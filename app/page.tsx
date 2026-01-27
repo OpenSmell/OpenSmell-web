@@ -40,7 +40,7 @@ export default function Home() {
     searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // Copy wallet address to clipboard
+  // Copy wallet address to clipboard - USING YOUR EXISTING ADDRESS
   const copyWalletAddress = () => {
     navigator.clipboard.writeText("0x699d0178f16484509f57d4d77f310b6b617621ce")
     alert("USDC wallet address copied to clipboard!")
@@ -73,11 +73,11 @@ export default function Home() {
               Search
             </button>
             <Link 
-              href="/e-nose"  {/* CHANGED: Hairy-Nose to E-Nose */}
+              href="/e-nose"
               className="text-gray-700 hover:text-black transition-colors"
               prefetch={false}
             >
-              E-Nose {/* CHANGED */}
+              E-Nose
             </Link>
             <Link 
               href="/contribute" 
@@ -95,9 +95,8 @@ export default function Home() {
               <MessageSquare className="w-4 h-4" />
               <span>Community</span>
             </a>
-            {/* CHANGED: Donate button now links to Discord support channel */}
             <a 
-              href="https://discord.com/channels/your-server-id/support-and-transparency-channel-id" 
+              href="https://discord.gg/CGER3tHxbH" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-1 bg-gradient-to-r from-green-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
@@ -174,7 +173,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Search Interface - FIXED */}
+          {/* Search Interface */}
           <div ref={searchSectionRef} className="mb-16">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Search for Scents</h2>
@@ -325,7 +324,7 @@ export default function Home() {
                     <h3 className="font-bold text-gray-900 mb-4 text-center">How to Support</h3>
                     <div className="space-y-4">
                       <a 
-                        href="https://discord.com/channels/your-server-id/support-and-transparency-channel-id"
+                        href="https://discord.gg/CGER3tHxbH"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600 to-blue-600 text-white px-4 py-3 rounded-lg hover:opacity-90 transition-opacity"
@@ -375,13 +374,13 @@ export default function Home() {
                 </div>
               </div>
               
-              {/* Step 2 - CHANGED: Hairy-Nose to E-Nose */}
+              {/* Step 2 - Updated to E-Nose */}
               <div className="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl border border-green-100">
                 <div className="flex items-center mb-4">
                   <div className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-lg font-bold mr-3">
                     2
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">E-Nose</h3> {/* CHANGED */}
+                  <h3 className="text-xl font-bold text-gray-900">E-Nose</h3>
                 </div>
                 <p className="text-gray-600 mb-4">
                   Affordable electronic nose that identifies unknown chemicals by matching sensor 
@@ -443,13 +442,13 @@ export default function Home() {
                   View on GitHub
                 </a>
                 <a 
-                  href="https://discord.gg/8FfgdCqa"
-                  target="_blank"
+                  href="https://discord.gg/CGER3tHxbH" 
+                  target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:border-black transition-colors"
                 >
                   <Wallet className="w-5 h-5 mr-2" />
-                  Support Development
+                  Support the Project
                 </a>
               </div>
             </div>
@@ -473,18 +472,16 @@ export default function Home() {
                     <div className="font-bold text-gray-900">OpenSmell</div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-600 max-w-md">
-                  An open-source initiative to map, understand, and digitize olfaction.
+                <p className="text-gray-600 text-sm max-w-xs">
+                  Building the digital infrastructure for olfaction. Open source, community-driven.
                 </p>
               </div>
-              
-              <div className="flex items-center space-x-4">
+              <div className="flex space-x-6">
                 <a 
                   href="https://github.com/opensmell" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-black transition-colors"
-                  aria-label="GitHub"
+                  className="text-gray-500 hover:text-gray-900"
                 >
                   <Github className="w-5 h-5" />
                 </a>
@@ -492,30 +489,20 @@ export default function Home() {
                   href="https://discord.gg/CGER3tHxbH" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-black transition-colors"
-                  aria-label="Discord"
+                  className="text-gray-500 hover:text-gray-900"
                 >
                   <MessageSquare className="w-5 h-5" />
                 </a>
-                <button 
-                  onClick={copyWalletAddress}
-                  className="text-gray-600 hover:text-black transition-colors"
-                  aria-label="Donate"
-                >
-                  <Wallet className="w-5 h-5" />
-                </button>
                 <a 
                   href="mailto:contact@opensmell.org" 
-                  className="text-gray-600 hover:text-black transition-colors"
-                  aria-label="Email"
+                  className="text-gray-500 hover:text-gray-900"
                 >
                   <Mail className="w-5 h-5" />
                 </a>
               </div>
             </div>
-            
-            <div className="mt-8 pt-8 border-t border-gray-100 text-center text-sm text-gray-600">
-              <p>© {new Date().getFullYear()} OpenSmell. Data updated weekly. Support our work via USDC on Polygon.</p>
+            <div className="mt-8 text-center text-gray-500 text-sm">
+              <p>© {new Date().getFullYear()} OpenSmell. Open source research to digitize the final sense.</p>
             </div>
           </footer>
         </div>
