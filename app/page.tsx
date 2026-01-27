@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Search, Zap, Brain, Mail, Github, MessageSquare, Coffee, ChevronRight } from "lucide-react"
+import { Search, Zap, Brain, Mail, Github, MessageSquare, Coffee, ChevronRight, Wallet } from "lucide-react"
 
 export default function Home() {
   const [recentSearches, setRecentSearches] = useState<
@@ -40,6 +40,12 @@ export default function Home() {
     searchSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  // Copy wallet address to clipboard
+  const copyWalletAddress = () => {
+    navigator.clipboard.writeText("0x699d0178f16484509f57d4d77f310b6b617621ce")
+    alert("USDC wallet address copied to clipboard!")
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation with Logo */}
@@ -67,11 +73,11 @@ export default function Home() {
               Search
             </button>
             <Link 
-              href="/hairy-nose" 
+              href="/e-nose"  {/* CHANGED: Hairy-Nose to E-Nose */}
               className="text-gray-700 hover:text-black transition-colors"
               prefetch={false}
             >
-              Hairy-Nose
+              E-Nose {/* CHANGED */}
             </Link>
             <Link 
               href="/contribute" 
@@ -89,14 +95,15 @@ export default function Home() {
               <MessageSquare className="w-4 h-4" />
               <span>Community</span>
             </a>
+            {/* CHANGED: Donate button now links to Discord support channel */}
             <a 
-              href="https://selar.com/showlove/judahx" 
+              href="https://discord.com/channels/your-server-id/support-and-transparency-channel-id" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
+              className="inline-flex items-center space-x-1 bg-gradient-to-r from-green-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
             >
-              <Coffee className="w-4 h-4" />
-              <span>Donate</span>
+              <Wallet className="w-4 h-4" />
+              <span>Support</span>
             </a>
           </nav>
         </div>
@@ -281,7 +288,68 @@ export default function Home() {
             </div>
           </div>
 
-          {/* The Vision Roadmap - Updated with chemical identification */}
+          {/* NEW: Support Section */}
+          <div className="mb-16">
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-8 sm:p-12 border border-green-100">
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div className="lg:w-2/3">
+                  <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                    Support Open Source Olfaction Research
+                  </h2>
+                  <p className="text-gray-700 mb-6">
+                    Your contributions directly fuel our infrastructure: cloud compute for quantum chemistry simulations, 
+                    hardware for e-nose prototyping, and data labeling efforts. Every donation brings us closer to 
+                    digitizing the final sense.
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-start">
+                      <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">
+                        ✓
+                      </div>
+                      <p className="text-gray-700">
+                        <span className="font-semibold">100% transparent:</span> All donations and their usage are documented in our Discord.
+                      </p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">
+                        ✓
+                      </div>
+                      <p className="text-gray-700">
+                        <span className="font-semibold">Direct impact:</span> Funds go to specific research goals like DFT calculations and sensor development.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="lg:w-1/3 w-full">
+                  <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                    <h3 className="font-bold text-gray-900 mb-4 text-center">How to Support</h3>
+                    <div className="space-y-4">
+                      <a 
+                        href="https://discord.com/channels/your-server-id/support-and-transparency-channel-id"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600 to-blue-600 text-white px-4 py-3 rounded-lg hover:opacity-90 transition-opacity"
+                      >
+                        <Wallet className="w-5 h-5" />
+                        <span>View Funding Channels</span>
+                      </a>
+                      <button
+                        onClick={copyWalletAddress}
+                        className="w-full flex items-center justify-center space-x-2 border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-lg hover:border-black transition-colors"
+                      >
+                        <span>Copy USDC Address</span>
+                      </button>
+                      <p className="text-xs text-gray-500 text-center">
+                        Donate USDC on Polygon network. All transactions are publicly acknowledged.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* The Vision Roadmap - Updated with E-Nose name change */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">Our Vision</h2>
             <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
@@ -307,16 +375,16 @@ export default function Home() {
                 </div>
               </div>
               
-              {/* Step 2 - Hairy-Nose with chemical identification */}
+              {/* Step 2 - CHANGED: Hairy-Nose to E-Nose */}
               <div className="bg-gradient-to-br from-green-50 to-white p-6 rounded-xl border border-green-100">
                 <div className="flex items-center mb-4">
                   <div className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-lg font-bold mr-3">
                     2
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Hairy-Nose</h3>
+                  <h3 className="text-xl font-bold text-gray-900">E-Nose</h3> {/* CHANGED */}
                 </div>
                 <p className="text-gray-600 mb-4">
-                  Affordable e-nose that identifies unknown chemicals by matching sensor 
+                  Affordable electronic nose that identifies unknown chemicals by matching sensor 
                   patterns against our database. Smell the physical world and know what's in it.
                 </p>
                 <div className="flex items-center text-green-600 text-sm font-medium">
@@ -375,13 +443,13 @@ export default function Home() {
                   View on GitHub
                 </a>
                 <a 
-                  href="https://selar.com/showlove/judahx" 
-                  target="_blank" 
+                  href="https://discord.gg/8FfgdCqa"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:border-black transition-colors"
                 >
-                  <Coffee className="w-5 h-5 mr-2" />
-                  Support the Project
+                  <Wallet className="w-5 h-5 mr-2" />
+                  Support Development
                 </a>
               </div>
             </div>
@@ -429,6 +497,13 @@ export default function Home() {
                 >
                   <MessageSquare className="w-5 h-5" />
                 </a>
+                <button 
+                  onClick={copyWalletAddress}
+                  className="text-gray-600 hover:text-black transition-colors"
+                  aria-label="Donate"
+                >
+                  <Wallet className="w-5 h-5" />
+                </button>
                 <a 
                   href="mailto:contact@opensmell.org" 
                   className="text-gray-600 hover:text-black transition-colors"
@@ -440,7 +515,7 @@ export default function Home() {
             </div>
             
             <div className="mt-8 pt-8 border-t border-gray-100 text-center text-sm text-gray-600">
-              <p>© {new Date().getFullYear()} OpenSmell. Data updated weekly.</p>
+              <p>© {new Date().getFullYear()} OpenSmell. Data updated weekly. Support our work via USDC on Polygon.</p>
             </div>
           </footer>
         </div>
