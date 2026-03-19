@@ -120,7 +120,7 @@ export default function Home() {
               
               <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-8 relative z-10">
                 We're building the tools, standards, and community to make smell as programmable as light and sound.  
-                Our first release: the <span className="font-semibold">chemoprint</span> – an open, hardware‑agnostic representation for molecular odor properties.
+                Our latest release is the <span className="font-semibold">chemoprint</span> – an open, hardware‑agnostic representation for molecular odor properties.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
