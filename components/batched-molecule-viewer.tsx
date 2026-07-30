@@ -1,21 +1,19 @@
-// components/batched-chemical-viewer.tsx
 "use client"
 
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { ExternalLink, Copy, Check, BarChart3 } from 'lucide-react'
 import Link from 'next/link'
 
-// Global RDKit loader with safe cleanup
 const loadRDKit = (): Promise<any> => {
   if ((window as any).RDKit) return Promise.resolve((window as any).RDKit)
-  
+
   return new Promise(async (resolve, reject) => {
     try {
       const script = document.createElement('script')
       script.src = '/rdkit/RDKit_minimal.js'
       script.async = true
       script.id = 'rdkit-script'
-      
+
       script.onload = async () => {
         try {
           const RDKitModule = await (window as any).initRDKitModule({
@@ -27,7 +25,7 @@ const loadRDKit = (): Promise<any> => {
           reject(err)
         }
       }
-      
+
       script.onerror = reject
       document.head.appendChild(script)
     } catch (err) {
@@ -57,10 +55,8 @@ export function ChemicalCard({ chemical, priority = false, showDetails = true }:
   const [svgContent, setSvgContent] = useState<string>('')
   const [copied, setCopied] = useState(false)
 
-  // Safe cleanup function
   const cleanupSVG = useCallback(() => {
     if (svgContainerRef.current) {
-      // SAFE METHOD: Use textContent instead of innerHTML to avoid DOM conflicts
       svgContainerRef.current.textContent = ''
     }
   }, [])
@@ -73,25 +69,21 @@ export function ChemicalCard({ chemical, priority = false, showDetails = true }:
 
   const renderMolecule = useCallback(async () => {
     if (rendered || loading) return
-    
+
     setLoading(true)
     try {
       const RDKit = await loadRDKit()
       const mol = RDKit.get_mol(chemical.smiles)
-      
+
       if (!mol) {
         throw new Error('Failed to parse molecule')
       }
-      
+
       const svg = mol.get_svg()
-      
-      // Clean up previous content safely
+
       cleanupSVG()
-      
-      // Set SVG content for display
       setSvgContent(svg)
-      
-      // Scale SVG safely
+
       setTimeout(() => {
         if (svgContainerRef.current) {
           const svgEl = svgContainerRef.current.querySelector('svg')
@@ -103,7 +95,7 @@ export function ChemicalCard({ chemical, priority = false, showDetails = true }:
           }
         }
       }, 10)
-      
+
       mol.delete()
       setRendered(true)
     } catch (err) {
@@ -114,7 +106,6 @@ export function ChemicalCard({ chemical, priority = false, showDetails = true }:
     }
   }, [rendered, loading, chemical.smiles, cleanupSVG])
 
-  // Priority rendering for first few items
   useEffect(() => {
     if (priority) {
       const timer = setTimeout(() => {
@@ -124,7 +115,6 @@ export function ChemicalCard({ chemical, priority = false, showDetails = true }:
     }
   }, [priority, renderMolecule])
 
-  // Clean up on unmount
   useEffect(() => {
     return () => {
       cleanupSVG()
@@ -136,123 +126,118 @@ export function ChemicalCard({ chemical, priority = false, showDetails = true }:
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all duration-300 hover:border-blue-200">
-      {/* Header - Same as original ChemicalCard */}
+    <div className="border border-border p-5 transition-all duration-300 hover:bg-foreground/5">
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-mono text-sm bg-blue-50 text-blue-700 px-2 py-1 rounded flex-shrink-0">
+            <span className="font-mono text-xs text-muted-foreground border border-border px-2 py-1">
               CID_{chemical.cid}
             </span>
             <button
               onClick={openPubChem}
-              className="text-gray-400 hover:text-blue-600 transition-colors flex-shrink-0"
+              className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
               title="Open in PubChem"
             >
               <ExternalLink className="w-4 h-4" />
             </button>
           </div>
-          <h3 className="font-bold text-gray-900 text-lg truncate" title={chemical.name}>
+          <h3 className="font-semibold text-foreground text-sm truncate" title={chemical.name}>
             {chemical.name}
           </h3>
         </div>
-        
+
         <button
           onClick={() => copyToClipboard(chemical.smiles)}
-          className="text-gray-400 hover:text-gray-700 transition-colors flex-shrink-0 ml-2"
+          className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0 ml-2"
           title="Copy SMILES"
         >
           {copied ? (
-            <Check className="w-4 h-4 text-green-500" />
+            <Check className="w-4 h-4" />
           ) : (
             <Copy className="w-4 h-4" />
           )}
         </button>
       </div>
 
-      {/* Molecule Visualization Area */}
       <div className="mb-4">
         {!rendered ? (
-          <div 
-            className="border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
+          <div
+            className="border border-dashed border-border bg-foreground/5 flex items-center justify-center cursor-pointer hover:bg-foreground/10 transition-colors"
             style={{ height: '180px' }}
             onClick={renderMolecule}
           >
             {loading ? (
               <div className="text-center">
-                <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600 mb-2" />
-                <p className="text-sm text-gray-600">Rendering molecule...</p>
+                <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-border border-t-foreground mb-2" />
+                <p className="text-xs text-muted-foreground">Rendering molecule...</p>
               </div>
             ) : (
               <div className="text-center p-4">
-                <div className="text-gray-400 mb-2">Click to render molecule</div>
-                <div className="text-xs text-gray-500 font-mono">
+                <div className="text-muted-foreground text-xs mb-2">Click to render molecule</div>
+                <div className="text-xs text-muted-foreground font-mono opacity-60">
                   {chemical.smiles.substring(0, 40)}...
                 </div>
               </div>
             )}
           </div>
         ) : (
-          <div 
+          <div
             ref={svgContainerRef}
-            className="border border-gray-200 rounded-lg overflow-hidden"
+            className="border border-border overflow-hidden bg-background"
             style={{ height: '180px' }}
             dangerouslySetInnerHTML={{ __html: svgContent }}
           />
         )}
       </div>
 
-      {/* Descriptors - Same as original */}
       {showDetails && (
         <>
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2">
-              <BarChart3 className="w-4 h-4 text-gray-400" />
-              <span className="text-sm font-medium text-gray-700">Odor Profile</span>
-              <span className="text-xs text-gray-500">({chemical.descriptors.length})</span>
+              <BarChart3 className="w-4 h-4 text-muted-foreground" />
+              <span className="text-xs font-medium text-muted-foreground">Odor Profile</span>
+              <span className="text-xs text-muted-foreground">({chemical.descriptors.length})</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {chemical.descriptors.slice(0, 6).map((desc, idx) => (
                 <span
                   key={`${chemical.cid}-${desc}-${idx}`}
-                  className="text-xs bg-gray-50 text-gray-700 px-2 py-1 rounded border border-gray-200 hover:bg-gray-100 transition-colors"
+                  className="text-xs border border-border text-muted-foreground px-2 py-1 hover:bg-foreground hover:text-background transition-colors"
                   title={desc}
                 >
                   {desc}
                 </span>
               ))}
               {chemical.descriptors.length > 6 && (
-                <span className="text-xs text-gray-500 px-2 py-1">
+                <span className="text-xs text-muted-foreground px-2 py-1">
                   +{chemical.descriptors.length - 6} more
                 </span>
               )}
             </div>
           </div>
 
-          {/* Sources */}
           <div className="mb-4">
-            <div className="text-xs text-gray-500 mb-1">Data Sources</div>
+            <div className="text-xs text-muted-foreground mb-1">Data Sources</div>
             <div className="flex flex-wrap gap-1">
               {chemical.sources.slice(0, 3).map(source => (
                 <span
                   key={source}
-                  className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded"
+                  className="text-xs border border-border text-muted-foreground px-2 py-0.5"
                 >
                   {source}
                 </span>
               ))}
               {chemical.sources.length > 3 && (
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-muted-foreground">
                   +{chemical.sources.length - 3} more
                 </span>
               )}
             </div>
           </div>
 
-          {/* View Details Button */}
           <Link
             href={`/chemical/${chemical.cid}`}
-            className="block w-full text-center border border-gray-300 text-gray-700 hover:border-black hover:bg-gray-50 px-4 py-2 rounded-lg transition-colors text-sm"
+            className="block w-full text-center border border-border text-muted-foreground hover:bg-foreground hover:text-background px-4 py-2 transition-colors text-sm"
           >
             View Details
           </Link>
@@ -262,7 +247,6 @@ export function ChemicalCard({ chemical, priority = false, showDetails = true }:
   )
 }
 
-// Main component for displaying search results
 interface BatchedChemicalViewerProps {
   chemicals: Chemical[]
   itemsPerPage?: number
@@ -276,8 +260,8 @@ interface BatchedChemicalViewerProps {
   }
 }
 
-export default function BatchedChemicalViewer({ 
-  chemicals, 
+export default function BatchedChemicalViewer({
+  chemicals,
   itemsPerPage = 24,
   showDetails = true,
   gridColumns = {
@@ -290,7 +274,6 @@ export default function BatchedChemicalViewer({
 }: BatchedChemicalViewerProps) {
   const [visibleCount, setVisibleCount] = useState(Math.min(itemsPerPage, chemicals.length))
 
-  // Load RDKit in background
   useEffect(() => {
     loadRDKit().catch(console.error)
   }, [])
@@ -303,32 +286,31 @@ export default function BatchedChemicalViewer({
     setVisibleCount(prev => Math.min(prev + itemsPerPage, chemicals.length))
   }
 
-  // Generate grid class
   const gridClass = `grid grid-cols-${gridColumns.base || 1} ${
     gridColumns.sm ? `sm:grid-cols-${gridColumns.sm}` : ''
   } ${gridColumns.md ? `md:grid-cols-${gridColumns.md}` : ''} ${
     gridColumns.lg ? `lg:grid-cols-${gridColumns.lg}` : ''
-  } ${gridColumns.xl ? `xl:grid-cols-${gridColumns.xl}` : ''} gap-6`
+  } ${gridColumns.xl ? `xl:grid-cols-${gridColumns.xl}` : ''} gap-px bg-border`
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap justify-between items-center gap-4 bg-gray-50 p-4 rounded-lg">
-        <div className="text-sm text-gray-600">
-          Showing <span className="font-semibold">{visibleChemicals.length}</span> of{' '}
-          <span className="font-semibold">{chemicals.length}</span> chemicals
+      <div className="flex flex-wrap justify-between items-center gap-4 bg-foreground/5 p-4">
+        <div className="text-sm text-muted-foreground">
+          Showing <span className="font-semibold text-foreground">{visibleChemicals.length}</span> of{' '}
+          <span className="font-semibold text-foreground">{chemicals.length}</span> chemicals
         </div>
         <div className="flex gap-2">
           <button
             onClick={loadMore}
             disabled={visibleCount >= chemicals.length}
-            className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-4 py-2 text-sm bg-foreground text-background hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
           >
             Load {Math.min(itemsPerPage, chemicals.length - visibleCount)} More
           </button>
           {visibleCount > itemsPerPage && (
             <button
               onClick={() => setVisibleCount(itemsPerPage)}
-              className="px-4 py-2 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="px-4 py-2 text-sm border border-border text-muted-foreground hover:bg-foreground hover:text-background transition-all"
             >
               Show Less
             </button>
@@ -341,7 +323,7 @@ export default function BatchedChemicalViewer({
           <ChemicalCard
             key={chemical.cid}
             chemical={chemical}
-            priority={index < 6} // Auto-render first 6
+            priority={index < 6}
             showDetails={showDetails}
           />
         ))}
@@ -351,7 +333,7 @@ export default function BatchedChemicalViewer({
         <div className="text-center pt-6">
           <button
             onClick={loadMore}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors"
+            className="px-6 py-3 bg-foreground text-background hover:opacity-90 font-medium transition-all"
           >
             Load {Math.min(itemsPerPage, chemicals.length - visibleCount)} More Chemicals
             <div className="text-sm font-normal mt-1 opacity-75">

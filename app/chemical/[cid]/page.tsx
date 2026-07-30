@@ -3,9 +3,11 @@
 import { useParams } from "next/navigation"
 import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
-import { ArrowLeft, ExternalLink, Copy, Check, BarChart3, Database, Tag } from "lucide-react"
+import Image from "next/image"
+import { ArrowLeft, ExternalLink, Copy, Check, Database, BookOpen, Monitor, Store } from "lucide-react"
 import MoleculeViewer from "@/components/molecule-viewer"
 import { getChemicalByCID, Chemical } from "@/lib/odor-index"
+import ThemeToggle from "@/components/theme-toggle"
 
 function ChemicalDetailPage() {
   const params = useParams()
@@ -32,15 +34,15 @@ function ChemicalDetailPage() {
   }
 
   const openPubChem = () => {
-    window.open(`https://pubchem.ncbi.nlm.nih.gov/compound/${cid}`, '_blank')
+    window.open(`https://pubchem.ncbi.nlm.nih.gov/compound/${cid}`, "_blank")
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-600">Loading chemical data...</p>
+          <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-foreground mb-4"></div>
+          <p className="text-sm text-muted-foreground">Loading chemical data...</p>
         </div>
       </div>
     )
@@ -48,21 +50,30 @@ function ChemicalDetailPage() {
 
   if (!chemical) {
     return (
-      <div className="min-h-screen bg-white">
-        <header className="border-b border-gray-200 px-8 py-6">
-          <Link href="/" className="font-bold text-xl text-gray-900">
-            OpenSmell
+      <div className="min-h-screen bg-background text-foreground">
+        <header className="border-b border-border px-6 py-4">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="relative w-7 h-7">
+              <Image
+                src="/opensmell_logo.png"
+                alt="OpenSmell"
+                fill
+                className="object-contain"
+                sizes="28px"
+              />
+            </div>
+            <span className="font-semibold text-sm">OpenSmell</span>
           </Link>
         </header>
-        <main className="max-w-7xl mx-auto px-8 py-12">
+        <main className="max-w-7xl mx-auto px-6 py-16">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Chemical not found</h1>
-            <p className="text-gray-600 mb-6">CID_{cid} doesn't exist in our database.</p>
-            <Link 
-              href="/" 
-              className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
+            <h1 className="text-2xl font-bold mb-4">Chemical not found</h1>
+            <p className="text-muted-foreground mb-6 font-mono text-sm">CID_{cid} doesn't exist in our database.</p>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground border border-border px-4 py-2 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 mr-1" />
+              <ArrowLeft className="w-4 h-4" />
               Back to search
             </Link>
           </div>
@@ -72,106 +83,120 @@ function ChemicalDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      {/* Header */}
-      <header className="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link 
-              href="/" 
-              className="inline-flex items-center text-gray-700 hover:text-black transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              <span className="font-semibold">Back to Search</span>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Link 
-                href="/" 
-                className="font-bold text-xl text-gray-900"
-              >
-                OpenSmell
-              </Link>
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link
+            href="/search"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Search</span>
+          </Link>
+          <Link href="/" className="flex items-center gap-2 no-underline">
+            <div className="relative w-7 h-7">
+              <Image
+                src="/opensmell_logo.png"
+                alt="OpenSmell"
+                fill
+                className="object-contain"
+                sizes="28px"
+              />
             </div>
+            <span className="font-semibold text-sm">OpenSmell</span>
+          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/osmograph"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              title="Osmograph"
+            >
+              <Monitor className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/appstore"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              title="Appstore"
+            >
+              <Store className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/academy"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              title="Academy"
+            >
+              <BookOpen className="w-4 h-4" />
+            </Link>
+            <ThemeToggle />
           </div>
         </div>
       </header>
 
-      {/* Chemical Details */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Molecule & Basic Info */}
           <div className="lg:col-span-2">
-            <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
+            <div className="border border-border p-6 mb-6">
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-mono text-lg bg-blue-50 text-blue-700 px-3 py-1.5 rounded">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="font-mono text-sm text-muted-foreground border border-border px-3 py-1">
                       CID_{chemical.cid}
                     </span>
                     <button
                       onClick={openPubChem}
-                      className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 transition-colors"
-                      title="Open in PubChem"
+                      className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <ExternalLink className="w-4 h-4" />
+                      <ExternalLink className="w-3.5 h-3.5" />
                       PubChem
                     </button>
                   </div>
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">{chemical.name}</h1>
+                  <h1 className="text-3xl font-bold tracking-tight">{chemical.name}</h1>
                 </div>
                 <button
                   onClick={() => copyToClipboard(chemical.smiles)}
-                  className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-800 transition-colors"
-                  title="Copy SMILES"
+                  className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground border border-border px-3 py-1.5 transition-colors"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-4 h-4 text-green-500" />
-                      <span className="text-sm">Copied!</span>
+                      <Check className="w-3.5 h-3.5" />
+                      Copied
                     </>
                   ) : (
                     <>
-                      <Copy className="w-4 h-4" />
-                      <span className="text-sm">Copy SMILES</span>
+                      <Copy className="w-3.5 h-3.5" />
+                      Copy SMILES
                     </>
                   )}
                 </button>
               </div>
 
-              {/* Large Molecule Viewer */}
               <div className="mb-6">
                 <MoleculeViewer
                   cid={chemical.cid}
-                  smiles={chemical.smiles} 
+                  smiles={chemical.smiles}
                   width={600}
                   height={300}
                 />
               </div>
 
-              {/* SMILES String */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-sm text-gray-600 mb-2 flex items-center gap-2">
-                  <Tag className="w-4 h-4" />
-                  SMILES String
-                </div>
-                <div className="font-mono text-sm bg-white p-3 rounded border border-gray-200 overflow-x-auto">
-                  {chemical.smiles}
-                </div>
+              <div className="border border-border p-4">
+                <div className="text-xs text-muted-foreground mb-2 font-mono">SMILES</div>
+                <code className="text-sm font-mono">{chemical.smiles}</code>
               </div>
             </div>
 
-            {/* Descriptors */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div className="border border-border p-6">
               <div className="flex items-center gap-2 mb-4">
-                <BarChart3 className="w-5 h-5 text-gray-400" />
-                <h2 className="text-xl font-bold text-gray-900">Odor Profile</h2>
-                <span className="text-gray-500">({chemical.descriptors.length} descriptors)</span>
+                <h2 className="text-lg font-semibold">Odor Profile</h2>
+                <span className="text-xs text-muted-foreground font-mono">
+                  ({chemical.descriptors.length} descriptors)
+                </span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {chemical.descriptors.map((desc, idx) => (
                   <span
                     key={idx}
-                    className="text-base bg-gray-50 text-gray-700 px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
+                    className="text-sm border border-border px-3 py-1.5 text-muted-foreground hover:bg-foreground hover:text-background transition-all"
                   >
                     {desc}
                   </span>
@@ -180,47 +205,44 @@ function ChemicalDetailPage() {
             </div>
           </div>
 
-          {/* Right Column - Metadata */}
           <div className="lg:col-span-1">
-            {/* Data Sources */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
+            <div className="border border-border p-6 mb-6">
               <div className="flex items-center gap-2 mb-4">
-                <Database className="w-5 h-5 text-gray-400" />
-                <h3 className="font-bold text-gray-900">Data Sources</h3>
+                <Database className="w-4 h-4 text-muted-foreground" />
+                <h3 className="text-sm font-semibold">Data Sources</h3>
               </div>
               <div className="space-y-2">
                 {chemical.sources.map((source, idx) => (
                   <div key={idx} className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                    <span className="text-gray-700">{source}</span>
+                    <div className="w-1 h-1 rounded-full bg-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">{source}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <div className="text-sm text-gray-600">
-                  This data is compiled from {chemical.sources.length} scientific sources
+              <div className="mt-4 pt-4 border-t border-border">
+                <div className="text-xs text-muted-foreground">
+                  Compiled from {chemical.sources.length} scientific sources
                 </div>
               </div>
             </div>
 
-            {/* Actions */}
-            <div className="bg-white border border-gray-200 rounded-xl p-6">
-              <h3 className="font-bold text-gray-900 mb-4">Actions</h3>
+            <div className="border border-border p-6">
+              <h3 className="text-sm font-semibold mb-4">Actions</h3>
               <div className="space-y-3">
                 <button
                   onClick={openPubChem}
-                  className="w-full flex items-center justify-center gap-2 bg-blue-50 text-blue-700 hover:bg-blue-100 px-4 py-3 rounded-lg transition-colors"
+                  className="w-full flex items-center justify-center gap-2 border border-border px-4 py-3 text-sm hover:bg-foreground hover:text-background transition-all"
                 >
                   <ExternalLink className="w-4 h-4" />
                   View on PubChem
                 </button>
                 <button
                   onClick={() => copyToClipboard(chemical.smiles)}
-                  className="w-full flex items-center justify-center gap-2 bg-gray-50 text-gray-700 hover:bg-gray-100 px-4 py-3 rounded-lg transition-colors"
+                  className="w-full flex items-center justify-center gap-2 border border-border px-4 py-3 text-sm hover:bg-foreground hover:text-background transition-all"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-4 h-4 text-green-500" />
+                      <Check className="w-4 h-4" />
                       SMILES Copied
                     </>
                   ) : (
@@ -232,7 +254,7 @@ function ChemicalDetailPage() {
                 </button>
                 <Link
                   href="/"
-                  className="block w-full text-center border border-gray-300 text-gray-700 hover:border-black hover:bg-gray-50 px-4 py-3 rounded-lg transition-colors"
+                  className="block w-full text-center border border-border px-4 py-3 text-sm text-muted-foreground hover:bg-foreground hover:text-background transition-all"
                 >
                   Search Another Chemical
                 </Link>
@@ -248,10 +270,10 @@ function ChemicalDetailPage() {
 export default function ChemicalPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-600">Loading chemical...</p>
+          <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-foreground mb-4"></div>
+          <p className="text-sm text-muted-foreground">Loading chemical...</p>
         </div>
       </div>
     }>

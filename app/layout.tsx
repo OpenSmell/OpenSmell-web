@@ -2,31 +2,24 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "OpenSmell - Chemical Odor Discovery Engine",
-  description: "Search 4,800+ chemicals and their odor descriptors. Open-source olfaction database.",
-  generator: "v0.app",
+  title: "OpenSmell — Open Infrastructure for Digital Olfaction",
+  description: "Building the tools, standards, and community to make smell as programmable as light and sound. Open-source chemoprint, e-nose hardware, and data commons.",
+  metadataBase: new URL("https://opensmell.org"),
+  openGraph: {
+    title: "OpenSmell — Open Infrastructure for Digital Olfaction",
+    description: "Building the tools, standards, and community to make smell as programmable as light and sound.",
+    type: "website",
+  },
   icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
+    icon: "/opensmell_logo.png",
+    apple: "/opensmell_logo.png",
   },
 }
 
@@ -36,9 +29,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          storageKey="opensmell-theme"
+        >
+          {children}
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
