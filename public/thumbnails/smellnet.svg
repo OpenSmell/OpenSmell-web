@@ -1,0 +1,91 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">DATASET REVIEW</text>
+  <text x="600" y="128" text-anchor="middle" font-family="ui-monospace, monospace" font-size="38" font-weight="bold" fill="#111111" letter-spacing="1">MOX ARRAY → SCENTFORMER → 50-WAY</text>
+  <text x="600" y="153" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">828K TIMESTEPS · 50 SUBSTANCES · 43 MIXTURES · MIT MEDIA LAB</text>
+
+  <g stroke="#111111" fill="none">
+    <rect x="140" y="215" width="200" height="185" stroke-width="1.8"/>
+    <rect x="148" y="223" width="184" height="169" stroke-width="1"/>
+    <text x="240" y="236" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">SENSOR ARRAY</text>
+    <g fill="#e5e5e5" stroke-width="1">
+      <circle cx="170" cy="270" r="11"/><circle cx="215" cy="270" r="11"/><circle cx="260" cy="270" r="11"/><circle cx="305" cy="270" r="11"/>
+      <circle cx="170" cy="325" r="11"/><circle cx="215" cy="325" r="11"/><circle cx="260" cy="325" r="11"/><circle cx="305" cy="325" r="11"/>
+    </g>
+    <g fill="#111111">
+      <circle cx="170" cy="270" r="3"/><circle cx="215" cy="270" r="3"/><circle cx="260" cy="270" r="3"/><circle cx="305" cy="270" r="3"/>
+      <circle cx="170" cy="325" r="3"/><circle cx="215" cy="325" r="3"/><circle cx="260" cy="325" r="3"/><circle cx="305" cy="325" r="3"/>
+    </g>
+    <line x1="140" y1="356" x2="340" y2="356" stroke-width="1"/>
+    <text x="240" y="382" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#111111">MOX × 12 CH</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="382" y="215" width="178" height="185" stroke-width="1.8"/>
+    <text x="471" y="236" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">RAW SERIES</text>
+    <polyline points="394,300 406,288 418,302 430,290 442,306 454,292 466,308 478,294 490,310 502,296 514,312 526,300 538,316 548,302" stroke-width="1.2"/>
+    <polyline points="394,330 406,322 418,334 430,324 442,338 454,326 466,340 478,328 490,342 502,330 514,344 526,332 538,346 548,334" stroke-width="1"/>
+    <polyline points="394,360 406,354 418,362 430,356 442,364 454,358 466,366 478,360 490,368 502,362 514,370 526,364 538,372 548,366" stroke-width="1"/>
+  </g>
+
+  <line x1="560" y1="307" x2="606" y2="307" stroke="#111111" stroke-width="2.5"/>
+  <polygon points="616,307 602,301 602,313" fill="#111111"/>
+
+  <g stroke="#111111" fill="none">
+    <rect x="620" y="215" width="200" height="185" stroke-width="1.8"/>
+    <rect x="628" y="223" width="184" height="169" stroke-width="1"/>
+    <text x="720" y="236" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">SCENTFORMER</text>
+    <rect x="636" y="252" width="168" height="32" stroke-width="1"/>
+    <rect x="636" y="292" width="168" height="32" stroke-width="1"/>
+    <rect x="636" y="332" width="168" height="32" stroke-width="1"/>
+    <g font-family="ui-monospace, monospace" fill="#111111">
+      <text x="720" y="272" text-anchor="middle" font-size="11">WINDOW + DIFF</text>
+      <text x="720" y="312" text-anchor="middle" font-size="11">SELF-ATTENTION</text>
+      <text x="720" y="352" text-anchor="middle" font-size="11">CLS + HEAD</text>
+    </g>
+    <text x="720" y="382" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#555555">GC-MS PRIOR → CONTRASTIVE</text>
+  </g>
+
+  <line x1="820" y1="307" x2="866" y2="307" stroke="#111111" stroke-width="2.5"/>
+  <polygon points="876,307 862,301 862,313" fill="#111111"/>
+
+  <g stroke="#111111" fill="none">
+    <rect x="880" y="215" width="180" height="185" stroke-width="1.8"/>
+    <text x="970" y="236" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">50-WAY OUTPUT</text>
+    <line x1="896" y1="366" x2="1044" y2="366" stroke-width="1"/>
+    <g stroke-width="3">
+      <line x1="897" y1="366" x2="897" y2="356"/><line x1="903" y1="366" x2="903" y2="330"/><line x1="909" y1="366" x2="909" y2="345"/><line x1="915" y1="366" x2="915" y2="360"/><line x1="921" y1="366" x2="921" y2="322"/><line x1="927" y1="366" x2="927" y2="352"/><line x1="933" y1="366" x2="933" y2="340"/><line x1="939" y1="366" x2="939" y2="358"/><line x1="945" y1="366" x2="945" y2="315"/><line x1="951" y1="366" x2="951" y2="350"/><line x1="957" y1="366" x2="957" y2="336"/><line x1="963" y1="366" x2="963" y2="355"/><line x1="969" y1="366" x2="969" y2="328"/><line x1="975" y1="366" x2="975" y2="348"/><line x1="981" y1="366" x2="981" y2="338"/><line x1="987" y1="366" x2="987" y2="310"/><line x1="993" y1="366" x2="993" y2="342"/><line x1="999" y1="366" x2="999" y2="354"/><line x1="1005" y1="366" x2="1005" y2="326"/><line x1="1011" y1="366" x2="1011" y2="345"/><line x1="1017" y1="366" x2="1017" y2="333"/><line x1="1023" y1="366" x2="1023" y2="357"/><line x1="1029" y1="366" x2="1029" y2="320"/><line x1="1035" y1="366" x2="1035" y2="350"/><line x1="1041" y1="366" x2="1041" y2="344"/>
+    </g>
+    <line x1="945" y1="315" x2="945" y2="366" stroke-width="6"/>
+    <text x="970" y="386" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#555555">TOP-1 · MIXTURE RATIO (12)</text>
+  </g>
+
+  <rect x="140" y="438" width="560" height="36" fill="none" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="420" y="461" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#111111">DATA: 828K TIMESTEPS · 50 SUBSTANCES · 43 MIXTURES · 68 H · OPEN SOURCE</text>
+
+  <rect x="900" y="522" width="268" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="900" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1080" y1="522" x2="1080" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="912" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="912" y="584" font-size="12">REV A · 2026</text>
+    <text x="1092" y="546" font-size="12">FIG. 008</text>
+    <text x="1092" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

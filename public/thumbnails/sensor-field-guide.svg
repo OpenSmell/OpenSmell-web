@@ -1,0 +1,119 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">TECHNOLOGY SURVEY</text>
+  <text x="600" y="120" text-anchor="middle" font-family="ui-monospace, monospace" font-size="38" font-weight="bold" fill="#111111" letter-spacing="1">ODOR SENSOR TECHNOLOGIES</text>
+  <text x="600" y="145" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">SIX TRANSDUCTION PHYSICS · ONE QUESTION: WHATS IN THE AIR?</text>
+
+  <g stroke="#111111" stroke-width="1.5" fill="none" font-family="ui-monospace, monospace">
+    <rect x="80" y="175" width="320" height="140"/>
+    <rect x="440" y="175" width="320" height="140"/>
+    <rect x="800" y="175" width="320" height="140"/>
+    <rect x="80" y="355" width="320" height="140"/>
+    <rect x="440" y="355" width="320" height="140"/>
+    <rect x="800" y="355" width="320" height="140"/>
+  </g>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <rect x="110" y="200" width="70" height="50"/>
+    <rect x="185" y="200" width="70" height="50"/>
+    <line x1="145" y1="215" x2="215" y2="215"/>
+    <line x1="145" y1="265" x2="215" y2="265"/>
+    <path d="M 145 240 q 12 -8 24 0 q 12 8 24 0"/>
+  </g>
+  <g fill="#111111"><rect x="105" y="256" width="10" height="8"/><rect x="250" y="256" width="10" height="8"/></g>
+  <text x="145" y="295" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">MOX</text>
+  <text x="240" y="295" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">resistance ↓ in gas</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <rect x="470" y="200" width="70" height="50"/>
+    <rect x="545" y="200" width="70" height="50"/>
+    <line x1="505" y1="215" x2="545" y2="215"/>
+    <line x1="505" y1="265" x2="545" y2="265"/>
+    <rect x="488" y="222" width="34" height="20"/>
+    <line x1="545" y1="238" x2="580" y2="238"/>
+    <polygon points="580,238 570,232 570,244"/>
+  </g>
+  <text x="540" y="295" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">ELECTRO-CHEM</text>
+  <text x="540" y="310" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">specific · quantitative</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <rect x="830" y="205" width="40" height="40"/>
+    <line x1="860" y1="225" x2="860" y2="225" stroke-width="3"/>
+    <line x1="830" y1="225" x2="895" y2="225"/>
+    <line x1="830" y1="245" x2="895" y2="245"/>
+    <path d="M 895 225 l 4 10 l -4 10" stroke-width="1.5"/>
+    <line x1="895" y1="225" x2="935" y2="205"/>
+    <line x1="895" y1="245" x2="935" y2="265"/>
+    <line x1="935" y1="205" x2="935" y2="265" stroke-width="2"/>
+    <path d="M 895 225 h 18 M 895 245 h 18" stroke-width="1"/>
+  </g>
+  <text x="880" y="295" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">PID</text>
+  <text x="880" y="310" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">total VOCs · UV lamp</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <circle cx="160" cy="425" r="40"/>
+    <circle cx="160" cy="425" r="14"/>
+    <line x1="160" y1="385" x2="160" y2="465"/>
+    <line x1="120" y1="425" x2="200" y2="425"/>
+    <path d="M 260 415 q 10 -12 20 0 q 10 12 20 0 q 10 -12 20 0" stroke-width="2"/>
+    <line x1="200" y1="425" x2="240" y2="425"/>
+  </g>
+  <text x="160" y="493" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">QCM / SAW</text>
+  <text x="160" y="508" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">mass-loading · kHz shift</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <rect x="480" y="390" width="50" height="70"/>
+    <path d="M 500 395 l 0 60 M 510 395 l 0 60" stroke-width="1"/>
+    <rect x="610" y="390" width="50" height="70"/>
+    <path d="M 615 430 q 6 -8 12 0" stroke-width="1.5"/>
+    <line x1="530" y1="425" x2="610" y2="425" stroke-width="2"/>
+    <line x1="530" y1="445" x2="610" y2="445" stroke-width="1"/>
+    <line x1="600" y1="415" x2="610" y2="415" stroke-width="2"/>
+    <line x1="600" y1="435" x2="610" y2="435" stroke-width="2"/>
+  </g>
+  <text x="570" y="493" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">NDIR / FTIR</text>
+  <text x="570" y="508" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">vibrational fingerprint</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <rect x="830" y="390" width="90" height="70"/>
+    <g fill="#111111">
+      <circle cx="848" cy="408" r="4"/><circle cx="864" cy="408" r="4"/><circle cx="880" cy="408" r="4"/>
+      <circle cx="896" cy="408" r="4"/><circle cx="848" cy="424" r="4"/><circle cx="864" cy="424" r="4"/>
+      <circle cx="880" cy="424" r="4"/><circle cx="896" cy="424" r="4"/>
+      <circle cx="848" cy="440" r="4"/><circle cx="864" cy="440" r="4"/><circle cx="880" cy="440" r="4"/>
+      <circle cx="896" cy="440" r="4"/>
+    </g>
+    <line x1="925" y1="400" x2="955" y2="400"/>
+    <line x1="955" y1="400" x2="955" y2="460"/>
+    <line x1="925" y1="460" x2="955" y2="460"/>
+    <path d="M 925 400 h 30 M 925 460 h 30" stroke-width="1"/>
+  </g>
+  <text x="880" y="493" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">BIOSENSOR ARRAY</text>
+  <text x="880" y="508" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">peptides · SPR (Aryballe)</text>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 003</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

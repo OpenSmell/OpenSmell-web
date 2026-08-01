@@ -1,0 +1,92 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">HISTORICAL CHART</text>
+  <text x="600" y="120" text-anchor="middle" font-family="ui-monospace, monospace" font-size="38" font-weight="bold" fill="#111111" letter-spacing="1">DIGITAL OLFACTION — 60-YEAR TIMELINE</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <line x1="90" y1="330" x2="1110" y2="330" stroke-width="3"/>
+    <polygon points="1110,330 1096,323 1096,337" fill="#111111" stroke="none"/>
+  </g>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <line x1="150" y1="330" x2="150" y2="380"/>
+    <line x1="300" y1="330" x2="300" y2="280"/>
+    <line x1="450" y1="330" x2="450" y2="380"/>
+    <line x1="600" y1="330" x2="600" y2="280"/>
+    <line x1="750" y1="330" x2="750" y2="380"/>
+    <line x1="900" y1="330" x2="900" y2="280"/>
+    <line x1="1030" y1="330" x2="1030" y2="380"/>
+  </g>
+  <g fill="#111111" stroke="none">
+    <circle cx="150" cy="330" r="6"/><circle cx="300" cy="330" r="6"/><circle cx="450" cy="330" r="6"/>
+    <circle cx="600" cy="330" r="6"/><circle cx="750" cy="330" r="6"/><circle cx="900" cy="330" r="6"/>
+    <circle cx="1030" cy="330" r="6"/>
+  </g>
+
+  <g font-family="ui-monospace, monospace" text-anchor="middle">
+    <text x="150" y="310" font-size="15" font-weight="bold" fill="#111111">1962</text>
+    <text x="150" y="405" font-size="12" fill="#555555">Seiyama: ZnO film</text>
+    <text x="150" y="421" font-size="12" fill="#555555">Taguchi patents SnO₂</text>
+    <text x="300" y="258" font-size="15" font-weight="bold" fill="#111111">1968</text>
+    <text x="300" y="243" font-size="12" fill="#555555">First commercial TGS</text>
+    <text x="300" y="227" font-size="12" fill="#555555">(Figaro, Japan)</text>
+    <text x="450" y="310" font-size="15" font-weight="bold" fill="#111111">1982</text>
+    <text x="450" y="405" font-size="12" fill="#555555">Persaud &amp; Dodd:</text>
+    <text x="450" y="421" font-size="12" fill="#555555">"model nose" (Nature)</text>
+    <text x="600" y="258" font-size="15" font-weight="bold" fill="#111111">1991</text>
+    <text x="600" y="243" font-size="12" fill="#555555">Buck &amp; Axel discover</text>
+    <text x="600" y="227" font-size="12" fill="#555555">odorant receptor genes</text>
+    <text x="750" y="310" font-size="15" font-weight="bold" fill="#111111">2004</text>
+    <text x="750" y="405" font-size="12" fill="#555555">Nobel Prize in Medicine</text>
+    <text x="750" y="421" font-size="12" fill="#555555">for olfactory receptors</text>
+    <text x="900" y="258" font-size="15" font-weight="bold" fill="#111111">2023</text>
+    <text x="900" y="243" font-size="12" fill="#555555">Principal Odor Map</text>
+    <text x="900" y="227" font-size="12" fill="#555555">(Osmo · Science)</text>
+    <text x="1030" y="310" font-size="15" font-weight="bold" fill="#111111">2026</text>
+    <text x="1030" y="405" font-size="12" fill="#555555">OpenSmell: open</text>
+    <text x="1030" y="421" font-size="12" fill="#555555">chemoprint + data</text>
+  </g>
+
+  <line x1="90" y1="470" x2="1110" y2="470" stroke="#111111" stroke-width="1"/>
+  <g stroke="#111111" stroke-width="1.5" fill="none">
+    <line x1="90" y1="490" x2="1110" y2="490" stroke-width="1"/>
+    <line x1="240" y1="480" x2="240" y2="500" stroke-width="1"/>
+    <line x1="390" y1="480" x2="390" y2="500" stroke-width="1"/>
+    <line x1="540" y1="480" x2="540" y2="500" stroke-width="1"/>
+    <line x1="690" y1="480" x2="690" y2="500" stroke-width="1"/>
+    <line x1="840" y1="480" x2="840" y2="500" stroke-width="1"/>
+    <line x1="990" y1="480" x2="990" y2="500" stroke-width="1"/>
+  </g>
+  <g font-family="ui-monospace, monospace" text-anchor="middle" fill="#555555" font-size="12">
+    <text x="90" y="512">1980</text><text x="240" y="512">1990</text><text x="390" y="512">2000</text>
+    <text x="540" y="512">2010</text><text x="690" y="512">2020</text><text x="840" y="512">2025</text>
+    <text x="990" y="512">2030</text>
+  </g>
+  <text x="600" y="548" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#111111">THE CURVE NEVER QUITE INFLECTS — UNTIL OPEN STANDARDS LOWER THE BARRIER TO ENTRY.</text>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 005</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

@@ -1,0 +1,93 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">SECTION VIEW</text>
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, monospace" font-size="40" font-weight="bold" fill="#111111" letter-spacing="1">MOX GAS SENSOR — CUTAWAY</text>
+  <text x="600" y="156" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">TO-39 PACKAGE · SnO₂ SINTERED FILM</text>
+
+  <line x1="120" y1="200" x2="1040" y2="200" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" fill="none">
+    <path d="M 250 520 A 170 170 0 0 1 590 520 Z" stroke-width="2.5"/>
+    <path d="M 262 520 A 158 158 0 0 1 578 520" stroke-width="1" stroke-dasharray="5,4"/>
+    <line x1="420" y1="520" x2="420" y2="500" stroke-width="1" stroke-dasharray="3,3"/>
+    <rect x="330" y="250" width="180" height="240" stroke-width="2"/>
+    <line x1="420" y1="250" x2="420" y2="490" stroke-width="1" stroke-dasharray="6,4"/>
+    <path d="M 345 270 h 20 l 4 6 v 200 l -4 6 h -20" stroke-width="8" stroke="#333333"/>
+    <path d="M 345 270 h 20 l 4 6 v 200 l -4 6 h -20" stroke-width="1.5" stroke="#111111" fill="#ffffff"/>
+    <path d="M 383 330 q 8 -7 16 0 q 8 7 16 0" stroke-width="1.5"/>
+    <path d="M 383 380 q 8 -7 16 0 q 8 7 16 0" stroke-width="1.5"/>
+    <path d="M 383 430 q 8 -7 16 0 q 8 7 16 0" stroke-width="1.5"/>
+    <line x1="300" y1="490" x2="300" y2="520" stroke-width="1.5"/>
+    <line x1="540" y1="490" x2="540" y2="520" stroke-width="1.5"/>
+    <line x1="330" y1="250" x2="280" y2="180" stroke-width="1.5"/>
+    <line x1="510" y1="250" x2="560" y2="180" stroke-width="1.5"/>
+  </g>
+
+  <g stroke="#111111" fill="#111111">
+    <polygon points="305,385 293,379 293,391"/>
+    <polygon points="545,385 533,379 533,391"/>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="278" y="245" text-anchor="end" font-size="13" font-weight="bold">mesh cap</text>
+    <text x="440" y="292" font-size="13" font-weight="bold">sensing layer</text>
+    <text x="440" y="309" font-size="11" fill="#555555">porous SnO₂ · 350–450 °C</text>
+    <text x="452" y="462" font-size="12" fill="#555555">ceramic tube</text>
+    <text x="452" y="478" font-size="11" fill="#555555">(Al₂O₃)</text>
+    <text x="255" y="352" font-size="13" font-weight="bold">electrodes</text>
+    <text x="440" y="352" font-size="12" fill="#555555">Pt / Au</text>
+    <text x="362" y="215" font-size="11" fill="#555555">heater coil (Pt·Ir)</text>
+  </g>
+
+  <line x1="420" y1="520" x2="420" y2="556" stroke="#111111" stroke-width="1.5"/>
+  <line x1="250" y1="556" x2="590" y2="556" stroke="#111111" stroke-width="1.5"/>
+  <line x1="250" y1="550" x2="250" y2="562" stroke="#111111" stroke-width="1.5"/>
+  <line x1="590" y1="550" x2="590" y2="562" stroke="#111111" stroke-width="1.5"/>
+  <text x="420" y="582" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#111111">Ø 9.2 mm</text>
+
+  <line x1="700" y1="235" x2="700" y2="510" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+  <g stroke="#111111" fill="none">
+    <circle cx="880" cy="300" r="95" stroke-width="2.5"/>
+    <circle cx="880" cy="300" r="60" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <circle cx="850" cy="265" r="7" stroke-width="1"/><circle cx="908" cy="270" r="5" stroke-width="1"/>
+    <circle cx="872" cy="330" r="6" stroke-width="1"/><circle cx="915" cy="315" r="8" stroke-width="1"/>
+    <circle cx="860" cy="300" r="4" stroke-width="1"/><circle cx="895" cy="352" r="5" stroke-width="1"/>
+  </g>
+  <text x="880" y="430" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" font-weight="bold" fill="#111111">DETAIL A</text>
+  <text x="880" y="449" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#555555">porous film · ×100</text>
+  <line x1="600" y1="300" x2="777" y2="292" stroke="#111111" stroke-width="1"/>
+  <circle cx="600" cy="300" r="4" fill="#111111"/>
+  <text x="972" y="300" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">porosity =</text>
+  <text x="972" y="320" font-family="ui-monospace, monospace" font-size="12" fill="#555555">surface area</text>
+  <text x="972" y="338" font-family="ui-monospace, monospace" font-size="12" fill="#555555">for O₂ chemisorption</text>
+  <line x1="975" y1="356" x2="975" y2="480" stroke="#111111" stroke-width="1"/>
+  <text x="975" y="470" text-anchor="end" font-family="ui-monospace, monospace" font-size="12" fill="#555555">sintered at ~700 °C</text>
+
+  <text x="760" y="520" font-family="ui-monospace, monospace" font-size="13" fill="#111111">RESPONSE: R gas / R air = f(C⁻ᵏ)</text>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 002</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

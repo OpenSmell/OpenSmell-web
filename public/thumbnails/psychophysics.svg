@@ -1,0 +1,87 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">PSYCHOPHYSICS · PLATE 01</text>
+  <text x="600" y="120" text-anchor="middle" font-family="ui-monospace, monospace" font-size="38" font-weight="bold" fill="#111111" letter-spacing="1">OLFACTORY PSYCHOPHYSICS</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <line x1="120" y1="430" x2="120" y2="180"/>
+    <polygon points="120,172 115,188 125,188"/>
+    <line x1="120" y1="430" x2="640" y2="430"/>
+    <polygon points="648,430 632,425 632,435"/>
+  </g>
+  <g stroke="#111111" fill="none" stroke-width="1">
+    <line x1="160" y1="430" x2="160" y2="436"/><line x1="240" y1="430" x2="240" y2="436"/>
+    <line x1="320" y1="430" x2="320" y2="436"/><line x1="400" y1="430" x2="400" y2="436"/>
+    <line x1="480" y1="430" x2="480" y2="436"/><line x1="560" y1="430" x2="560" y2="436"/>
+    <line x1="120" y1="200" x2="126" y2="200"/><line x1="120" y1="245" x2="126" y2="245"/>
+    <line x1="120" y1="290" x2="126" y2="290"/><line x1="120" y1="335" x2="126" y2="335"/>
+    <line x1="120" y1="380" x2="126" y2="380"/>
+  </g>
+
+  <path d="M 120 428 C 200 428 260 426 300 423 C 360 418 400 400 430 365 C 460 330 480 260 500 205 C 515 170 560 158 640 158"
+        stroke="#111111" stroke-width="2.5" fill="none"/>
+  <line x1="120" y1="305" x2="600" y2="305" stroke="#111111" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <line x1="420" y1="305" x2="420" y2="430" stroke="#111111" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <circle cx="420" cy="305" r="5" fill="#111111"/>
+  <line x1="420" y1="305" x2="500" y2="305" stroke="#111111" stroke-width="1.2"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="90" y="440" font-size="12" transform="rotate(-90 130 300)">DETECTION PROBABILITY</text>
+    <text x="300" y="470" font-size="12" text-anchor="middle">LOG CONCENTRATION (ppb)</text>
+    <text x="520" y="290" font-size="13" font-weight="bold">ODT (50%)</text>
+    <text x="520" y="305" font-size="11" fill="#555555">e.g. ~0.02 ppb</text>
+    <text x="640" y="250" font-size="12" text-anchor="end" fill="#555555">psychometric function</text>
+    <text x="640" y="265" font-size="12" text-anchor="end" fill="#555555">steep · ~a few decades</text>
+  </g>
+
+  <line x1="700" y1="180" x2="700" y2="450" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5">
+    <line x1="760" y1="430" x2="760" y2="210"/>
+    <polygon points="760,202 755,218 765,218"/>
+    <line x1="760" y1="430" x2="1120" y2="430"/>
+    <polygon points="1128,430 1112,425 1112,435"/>
+    <line x1="1120" y1="430" x2="830" y2="215" stroke-width="2.5"/>
+    <line x1="1120" y1="430" x2="870" y2="320" stroke-width="1.5" stroke-dasharray="4,3"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="780" y="450" font-size="12">PERCEIVED INTENSITY</text>
+    <text x="940" y="468" font-size="12" text-anchor="middle">LOG CONCENTRATION</text>
+    <text x="1020" y="300" font-size="12" font-weight="bold">I = k·Cⁿ</text>
+    <text x="1020" y="316" font-size="11" fill="#555555">n ≈ 0.2 – 0.8</text>
+    <text x="940" y="380" font-size="11" fill="#555555">Stevens' power law:</text>
+    <text x="940" y="396" font-size="11" fill="#555555">intensity compresses</text>
+    <text x="940" y="412" font-size="11" fill="#555555">with concentration</text>
+  </g>
+
+  <text x="820" y="190" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">PLATE 1 — PSYCHOMETRIC FUNCTION</text>
+  <text x="820" y="470" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">PLATE 2 — INTENSITY GROWTH</text>
+
+  <text x="600" y="520" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#111111">PERCEPTION IS LOGARITHMIC AND SLOW — INSTRUMENTS MUST BE LINEAR AND FAST. THAT GAP IS THE BUSINESS.</text>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 006</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

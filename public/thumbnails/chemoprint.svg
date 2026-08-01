@@ -1,0 +1,94 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">DATA REPRESENTATION</text>
+  <text x="600" y="120" text-anchor="middle" font-family="ui-monospace, monospace" font-size="38" font-weight="bold" fill="#111111" letter-spacing="1">THE CHEMOPRINT — 29-DIM VECTOR</text>
+  <text x="600" y="145" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">MOLECULE → RDKIT DESCRIPTORS → NORMALISED FEATURES</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.8">
+    <polygon points="120,225 120,335 210,335 210,225"/>
+    <polygon points="120,225 210,225 165,180"/>
+    <line x1="120" y1="225" x2="120" y2="300" stroke-width="1"/>
+    <line x1="120" y1="300" x2="165" y2="335" stroke-width="1"/>
+    <line x1="120" y1="225" x2="165" y2="335" stroke-width="1"/>
+    <line x1="210" y1="225" x2="165" y2="335" stroke-width="1"/>
+    <circle cx="165" cy="180" r="14" stroke-width="1.5"/>
+    <circle cx="165" cy="180" r="3" fill="#111111"/>
+    <circle cx="132" cy="258" r="3" fill="#111111"/>
+    <circle cx="165" cy="290" r="3" fill="#111111"/>
+    <circle cx="198" cy="252" r="3" fill="#111111"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="165" y="380" text-anchor="middle" font-size="13" font-weight="bold">MOLECULE</text>
+    <text x="165" y="397" text-anchor="middle" font-size="11" fill="#555555">SMILES string in</text>
+  </g>
+
+  <line x1="260" y1="280" x2="330" y2="280" stroke="#111111" stroke-width="2.5"/>
+  <polygon points="338,280 326,274 326,286" fill="#111111"/>
+  <text x="299" y="262" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">RDKit</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1">
+    <rect x="380" y="230" width="250" height="100"/>
+    <line x1="380" y1="280" x2="630" y2="280"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="395" y="255" font-size="12" font-weight="bold">DESCRIPTOR POOL</text>
+    <text x="395" y="275" font-size="11" fill="#555555">MW · logP · TPSA · HBD</text>
+    <text x="395" y="293" font-size="11" fill="#555555">HBA · polarisability</text>
+    <text x="395" y="311" font-size="11" fill="#555555">vapour pressure · bp · …</text>
+    <text x="505" y="352" text-anchor="middle" font-size="12" fill="#555555">curated + normalised</text>
+  </g>
+
+  <line x1="660" y1="280" x2="730" y2="280" stroke="#111111" stroke-width="2.5"/>
+  <polygon points="738,280 726,274 726,286" fill="#111111"/>
+
+  <line x1="760" y1="420" x2="1140" y2="420" stroke="#111111" stroke-width="1.5"/>
+  <g fill="#111111">
+    <rect x="768" y="330" width="9" height="90"/><rect x="781" y="360" width="9" height="60"/>
+    <rect x="794" y="300" width="9" height="120"/><rect x="807" y="350" width="9" height="70"/>
+    <rect x="820" y="320" width="9" height="100"/><rect x="833" y="280" width="9" height="140"/>
+    <rect x="846" y="380" width="9" height="40"/><rect x="859" y="310" width="9" height="110"/>
+    <rect x="872" y="290" width="9" height="130"/><rect x="885" y="370" width="9" height="50"/>
+    <rect x="898" y="340" width="9" height="80"/><rect x="911" y="305" width="9" height="115"/>
+    <rect x="924" y="360" width="9" height="60"/><rect x="937" y="280" width="9" height="140"/>
+    <rect x="950" y="330" width="9" height="90"/><rect x="963" y="375" width="9" height="45"/>
+    <rect x="976" y="295" width="9" height="125"/><rect x="989" y="345" width="9" height="75"/>
+    <rect x="1002" y="315" width="9" height="105"/><rect x="1015" y="285" width="9" height="135"/>
+    <rect x="1028" y="365" width="9" height="55"/><rect x="1041" y="325" width="9" height="95"/>
+    <rect x="1054" y="305" width="9" height="115"/><rect x="1067" y="355" width="9" height="65"/>
+    <rect x="1080" y="290" width="9" height="130"/><rect x="1093" y="335" width="9" height="85"/>
+    <rect x="1106" y="370" width="9" height="50"/><rect x="1119" y="305" width="9" height="115"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="950" y="260" text-anchor="middle" font-size="14" font-weight="bold">29 FEATURES</text>
+    <text x="950" y="450" text-anchor="middle" font-size="11" fill="#555555">dimension 1 … 29</text>
+    <text x="950" y="240" text-anchor="middle" font-size="12" fill="#555555">SCALE 0–1</text>
+  </g>
+
+  <text x="600" y="520" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#111111">ONE NUMBER PER PHYSICOCHEMICAL PROPERTY · THE SAME VECTOR FOR CLASSIFYING, RETRIEVING, AND CLUSTERING SMELLS.</text>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 007</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

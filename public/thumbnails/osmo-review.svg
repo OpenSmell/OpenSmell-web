@@ -1,0 +1,105 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">TECHNICAL REVIEW</text>
+  <text x="600" y="128" text-anchor="middle" font-family="ui-monospace, monospace" font-size="38" font-weight="bold" fill="#111111" letter-spacing="1">STRUCTURE → PRINCIPAL ODOR MAP</text>
+  <text x="600" y="153" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">GRAPH NEURAL NETWORK · 5,000 TRAINING MOLECULES · OSMO ET AL., SCIENCE 2023</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.8">
+    <polygon points="210,225 210,335 300,335 300,225"/>
+    <polygon points="210,225 300,225 255,180"/>
+    <line x1="210" y1="225" x2="210" y2="300" stroke-width="1"/>
+    <line x1="210" y1="300" x2="255" y2="335" stroke-width="1"/>
+    <line x1="210" y1="225" x2="255" y2="335" stroke-width="1"/>
+    <line x1="300" y1="225" x2="255" y2="335" stroke-width="1"/>
+    <circle cx="255" cy="180" r="14" stroke-width="1.5"/>
+    <circle cx="255" cy="180" r="3" fill="#111111"/>
+    <circle cx="222" cy="258" r="3" fill="#111111"/>
+    <circle cx="255" cy="290" r="3" fill="#111111"/>
+    <circle cx="288" cy="252" r="3" fill="#111111"/>
+  </g>
+  <g stroke="#111111" fill="none" stroke-width="1" stroke-dasharray="4,3">
+    <line x1="255" y1="180" x2="255" y2="225"/>
+    <line x1="255" y1="180" x2="222" y2="258"/>
+    <line x1="255" y1="180" x2="288" y2="252"/>
+    <line x1="222" y1="258" x2="255" y2="290"/>
+    <line x1="255" y1="290" x2="288" y2="252"/>
+  </g>
+  <line x1="140" y1="180" x2="140" y2="300" stroke="#111111" stroke-width="1"/>
+  <line x1="132" y1="180" x2="148" y2="180" stroke="#111111" stroke-width="1"/>
+  <line x1="132" y1="300" x2="148" y2="300" stroke="#111111" stroke-width="1"/>
+  <text x="130" y="245" text-anchor="end" font-family="ui-monospace, monospace" font-size="11" fill="#555555" transform="rotate(-90 130 245)">MOLECULE</text>
+  <text x="255" y="382" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" font-weight="bold" fill="#111111">INPUT: SMILES</text>
+  <text x="255" y="400" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">atoms → nodes · bonds → edges</text>
+
+  <line x1="370" y1="280" x2="430" y2="280" stroke="#111111" stroke-width="2.5"/>
+  <polygon points="438,280 426,274 426,286" fill="#111111"/>
+  <text x="404" y="265" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" font-weight="bold" fill="#111111">GNN</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.8">
+    <line x1="470" y1="390" x2="470" y2="210"/>
+    <polygon points="470,202 465,218 475,218"/>
+    <line x1="470" y1="390" x2="700" y2="390"/>
+    <polygon points="708,390 692,385 692,395"/>
+    <text x="478" y="225" font-family="ui-monospace, monospace" font-size="11" fill="#555555">AXIS 1</text>
+    <text x="652" y="410" font-family="ui-monospace, monospace" font-size="11" fill="#555555">AXIS 2</text>
+  </g>
+  <g fill="#111111">
+    <circle cx="505" cy="352" r="4"/><circle cx="545" cy="330" r="4"/><circle cx="528" cy="365" r="4"/><circle cx="560" cy="356" r="4"/>
+    <circle cx="600" cy="300" r="4"/><circle cx="585" cy="320" r="4"/><circle cx="620" cy="308" r="4"/>
+    <circle cx="540" cy="270" r="4"/><circle cx="505" cy="288" r="4"/><circle cx="572" cy="260" r="4"/>
+    <circle cx="650" cy="352" r="4"/><circle cx="672" cy="330" r="4"/><circle cx="660" cy="365" r="4"/>
+  </g>
+  <g font-family="ui-monospace, monospace" font-size="11" fill="#555555">
+    <text x="548" y="352" text-anchor="middle">SWEET</text>
+    <text x="600" y="296" text-anchor="middle">FLORAL</text>
+    <text x="544" y="256" text-anchor="middle">FRUITY</text>
+    <text x="668" y="366" text-anchor="middle">WOODY</text>
+  </g>
+  <text x="585" y="440" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" font-weight="bold" fill="#111111">OUTPUT: ODOR SPACE EMBEDDING</text>
+  <text x="585" y="458" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#555555">perceptual similarity → clusters · beats single-human consensus</text>
+
+  <g stroke="#111111" fill="none" stroke-width="1.5" font-family="ui-monospace, monospace">
+    <rect x="760" y="205" width="360" height="52"/>
+    <rect x="760" y="267" width="360" height="52"/>
+    <rect x="760" y="329" width="360" height="52"/>
+    <rect x="760" y="391" width="360" height="52"/>
+  </g>
+  <g fill="#111111"><rect x="760" y="205" width="6" height="52"/><rect x="760" y="267" width="6" height="52"/><rect x="760" y="329" width="6" height="52"/><rect x="760" y="391" width="6" height="52"/></g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="778" y="227" font-size="14" font-weight="bold">READ</text>
+    <text x="778" y="245" font-size="12" fill="#555555">sensor → atoms to bits</text>
+    <text x="778" y="289" font-size="14" font-weight="bold">MAP</text>
+    <text x="778" y="307" font-size="12" fill="#555555">odor space · compress / transmit</text>
+    <text x="778" y="351" font-size="14" font-weight="bold">WRITE</text>
+    <text x="778" y="369" font-size="12" fill="#555555">molecule design → target odor</text>
+    <text x="778" y="413" font-size="14" font-weight="bold">DIGITIZE</text>
+    <text x="778" y="431" font-size="12" fill="#555555">open the loop · the full stack</text>
+  </g>
+  <text x="940" y="480" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#111111">WILTSCHKO'S TRIAD: SENSOR · MAP · PRINTER</text>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 004</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

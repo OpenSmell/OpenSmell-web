@@ -235,3 +235,188 @@
   border-bottom: 1px solid var(--border);
   border-right: 1px solid var(--border);
 }
+
+/* ---- Academy article typography ---- */
+
+.article-body {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--foreground);
+}
+
+.article-body > *:first-child {
+  margin-top: 0;
+}
+
+.article-body h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 2.75rem 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.article-body h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin: 2rem 0 0.75rem;
+}
+
+.article-body h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.article-body p {
+  margin-bottom: 1.25rem;
+}
+
+.article-body a {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 0.15s ease;
+}
+
+.article-body a:hover {
+  color: var(--muted-foreground);
+}
+
+.article-body strong {
+  font-weight: 600;
+}
+
+.article-body em {
+  font-style: italic;
+}
+
+.article-body ul,
+.article-body ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.article-body ul {
+  list-style: none;
+}
+
+.article-body ul li {
+  position: relative;
+  padding-left: 0.25rem;
+}
+
+.article-body ul li::before {
+  content: "";
+  position: absolute;
+  left: -1.1rem;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  background: var(--muted-foreground);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  opacity: 0.7;
+}
+
+.article-body ol {
+  list-style: decimal;
+}
+
+.article-body ol li::marker {
+  color: var(--muted-foreground);
+}
+
+.article-body li {
+  margin-bottom: 0.5rem;
+}
+
+.article-body blockquote {
+  margin: 1.5rem 0 1.75rem;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 2px solid var(--foreground);
+  color: var(--muted-foreground);
+}
+
+.article-body blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+.article-body code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  padding: 0.15em 0.4em;
+  white-space: nowrap;
+}
+
+.article-body pre {
+  margin: 1.5rem 0 1.75rem;
+  padding: 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.article-body pre code {
+  font-family: var(--font-mono);
+  font-size: 0.825rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  white-space: pre;
+}
+
+.article-body .article-table-wrap {
+  margin: 1.5rem 0 1.75rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.article-body th,
+.article-body td {
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-body th:last-child,
+.article-body td:last-child {
+  border-right: none;
+}
+
+.article-body thead th {
+  background: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.article-body tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.article-body img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+}
