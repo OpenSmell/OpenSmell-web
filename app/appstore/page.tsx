@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Store, Download, Star, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, Users, TrendingUp, Grid3X3, Filter } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
+import MobileNav from "@/components/mobile-nav"
 
 const apps = [
   {
@@ -127,7 +128,7 @@ export default function AppStorePage() {
   if (!hydrated) return null
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
       }`}>
@@ -162,6 +163,7 @@ export default function AppStorePage() {
             </a>
           </nav>
           <div className="flex items-center gap-3">
+            <MobileNav />
             <ThemeToggle />
           </div>
         </div>

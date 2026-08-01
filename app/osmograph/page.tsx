@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Store } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
+import MobileNav from "@/components/mobile-nav"
 
 export default function OsmographPage() {
   const [hydrated, setHydrated] = useState(false)
@@ -21,7 +22,7 @@ export default function OsmographPage() {
   if (!hydrated) return null
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
       }`}>
@@ -56,6 +57,7 @@ export default function OsmographPage() {
             </a>
           </nav>
           <div className="flex items-center gap-3">
+            <MobileNav />
             <ThemeToggle />
             <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity">
@@ -175,7 +177,7 @@ export default function OsmographPage() {
               </div>
               <div className="border border-border p-6 bg-background hex-box">
                 <div className="text-xs text-muted-foreground mb-4 font-mono">pip install opensmell</div>
-                <pre className="text-sm leading-relaxed font-mono text-muted-foreground">
+                <pre className="text-sm leading-relaxed font-mono text-muted-foreground overflow-x-auto">
                   <span className="text-foreground">from</span> opensmell{" "}
                   <span className="text-foreground">import</span> extract_features{"\n\n"}
                   features = extract_features(<span className="text-foreground">"recordings/"</span>){"\n"}

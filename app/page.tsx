@@ -8,6 +8,7 @@ import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, He
 import { useTheme } from "next-themes"
 import AnimatedHero from "@/components/animated-hero"
 import ThemeToggle from "@/components/theme-toggle"
+import MobileNav from "@/components/mobile-nav"
 
 export default function Home() {
   const [hydrated, setHydrated] = useState(false)
@@ -36,7 +37,7 @@ export default function Home() {
   if (!hydrated) return null
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <header
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
           scrolled
@@ -100,6 +101,7 @@ export default function Home() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <MobileNav />
             <ThemeToggle />
             <a
               href="https://github.com/opensmell"
@@ -288,7 +290,7 @@ export default function Home() {
               </div>
               <div className="hex-box border border-border p-8 bg-background">
                 <div className="text-xs text-muted-foreground mb-4 font-mono">chemoprint.py</div>
-                <pre className="text-sm leading-relaxed font-mono text-muted-foreground">
+                <pre className="text-sm leading-relaxed font-mono text-muted-foreground overflow-x-auto">
                   <span className="text-foreground">from</span> chemoprint{" "}
                   <span className="text-foreground">import</span> chemoprint_from_smiles{"\n\n"}
                   smiles = <span className="text-foreground">"CCO"</span>{"  "}# ethanol{"\n"}
@@ -522,12 +524,12 @@ export default function Home() {
                 OpenSmell is funded by the community. Donations go directly to cloud compute,
                 sensor prototyping, and community building. 100% transparent — usage documented in Discord.
               </p>
-              <div className="inline-flex flex-col items-center gap-4 border border-border p-8 bg-background/80 backdrop-blur-sm">
+              <div className="flex flex-col items-center gap-4 border border-border p-8 bg-background/80 backdrop-blur-sm w-full max-w-xl mx-auto">
                 <div className="text-xs text-muted-foreground font-mono uppercase tracking-widest">
                   Donate USDC — Polygon Network
                 </div>
-                <div className="flex items-center gap-3 w-full max-w-xl">
-                  <code className="flex-1 text-xs font-mono border border-border px-4 py-3 bg-foreground/5 truncate">
+                <div className="flex items-center gap-3 w-full min-w-0">
+                  <code className="flex-1 min-w-0 text-xs font-mono border border-border px-4 py-3 bg-foreground/5 truncate">
                     0x699d0178f16484509f57d4d77f310b6b617621ce
                   </code>
                   <button
