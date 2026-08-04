@@ -6,6 +6,7 @@ import Image from "next/image"
 import { ArrowRight, GraduationCap, ChevronRight } from "lucide-react"
 import { articles } from "@/lib/articles"
 import SiteHeader from "@/components/site-header"
+import { AcademyArt } from "@/components/hero-art"
 
 const filters = ["All", "Foundations", "Hardware", "Tutorial", "Research"]
 
@@ -63,15 +64,7 @@ export default function AcademyPage() {
                 </div>
               </div>
               <div className="hidden lg:flex items-center justify-center">
-                <div className="relative w-64 h-80 border border-border bg-white overflow-hidden">
-                  <Image
-                    src="/thumbnails/professor.svg"
-                    alt="OpenSmell Academy"
-                    fill
-                    className="object-contain"
-                    sizes="256px"
-                  />
-                </div>
+                <AcademyArt className="w-72 h-72 lg:w-80 lg:h-80 text-foreground" />
               </div>
             </div>
           </div>

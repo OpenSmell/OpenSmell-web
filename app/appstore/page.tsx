@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Store, Download, Star, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, Users, TrendingUp, Grid3X3, Filter, Database, Puzzle, X, Send } from "lucide-react"
+import { Store, Download, Star, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, Users, TrendingUp, Grid3X3, Filter, Database, Puzzle, X, Send, Coins } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
+import { AppstoreArt } from "@/components/hero-art"
 import { loadSubmissions, addSubmission, buildMailto, loadApproved, type SubmissionType, type AppStoreSubmission } from "@/lib/appstore-submissions"
 
 const builtinApps = [
@@ -16,6 +17,7 @@ const builtinApps = [
     rating: 4.9,
     reviews: 128,
     downloads: "3.4k",
+    price: "Free",
     tags: ["GUI", "Recording", "Classification"],
     rigs: ["v1 e-nose", "v2 e-nose"],
     icon: Monitor,
@@ -30,6 +32,7 @@ const builtinApps = [
     rating: 4.8,
     reviews: 42,
     downloads: "1.8k",
+    price: "Free",
     tags: ["Web", "Dashboard", "Realtime"],
     rigs: ["v1 e-nose", "v2 e-nose"],
     icon: Monitor,
@@ -44,6 +47,7 @@ const builtinApps = [
     rating: 4.7,
     reviews: 31,
     downloads: "2.1k",
+    price: "Free",
     tags: ["Dataset", "Community", "Open Data"],
     rigs: ["v1 e-nose", "v2 e-nose", "DIY"],
     icon: Database,
@@ -58,6 +62,7 @@ const builtinApps = [
     rating: 4.9,
     reviews: 89,
     downloads: "8.7k",
+    price: "Free",
     tags: ["SDK", "Python", "Pipeline"],
     rigs: ["Any"],
     icon: Tag,
@@ -72,6 +77,7 @@ const builtinApps = [
     rating: 4.6,
     reviews: 31,
     downloads: "890",
+    price: "Free",
     tags: ["Visualisation", "Dashboard", "Realtime"],
     rigs: ["v1 e-nose", "v2 e-nose", "DIY"],
     icon: TrendingUp,
@@ -86,6 +92,7 @@ const builtinApps = [
     rating: 4.5,
     reviews: 18,
     downloads: "560",
+    price: "$9.99",
     tags: ["Fermentation", "Food", "Monitoring"],
     rigs: ["v2 e-nose"],
     icon: Cpu,
@@ -100,6 +107,7 @@ const builtinApps = [
     rating: 4.4,
     reviews: 23,
     downloads: "720",
+    price: "Free",
     tags: ["Mapping", "Environment", "GPS"],
     rigs: ["v1 e-nose", "DIY"],
     icon: Grid3X3,
@@ -138,6 +146,14 @@ export default function AppStorePage() {
     tags: "",
   })
   const [submitted, setSubmitted] = useState(false)
+  const formRef = useRef<HTMLDivElement>(null)
+
+  const openForm = () => {
+    setShowForm(true)
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    }, 50)
+  }
 
   useEffect(() => { setHydrated(true); setApproved(loadApproved()) }, [])
   useEffect(() => {
@@ -157,6 +173,7 @@ export default function AppStorePage() {
       rating: 0,
       reviews: 0,
       downloads: "—",
+      price: s.price || "Free",
       tags: s.tags,
       rigs: ["Community"],
       icon: typeIcons[s.type],
@@ -174,10 +191,17 @@ export default function AppStorePage() {
       ...form,
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
     })
-    window.open(buildMailto({
+    const mailto = buildMailto({
       ...form,
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
-    }), "_blank")
+    })
+    const a = document.createElement("a")
+    a.href = mailto
+    a.target = "_blank"
+    a.rel = "noopener noreferrer"
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
     setSubmitted(true)
     setTimeout(() => { setSubmitted(false); setShowForm(false); setForm({ name: "", type: "plugin", description: "", author: "", email: "", price: "", link: "", tags: "" }) }, 3000)
   }
@@ -227,28 +251,34 @@ export default function AppStorePage() {
       <main>
         <section className="pt-32 pb-20 border-b border-border bg-hex">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
-                <Store className="w-3.5 h-3.5" />
-                Appstore
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
+                  <Store className="w-3.5 h-3.5" />
+                  Appstore
+                </div>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-[0.95]">
+                  Ecosystem
+                  <br />
+                  <span className="text-muted-foreground">of olfaction tools.</span>
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-2xl mb-8 leading-relaxed">
+                  Datasets, plugins, and apps built by the community for the OpenSmell platform.
+                  Download free tools, buy from the community, or sell your own work —
+                  every submission is reviewed for compatibility and quality.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    onClick={openForm}
+                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                  >
+                    <Upload className="w-4 h-4" />
+                    Submit Your Work
+                  </button>
+                </div>
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-[0.95]">
-                Ecosystem
-                <br />
-                <span className="text-muted-foreground">of olfaction tools.</span>
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mb-8 leading-relaxed">
-                Datasets, plugins, and apps built by the community for the OpenSmell platform.
-                Every submission is reviewed for compatibility and quality.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => setShowForm(!showForm)}
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
-                >
-                  <Upload className="w-4 h-4" />
-                  Submit Your Work
-                </button>
+              <div className="hidden lg:flex items-center justify-center">
+                <AppstoreArt className="w-80 h-72 lg:w-96 lg:h-80 text-foreground" />
               </div>
             </div>
           </div>
@@ -274,7 +304,7 @@ export default function AppStorePage() {
         </section>
 
         {showForm && (
-          <section className="border-b border-border py-12">
+          <section ref={formRef} className="border-b border-border py-12 scroll-mt-20">
             <div className="max-w-3xl mx-auto px-6">
               <div className="border border-border p-8 bg-background hex-box">
                 <div className="flex items-center justify-between mb-6">
@@ -335,6 +365,7 @@ export default function AppStorePage() {
                         <input value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })}
                           placeholder="Free, or $9.99"
                           className="w-full bg-transparent border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-foreground transition-colors" />
+                        <p className="text-[10px] text-muted-foreground mt-1">Release it free or sell it. Pricing is displayed on your listing.</p>
                       </div>
                       <div>
                         <label className="text-xs text-muted-foreground mb-1.5 block">Link</label>
@@ -389,11 +420,14 @@ export default function AppStorePage() {
               {filtered.map((app) => {
                 const TypeIcon = typeIcons[app.type]
                 return (
-                  <div key={app.name} className="bg-background p-6 hex-box group">
+                  <div key={app.name} className="bg-background p-6 hex-box group flex flex-col">
                     <div className="flex items-center gap-2 mb-3">
                       <TypeIcon className="w-4 h-4 text-muted-foreground" />
                       <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{typeLabels[app.type]}</span>
-                      <span className="text-xs text-muted-foreground ml-auto">{app.author}</span>
+                      <span className="ml-auto inline-flex items-center gap-1 text-xs font-semibold border border-border px-2 py-0.5">
+                        <Coins className="w-3 h-3 text-muted-foreground" />
+                        {app.price}
+                      </span>
                     </div>
                     <h3 className="font-semibold mb-1">{app.name}</h3>
                     <p className="text-xs text-muted-foreground mb-3 leading-relaxed line-clamp-2">{app.desc}</p>
@@ -402,7 +436,7 @@ export default function AppStorePage() {
                         <span key={t} className="text-[10px] border border-border px-1.5 py-0.5 text-muted-foreground">{t}</span>
                       ))}
                     </div>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground mb-3">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground mb-4 mt-auto">
                       {app.rating > 0 ? (
                         <span className="flex items-center gap-1">
                           <Star className="w-3 h-3 fill-current" />
@@ -411,10 +445,17 @@ export default function AppStorePage() {
                       ) : <span />}
                       <span>{app.downloads} dl</span>
                     </div>
-                    <a href={app.href} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-medium hover:underline">
-                      View details <ChevronRight className="w-3 h-3" />
-                    </a>
+                    <div className="flex items-center justify-between gap-2">
+                      <a href={app.href} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 bg-foreground text-background px-3 py-2 text-xs font-medium hover:opacity-90 transition-opacity">
+                        <Download className="w-3.5 h-3.5" />
+                        {app.price === "Free" ? "Download" : "Buy"}
+                      </a>
+                      <a href={app.href} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs font-medium hover:underline">
+                        Details <ChevronRight className="w-3 h-3" />
+                      </a>
+                    </div>
                   </div>
                 )
               })}
@@ -431,14 +472,15 @@ export default function AppStorePage() {
               </div>
               <p className="text-muted-foreground mb-8 leading-relaxed">
                 Built a plugin, dataset, or tool for the OpenSmell platform?
-                Submit it here. Every submission is manually reviewed for
-                compatibility, security, and quality. Set your price or release for free.
+                Sell it or release it free. Buy from the community or download
+                free tools. Every submission is manually reviewed for
+                compatibility, security, and quality.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border mb-8">
                 {[
                   { icon: Upload, title: "Submit", desc: "Fill the form with your project details" },
                   { icon: Shield, title: "Review", desc: "Manual review for quality and compatibility" },
-                  { icon: Check, title: "Publish", desc: "Go live with tags, pricing, and categories" },
+                  { icon: Coins, title: "Publish", desc: "Go live as free or paid — you set the price" },
                 ].map((s) => (
                   <div key={s.title} className="bg-background p-6 text-center">
                     <s.icon className="w-6 h-6 mx-auto mb-2 text-muted-foreground" />
@@ -447,7 +489,7 @@ export default function AppStorePage() {
                   </div>
                 ))}
               </div>
-              <button onClick={() => { setShowForm(true); window.scrollTo({ top: 0, behavior: "smooth" }) }}
+              <button onClick={openForm}
                 className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all">
                 <Upload className="w-4 h-4" />
                 Submit Your Work

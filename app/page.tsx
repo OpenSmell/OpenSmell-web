@@ -117,18 +117,18 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="relative min-h-screen flex items-center overflow-hidden">
+        <section className="relative min-h-screen flex items-center overflow-hidden bg-hex">
           <AnimatedHero />
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-24 pb-32">
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
                 <Sigma className="w-3.5 h-3.5" />
-                Open source · Community built
+                Open source Infrastructure
               </div>
               <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tighter mb-6 leading-[0.95]">
-                Every device
+                Digital Smell
                 <br />
-                <span className="text-muted-foreground">should smell.</span>
+                <span className="text-muted-foreground">for everyone.</span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
                 The open platform for digital olfaction. Build an e-nose, record smells,
@@ -173,8 +173,8 @@ export default function Home() {
                 { label: "Open Repositories", value: "15" },
                 { label: "Chemical–Odour Pairs", value: "4,800+" },
                 { label: "Community ★", value: "42" },
-                { label: "Applications Possible", value: "∞" },
-                { label: "Cost to Build an E-Nose", value: "$15" },
+                { label: "ML Features / Recording", value: "145" },
+                { label: "E-Nose Parts (all in)", value: "<$50" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-3xl font-bold tracking-tight mb-1">

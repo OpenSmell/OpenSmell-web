@@ -125,23 +125,51 @@ export default function OsmographPage() {
           </div>
         </section>
 
-        <section className="border-t border-border py-16">
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold tracking-tight mb-2">See it in action</h2>
-              <p className="text-sm text-muted-foreground">Live sensor recording, classification, and trace visualisation — no code required.</p>
-            </div>
-            <div className="border border-border overflow-hidden bg-background hex-box">
-              <video
-                src="/osmograph.webm"
-                controls
-                playsInline
-                preload="metadata"
-                className="w-full h-auto"
-                poster="/opensmell_logo.png"
-              >
-                Your browser does not support the video tag.
-              </video>
+        <section className="border-t border-border py-20 bg-hex">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
+                  <Play className="w-3.5 h-3.5" />
+                  Demo
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">See it in action</h2>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Live sensor recording, classification, and trace visualisation — no code required.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    "Real-time sensor traces as smells pass the array",
+                    "One-click classifier training on recorded samples",
+                    "Automatic signal quality validation before export",
+                  ].map((item) => (
+                    <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
+                  Try it yourself <ChevronRight className="w-4 h-4" />
+                </a>
+              </div>
+              <div className="border border-border overflow-hidden bg-background hex-box">
+                <video
+                  src="/osmograph.webm"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full max-h-72 h-auto object-contain bg-background"
+                  poster="/opensmell_logo.png"
+                >
+                  Your browser does not support the video tag.
+                </video>
+                <div className="border-t border-border px-4 py-2 flex items-center justify-between text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
+                  <span>osmograph_demo.webm</span>
+                  <span>~20s · 1.3 MB</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
