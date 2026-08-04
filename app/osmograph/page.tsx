@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Store } from "lucide-react"
+import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Store, Globe } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 
@@ -85,10 +85,16 @@ export default function OsmographPage() {
                   train classifiers — all with button clicks. No electronics background or coding required.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
+                  <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all">
+                    <Globe className="w-4 h-4" />
+                    Try Osmograph Web
+                    <ChevronRight className="w-4 h-4" />
+                  </a>
+                  <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all">
                     <Download className="w-4 h-4" />
-                    Download
+                    Download Desktop
                   </a>
                   <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all">
@@ -115,6 +121,27 @@ export default function OsmographPage() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-border py-16">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold tracking-tight mb-2">See it in action</h2>
+              <p className="text-sm text-muted-foreground">Live sensor recording, classification, and trace visualisation — no code required.</p>
+            </div>
+            <div className="border border-border overflow-hidden bg-background hex-box">
+              <video
+                src="/osmograph.webm"
+                controls
+                playsInline
+                preload="metadata"
+                className="w-full h-auto"
+                poster="/opensmell_logo.png"
+              >
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </section>

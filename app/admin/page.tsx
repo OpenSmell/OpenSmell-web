@@ -1,8 +1,9 @@
 "use client"
 
 import { useEffect, useState, type FormEvent, type ReactNode } from "react"
-import { Lock, LogOut, Plus, Save, Trash2, Download, Copy, Check, Eye, EyeOff } from "lucide-react"
+import { Lock, LogOut, Plus, Save, Trash2, Download, Copy, Check, Eye, EyeOff, CheckCircle, XCircle, Mail } from "lucide-react"
 import { articles as builtInArticles, type Article, type ArticleCategory } from "@/lib/articles"
+import { loadSubmissions, reviewSubmission, type AppStoreSubmission } from "@/lib/appstore-submissions"
 import Markdown from "@/components/markdown"
 
 const DEFAULT_HASH = "f650f775de4d874c9d82d5b74bc9f81f5196c485e2c208cf49fb2aec15477033"
@@ -102,9 +103,14 @@ export default function AdminPage() {
   const [copied, setCopied] = useState(false)
   const [preview, setPreview] = useState(false)
   const [toast, setToast] = useState("")
+  const [subs, setSubs] = useState<AppStoreSubmission[]>([])
+  const [subTab, setSubTab] = useState<"pending" | "approved" | "rejected">("pending")
 
   useEffect(() => {
-    if (sessionStorage.getItem(AUTH_KEY) === "1") setAuthed(true)
+    if (sessionStorage.getItem(AUTH_KEY) === "1") {
+      setAuthed(true)
+      setSubs(loadSubmissions())
+    }
     setList(mergeArticles())
   }, [])
 
@@ -119,6 +125,12 @@ export default function AdminPage() {
     for (const a of next) drafts[a.slug] = a
     localStorage.setItem(STORAGE_KEY, JSON.stringify(drafts))
     setList(next)
+  }
+
+  const handleReview = (id: string, status: "approved" | "rejected") => {
+    const updated = reviewSubmission(id, status)
+    setSubs(updated)
+    setToast(`Submission ${status}`)
   }
 
   async function attemptLogin(e: FormEvent) {
@@ -439,6 +451,66 @@ export default function AdminPage() {
             )}
           </section>
         </div>
+
+        <section className="border border-border mt-px p-6 mt-4">
+          <h3 className="font-semibold mb-4">Appstore Submissions</h3>
+          <div className="flex gap-2 mb-4">
+            {(["pending", "approved", "rejected"] as const).map((tab) => {
+              const count = subs.filter((s) => s.status === tab).length
+              return (
+                <button key={tab} onClick={() => setSubTab(tab)}
+                  className={`text-xs px-3 py-1.5 border transition-all ${
+                    subTab === tab ? "bg-foreground text-background border-foreground" : "border-border text-muted-foreground hover:text-foreground"
+                  }`}>
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)} ({count})
+                </button>
+              )
+            })}
+          </div>
+          {subs.filter((s) => s.status === subTab).length === 0 ? (
+            <p className="text-sm text-muted-foreground py-8 text-center">No {subTab} submissions.</p>
+          ) : (
+            <div className="space-y-3">
+              {subs.filter((s) => s.status === subTab).map((sub) => (
+                <div key={sub.id} className="border border-border p-4 bg-background">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[10px] uppercase tracking-wider text-muted-foreground border border-border px-1.5 py-0.5">{sub.type}</span>
+                        <span className="font-semibold text-sm">{sub.name}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{sub.description}</p>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                        <span>{sub.author}</span>
+                        <span className="flex items-center gap-1"><Mail className="w-3 h-3" />{sub.email}</span>
+                        {sub.price && <span>Price: {sub.price}</span>}
+                        {sub.link && <a href={sub.link} target="_blank" rel="noopener noreferrer" className="underline">Link</a>}
+                        <span>{new Date(sub.submittedAt).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                    {sub.status === "pending" && (
+                      <div className="flex gap-2 flex-shrink-0">
+                        <button onClick={() => handleReview(sub.id, "approved")}
+                          className="inline-flex items-center gap-1 bg-green-600 text-white px-3 py-1.5 text-xs font-medium hover:opacity-90 transition-all">
+                          <CheckCircle className="w-3.5 h-3.5" /> Approve
+                        </button>
+                        <button onClick={() => handleReview(sub.id, "rejected")}
+                          className="inline-flex items-center gap-1 bg-red-600 text-white px-3 py-1.5 text-xs font-medium hover:opacity-90 transition-all">
+                          <XCircle className="w-3.5 h-3.5" /> Reject
+                        </button>
+                      </div>
+                    )}
+                    {sub.status !== "pending" && (
+                      <span className={`text-xs px-2 py-1 ${sub.status === "approved" ? "text-green-500" : "text-red-500"}`}>
+                        {sub.status}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
         <section className="border border-border mt-px p-6 mt-4">
           <div className="flex flex-wrap items-center gap-2 mb-4">

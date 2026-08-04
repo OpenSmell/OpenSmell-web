@@ -29,23 +29,24 @@ export default function AcademyPage() {
       <SiteHeader active="academy" />
 
       <main>
-        <section className="pt-32 pb-20 border-b border-border">
+        <section className="pt-32 pb-20 border-b border-border bg-hex">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
-                <GraduationCap className="w-3.5 h-3.5" />
-                Digital Olfaction Academy
-              </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-[0.95]">
-                Learn the science
-                <br />
-                <span className="text-muted-foreground">of digital smell.</span>
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mb-8">
-                Tutorials, research deep-dives, and hardware guides for building
-                the olfactory internet. From chemoprint fundamentals to e-nose assembly.
-              </p>
-              <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
+                  <GraduationCap className="w-3.5 h-3.5" />
+                  Digital Olfaction Academy
+                </div>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-[0.95]">
+                  Learn the science
+                  <br />
+                  <span className="text-muted-foreground">of digital smell.</span>
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-2xl mb-8">
+                  Tutorials, research deep-dives, and hardware guides for building
+                  the olfactory internet. From sensor fundamentals to machine-learning pipelines.
+                </p>
+                <div className="flex flex-wrap gap-3">
                 {filters.map((cat) => (
                   <button
                     key={cat}
@@ -59,6 +60,18 @@ export default function AcademyPage() {
                     {cat}
                   </button>
                 ))}
+                </div>
+              </div>
+              <div className="hidden lg:flex items-center justify-center">
+                <div className="relative w-64 h-80 border border-border bg-white overflow-hidden">
+                  <Image
+                    src="/thumbnails/professor.svg"
+                    alt="OpenSmell Academy"
+                    fill
+                    className="object-contain"
+                    sizes="256px"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -112,7 +125,7 @@ export default function AcademyPage() {
           </div>
         </section>
 
-        <section className="border-t border-border py-20 bg-grid">
+        <section className="border-t border-border py-20 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-2xl mx-auto text-center">
               <h2 className="text-2xl font-bold tracking-tight mb-4">

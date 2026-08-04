@@ -42,6 +42,7 @@ export default function AnimatedHero() {
     if (!ctx) return
 
     let animFrame: number
+    let visible = true
     let mouse = { x: -1000, y: -1000 }
     let hexes: HexCell[] = []
     let particles: EvapParticle[] = []
@@ -158,6 +159,7 @@ export default function AnimatedHero() {
     }
 
     const animate = () => {
+      if (!visible) { animFrame = requestAnimationFrame(animate); return }
       const w = canvas.width, h = canvas.height
       const t = Date.now() / 1000
       const dark = document.documentElement.classList.contains("dark")
@@ -248,6 +250,12 @@ export default function AnimatedHero() {
     const onTouch = (e: TouchEvent) => { const t = e.touches[0]; if (t) mouse = { x: t.clientX, y: t.clientY } }
     const onLeave = () => { mouse = { x: -1000, y: -1000 } }
 
+    const observer = new IntersectionObserver(
+      ([entry]) => { visible = entry.isIntersecting },
+      { threshold: 0 }
+    )
+    observer.observe(canvas)
+
     resize(); animate()
     window.addEventListener("resize", resize)
     window.addEventListener("mousemove", onMouse)
@@ -256,6 +264,7 @@ export default function AnimatedHero() {
 
     return () => {
       cancelAnimationFrame(animFrame)
+      observer.disconnect()
       window.removeEventListener("resize", resize)
       window.removeEventListener("mousemove", onMouse)
       window.removeEventListener("touchmove", onTouch)

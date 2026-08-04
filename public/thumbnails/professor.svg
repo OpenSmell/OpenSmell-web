@@ -1,0 +1,98 @@
+<svg width="600" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="600" fill="#ffffff"/>
+
+  <g stroke="#111111" fill="none" stroke-width="1">
+    <rect x="16" y="16" width="568" height="568" stroke-width="2"/>
+    <rect x="22" y="22" width="556" height="556" stroke-width="0.8"/>
+    <line x1="16" y1="50" x2="60" y2="50"/><line x1="16" y1="550" x2="60" y2="550"/>
+    <line x1="540" y1="50" x2="584" y2="50"/><line x1="540" y1="550" x2="584" y2="550"/>
+    <line x1="50" y1="16" x2="50" y2="60"/><line x1="550" y1="16" x2="550" y2="60"/>
+    <line x1="50" y1="540" x2="50" y2="584"/><line x1="550" y1="540" x2="550" y2="584"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="0.8">
+    <polygon points="36,36 48,30 60,36 60,48 48,54 36,48"/>
+    <polygon points="540,36 552,30 564,36 564,48 552,54 540,48"/>
+  </g>
+
+  <text x="300" y="42" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#111111" letter-spacing="2">OPEN SMELL · ACADEMY</text>
+
+  <g transform="translate(0, 10)">
+    <g stroke="#111111" fill="none" stroke-width="1.8">
+      <ellipse cx="300" cy="230" rx="62" ry="68"/>
+    </g>
+
+    <g stroke="#111111" fill="none" stroke-width="1.2">
+      <path d="M238,220 Q228,180 248,160 Q258,150 270,155"/>
+      <path d="M232,235 Q218,200 225,170 Q232,148 255,142"/>
+      <path d="M240,250 Q222,225 218,195 Q216,170 230,150"/>
+      <path d="M362,220 Q372,180 352,160 Q342,150 330,155"/>
+      <path d="M368,235 Q382,200 375,170 Q368,148 345,142"/>
+      <path d="M360,250 Q378,225 382,195 Q384,170 370,150"/>
+      <path d="M255,168 Q270,130 300,125 Q330,130 345,168"/>
+      <path d="M248,180 Q260,140 300,132 Q340,140 352,180"/>
+    </g>
+
+    <g stroke="#111111" fill="none" stroke-width="1.5">
+      <circle cx="275" cy="225" r="24"/>
+      <circle cx="325" cy="225" r="24"/>
+      <line x1="299" y1="225" x2="301" y2="225" stroke-width="2"/>
+    </g>
+    <g stroke="#111111" fill="none" stroke-width="1">
+      <circle cx="275" cy="225" r="14"/>
+      <circle cx="325" cy="225" r="14"/>
+      <circle cx="275" cy="225" r="5" fill="#111111"/>
+      <circle cx="325" cy="225" r="5" fill="#111111"/>
+    </g>
+    <line x1="251" y1="218" x2="228" y2="212" stroke="#111111" stroke-width="1"/>
+    <line x1="349" y1="218" x2="372" y2="212" stroke="#111111" stroke-width="1"/>
+
+    <g stroke="#111111" fill="none" stroke-width="1.2">
+      <path d="M280,260 Q290,275 300,270 Q310,275 320,260"/>
+    </g>
+
+    <g stroke="#111111" fill="none" stroke-width="1.8">
+      <path d="M240,310 L240,450 Q240,465 255,470 L345,470 Q360,465 360,450 L360,310"/>
+      <line x1="240" y1="310" x2="300" y2="340"/>
+      <line x1="360" y1="310" x2="300" y2="340"/>
+      <path d="M270,310 L270,460" stroke-width="0.8"/>
+      <path d="M330,310 L330,460" stroke-width="0.8"/>
+    </g>
+
+    <g stroke="#111111" fill="none" stroke-width="1.5">
+      <line x1="360" y1="370" x2="420" y2="340"/>
+      <line x1="420" y1="340" x2="420" y2="430"/>
+      <line x1="420" y1="430" x2="360" y2="460"/>
+    </g>
+
+    <g stroke="#111111" fill="none" stroke-width="1.8">
+      <path d="M405,330 L415,310 L435,310 L445,330"/>
+      <ellipse cx="425" cy="340" rx="28" ry="12"/>
+      <path d="M397,340 Q397,400 425,420 Q453,400 453,340"/>
+    </g>
+
+    <g stroke="#111111" fill="none" stroke-width="1" stroke-dasharray="3,2">
+      <circle cx="415" cy="355" r="3"/>
+      <circle cx="428" cy="365" r="2.5"/>
+      <circle cx="420" cy="378" r="3.5"/>
+      <circle cx="435" cy="358" r="2"/>
+      <circle cx="410" cy="388" r="2.5"/>
+      <circle cx="430" cy="395" r="3"/>
+      <circle cx="418" cy="408" r="2"/>
+      <circle cx="438" cy="410" r="2.5"/>
+    </g>
+
+    <g stroke="#111111" fill="none" stroke-width="0.8" opacity="0.4">
+      <polygon points="155,160 175,148 195,160 195,184 175,196 155,184"/>
+      <polygon points="420,180 435,172 450,180 450,196 435,204 420,196"/>
+      <polygon points="130,300 145,292 160,300 160,316 145,324 130,316"/>
+      <polygon points="450,260 462,254 474,260 474,272 462,278 450,272"/>
+    </g>
+    <g fill="#111111" opacity="0.3">
+      <circle cx="175" cy="172" r="3"/><circle cx="435" cy="188" r="2.5"/>
+      <circle cx="145" cy="308" r="2.5"/><circle cx="462" cy="266" r="2"/>
+    </g>
+  </g>
+
+  <text x="300" y="582" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#555555" letter-spacing="1">THE OPEN STACK FOR DIGITAL OLFACTION</text>
+</svg>

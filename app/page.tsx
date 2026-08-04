@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, Hexagon, Sigma, Database, Cpu, Monitor, Store } from "lucide-react"
+import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, Hexagon, Sigma, Database, Cpu, Monitor, Store, BarChart3, Settings } from "lucide-react"
 import { useTheme } from "next-themes"
 import AnimatedHero from "@/components/animated-hero"
 import ThemeToggle from "@/components/theme-toggle"
@@ -123,16 +123,16 @@ export default function Home() {
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
                 <Sigma className="w-3.5 h-3.5" />
-                v1.0 — Open Infrastructure
+                Open source · Community built
               </div>
               <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tighter mb-6 leading-[0.95]">
-                Digital smell
+                Every device
                 <br />
-                <span className="text-muted-foreground">for everyone.</span>
+                <span className="text-muted-foreground">should smell.</span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
-                We're building the open standards, hardware, and data infrastructure
-                to make smell as programmable as light and sound.
+                The open platform for digital olfaction. Build an e-nose, record smells,
+                classify odours — with open hardware, open data, and open software.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
@@ -142,16 +142,18 @@ export default function Home() {
                   className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
                 >
                   <Cpu className="w-4 h-4" />
-                  Get the E-Nose Kit
+                  Build an E-Nose
                   <ChevronRight className="w-4 h-4" />
                 </a>
-                <Link
-                  href="/osmograph"
+                <a
+                  href="https://mox.opensmell.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
                 >
                   <Monitor className="w-4 h-4" />
-                  Try Osmograph
-                </Link>
+                  Try Osmograph Web
+                </a>
                 <button
                   onClick={() => searchRef.current?.scrollIntoView({ behavior: "smooth" })}
                   className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
@@ -168,11 +170,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
               {[
-                { label: "Chemoprint Dimensions", value: "29" },
-                { label: "Validation R² (ODT)", value: "0.88" },
-                { label: "Molecules in Index", value: "4,800+" },
-                { label: "Hardware Validation R²", value: "0.982" },
                 { label: "Open Repositories", value: "15" },
+                { label: "Chemical–Odour Pairs", value: "4,800+" },
+                { label: "Community ★", value: "42" },
+                { label: "Applications Possible", value: "∞" },
+                { label: "Cost to Build an E-Nose", value: "$15" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-3xl font-bold tracking-tight mb-1">
@@ -244,131 +246,61 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-grid">
+        <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
                   <Hexagon className="w-3.5 h-3.5" />
-                  Core Standard
+                  What You Can Build
                 </div>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="hex-icon text-muted-foreground" />
-                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                    The Chemoprint
-                  </h2>
-                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
+                  Real applications, real hardware.
+                </h2>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  A 29-dimensional physicochemical vector computable from a SMILES string.
-                  Human-interpretable, deterministic, MIT-licensed. Each dimension corresponds
-                  to molecular weight, LogP, functional groups, and topological indices.
+                  From food quality monitoring to breath analysis to environmental sensing —
+                  the open stack lets you build olfactory applications that actually work,
+                  with sensors you can buy today.
                 </p>
-                <p className="text-muted-foreground mb-8 leading-relaxed">
-                  Validated against the UCI Gas Sensor Array Drift Dataset (R² = 0.982)
-                  and against odor detection thresholds for 717 molecules (R² = 0.88).
-                </p>
-                <div className="grid grid-cols-3 gap-4 mb-8">
+                <div className="space-y-4 mb-8">
                   {[
-                    { val: "0–11", label: "Base properties" },
-                    { val: "12–14", label: "Topological indices" },
-                    { val: "15–28", label: "Functional groups" },
-                  ].map((d) => (
-                    <div key={d.val} className="border border-border p-4">
-                      <div className="text-lg font-bold">{d.val}</div>
-                      <div className="text-xs text-muted-foreground mt-1">{d.label}</div>
+                    { title: "Detect spoilage before it happens", desc: "Track fermentation, coffee roast, or fruit ripening with live sensor traces." },
+                    { title: "Build gas leak alarms", desc: "LPG, methane, CO — classify dangerous gases in real time with a $15 sensor array." },
+                    { title: "Prototype breath analysis", desc: "Ketosis markers, alcohol estimation, volatile biomarkers — the data pipeline is open." },
+                  ].map((item) => (
+                    <div key={item.title} className="border border-border p-4">
+                      <div className="font-semibold text-sm mb-1">{item.title}</div>
+                      <div className="text-xs text-muted-foreground">{item.desc}</div>
                     </div>
                   ))}
                 </div>
                 <a
-                  href="https://github.com/opensmell/chemoprint"
+                  href="https://github.com/opensmell/electronic-nose"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-medium hover:underline"
                 >
-                  Read the full spec <ChevronRight className="w-4 h-4" />
+                  See the hardware specs <ChevronRight className="w-4 h-4" />
                 </a>
               </div>
               <div className="hex-box border border-border p-8 bg-background">
-                <div className="text-xs text-muted-foreground mb-4 font-mono">chemoprint.py</div>
-                <pre className="text-sm leading-relaxed font-mono text-muted-foreground overflow-x-auto">
-                  <span className="text-foreground">from</span> chemoprint{" "}
-                  <span className="text-foreground">import</span> chemoprint_from_smiles{"\n\n"}
-                  smiles = <span className="text-foreground">"CCO"</span>{"  "}# ethanol{"\n"}
-                  vec = chemoprint_from_smiles(smiles){"\n"}
-                  <span className="text-foreground">print</span>(vec.shape){"  "}# (29,)
-                </pre>
-                <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
+                <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">How it works</div>
+                <div className="space-y-4">
                   {[
-                    { k: "License", v: "MIT" },
-                    { k: "Dimensions", v: "29" },
-                    { k: "Validation (Sensor)", v: "R² = 0.982" },
-                    { k: "Validation (ODT)", v: "R² = 0.88" },
-                  ].map((x) => (
-                    <div key={x.k} className="flex justify-between border-b border-border pb-1">
-                      <span className="text-muted-foreground">{x.k}</span>
-                      <span className="font-mono">{x.v}</span>
+                    { step: "1", icon: Cpu, text: "Build or buy an e-nose ($15–$50 in parts)" },
+                    { step: "2", icon: Monitor, text: "Flash firmware with Osmograph (one click)" },
+                    { step: "3", icon: BarChart3, text: "Record live sensor traces of any smell" },
+                    { step: "4", icon: Settings, text: "Train a classifier — no coding required" },
+                    { step: "5", icon: Database, text: "Share data to the community Data Commons" },
+                  ].map((s) => (
+                    <div key={s.step} className="flex items-center gap-3">
+                      <span className="w-6 h-6 border border-border flex items-center justify-center text-xs font-mono text-muted-foreground flex-shrink-0">{s.step}</span>
+                      <s.icon className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground">{s.text}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-border py-24">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                  What you can build
-                </h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                From gas leak alarms to breath analysis — the open stack enables
-                a new generation of olfactory applications.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
-              {[
-                {
-                  title: "Safety & Monitoring",
-                  items: [
-                    "Gas leak alarms (LPG, methane, CO)",
-                    "Urban air quality mapping",
-                    "Industrial odour detection",
-                  ],
-                },
-                {
-                  title: "Food & Agriculture",
-                  items: [
-                    "Fruit ripening tracking",
-                    "Coffee roast profiling",
-                    "Honey & spice authenticity",
-                  ],
-                },
-                {
-                  title: "Health & Science",
-                  items: [
-                    "Breath analysis (ketosis markers)",
-                    "Fermentation monitoring",
-                    "Substance classification",
-                  ],
-                },
-              ].map((cat) => (
-                <div key={cat.title} className="bg-background p-8">
-                  <h3 className="text-lg font-semibold mb-4">{cat.title}</h3>
-                  <ul className="space-y-3">
-                    {cat.items.map((item) => (
-                      <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="mt-1.5 w-1 h-1 rounded-full bg-muted-foreground flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
             </div>
           </div>
         </section>
@@ -472,7 +404,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-grid">
+        <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto">
               <div className="flex items-center justify-center gap-3 mb-4">
