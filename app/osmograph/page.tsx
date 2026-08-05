@@ -69,7 +69,7 @@ export default function OsmographPage() {
       </header>
 
       <main>
-        <section className="pt-32 pb-20 border-b border-border bg-hex">
+        <section className="pt-32 pb-20 border-b border-border">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -125,7 +125,7 @@ export default function OsmographPage() {
           </div>
         </section>
 
-        <section className="border-t border-border py-20 bg-hex">
+        <section className="border-t border-border py-20">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
               <div>
@@ -202,7 +202,7 @@ export default function OsmographPage() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-hex">
+        <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>

@@ -29,7 +29,7 @@ export default function AcademyPage() {
       <SiteHeader active="academy" />
 
       <main>
-        <section className="pt-32 pb-20 border-b border-border bg-hex">
+        <section className="pt-32 pb-20 border-b border-border">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
               <div className="max-w-3xl">

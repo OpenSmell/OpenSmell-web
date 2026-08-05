@@ -291,7 +291,7 @@ export default function AppStorePage() {
           </div>
         </section>
 
-        <section className="border-b border-border py-16 bg-hex">
+        <section className="border-b border-border py-16">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
               {[
@@ -491,7 +491,7 @@ export default function AppStorePage() {
           </div>
         </section>
 
-        <section className="border-t border-border py-20 bg-hex">
+        <section className="border-t border-border py-20">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-2xl mx-auto text-center">
               <div className="flex items-center justify-center gap-3 mb-4">

@@ -117,7 +117,7 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="relative min-h-screen flex items-center overflow-hidden bg-hex">
+        <section className="relative min-h-screen flex items-center overflow-hidden">
           <AnimatedHero />
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-24 pb-32">
             <div className="max-w-4xl">
@@ -187,7 +187,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-hex">
+        <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -246,7 +246,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-hex">
+        <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
@@ -442,7 +442,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-hex">
+        <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center">
               <div className="flex items-center justify-center gap-3 mb-4">
