@@ -4,9 +4,8 @@ import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, GraduationCap, ChevronRight } from "lucide-react"
-import { articles } from "@/lib/articles"
 import SiteHeader from "@/components/site-header"
-import { AcademyArt } from "@/components/hero-art"
+import { articles } from "@/lib/articles"
 
 const filters = ["All", "Foundations", "Hardware", "Tutorial", "Research"]
 
@@ -64,7 +63,14 @@ export default function AcademyPage() {
                 </div>
               </div>
               <div className="hidden lg:flex items-center justify-center">
-                <AcademyArt className="w-72 h-72 lg:w-80 lg:h-80 text-foreground" />
+                <Image
+                  src="/professor.png"
+                  alt="Digital olfaction professor"
+                  width={259}
+                  height={288}
+                  priority
+                  className="w-72 h-auto lg:w-80 lg:h-auto object-contain"
+                />
               </div>
             </div>
           </div>

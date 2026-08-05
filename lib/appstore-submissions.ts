@@ -72,17 +72,17 @@ export function loadApproved(): AppStoreSubmission[] {
   }
 }
 
-export function buildMailto(sub: Omit<AppStoreSubmission, "id" | "status" | "submittedAt">): string {
-  const subject = encodeURIComponent(`[AppStore Submission] ${sub.name}`)
-  const body = encodeURIComponent(
-    `Submission Type: ${sub.type}\n` +
-    `Name: ${sub.name}\n` +
-    `Author: ${sub.author}\n` +
-    `Email: ${sub.email}\n` +
-    `Description: ${sub.description}\n` +
-    `Price: ${sub.price || "Free"}\n` +
-    `Link: ${sub.link}\n` +
-    `Tags: ${sub.tags.join(", ")}\n`
-  )
-  return `mailto:praisejx@proton.me?subject=${subject}&body=${body}`
+export async function submitToServer(sub: Omit<AppStoreSubmission, "id" | "status" | "submittedAt">): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const res = await fetch("/api/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(sub),
+    })
+    const data = await res.json().catch(() => null)
+    if (res.ok && data?.ok) return { ok: true }
+    return { ok: false, error: data?.error || "Something went wrong. Please try again." }
+  } catch {
+    return { ok: false, error: "Network error. Please try again." }
+  }
 }

@@ -60,7 +60,7 @@ export default function AnimatedHero() {
     const buildHexGrid = (w: number, h: number) => {
       hexes = []
       const hSpacing = HEX_SIZE * Math.sqrt(3) + 6
-      const vSpacing = HEX_SIZE * 1.5 + 6
+      const vSpacing = HEX_SIZE * 2 + 6
       const cols = Math.ceil(w / hSpacing) + 2
       const rows = Math.ceil(h / vSpacing) + 2
 
@@ -69,9 +69,8 @@ export default function AnimatedHero() {
       const cx = w + 20, cy = h * 0.2
 
       for (let row = 0; row < rows; row++) {
-        const offX = (row % 2) * (hSpacing / 2)
         for (let col = 0; col < cols; col++) {
-          const x = col * hSpacing + offX
+          const x = col * hSpacing
           const y = row * vSpacing
           if (pointInTriangle(x, y, ax, ay, bx, by, cx, cy)) {
             hexes.push({

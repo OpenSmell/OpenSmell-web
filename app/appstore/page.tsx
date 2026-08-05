@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Store, Download, Star, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, Users, TrendingUp, Grid3X3, Filter, Database, Puzzle, X, Send, Coins } from "lucide-react"
+import { Store, Download, Star, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, Users, TrendingUp, Grid3X3, Filter, Database, Puzzle, X, Send, Coins, Loader2 } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 import { AppstoreArt } from "@/components/hero-art"
-import { loadSubmissions, addSubmission, buildMailto, loadApproved, type SubmissionType, type AppStoreSubmission } from "@/lib/appstore-submissions"
+import { loadSubmissions, addSubmission, submitToServer, loadApproved, type SubmissionType, type AppStoreSubmission } from "@/lib/appstore-submissions"
 
 const builtinApps = [
   {
@@ -146,6 +146,9 @@ export default function AppStorePage() {
     tags: "",
   })
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [submitError, setSubmitError] = useState("")
+  const [honey, setHoney] = useState("")
   const formRef = useRef<HTMLDivElement>(null)
 
   const openForm = () => {
@@ -185,25 +188,29 @@ export default function AppStorePage() {
 
   const filtered = filter === "all" ? allApps : allApps.filter((a) => a.type === filter)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form.name || !form.author || !form.email || !form.description) return
-    addSubmission({
+    if (honey) return
+    const payload = {
       ...form,
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
-    })
-    const mailto = buildMailto({
-      ...form,
-      tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
-    })
-    const a = document.createElement("a")
-    a.href = mailto
-    a.target = "_blank"
-    a.rel = "noopener noreferrer"
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
+    }
+    addSubmission(payload)
+    setSending(true)
+    setSubmitError("")
+    const res = await submitToServer(payload)
+    setSending(false)
+    if (!res.ok) {
+      setSubmitError(res.error || "Something went wrong. Please try again.")
+      return
+    }
     setSubmitted(true)
-    setTimeout(() => { setSubmitted(false); setShowForm(false); setForm({ name: "", type: "plugin", description: "", author: "", email: "", price: "", link: "", tags: "" }) }, 3000)
+    setTimeout(() => {
+      setSubmitted(false)
+      setShowForm(false)
+      setSubmitError("")
+      setForm({ name: "", type: "plugin", description: "", author: "", email: "", price: "", link: "", tags: "" })
+    }, 3500)
   }
 
   return (
@@ -317,10 +324,19 @@ export default function AppStorePage() {
                   <div className="text-center py-12">
                     <Check className="w-12 h-12 mx-auto mb-4 text-green-500" />
                     <h3 className="text-lg font-semibold mb-2">Submission received</h3>
-                    <p className="text-sm text-muted-foreground">Your email client should open shortly. We&apos;ll review your submission and get back to you.</p>
+                    <p className="text-sm text-muted-foreground">Thanks — we&apos;ve got it and will review it soon.</p>
                   </div>
                 ) : (
                   <div className="space-y-5">
+                    <input
+                      type="text"
+                      value={honey}
+                      onChange={(e) => setHoney(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="hidden"
+                    />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-xs text-muted-foreground mb-1.5 block">Name *</label>
@@ -368,10 +384,11 @@ export default function AppStorePage() {
                         <p className="text-[10px] text-muted-foreground mt-1">Release it free or sell it. Pricing is displayed on your listing.</p>
                       </div>
                       <div>
-                        <label className="text-xs text-muted-foreground mb-1.5 block">Link</label>
+                        <label className="text-xs text-muted-foreground mb-1.5 block">Repo / download link</label>
                         <input value={form.link} onChange={(e) => setForm({ ...form, link: e.target.value })}
-                          placeholder="https://github.com/..."
+                          placeholder="https://github.com/yourname/your-repo"
                           className="w-full bg-transparent border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-foreground transition-colors" />
+                        <p className="text-[10px] text-muted-foreground mt-1">A public repo (e.g. GitHub) lets us download and test your work.</p>
                       </div>
                     </div>
                     <div>
@@ -380,14 +397,25 @@ export default function AppStorePage() {
                         placeholder="food, monitoring, python"
                         className="w-full bg-transparent border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-foreground transition-colors" />
                     </div>
+                    <div className="border border-border p-4">
+                      <p className="text-xs font-semibold mb-2">Tips for a strong submission</p>
+                      <ul className="text-xs text-muted-foreground space-y-1.5 list-disc list-inside">
+                        <li>Link a public repo with source code and a README so reviewers can test it.</li>
+                        <li>Add a short demo video or GIF to your repo.</li>
+                        <li>Mention which rigs it works with (v1 / v2 e-nose, DIY).</li>
+                        <li>Keep the description focused on what it does and the problem it solves.</li>
+                      </ul>
+                    </div>
                     <div className="flex flex-col sm:flex-row gap-3 pt-2">
                       <button onClick={handleSubmit}
-                        disabled={!form.name || !form.author || !form.email || !form.description}
+                        disabled={!form.name || !form.author || !form.email || !form.description || sending}
                         className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-2.5 text-sm font-medium hover:opacity-90 transition-all disabled:opacity-40">
-                        <Send className="w-4 h-4" />
-                        Submit &amp; Email
+                        {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                        {sending ? "Submitting…" : "Submit"}
                       </button>
-                      <p className="text-xs text-muted-foreground self-center">Opens your email client with submission details pre-filled to praisejx@proton.me</p>
+                      {submitError && (
+                        <p className="text-xs text-red-500 self-center">{submitError}</p>
+                      )}
                     </div>
                   </div>
                 )}
