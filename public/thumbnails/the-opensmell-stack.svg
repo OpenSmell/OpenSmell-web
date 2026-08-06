@@ -1,0 +1,123 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">PROJECT MAP</text>
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, monospace" font-size="34" font-weight="bold" fill="#111111" letter-spacing="1">THE OPEN SMELL STACK</text>
+  <text x="600" y="156" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">SDK · WEB · DESKTOP · HARDWARE · RESEARCH · 1:1 MIRRORS</text>
+
+  <line x1="120" y1="200" x2="1040" y2="200" stroke="#111111" stroke-width="1"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="60" y="240" font-size="13" font-weight="bold">LAYERS</text>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <rect x="60" y="258" width="260" height="40" fill="#111111"/>
+    <text x="76" y="284" font-size="13" fill="#ffffff" font-weight="bold">opensmell/  SDK</text>
+    <rect x="60" y="302" width="260" height="40" fill="#ffffff" stroke="#111111" stroke-width="1.5"/>
+    <text x="76" y="328" font-size="13" fill="#111111">osmograph-web/  web</text>
+    <rect x="60" y="346" width="260" height="40" fill="#ffffff" stroke="#111111" stroke-width="1.5"/>
+    <text x="76" y="372" font-size="13" fill="#111111">Osmograph/  desktop</text>
+    <rect x="60" y="390" width="260" height="40" fill="#ffffff" stroke="#111111" stroke-width="1.5"/>
+    <text x="76" y="416" font-size="13" fill="#111111">electronic-nose/  hardware</text>
+    <rect x="60" y="434" width="260" height="40" fill="#ffffff" stroke="#111111" stroke-width="1.5"/>
+    <text x="76" y="460" font-size="13" fill="#111111">research/ · encoder/ · Chemoprint/</text>
+    <text x="76" y="476" font-size="13" fill="#111111">interoperability/  science</text>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="76" y="504" font-size="11" fill="#555555">every owned repo ships an MIT LICENSE</text>
+  </g>
+
+  <line x1="360" y1="240" x2="360" y2="540" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="400" y="240" font-size="13" font-weight="bold">1:1 MIRRORING CONTRACT</text>
+    <text x="400" y="258" font-size="11" fill="#555555">identical logic in Python and TypeScript,</text>
+    <text x="400" y="272" font-size="11" fill="#555555">kept equal by tests</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="400" y="290" width="170" height="34" stroke-width="1.5"/>
+    <rect x="590" y="290" width="170" height="34" stroke-width="1.5"/>
+    <rect x="400" y="334" width="170" height="34" stroke-width="1.5"/>
+    <rect x="590" y="334" width="170" height="34" stroke-width="1.5"/>
+    <rect x="400" y="378" width="170" height="34" stroke-width="1.5"/>
+    <rect x="590" y="378" width="170" height="34" stroke-width="1.5"/>
+    <rect x="400" y="422" width="170" height="34" stroke-width="1.5"/>
+    <rect x="590" y="422" width="170" height="34" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="414" y="312" font-size="12" font-weight="bold">io.py</text>
+    <text x="604" y="312" font-size="12" font-weight="bold">io.ts</text>
+    <text x="414" y="356" font-size="12" font-weight="bold">normalize.py</text>
+    <text x="604" y="356" font-size="12" font-weight="bold">normalize.ts</text>
+    <text x="414" y="400" font-size="12" font-weight="bold">types.py</text>
+    <text x="604" y="400" font-size="12" font-weight="bold">types.ts</text>
+    <text x="414" y="444" font-size="12" font-weight="bold">groups.py</text>
+    <text x="604" y="444" font-size="12" font-weight="bold">groups.ts</text>
+  </g>
+  <g stroke="#111111" fill="none">
+    <line x1="570" y1="307" x2="590" y2="307" stroke-width="1.5"/>
+    <polygon points="586,303 596,307 586,311"/>
+    <line x1="570" y1="351" x2="590" y2="351" stroke-width="1.5"/>
+    <polygon points="586,347 596,351 586,355"/>
+    <line x1="570" y1="395" x2="590" y2="395" stroke-width="1.5"/>
+    <polygon points="586,391 596,395 586,399"/>
+    <line x1="570" y1="439" x2="590" y2="439" stroke-width="1.5"/>
+    <polygon points="586,435 596,439 586,443"/>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="400" y="492" font-size="12" font-weight="bold">THE HONESTY RULES</text>
+    <text x="400" y="510" font-size="11" fill="#555555">we publish what we claim, and</text>
+    <text x="400" y="524" font-size="11" fill="#555555">we state what we refuse to claim</text>
+  </g>
+
+  <line x1="800" y1="240" x2="800" y2="540" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="840" y="258" font-size="13" font-weight="bold">WHERE TO START</text>
+    <text x="840" y="284" font-size="12" fill="#555555">1 · run the SDK on a SmellNet CSV</text>
+    <text x="840" y="304" font-size="12" fill="#555555">2 · read the 187-dim framework</text>
+    <text x="840" y="324" font-size="12" fill="#555555">3 · study sensor theory (§6)</text>
+    <text x="840" y="344" font-size="12" fill="#555555">4 · study the .osmell format (§3)</text>
+    <text x="840" y="364" font-size="12" fill="#555555">5 · decay model (§5)</text>
+    <text x="840" y="384" font-size="12" fill="#555555">6 · honesty rules + results (§7.11, §8)</text>
+    <text x="840" y="404" font-size="12" fill="#555555">7 · the U-suite (§12)</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="840" y="424" width="300" height="66" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="858" y="446" font-size="12" font-weight="bold">KNOWN GAPS (PUBLIC)</text>
+    <text x="858" y="464" font-size="11" fill="#555555">train pipeline · MINPACK decay minima ·</text>
+    <text x="858" y="480" font-size="11" fill="#555555">canonical extractor unification</text>
+  </g>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 021</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

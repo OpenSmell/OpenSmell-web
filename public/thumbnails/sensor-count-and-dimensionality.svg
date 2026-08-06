@@ -1,0 +1,131 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">DIMENSIONALITY</text>
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, monospace" font-size="34" font-weight="bold" fill="#111111" letter-spacing="1">HOW MANY SENSORS MAKE A NOSE?</text>
+  <text x="600" y="156" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">EFFECTIVE DIMS · PLATEAU · JOHNSON–LINDENSTRAUSS</text>
+
+  <line x1="120" y1="200" x2="1040" y2="200" stroke="#111111" stroke-width="1"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="60" y="240" font-size="13" font-weight="bold">DISCRIMINATIVE POWER vs COUNT</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <line x1="80" y1="330" x2="80" y2="500" stroke-width="1.5"/>
+    <line x1="80" y1="500" x2="440" y2="500" stroke-width="1.5"/>
+    <polygon points="440,500 428,492 428,508"/>
+    <polygon points="80,330 88,342 72,342"/>
+  </g>
+  <g stroke="#111111" fill="none">
+    <line x1="80" y1="468" x2="104" y2="468" stroke-width="1"/>
+    <line x1="80" y1="418" x2="104" y2="418" stroke-width="1"/>
+    <line x1="80" y1="368" x2="104" y2="368" stroke-width="1"/>
+    <line x1="140" y1="500" x2="140" y2="480" stroke-width="1"/>
+    <line x1="200" y1="500" x2="200" y2="480" stroke-width="1"/>
+    <line x1="260" y1="500" x2="260" y2="480" stroke-width="1"/>
+    <line x1="320" y1="500" x2="320" y2="480" stroke-width="1"/>
+    <line x1="380" y1="500" x2="380" y2="480" stroke-width="1"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="40" y="472" font-size="11">1</text>
+    <text x="40" y="422" font-size="11">3</text>
+    <text x="40" y="372" font-size="11">5</text>
+    <text x="132" y="520" font-size="11">1</text>
+    <text x="192" y="520" font-size="11">2</text>
+    <text x="252" y="520" font-size="11">3</text>
+    <text x="312" y="520" font-size="11">4</text>
+    <text x="372" y="520" font-size="11">5</text>
+    <text x="248" y="330" font-size="12" fill="#555555">effective dims</text>
+    <text x="248" y="536" font-size="12" fill="#555555">sensor count N</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <path d="M 140 468 L 176 452 L 212 445 L 248 430 L 284 414 L 320 404 L 356 400" stroke-width="2"/>
+  </g>
+  <g fill="#111111">
+    <circle cx="140" cy="468" r="4"/>
+    <circle cx="212" cy="445" r="4"/>
+    <circle cx="320" cy="404" r="4"/>
+    <circle cx="356" cy="400" r="4"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="148" y="478" font-size="11" fill="#555555">1 → 1</text>
+    <text x="220" y="448" font-size="11" fill="#555555">3 → 2.6</text>
+    <text x="328" y="404" font-size="11" fill="#555555">6 → 4.6</text>
+    <text x="330" y="392" font-size="11" fill="#555555">8 → 4.9</text>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="96" y="382" font-size="12" font-weight="bold">plateau:</text>
+    <text x="96" y="398" font-size="11" fill="#555555">the 6th sensor typically adds</text>
+    <text x="96" y="412" font-size="11" fill="#555555">&lt;10% separation over the 5th</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <path d="M 470 330 q 4 -18 18 -22 q 14 -4 24 6 q 10 10 28 8 q 18 -2 24 -14" stroke-width="2"/>
+    <path d="M 470 340 q 4 -14 16 -18 q 14 -4 24 4 q 12 8 28 6 q 18 -2 24 -12" stroke-width="1.5" stroke-dasharray="4,3"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="470" y="378" font-size="13" font-weight="bold">TWO SAME-FAMILY MOX ≈ 1 DIM</text>
+    <text x="470" y="396" font-size="11" fill="#555555">SVD/rank analysis (§6.3)</text>
+    <text x="470" y="412" font-size="11" fill="#555555">correlated sensitivity ⇒ correlated signal</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="470" y="430" width="250" height="70" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="486" y="452" font-size="12" font-weight="bold">1 sensor = detector, not nose</text>
+    <text x="486" y="472" font-size="12" font-weight="bold">6 diverse ≈ 4–5 effective dims</text>
+    <text x="486" y="490" font-size="11" fill="#555555">(capacity: ~20–40 substances)</text>
+  </g>
+
+  <line x1="760" y1="240" x2="760" y2="540" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="790" y="266" font-size="13" font-weight="bold">THE JL GUIDELINE</text>
+  </g>
+  <text x="790" y="312" font-family="ui-monospace, monospace" font-size="22" fill="#111111">d_min &gt; 8·ln(n) / ε²</text>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="790" y="336" font-size="12" fill="#555555">n substances · ε allowed pairwise distortion</text>
+    <text x="790" y="354" font-size="12" fill="#555555">n = 4,565 known odorants, ε = 0.5:</text>
+    <text x="790" y="372" font-size="12" font-weight="bold">d_min ≈ 271 effective dims</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <line x1="790" y1="400" x2="1140" y2="400" stroke-width="1"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="790" y="428" font-size="13" font-weight="bold">WHAT THIS MEANS</text>
+    <text x="790" y="452" font-size="12" fill="#555555">• more sensors ≠ linear gain — diminishing returns</text>
+    <text x="790" y="470" font-size="12" fill="#555555">• same-family sensors are wasted channels</text>
+    <text x="790" y="488" font-size="12" fill="#555555">• chemical diversity of the array is the budget</text>
+    <text x="790" y="506" font-size="12" fill="#555555">• cross-sensitivity is a feature, not a bug —</text>
+    <text x="790" y="524" font-size="12" fill="#555555">  it is what an e-nose is FOR</text>
+  </g>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 013</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

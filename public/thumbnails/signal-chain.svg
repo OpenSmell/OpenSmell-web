@@ -1,0 +1,117 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">SIGNAL CHAIN</text>
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, monospace" font-size="34" font-weight="bold" fill="#111111" letter-spacing="1">FILM → NUMBER: THE SIGNAL CHAIN</text>
+  <text x="600" y="156" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">DIVIDER · ADC · R₀ WINDOW · DEAD-CHANNEL GATE</text>
+
+  <line x1="120" y1="200" x2="1040" y2="200" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" fill="none">
+    <rect x="60" y="250" width="180" height="110" stroke-width="1.5"/>
+    <rect x="300" y="250" width="180" height="110" stroke-width="1.5"/>
+    <rect x="540" y="250" width="180" height="110" stroke-width="1.5"/>
+    <rect x="780" y="250" width="180" height="110" stroke-width="1.5"/>
+  </g>
+  <g stroke="#111111" fill="none">
+    <line x1="240" y1="305" x2="300" y2="305" stroke-width="1.5"/>
+    <polygon points="296,301 306,305 296,309"/>
+    <line x1="480" y1="305" x2="540" y2="305" stroke-width="1.5"/>
+    <polygon points="536,301 546,305 536,309"/>
+    <line x1="720" y1="305" x2="780" y2="305" stroke-width="1.5"/>
+    <polygon points="776,301 786,305 776,309"/>
+    <line x1="960" y1="305" x2="1020" y2="305" stroke-width="1.5"/>
+    <polygon points="1016,301 1026,305 1016,309"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="150" y="290" text-anchor="middle" font-size="13" font-weight="bold">SnO₂ FILM</text>
+    <text x="150" y="310" text-anchor="middle" font-size="11" fill="#555555">Rs(t) chemisorption</text>
+    <text x="390" y="290" text-anchor="middle" font-size="13" font-weight="bold">DIVIDER</text>
+    <text x="390" y="310" text-anchor="middle" font-size="11" fill="#555555">V = V_cc·R_L/(R_s+R_L)</text>
+    <text x="630" y="290" text-anchor="middle" font-size="13" font-weight="bold">ADC</text>
+    <text x="630" y="310" text-anchor="middle" font-size="11" fill="#555555">12-bit · max 4095</text>
+    <text x="870" y="290" text-anchor="middle" font-size="13" font-weight="bold">NORMALIZE</text>
+    <text x="870" y="310" text-anchor="middle" font-size="11" fill="#555555">Rs/R₀, (R−R₀)/R₀, z</text>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="1042" y="305" font-size="13" font-weight="bold">FEATURES</text>
+  </g>
+  <g stroke="#111111" fill="none">
+    <path d="M 1080 290 h 60" stroke-width="1.5"/>
+    <path d="M 1080 320 h 60" stroke-width="1.5"/>
+  </g>
+
+  <line x1="60" y1="400" x2="1140" y2="400" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="60" y="428" font-size="13" font-weight="bold">CLIPPING</text>
+    <text x="60" y="446" font-size="11" fill="#555555">ADC saturates at adc_max (4095, 12-bit)</text>
+    <text x="60" y="462" font-size="11" fill="#555555">flat-top trace = dead information</text>
+    <text x="60" y="478" font-size="11" fill="#555555">saturation score S_k = 100·(1 − clipped_k/N)</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <path d="M 330 478 q 20 -6 40 -8 q 30 -4 55 -14 q 20 -8 35 -24" stroke-width="1.5"/>
+    <line x1="330" y1="478" x2="420" y2="478" stroke="#111111" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="420" y1="478" x2="420" y2="430" stroke="#111111" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="330" y1="452" x2="420" y2="452" stroke="#111111" stroke-width="1" stroke-dasharray="3,3"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="560" y="466" font-size="11" fill="#555555">flat top</text>
+  </g>
+
+  <line x1="600" y1="410" x2="600" y2="520" stroke="#111111" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="620" y="428" font-size="13" font-weight="bold">R₀ WINDOW</text>
+    <text x="620" y="446" font-size="11" fill="#555555">15 samples / ~1.5 s clean-air baseline</text>
+    <text x="620" y="462" font-size="11" fill="#555555">readiness gate: baseline must be stable</text>
+    <text x="620" y="478" font-size="11" fill="#555555">health: noise_floor · drift_rate</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <path d="M 760 450 h 80" stroke-width="1.5"/>
+    <path d="M 760 466 h 80" stroke-width="1.5"/>
+    <path d="M 760 482 h 80" stroke-width="1.5"/>
+    <path d="M 760 450 q 20 -8 40 -6 q 20 2 40 -4" stroke-width="1.5"/>
+    <line x1="800" y1="434" x2="800" y2="450" stroke="#111111" stroke-width="1"/>
+  </g>
+
+  <line x1="860" y1="410" x2="860" y2="520" stroke="#111111" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="880" y="428" font-size="13" font-weight="bold">DEAD-CHANNEL GATE</text>
+    <text x="880" y="446" font-size="11" fill="#555555">coefficient of variation cv &lt; 0.001</text>
+    <text x="880" y="462" font-size="11" fill="#555555">⇒ channel not responding ⇒ drop it</text>
+    <text x="880" y="478" font-size="11" fill="#555555">silent channels corrupt every ratio</text>
+  </g>
+  <g stroke="#111111" fill="none">
+    <rect x="880" y="492" width="120" height="24" stroke-width="1.5"/>
+  </g>
+  <text x="940" y="508" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#111111">cv &lt; 0.001</text>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 015</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

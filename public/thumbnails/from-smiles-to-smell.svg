@@ -1,0 +1,169 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">ODORANT CHEMISTRY</text>
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, monospace" font-size="34" font-weight="bold" fill="#111111" letter-spacing="1">FROM SMILES TO A VERDICT</text>
+  <text x="600" y="156" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">VAPOR PRESSURE · REDOX · HEADSPACE PPM · FEASIBILITY</text>
+
+  <line x1="120" y1="200" x2="1040" y2="200" stroke="#111111" stroke-width="1"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="60" y="240" font-size="13" font-weight="bold">INPUT — ONE STRING</text>
+  </g>
+  <rect x="60" y="252" width="330" height="56" fill="#111111"/>
+  <text x="78" y="288" font-family="ui-monospace, monospace" font-size="20" fill="#ffffff" font-weight="bold">CC(=O)OCC(C)C</text>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="78" y="252" font-size="11" fill="#555555">isoamyl acetate — "banana oil"</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <path d="M 70 340 q 40 -30 80 -20 q 40 10 80 -10 q 30 -15 60 -8" stroke-width="1.5"/>
+    <path d="M 150 320 l 12 16" stroke-width="1.5"/>
+    <circle cx="150" cy="352" r="14" stroke-width="1.5"/>
+    <text x="150" y="357" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#111111">O</text>
+    <path d="M 150 366 v 14" stroke-width="1.5"/>
+    <line x1="150" y1="380" x2="140" y2="392" stroke-width="1.5"/>
+    <line x1="150" y1="380" x2="160" y2="392" stroke-width="1.5"/>
+    <line x1="170" y1="324" x2="184" y2="336" stroke-width="1.5"/>
+    <line x1="184" y1="336" x2="170" y2="348" stroke-width="1.5"/>
+    <line x1="184" y1="336" x2="198" y2="324" stroke-width="1.5"/>
+    <circle cx="230" cy="330" r="12" stroke-width="1.5"/>
+    <line x1="230" y1="318" x2="230" y2="300" stroke-width="1.5"/>
+    <line x1="230" y1="300" x2="242" y2="292" stroke-width="1.5"/>
+    <line x1="230" y1="300" x2="218" y2="292" stroke-width="1.5"/>
+    <line x1="230" y1="342" x2="230" y2="362" stroke-width="1.5"/>
+    <line x1="230" y1="362" x2="242" y2="370" stroke-width="1.5"/>
+    <line x1="230" y1="362" x2="218" y2="370" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="60" y="398" font-size="11" fill="#555555">graph, not guess — groups inferred from structure</text>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="60" y="430" font-size="13" font-weight="bold">THERMODYNAMICS</text>
+  </g>
+  <rect x="60" y="442" width="330" height="104" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="78" y="464" font-size="12" font-weight="bold">saturated headspace (25 °C)</text>
+    <text x="78" y="486" font-size="20">P_vap → C_hs</text>
+    <text x="78" y="506" font-size="11" fill="#555555">isoamyl acetate: 700 Pa ≈ 6,900 ppm</text>
+    <text x="78" y="522" font-size="11" fill="#555555">cinnamaldehyde: 1.3 Pa ≈ 13 ppm</text>
+    <text x="78" y="538" font-size="11" fill="#555555">(Joback groups → T_b, P_vap)</text>
+  </g>
+
+  <line x1="420" y1="240" x2="420" y2="560" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="450" y="240" font-size="13" font-weight="bold">HEADSPACE ON A LOG AXIS</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <line x1="450" y1="330" x2="450" y2="500" stroke-width="1.5"/>
+    <line x1="450" y1="500" x2="790" y2="500" stroke-width="1.5"/>
+  </g>
+  <line x1="450" y1="480" x2="790" y2="480" stroke="#111111" stroke-width="1"/>
+  <line x1="450" y1="430" x2="790" y2="430" stroke="#111111" stroke-width="1"/>
+  <line x1="450" y1="380" x2="790" y2="380" stroke="#111111" stroke-width="1"/>
+  <line x1="450" y1="330" x2="790" y2="330" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="432" y="484" font-size="11" text-anchor="end">0.1</text>
+    <text x="432" y="434" font-size="11" text-anchor="end">10</text>
+    <text x="432" y="384" font-size="11" text-anchor="end">1,000</text>
+    <text x="432" y="334" font-size="11" text-anchor="end">100,000</text>
+    <text x="620" y="520" font-size="11" fill="#555555">ppm in headspace</text>
+  </g>
+
+  <line x1="450" y1="377" x2="460" y2="377" stroke="#111111" stroke-width="1.5"/>
+  <text x="462" y="381" font-family="ui-monospace, monospace" font-size="11" fill="#111111" font-weight="bold">MOX floor ~1 ppm</text>
+  <line x1="450" y1="426" x2="460" y2="426" stroke="#111111" stroke-width="1.5"/>
+  <text x="462" y="430" font-family="ui-monospace, monospace" font-size="11" fill="#555555">cinnamaldehyde ~13 ppm</text>
+  <line x1="450" y1="356" x2="460" y2="356" stroke="#111111" stroke-width="1.5"/>
+  <text x="462" y="360" font-family="ui-monospace, monospace" font-size="11" fill="#555555">isoamyl acetate ~6,900 ppm</text>
+
+  <g stroke="#111111" fill="none">
+    <path d="M 500 356 h 40" stroke-width="2"/>
+    <path d="M 500 426 h 40" stroke-width="2"/>
+    <path d="M 500 377 h 40" stroke-width="2" stroke-dasharray="3,3"/>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="450" y="262" font-size="11" fill="#555555">volatility × redox → verdict</text>
+  </g>
+  <g stroke="#111111" fill="none">
+    <rect x="450" y="282" width="300" height="28" stroke-width="1.5" fill="#ffffff"/>
+    <rect x="450" y="282" width="150" height="28" fill="#e5e5e5" stroke="#111111" stroke-width="1"/>
+    <text x="600" y="300" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#111111">REDOX-ACTIVE?</text>
+    <text x="760" y="300" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#111111">yes/no</text>
+  </g>
+
+  <line x1="820" y1="240" x2="820" y2="560" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="850" y="240" font-size="13" font-weight="bold">FEASIBILITY GRID</text>
+    <text x="850" y="258" font-size="11" fill="#555555">estimate, not calibrated</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="850" y="280" width="140" height="90" stroke-width="1.5" fill="#ffffff"/>
+    <rect x="990" y="280" width="140" height="90" stroke-width="1.5" fill="#ffffff"/>
+    <rect x="850" y="370" width="140" height="90" stroke-width="1.5" fill="#ffffff"/>
+    <rect x="990" y="370" width="140" height="90" stroke-width="1.5" fill="#ffffff"/>
+  </g>
+  <g stroke="#111111" fill="none">
+    <line x1="850" y1="280" x2="1130" y2="280" stroke-width="1"/>
+    <line x1="850" y1="370" x2="1130" y2="370" stroke-width="1"/>
+  </g>
+  <g stroke="#999999" fill="#999999" opacity="0.35">
+    <rect x="862" y="292" width="116" height="66"/>
+    <rect x="1002" y="292" width="116" height="66"/>
+    <rect x="862" y="382" width="116" height="66"/>
+    <rect x="1002" y="382" width="116" height="66"/>
+  </g>
+  <g stroke="#111111" fill="#ffffff">
+    <rect x="1002" y="292" width="116" height="66"/>
+    <rect x="862" y="382" width="116" height="66"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="920" y="328" text-anchor="middle" font-size="12" fill="#555555">volatile</text>
+    <text x="920" y="346" text-anchor="middle" font-size="11" fill="#555555">not redox</text>
+    <text x="1060" y="328" text-anchor="middle" font-size="12" font-weight="bold">volatile</text>
+    <text x="1060" y="346" text-anchor="middle" font-size="11" font-weight="bold">+ redox</text>
+    <text x="920" y="418" text-anchor="middle" font-size="12" font-weight="bold">non-volatile</text>
+    <text x="920" y="436" text-anchor="middle" font-size="11" font-weight="bold">+ redox</text>
+    <text x="1060" y="418" text-anchor="middle" font-size="12" fill="#555555">non-volatile</text>
+    <text x="1060" y="436" text-anchor="middle" font-size="11" fill="#555555">not redox</text>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="850" y="486" font-size="12" font-weight="bold">LEGEND</text>
+    <circle cx="866" cy="506" r="8" fill="#111111"/>
+    <text x="884" y="511" font-size="12">detectable (MOX)</text>
+    <circle cx="866" cy="530" r="8" fill="none" stroke="#111111" stroke-width="1.5"/>
+    <text x="884" y="535" font-size="12">weak / matrix-dependent</text>
+  </g>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 014</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

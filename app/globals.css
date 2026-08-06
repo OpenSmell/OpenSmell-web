@@ -420,3 +420,18 @@
   margin: 1.5rem 0;
   border: 1px solid var(--border);
 }
+
+.article-body .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+  margin: 1.75rem 0;
+}
+
+.article-body .katex-display > .katex {
+  font-size: 1.05em;
+}
+
+.article-body .katex {
+  font-size: 0.98em;
+}

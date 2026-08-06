@@ -1,0 +1,135 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">CALIBRATION</text>
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, monospace" font-size="34" font-weight="bold" fill="#111111" letter-spacing="1">REFERENCE-POINT CALIBRATION</text>
+  <text x="600" y="156" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">POWER-LAW FIT · STATIC DILUTION · LEAVE-ONE-OUT</text>
+
+  <line x1="120" y1="200" x2="1040" y2="200" stroke="#111111" stroke-width="1"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="60" y="240" font-size="13" font-weight="bold">RECOVER (a, b) FROM n POINTS</text>
+  </g>
+  <text x="60" y="286" font-family="ui-monospace, monospace" font-size="18" fill="#111111">Rs/R₀ = a·Cᵇ</text>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="60" y="312" font-size="12" fill="#555555">two points solve it directly:</text>
+    <text x="60" y="332" font-size="13">b = log(R₁/R₂) / log(C₁/C₂)</text>
+    <text x="60" y="352" font-size="13">a = R₁ / C₁ᵇ</text>
+    <text x="60" y="374" font-size="11" fill="#555555">one point + C≈0 is degenerate — b needs log(C₁/C₂)</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="60" y="400" width="330" height="150" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="78" y="424" font-size="13" font-weight="bold">STATIC DILUTION</text>
+    <text x="78" y="446" font-size="12" fill="#555555">headspace → ppm:</text>
+    <text x="78" y="464" font-size="12" fill="#555555">P_vap → C_hs (Antoine /</text>
+    <text x="78" y="480" font-size="12" fill="#555555">Clausius–Clapeyron)</text>
+    <text x="78" y="500" font-size="12" fill="#555555">sealed-bag dilution → C₁/C₂</text>
+    <text x="78" y="520" font-size="11" fill="#555555">the smellability SDK already</text>
+    <text x="78" y="536" font-size="11" fill="#555555">computes headspace ppm</text>
+  </g>
+
+  <line x1="420" y1="240" x2="420" y2="560" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="450" y="240" font-size="13" font-weight="bold">THE VERIFIED FIT (SIMULATION)</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <line x1="450" y1="330" x2="450" y2="500" stroke-width="1.5"/>
+    <line x1="450" y1="500" x2="760" y2="500" stroke-width="1.5"/>
+    <polygon points="760,500 748,492 748,508"/>
+    <polygon points="450,330 458,342 442,342"/>
+  </g>
+  <g stroke="#111111" fill="none">
+    <line x1="450" y1="460" x2="470" y2="460" stroke-width="1"/>
+    <line x1="450" y1="420" x2="470" y2="420" stroke-width="1"/>
+    <line x1="450" y1="380" x2="470" y2="380" stroke-width="1"/>
+    <line x1="500" y1="500" x2="500" y2="486" stroke-width="1"/>
+    <line x1="560" y1="500" x2="560" y2="486" stroke-width="1"/>
+    <line x1="620" y1="500" x2="620" y2="486" stroke-width="1"/>
+    <line x1="680" y1="500" x2="680" y2="486" stroke-width="1"/>
+  </g>
+  <g stroke="#111111" fill="none">
+    <line x1="470" y1="492" x2="470" y2="468" stroke-width="1"/>
+    <line x1="545" y1="452" x2="545" y2="430" stroke-width="1"/>
+    <line x1="610" y1="420" x2="610" y2="398" stroke-width="1"/>
+    <line x1="668" y1="382" x2="668" y2="362" stroke-width="1"/>
+    <line x1="704" y1="370" x2="704" y2="350" stroke-width="1"/>
+  </g>
+  <g stroke="#111111" fill="none">
+    <ellipse cx="470" cy="480" rx="9" ry="11" stroke-width="1.5"/>
+    <ellipse cx="545" cy="441" rx="9" ry="11" stroke-width="1.5"/>
+    <ellipse cx="610" cy="409" rx="9" ry="11" stroke-width="1.5"/>
+    <ellipse cx="668" cy="372" rx="9" ry="11" stroke-width="1.5"/>
+    <ellipse cx="704" cy="360" rx="9" ry="11" stroke-width="1.5"/>
+  </g>
+  <g fill="#111111">
+    <ellipse cx="470" cy="480" rx="3" ry="3.5"/>
+    <ellipse cx="545" cy="441" rx="3" ry="3.5"/>
+    <ellipse cx="610" cy="409" rx="3" ry="3.5"/>
+    <ellipse cx="668" cy="372" rx="3" ry="3.5"/>
+    <ellipse cx="704" cy="360" rx="3" ry="3.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="492" y="518" font-size="11">10</text>
+    <text x="552" y="518" font-size="11">100</text>
+    <text x="612" y="518" font-size="11">1,000</text>
+    <text x="600" y="322" font-size="11" fill="#555555">log C (ppm)</text>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="780" y="258" font-size="12" font-weight="bold">true:  a = 2.0, b = −0.6, σ = 5%, n = 6</text>
+    <text x="780" y="282" font-size="12" font-weight="bold">recovered (median, 300 reps):</text>
+    <text x="780" y="302" font-size="12">a = 2.0042 · b = −0.6001</text>
+    <text x="780" y="322" font-size="12">r² = 0.9984</text>
+    <text x="780" y="342" font-size="12">LOO median error = 7.13%</text>
+    <text x="780" y="368" font-size="11" fill="#555555">leave-one-out over n reference points,</text>
+    <text x="780" y="384" font-size="11" fill="#555555">2 decades of concentration</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="780" y="402" width="330" height="70" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="798" y="424" font-size="12" font-weight="bold">POINT-COUNT TUNING (σ = 0.05)</text>
+    <text x="798" y="444" font-size="12" fill="#555555">n = 4 points → ~5.6% error</text>
+    <text x="798" y="462" font-size="12" fill="#555555">n = 6 points → ~5% error</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <line x1="450" y1="512" x2="760" y2="512" stroke-width="1"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="450" y="536" font-size="12" font-weight="bold">THE HONEST LIMITS</text>
+    <text x="450" y="556" font-size="11" fill="#555555">extrapolation beyond calibrated range is prohibited;</text>
+    <text x="450" y="570" font-size="11" fill="#555555">6 pure compounds cover ≈0.1% of 4,565 odorants</text>
+  </g>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 018</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>

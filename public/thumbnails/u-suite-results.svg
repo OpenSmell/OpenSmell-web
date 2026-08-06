@@ -1,0 +1,94 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">USE-CASE SUITE</text>
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, monospace" font-size="34" font-weight="bold" fill="#111111" letter-spacing="1">U1–U6: ONE PROTOCOL, SIX JOBS</text>
+  <text x="600" y="156" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">GAS-PRESENT 94.1% · TVC R² 0.793 · ZERO-SHOT 52.3%</text>
+
+  <line x1="120" y1="200" x2="1040" y2="200" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" fill="none">
+    <rect x="60" y="230" width="500" height="320" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="78" y="256" font-size="13" font-weight="bold">TASK → HEADLINE RESULT</text>
+  </g>
+  <line x1="60" y1="266" x2="560" y2="266" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="78" y="288" font-size="12">U2b · gas present / absent</text>
+    <text x="78" y="288" font-size="12" font-weight="bold" text-anchor="end">94.1%</text>
+    <text x="78" y="308" font-size="12">U2b · onset window</text>
+    <text x="78" y="308" font-size="12" font-weight="bold" text-anchor="end">84.2% @ 10 s</text>
+    <text x="78" y="328" font-size="12">U3 · TVC regression</text>
+    <text x="78" y="328" font-size="12" font-weight="bold" text-anchor="end">R² 0.793</text>
+    <text x="78" y="348" font-size="12">U4 · binary stimulus</text>
+    <text x="78" y="348" font-size="12" font-weight="bold" text-anchor="end">87.6% (bal 74.1%)</text>
+    <text x="78" y="368" font-size="12">U5 · rig fingerprint</text>
+    <text x="78" y="368" font-size="12" font-weight="bold" text-anchor="end">78.5%</text>
+    <text x="78" y="388" font-size="12">U6 · fine substance</text>
+    <text x="78" y="388" font-size="12" font-weight="bold" text-anchor="end">89.4%</text>
+    <text x="78" y="408" font-size="12">U6 · family (zero-shot)</text>
+    <text x="78" y="408" font-size="12" font-weight="bold" text-anchor="end">52.3%</text>
+    <text x="78" y="432" font-size="11" fill="#555555">U6 family LSO 40.2% vs majority 38.1%</text>
+  </g>
+  <line x1="60" y1="452" x2="560" y2="452" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="78" y="474" font-size="11" fill="#555555">ceiling for zero-shot (supervised, all families): 99.5%</text>
+    <text x="78" y="492" font-size="11" fill="#555555">TVC MAE 0.384 log₁₀ CFU/g · MQ5 ρ 0.93</text>
+    <text x="78" y="510" font-size="11" fill="#555555">every number: leave-one-session-out, recording-fair</text>
+  </g>
+
+  <line x1="600" y1="240" x2="600" y2="560" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="640" y="258" font-size="13" font-weight="bold">WHY THIS TABLE MATTERS</text>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="640" y="284" font-size="12" fill="#555555">six different jobs, one shared protocol —</text>
+    <text x="640" y="302" font-size="12" fill="#555555">so the numbers are comparable, and</text>
+    <text x="640" y="320" font-size="12" fill="#555555">the strengths and ceilings are visible</text>
+    <text x="640" y="338" font-size="12" fill="#555555">in the same frame.</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="640" y="356" width="460" height="66" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="658" y="378" font-size="12" font-weight="bold">DETECTION &gt; IDENTIFICATION</text>
+    <text x="658" y="396" font-size="11" fill="#555555">is-something-there (94.1%) is easier and more</text>
+    <text x="658" y="412" font-size="11" fill="#555555">robust than what-is-it (52.3% zero-shot)</text>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="640" y="452" font-size="12" fill="#555555">• regression on a physical quantity works</text>
+    <text x="640" y="470" font-size="12" fill="#555555">  (TVC R² 0.793 on real meat samples)</text>
+    <text x="640" y="490" font-size="12" fill="#555555">• binary beats multi-class (U4 bal 74.1%)</text>
+    <text x="640" y="510" font-size="12" fill="#555555">• sparse families collapse (0.0% classes)</text>
+    <text x="640" y="528" font-size="12" fill="#555555">• the honest framing is the deliverable</text>
+  </g>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 020</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>
