@@ -10,6 +10,7 @@ import AnimatedHero from "@/components/animated-hero"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+import OpenStack from "@/components/open-stack"
 
 const moats = [
   {
@@ -240,7 +241,7 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Five surfaces that together make digital smell real — from data to hardware to community.
+                Scent search, Osmograph, e-nose builder, appstore, Academy.
               </p>
             </div>
             <Carousel className="max-w-4xl mx-auto" opts={{ loop: true }}>
@@ -286,51 +287,10 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Four pillars that together make digitised olfaction possible.
+                Hardware · Data · Protocol · Software — the four pieces every rig relies on.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  icon: Cpu,
-                  title: "Open Hardware",
-                  desc: "Reference e-nose design using cheap off-the-shelf components. No PCB milling required.",
-                  link: "https://github.com/opensmell/electronic-nose",
-                },
-                {
-                  icon: Database,
-                  title: "Open Data",
-                  desc: "Community-contributed Data Commons for training shared, device-invariant representations.",
-                  link: "https://github.com/opensmell/data-commons",
-                },
-                {
-                  icon: Hexagon,
-                  title: "Open Protocol",
-                  desc: "Standardised recording procedure making temporal features reproducible across devices.",
-                  link: "https://github.com/opensmell/interoperability",
-                },
-                {
-                  icon: Sigma,
-                  title: "Open Software",
-                  desc: "Zero-code GUI (Osmograph) + Python SDK. Flash firmware, record, classify with clicks.",
-                  link: "https://github.com/opensmell/Osmograph",
-                },
-              ].map((item) => (
-                <a
-                  key={item.title}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hex-box group p-6 border border-border hover:bg-foreground hover:text-background transition-all duration-300"
-                >
-                  <item.icon className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground group-hover:text-background/70 transition-colors">
-                    {item.desc}
-                  </p>
-                </a>
-              ))}
-            </div>
+            <OpenStack />
           </div>
         </section>
 

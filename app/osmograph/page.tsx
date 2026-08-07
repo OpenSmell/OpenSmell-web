@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Globe } from "lucide-react"
+import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Globe, Usb, Wifi, Bluetooth } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 
@@ -185,7 +185,7 @@ export default function OsmographPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
               {[
-                { icon: Upload, title: "One-click firmware", desc: "Flashes firmware the moment you plug in your device. No manual setup." },
+                { icon: Upload, title: "One-click firmware", desc: "Flashes a pre-compiled ESP32 binary the moment you plug in your device. No PlatformIO or manual setup." },
                 { icon: BarChart3, title: "Live sensor traces", desc: "Displays real-time sensor readings with automatic signal quality validation." },
                 { icon: Settings, title: "Button-click training", desc: "Train substance classifiers without writing a single line of code." },
                 { icon: Monitor, title: "Zero-code GUI", desc: "Built for builders. No electronics background or programming required." },

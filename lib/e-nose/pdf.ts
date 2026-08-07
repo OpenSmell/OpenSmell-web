@@ -8,6 +8,11 @@ import {
   I2C_PINS,
   ENCLOSURE_SPECS,
   REPO_LINKS,
+  CONTROLLERS,
+  SAFETY_NOTES,
+  COMMON_MISTAKES,
+  TIPS,
+  BREADBOARD_GUIDE,
 } from "@/lib/e-nose/data"
 import type { PlanInput } from "@/lib/e-nose/data"
 
@@ -116,7 +121,7 @@ function table(cols: TableCol[], rows: (string[] | string)[][]) {
   y += 3
 }
 
-export async function buildPlanPdf(input: PlanInput): Promise<void> {
+async function createDoc(input: PlanInput): Promise<any> {
   ;({ doc } = await import("jspdf").then((m) => ({ doc: new m.jsPDF({ unit: "mm", format: "a4" }) })))
   y = M
 
@@ -149,6 +154,18 @@ export async function buildPlanPdf(input: PlanInput): Promise<void> {
     sensors.map((s) => [s.name, s.target, s.io, s.support === "full" ? "Full — in the standard kit" : s.support === "partial" ? "Hardware-ready · DIY firmware" : "Needs extra hardware"]),
   )
 
+  heading("Controllers")
+  table(
+    [
+      { title: "Board", width: 42 },
+      { title: "ADC inputs", width: 46 },
+      { title: "Wireless", width: 34 },
+      { title: "Fit", width: 60 },
+    ],
+    CONTROLLERS.map((c) => [c.name, c.adc, c.wireless, c.fit]),
+  )
+  para("The ESP32 is the recommended board — Osmograph flashes it one-click and its ADC1 pins are WiFi-safe. Other controllers work if you already own one: they share the same CSV stream contract, but need pin remaps, fewer channels, or a USB-only host. See the notes above before ordering parts.", 8)
+
   heading("Bill of materials")
   table(
     [
@@ -158,7 +175,7 @@ export async function buildPlanPdf(input: PlanInput): Promise<void> {
     ],
     bom.map((b) => [b.item, b.qty, b.purpose]),
   )
-  para("Prices are intentionally not listed — they vary by region. Source locally where possible. Two 10 kΩ resistors are needed per MQ sensor for the voltage divider.", 8)
+  para(`Prices are intentionally not listed — they vary by region. Source locally where possible. Two 10 kΩ resistors are needed per MQ sensor for the voltage divider. ${BREADBOARD_GUIDE.footprint}`, 8)
 
   heading("Wiring")
   if (mqCount > 0) {
@@ -184,6 +201,14 @@ export async function buildPlanPdf(input: PlanInput): Promise<void> {
   heading("Wiring checklist")
   WIRING_CHECKLIST.forEach(bullet)
 
+  heading("Before you power up — safety")
+  SAFETY_NOTES.forEach(bullet)
+
+  heading("Common mistakes")
+  COMMON_MISTAKES.forEach(([m, f]) => {
+    bullet(`${m} — ${f}`)
+  })
+
   heading("Firmware")
   para(hasDigital ? FIRMWARE_NOTES.withDigital : FIRMWARE_NOTES.mqOnly, 9)
   para(FIRMWARE_NOTES.stream, 8)
@@ -193,6 +218,9 @@ export async function buildPlanPdf(input: PlanInput): Promise<void> {
   bullet("Before every recording session, let the sensors warm up for 5 minutes.")
   bullet("Flash the firmware, open the serial monitor at 115200 baud, and confirm comma-separated numbers stream steadily.")
   bullet("Crush a clove of garlic, bring it near the array — the numbers should rise or fall clearly, then drift back over 30–60 seconds.")
+
+  heading("After flashing — tips")
+  TIPS.forEach(bullet)
 
   heading("Calibration")
   para(
@@ -217,9 +245,15 @@ export async function buildPlanPdf(input: PlanInput): Promise<void> {
     TROUBLESHOOTING,
   )
 
+  heading("Before you build")
+  para(
+    "Cross-check every connection against this plan before applying power. This is open-source documentation maintained by hand and by community fixes — wiring, pin numbers, and part behaviour can vary between boards and sensor clones. If something looks wrong, check the electronic-nose repo and the community before trusting it. Start with one sensor, prove it works, then grow the array.",
+    8.5,
+  )
+
   doc.setFont("helvetica", "normal")
   doc.setFontSize(8)
-  para("Sources: electronic-nose reference repo (BOM, WIRING, BUILD, ENCLOSURE, EXPERIMENT). Calibration and digital-sensor software are under active development — treat those capabilities as in-progress, not finished.", 8)
+  para("Sources: electronic-nose reference repo (BOM, WIRING, BUILD, ENCLOSURE, EXPERIMENT). Calibration and digital-sensor software are under active development — treat those capabilities as in-progress, not finished. This plan is provided as-is; verify before you order or power anything.", 8)
 
   const pages = doc.getNumberOfPages()
   for (let i = 1; i <= pages; i++) {
@@ -230,6 +264,16 @@ export async function buildPlanPdf(input: PlanInput): Promise<void> {
     doc.text(`Page ${i} of ${pages} · ${REPO_LINKS.repo}`, PAGE_W - M, PAGE_H - 8, { align: "right" })
   }
 
+  return doc
+}
+
+export async function buildPlanBlob(input: PlanInput): Promise<Blob> {
+  const d = await createDoc(input)
+  return d.output("blob")
+}
+
+export async function buildPlanPdf(input: PlanInput): Promise<void> {
+  const d = await createDoc(input)
   const stamp = new Date().toISOString().slice(0, 10)
-  doc.save(`opensmell-enose-build-plan-${stamp}.pdf`)
+  d.save(`opensmell-enose-build-plan-${stamp}.pdf`)
 }

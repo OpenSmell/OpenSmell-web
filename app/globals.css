@@ -159,12 +159,12 @@
   }
   .bg-hex {
     background-color: var(--background);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='89.14' height='156' viewBox='0 0 89.14 156'%3E%3Cpath d='M0 -48L41.57 -24L41.57 24L0 48L-41.57 24L-41.57 -24ZM89.14 -48L130.71 -24L130.71 24L89.14 48L47.57 24L47.57 -24ZM44.57 30L86.14 54L86.14 102L44.57 126L3 102L3 54ZM0 108L41.57 132L41.57 180L0 204L-41.57 180L-41.57 132ZM89.14 108L130.71 132L130.71 180L89.14 204L47.57 180L47.57 132Z' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.06'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='83.14' height='144' viewBox='0 0 83.14 144'%3E%3Cpath d='M0 -48L41.57 -24L41.57 24L0 48L-41.57 24L-41.57 -24ZM83.14 -48L124.71 -24L124.71 24L83.14 48L41.57 24L41.57 -24ZM41.57 24L83.14 48L83.14 96L41.57 120L0 96L0 48ZM0 96L41.57 120L41.57 168L0 192L-41.57 168L-41.57 96ZM83.14 96L124.71 120L124.71 168L83.14 192L41.57 168L41.57 96Z' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.06'/%3E%3C/svg%3E");
     background-repeat: repeat;
-    background-size: 89.14px 156px;
+    background-size: 83.14px 144px;
   }
   .light .bg-hex {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='89.14' height='156' viewBox='0 0 89.14 156'%3E%3Cpath d='M0 -48L41.57 -24L41.57 24L0 48L-41.57 24L-41.57 -24ZM89.14 -48L130.71 -24L130.71 24L89.14 48L47.57 24L47.57 -24ZM44.57 30L86.14 54L86.14 102L44.57 126L3 102L3 54ZM0 108L41.57 132L41.57 180L0 204L-41.57 180L-41.57 132ZM89.14 108L130.71 132L130.71 180L89.14 204L47.57 180L47.57 132Z' fill='none' stroke='%23000000' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='83.14' height='144' viewBox='0 0 83.14 144'%3E%3Cpath d='M0 -48L41.57 -24L41.57 24L0 48L-41.57 24L-41.57 -24ZM83.14 -48L124.71 -24L124.71 24L83.14 48L41.57 24L41.57 -24ZM41.57 24L83.14 48L83.14 96L41.57 120L0 96L0 48ZM0 96L41.57 120L41.57 168L0 192L-41.57 168L-41.57 96ZM83.14 96L124.71 120L124.71 168L83.14 192L41.57 168L41.57 96Z' fill='none' stroke='%23000000' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E");
   }
 }
 

@@ -25,6 +25,9 @@ import {
   Download,
   Radio,
   Loader2,
+  Eye,
+  X,
+  ShieldAlert,
 } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
@@ -45,9 +48,14 @@ import {
   I2C_PINS,
   buildBom,
   REPO_LINKS,
+  CONTROLLERS,
+  SAFETY_NOTES,
+  COMMON_MISTAKES,
+  TIPS,
+  BREADBOARD_GUIDE,
 } from "@/lib/e-nose/data"
 import type { SupportLevel } from "@/lib/e-nose/data"
-import { buildPlanPdf } from "@/lib/e-nose/pdf"
+import { buildPlanBlob } from "@/lib/e-nose/pdf"
 
 const KIND_META = {
   "mox-analog": { icon: Gauge, label: "Metal-oxide · analog" },
@@ -103,6 +111,7 @@ export default function EnosePage() {
 
   const [filter, setFilter] = useState<"all" | SupportLevel>("all")
   const [query, setQuery] = useState("")
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
   useEffect(() => {
     setHydrated(true)
@@ -166,13 +175,20 @@ export default function EnosePage() {
     if (planSensors.length === 0) return
     setGenerating(true)
     try {
-      await buildPlanPdf({
+      const blob = await buildPlanBlob({
         goal: goal.label,
         sensors: planSensors.map((s) => s.id),
       })
+      if (previewUrl) URL.revokeObjectURL(previewUrl)
+      setPreviewUrl(URL.createObjectURL(blob))
     } finally {
       setGenerating(false)
     }
+  }
+
+  const closePreview = () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl)
+    setPreviewUrl(null)
   }
 
   if (!hydrated) return null
@@ -644,8 +660,8 @@ export default function EnosePage() {
                     disabled={planSensors.length === 0 || generating}
                     className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-foreground text-background px-5 py-3 text-sm font-medium hover:opacity-90 transition-all disabled:opacity-40"
                   >
-                    {generating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-                    {planSensors.length === 0 ? "Pick at least one sensor" : "Download build plan (PDF)"}
+                    {generating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Eye className="w-4 h-4" />}
+                    {planSensors.length === 0 ? "Pick at least one sensor" : "Preview build plan (PDF)"}
                   </button>
                   <a
                     href={REPO_LINKS.repo}
@@ -752,6 +768,54 @@ export default function EnosePage() {
                 </div>
               </div>
             )}
+          </div>
+        </section>
+
+        {/* CONTROLLERS */}
+        <section className="border-t border-border py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Pick a controller</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                ESP32 is the recommended board. If you already own one of these, it works too.
+              </p>
+            </div>
+            <div className="border border-border bg-background hex-box overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="px-4 py-3 text-xs font-mono uppercase tracking-wider text-muted-foreground">Board</th>
+                      <th className="px-4 py-3 text-xs font-mono uppercase tracking-wider text-muted-foreground">ADC inputs</th>
+                      <th className="px-4 py-3 text-xs font-mono uppercase tracking-wider text-muted-foreground">Logic</th>
+                      <th className="px-4 py-3 text-xs font-mono uppercase tracking-wider text-muted-foreground">Wireless</th>
+                      <th className="px-4 py-3 text-xs font-mono uppercase tracking-wider text-muted-foreground">Fit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {CONTROLLERS.map((c) => (
+                      <tr key={c.id} className="border-b border-border last:border-0 align-top">
+                        <td className="px-4 py-3">
+                          <div className="font-semibold">{c.name}</div>
+                          <div className="text-xs text-muted-foreground mt-1 max-w-md">{c.note}</div>
+                        </td>
+                        <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{c.adc}</td>
+                        <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{c.logic}</td>
+                        <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{c.wireless}</td>
+                        <td className="px-4 py-3 text-xs">{c.fit}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-4 max-w-3xl mx-auto text-center">
+              One-click Osmograph flashing is ESP32-only today. The other boards share the same CSV stream contract, so they work with the platform — but you bring the Arduino or PlatformIO toolchain.
+            </p>
           </div>
         </section>
 
@@ -864,6 +928,64 @@ export default function EnosePage() {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SAFETY & MISTAKES */}
+        <section className="border-t border-border py-24 bg-hex">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Safety & common mistakes</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Cross-check your wiring before applying power. These are the failure modes people actually hit.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-border">
+              <div className="bg-background p-8 hex-box">
+                <div className="flex items-center gap-2 mb-4">
+                  <ShieldAlert className="w-5 h-5 text-muted-foreground" />
+                  <h3 className="font-bold">Before you power up</h3>
+                </div>
+                <ul className="space-y-3">
+                  {SAFETY_NOTES.map((s) => (
+                    <li key={s} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="bg-background p-8 hex-box">
+                <div className="flex items-center gap-2 mb-4">
+                  <AlertTriangle className="w-5 h-5 text-muted-foreground" />
+                  <h3 className="font-bold">Mistakes people make</h3>
+                </div>
+                <ul className="space-y-3">
+                  {COMMON_MISTAKES.map(([m, f]) => (
+                    <li key={m} className="text-sm">
+                      <span className="font-semibold">{m}.</span> <span className="text-muted-foreground">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="border border-border bg-background hex-box mt-px">
+              <div className="px-8 py-6">
+                <h3 className="font-bold mb-4">After flashing — tips</h3>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                  {TIPS.map((t) => (
+                    <li key={t} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
@@ -1014,6 +1136,36 @@ export default function EnosePage() {
           </Link>
         </div>
       </footer>
+
+      {previewUrl && (
+        <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4 md:p-8">
+          <div className="bg-background border border-border w-full max-w-4xl h-[85vh] flex flex-col">
+            <div className="flex items-center justify-between px-5 py-3 border-b border-border gap-3">
+              <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+                Build plan preview
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={previewUrl}
+                  download={`opensmell-enose-build-plan-${new Date().toISOString().slice(0, 10)}.pdf`}
+                  className="inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  Download PDF
+                </a>
+                <button
+                  onClick={closePreview}
+                  aria-label="Close preview"
+                  className="w-9 h-9 border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+            <iframe src={previewUrl} title="Build plan preview" className="w-full flex-1 bg-white" />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

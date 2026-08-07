@@ -432,6 +432,85 @@ export const I2C_PINS = { sda: "GPIO21", scl: "GPIO22" }
 
 export const MAX_I2C_ADDON = 1
 
+export interface Controller {
+  id: string
+  name: string
+  fit: "Recommended" | "Works — pin remap" | "Works — limited channels" | "Works — serial only"
+  adc: string
+  logic: string
+  wireless: string
+  flash: string
+  note: string
+}
+
+export const CONTROLLERS: Controller[] = [
+  {
+    id: "esp32",
+    name: "ESP32 (ESP-WROOM-32, 38-pin)",
+    fit: "Recommended",
+    adc: "6× ADC1, 12-bit (GPIO34/35/32/33/36/39)",
+    logic: "3.3 V",
+    wireless: "WiFi AP + BLE",
+    flash: "Osmograph one-click (esptool), PlatformIO, Arduino IDE",
+    note: "The reference board. ADC1 is WiFi-safe — the firmware maps sensors only to ADC1 so WiFi and BLE stay usable while recording.",
+  },
+  {
+    id: "esp32-s3",
+    name: "ESP32-S3 / C3",
+    fit: "Works — pin remap",
+    adc: "Different ADC1 pin numbering (S3: GPIO1–10)",
+    logic: "3.3 V",
+    wireless: "WiFi + BLE",
+    flash: "PlatformIO, Arduino IDE",
+    note: "Same ESP32 SDK, same CSV contract — but the ADC1 channels live on different GPIOs. Re-map the pin table in the firmware before flashing.",
+  },
+  {
+    id: "esp8266",
+    name: "ESP8266 (NodeMCU)",
+    fit: "Works — limited channels",
+    adc: "1× 10-bit (A0)",
+    logic: "3.3 V",
+    wireless: "WiFi (no BLE)",
+    flash: "Arduino IDE, PlatformIO",
+    note: "A single ADC input. One MQ sensor works; for more, add an I²C ADC (e.g. ADS1115) and keep the sensors on the 5 V rail with dividers into the ADC inputs.",
+  },
+  {
+    id: "uno",
+    name: "Arduino Uno / Nano",
+    fit: "Works — serial only",
+    adc: "6× 10-bit (A0–A5)",
+    logic: "5 V",
+    wireless: "None on board (shield required)",
+    flash: "Arduino IDE",
+    note: "Common shelf board. Streams the same CSV over USB Serial, but there is no onboard WiFi or BLE — the host (Osmograph) has to stay connected via USB.",
+  },
+  {
+    id: "pico",
+    name: "Raspberry Pi Pico / Pico W",
+    fit: "Works — limited channels",
+    adc: "4× 12-bit (GP26–29)",
+    logic: "3.3 V",
+    wireless: "Pico W only: WiFi (no BLE)",
+    flash: "C/C++, MicroPython",
+    note: "Twelve-bit ADC but only four usable inputs. Pico W adds WiFi; a plain Pico is serial-only. Keep divider outputs at or below 3.3 V.",
+  },
+]
+
+export const BREADBOARD_GUIDE = {
+  footprint:
+    "A 38-pin ESP32 spans ~11 rows of a breadboard and blocks every column it sits on — most of a 170-point mini board disappears under the module.",
+  byCount: [
+    { max: 2, board: "Mini breadboard (170 tie-points)", reason: "Enough for 1–2 sensors" },
+    { max: 4, board: "Half-size breadboard (400 tie-points)", reason: "Comfortable for 3–4 sensors" },
+    { max: 6, board: "Full-size breadboard (830 tie-points)", reason: "Room for the 6-sensor array and rails" },
+  ] as { max: number; board: string; reason: string }[],
+}
+
+export function breadboardFor(mq: number): { item: string; reason: string } {
+  const g = BREADBOARD_GUIDE.byCount.find((b) => mq <= b.max) ?? BREADBOARD_GUIDE.byCount[BREADBOARD_GUIDE.byCount.length - 1]
+  return { item: g.board, reason: g.reason }
+}
+
 export interface BomLine {
   item: string
   qty: string
@@ -448,13 +527,14 @@ export function buildBom(input: PlanInput): BomLine[] {
   const mq = input.sensors.filter((id) => sensorById(id)?.kind === "mox-analog").length
   const digital = input.sensors.filter((id) => sensorById(id)?.kind === "mox-digital").length
   const resistorPacks = Math.ceil((mq * 2) / 5)
+  const breadboard = breadboardFor(mq)
   const lines: BomLine[] = [
     { item: "ESP32 dev board (38-pin)", qty: "1", purpose: "Microcontroller" },
     { item: "MQ sensor modules", qty: String(mq), purpose: "Gas sensing array (see sensor list)" },
     ...(digital > 0
       ? [{ item: "Digital gas sensor breakout (I²C)", qty: String(digital), purpose: "Supplementary digital sensing channel" }]
       : []),
-    { item: "Mini breadboard (170 tie-points)", qty: "1", purpose: "Wiring base" },
+    { item: breadboard.item, qty: "1", purpose: `${breadboard.reason} — the 38-pin ESP32 covers ~11 rows and blocks the columns it sits on` },
     { item: "Jumper wires, male–male (40 pc)", qty: "1", purpose: "Connections" },
     { item: "10 kΩ resistors (5-pack)", qty: String(resistorPacks), purpose: `Voltage dividers — 2 per MQ sensor (${mq * 2} needed)` },
     { item: "Micro USB data cable", qty: "1", purpose: "Power + programming — must be data-capable, not charge-only" },
@@ -482,8 +562,37 @@ export const FIRMWARE_NOTES = {
   withDigital:
     "Osmograph's one-click flash currently covers MQ-only configurations. For a rig that includes a digital I²C sensor, flash the PlatformIO firmware from electronic-nose/firmware and add the sensor's I²C init, appending its readings as extra CSV columns.",
   stream:
-    "Stream contract: comma-separated values over serial at 115200 baud. Osmograph's firmware prefixes lines with OSM, and emits every 500 ms (also over the WiFi AP, TCP :8080); the reference firmware prints plain CSV at 10 Hz.",
+    "Stream contract: comma-separated values over serial at 115200 baud. The Osmograph firmware emits OSM-prefixed lines every 500 ms over USB Serial and a WiFi AP (TCP :8080, mDNS osmograph) at the same time; a BLE variant lives in electronic-nose/firmware/variants.",
 }
+
+export const SAFETY_NOTES = [
+  "Check polarity twice before powering: ESP32 VIN → 5 V, GND → GND. Reversed power is the fastest way to kill a board.",
+  "Never feed 5 V into a 3.3 V GPIO or ADC pin. The two-resistor divider is there for a reason.",
+  "MQ heater elements run at roughly 80 °C and are always on when powered. Keep plastic, wires, and fingers clear.",
+  "MQ heaters draw ~150 mA each. Four to six sensors can exceed a laptop USB port's 500 mA budget — use a powered hub or an external 5 V supply.",
+  "Bare electrochemical cells are not direct ADC inputs — they need a load/amplifier circuit. Wire a cell straight to GPIO and you risk the cell and the ADC.",
+  "The ESP32 is ESD-sensitive. Touch a grounded surface before handling the board.",
+  "If the board powers but never shows up on your computer, the cable is almost certainly charge-only.",
+]
+
+export const COMMON_MISTAKES = [
+  ["Wiring DO instead of AO", "MQ modules expose a digital DO pin (threshold output) and an analog AO pin. AO is the gas value — DO is not."],
+  ["Two sensors sharing one ADC pin", "Each MQ sensor needs a unique ADC1 pin. Sharing corrupts both readings."],
+  ["Skipping the voltage divider", "MQ AO can swing above 3.3 V. Without the divider the ADC clips at 3.3 V and reads wrong, and can be damaged."],
+  ["Under-sizing the breadboard", "The 38-pin ESP32 spans ~11 rows and blocks the columns it sits on. A 170-point mini board only fits 1–2 sensors."],
+  ["Two identical I²C breakouts", "Two SGP40s (or two of any same-address breakout) collide on the bus. Pick one digital add-on, or change an address if the breakout allows it."],
+  ["Flashing over a charge-only cable", "The board powers up but the port never enumerates. Swap the cable."],
+  ["Sensors sealed in an enclosure", "MQ sensors need airflow. A sealed box fills with heater heat and stale air — readings become meaningless."],
+]
+
+export const TIPS = [
+  "After flashing, you don't need the laptop plugged in: power the rig from a USB wall adapter or power bank and stream over the WiFi AP (or BLE). Your machine stays untethered.",
+  "Let the heaters warm up 5 minutes before every session — readings drift hard while they settle.",
+  "Log a clean-air baseline at the start of each session; drift happens and the baseline is your reference.",
+  "Use a cup, jar, or bag to hold samples at a consistent distance from the array.",
+  "Keep the rig near fresh air between samples, not next to the thing you're sniffing.",
+  "Re-flash to switch streaming mode — the variants cover USB-only, WiFi, and BLE.",
+]
 
 export const BUILD_FLOW = [
   { step: "1", title: "Wire it", desc: "Rails, power, and one voltage divider per MQ sensor onto unique ADC1 pins." },
