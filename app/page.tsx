@@ -225,9 +225,9 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
               {[
-                { label: "Open Repositories", value: "15" },
+                { label: "Open Repositories", value: "16" },
                 { label: "Chemical–Odour Pairs", value: "4,800+" },
-                { label: "Community ★", value: "42" },
+                { label: "Streaming Modes", value: "3" },
                 { label: "ML Features / Recording", value: "145" },
                 { label: "Max Sensors / Rig", value: "6" },
               ].map((stat) => (
@@ -353,15 +353,15 @@ export default function Home() {
                   Real applications, real hardware.
                 </h2>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  From food quality monitoring to breath analysis to environmental sensing —
-                  the open stack lets you build olfactory applications that actually work,
-                  with sensors you can buy today.
+                  From food quality to breath to environmental sensing —
+                  the open stack lets you explore olfactory applications with
+                  sensors you can buy today.
                 </p>
                 <div className="space-y-4 mb-8">
                   {[
-                    { title: "Detect spoilage before it happens", desc: "Track fermentation, coffee roast, or fruit ripening with live sensor traces." },
-                    { title: "Build gas leak alarms", desc: "LPG, methane, CO — detect and classify dangerous gases in real time from live traces." },
-                    { title: "Prototype breath analysis", desc: "Ketosis markers, alcohol estimation, volatile biomarkers — the data pipeline is open." },
+                    { title: "Track fermentation and ripening", desc: "Follow coffee roast, fruit ripening, or fermentation on live sensor traces." },
+                    { title: "Explore gas discrimination", desc: "LPG, methane, CO — train a classifier to tell them apart from live traces. A research tool, not a certified alarm." },
+                    { title: "Prototype breath analysis", desc: "VOC-rich breath signals — the pipeline is open, but biomarker claims need your own validation." },
                   ].map((item) => (
                     <div key={item.title} className="border border-border p-4">
                       <div className="font-semibold text-sm mb-1">{item.title}</div>

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Store, Download, Star, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, Users, TrendingUp, Grid3X3, Filter, Database, Puzzle, X, Send, Coins, Loader2 } from "lucide-react"
+import { Store, Download, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, TrendingUp, Grid3X3, Database, Puzzle, X, Send, Coins, Loader2 } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 import { AppstoreArt } from "@/components/hero-art"
@@ -272,7 +272,11 @@ export default function AppStorePage() {
                 <p className="text-lg text-muted-foreground max-w-2xl mb-8 leading-relaxed">
                   Datasets, plugins, and apps built by the community for the OpenSmell platform.
                   Download free tools, buy from the community, or sell your own work —
-                  every submission is reviewed for compatibility and quality.
+                  every submission is manually reviewed before it goes live.
+                </p>
+                <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
+                  Preview — the store is not open yet. The cards below are sample listings
+                  to show how submissions will look; metrics and counts are placeholders.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
@@ -295,10 +299,10 @@ export default function AppStorePage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
               {[
-                { icon: Download, val: "28k+", label: "Total Downloads" },
-                { icon: Users, val: "12", label: "Published Items" },
-                { icon: Shield, val: "100%", label: "Reviewed" },
+                { icon: Store, val: "Preview", label: "Status" },
+                { icon: Shield, val: "Manual", label: "Review Process" },
                 { icon: Database, val: "3", label: "Categories" },
+                { icon: Upload, val: "Open", label: "Submissions" },
               ].map((s) => (
                 <div key={s.label} className="bg-background p-8 text-center">
                   <s.icon className="w-6 h-6 mx-auto mb-3 text-muted-foreground" />
@@ -464,14 +468,8 @@ export default function AppStorePage() {
                         <span key={t} className="text-[10px] border border-border px-1.5 py-0.5 text-muted-foreground">{t}</span>
                       ))}
                     </div>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground mb-4 mt-auto">
-                      {app.rating > 0 ? (
-                        <span className="flex items-center gap-1">
-                          <Star className="w-3 h-3 fill-current" />
-                          {app.rating}
-                        </span>
-                      ) : <span />}
-                      <span>{app.downloads} dl</span>
+                    <div className="text-xs text-muted-foreground mb-4 mt-auto">
+                      {app.rigs.join(", ")}
                     </div>
                     <div className="flex items-center justify-between gap-2">
                       <a href={app.href} target="_blank" rel="noopener noreferrer"

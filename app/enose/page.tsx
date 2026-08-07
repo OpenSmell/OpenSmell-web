@@ -264,9 +264,9 @@ export default function EnosePage() {
                   that speaks <span className="text-muted-foreground">OpenSmell</span>.
                 </h1>
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                  An interoperable electronic nose from locally available parts — no PCB milling, no
-                  electronics degree. Wire sensors, flash with a click, and record smells into the same
-                  shared representation every OpenSmell app understands.
+                  An electronic nose from off-the-shelf parts — no PCB milling, no
+                  electronics degree. Wire sensors, flash with a click, and record into the open
+                  CSV stream the whole stack shares.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
                   <button
@@ -922,7 +922,7 @@ export default function EnosePage() {
                     <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-3">Calibration & interoperability</div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       The calibration pipeline translates a new device's voltages into the shared representation
-                      behind SmellNet's 44-substance prototypes. The Osmograph Calibration Wizard is under
+                      behind SmellNet's substance prototypes. The Osmograph Calibration Wizard is under
                       active development; within-session experiments work today. The full protocol — a 2-substance
                       quick test or a 5-substance validation — is in the repo's EXPERIMENT.md.
                     </p>

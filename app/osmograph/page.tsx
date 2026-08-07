@@ -109,7 +109,7 @@ export default function OsmographPage() {
                   {[
                     { step: "1", icon: Download, text: "Download Osmograph for your OS" },
                     { step: "2", icon: Cpu, text: "Plug in your e-nose via USB" },
-                    { step: "3", icon: Play, text: "Osmograph auto-flashes the firmware" },
+                    { step: "3", icon: Play, text: "Osmograph flashes the matching firmware (one click)" },
                     { step: "4", icon: BarChart3, text: "Record live sensor traces" },
                     { step: "5", icon: Settings, text: "Train a classifier with one click" },
                   ].map((s) => (
@@ -185,11 +185,11 @@ export default function OsmographPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
               {[
-                { icon: Upload, title: "One-click firmware", desc: "Flashes a pre-compiled ESP32 binary the moment you plug in your device. No PlatformIO or manual setup." },
+                { icon: Upload, title: "One-click firmware", desc: "Flashes a pre-compiled ESP32 binary with a click after board detection. No PlatformIO or manual setup." },
                 { icon: BarChart3, title: "Live sensor traces", desc: "Displays real-time sensor readings with automatic signal quality validation." },
                 { icon: Settings, title: "Button-click training", desc: "Train substance classifiers without writing a single line of code." },
                 { icon: Monitor, title: "Zero-code GUI", desc: "Built for builders. No electronics background or programming required." },
-                { icon: GitBranch, title: "Protocol enforcement", desc: "Enforces the standardised OpenSmell recording protocol automatically." },
+                { icon: GitBranch, title: "Signal validation", desc: "Validates incoming samples and filters bootloader chatter automatically." },
                 { icon: Download, title: "Cross-platform", desc: "Works on Windows, macOS, and Linux. One download, everything included." },
               ].map((f) => (
                 <div key={f.title} className="bg-background p-8 hex-box">
