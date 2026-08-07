@@ -12,7 +12,7 @@ const PILLARS = [
   {
     icon: Database,
     title: "Open Data",
-    desc: "Shared, device-invariant training data.",
+    desc: "Shared training data from open rigs.",
     href: "https://github.com/opensmell/data-commons",
     internal: false,
   },

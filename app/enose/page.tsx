@@ -384,7 +384,7 @@ export default function EnosePage() {
         </section>
 
         {/* SENSOR CATALOG */}
-        <section id="sensors" className="border-t border-border py-24 bg-hex">
+        <section id="sensors" className="border-t border-border py-24 bg-grid">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center mb-12">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -820,7 +820,7 @@ export default function EnosePage() {
         </section>
 
         {/* BUILD FLOW */}
-        <section id="build-flow" className="border-t border-border py-24 bg-hex">
+        <section id="build-flow" className="border-t border-border py-24 bg-grid">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -934,7 +934,7 @@ export default function EnosePage() {
         </section>
 
         {/* SAFETY & MISTAKES */}
-        <section className="border-t border-border py-24 bg-hex">
+        <section className="border-t border-border py-24 bg-grid">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -1053,7 +1053,7 @@ export default function EnosePage() {
         </section>
 
         {/* MIRIS */}
-        <section className="border-t border-border py-24 bg-hex">
+        <section className="border-t border-border py-24 bg-grid">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center">
               <div className="flex items-center justify-center gap-3 mb-4">

@@ -21,6 +21,47 @@ const PAGE_H = 297
 const M = 14
 const BOTTOM = PAGE_H - M
 
+const CP1252_SPECIAL = new Set([
+  0x20ac, 0x2013, 0x2014, 0x2018, 0x2019, 0x201a, 0x201c, 0x201d, 0x201e, 0x2020, 0x2021,
+  0x2022, 0x2026, 0x2030, 0x2039, 0x203a, 0x02c6, 0x02dc, 0x0152, 0x0153, 0x0160, 0x0161,
+  0x0178, 0x017d, 0x017e, 0x0192, 0x2122,
+])
+const REPLACEMENTS: [RegExp, string][] = [
+  [/→/g, "->"],
+  [/Ω/g, "ohm"],
+  [/≈/g, "~"],
+  [/≥/g, ">="],
+  [/≤/g, "<="],
+  [/±/g, "+/-"],
+  [/✓/g, "yes"],
+  [/₀/g, "0"],
+  [/₁/g, "1"],
+  [/₂/g, "2"],
+  [/₃/g, "3"],
+  [/₄/g, "4"],
+  [/₅/g, "5"],
+  [/₆/g, "6"],
+  [/₇/g, "7"],
+  [/₈/g, "8"],
+  [/₉/g, "9"],
+]
+const CP1252_UNASSIGNED = new Set([0x81, 0x8d, 0x8f, 0x90, 0x9d])
+
+function sanitize(text: string): string {
+  let out = text
+  for (const [re, sub] of REPLACEMENTS) out = out.replace(re, sub)
+  let result = ""
+  for (const ch of out) {
+    const cp = ch.codePointAt(0)!
+    if ((cp <= 0xff && !CP1252_UNASSIGNED.has(cp)) || CP1252_SPECIAL.has(cp)) {
+      result += ch
+    } else {
+      result += "?"
+    }
+  }
+  return result
+}
+
 let y = 0
 let doc: any = null
 
@@ -39,6 +80,7 @@ function rule() {
 }
 
 function heading(text: string) {
+  text = sanitize(text)
   ensure(16)
   doc.setFont("helvetica", "bold")
   doc.setFontSize(12)
@@ -48,6 +90,7 @@ function heading(text: string) {
 }
 
 function para(text: string, size = 9, opts?: { bold?: boolean }) {
+  text = sanitize(text)
   doc.setFont("helvetica", opts?.bold ? "bold" : "normal")
   doc.setFontSize(size)
   const lines = doc.splitTextToSize(text, PAGE_W - M * 2)
@@ -60,6 +103,7 @@ function para(text: string, size = 9, opts?: { bold?: boolean }) {
 }
 
 function bullet(text: string) {
+  text = sanitize(text)
   const lines = doc.splitTextToSize(text, PAGE_W - M * 2 - 6)
   lines.forEach((ln: string, i: number) => {
     ensure(5)
@@ -75,6 +119,10 @@ interface TableCol {
 }
 
 function table(cols: TableCol[], rows: (string[] | string)[][]) {
+  cols = cols.map((c) => ({ ...c, title: sanitize(c.title) }))
+  rows = rows.map((row) =>
+    row.map((cell) => (typeof cell === "string" ? sanitize(cell) : cell.map(sanitize))),
+  )
   const colX: number[] = []
   let x = M
   cols.forEach((c) => {

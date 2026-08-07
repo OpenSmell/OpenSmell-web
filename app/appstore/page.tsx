@@ -42,7 +42,7 @@ const builtinApps = [
   },
   {
     name: "Data Commons",
-    desc: "Community-contributed sensor recordings. Open, versioned, device-invariant datasets for ML training.",
+    desc: "Community-contributed sensor recordings. Open, versioned datasets for ML training.",
     author: "OpenSmell Core",
     rating: 4.7,
     reviews: 31,
@@ -256,7 +256,7 @@ export default function AppStorePage() {
       </header>
 
       <main>
-        <section className="pt-32 pb-20 border-b border-border bg-hex">
+        <section className="pt-32 pb-20 border-b border-border bg-grid">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
               <div className="max-w-3xl">

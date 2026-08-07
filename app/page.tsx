@@ -229,7 +229,7 @@ export default function Home() {
                 { label: "Chemical–Odour Pairs", value: "4,800+" },
                 { label: "Community ★", value: "42" },
                 { label: "ML Features / Recording", value: "145" },
-                { label: "E-Nose Parts (all in)", value: "<$50" },
+                { label: "Max Sensors / Rig", value: "6" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-3xl font-bold tracking-tight mb-1">
@@ -242,7 +242,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-hex">
+        <section className="border-t border-border py-24 bg-grid">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-14">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -360,7 +360,7 @@ export default function Home() {
                 <div className="space-y-4 mb-8">
                   {[
                     { title: "Detect spoilage before it happens", desc: "Track fermentation, coffee roast, or fruit ripening with live sensor traces." },
-                    { title: "Build gas leak alarms", desc: "LPG, methane, CO — classify dangerous gases in real time with a $15 sensor array." },
+                    { title: "Build gas leak alarms", desc: "LPG, methane, CO — detect and classify dangerous gases in real time from live traces." },
                     { title: "Prototype breath analysis", desc: "Ketosis markers, alcohol estimation, volatile biomarkers — the data pipeline is open." },
                   ].map((item) => (
                     <div key={item.title} className="border border-border p-4">
@@ -380,7 +380,7 @@ export default function Home() {
                 <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">How it works</div>
                 <div className="space-y-4">
                   {[
-                    { step: "1", icon: Cpu, text: "Build or buy an e-nose ($15–$50 in parts)" },
+                    { step: "1", icon: Cpu, text: "Build or buy an e-nose (off-the-shelf parts)" },
                     { step: "2", icon: Monitor, text: "Flash firmware with Osmograph (one click)" },
                     { step: "3", icon: BarChart3, text: "Record live sensor traces of any smell" },
                     { step: "4", icon: Settings, text: "Train a classifier — no coding required" },
@@ -497,7 +497,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-hex">
+        <section className="border-t border-border py-24 bg-grid">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto">
               <div className="flex items-center justify-center gap-3 mb-4">

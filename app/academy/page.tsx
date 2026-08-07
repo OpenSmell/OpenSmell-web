@@ -124,7 +124,7 @@ export default function AcademyPage() {
           </div>
         </section>
 
-        <section className="border-t border-border py-20 bg-hex">
+        <section className="border-t border-border py-20 bg-grid">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-2xl mx-auto text-center">
               <h2 className="text-2xl font-bold tracking-tight mb-4">
