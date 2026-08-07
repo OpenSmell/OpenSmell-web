@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Loader2, ExternalLink, Copy, Check, Search, BookOpen, Monitor, Store } from "lucide-react"
+import { ArrowLeft, Loader2, ExternalLink, Copy, Check, Search, BookOpen, Monitor, Cpu } from "lucide-react"
 import { searchByOdor, searchByChemical } from "@/lib/odor-index"
 import BatchedChemicalViewer from "@/components/batched-molecule-viewer"
 import ThemeToggle from "@/components/theme-toggle"
@@ -101,11 +101,11 @@ export default function SearchPage() {
               <Monitor className="w-4 h-4" />
             </Link>
             <Link
-              href="/appstore"
+              href="/enose"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Appstore"
+              title="E-Nose"
             >
-              <Store className="w-4 h-4" />
+              <Cpu className="w-4 h-4" />
             </Link>
             <Link
               href="/academy"

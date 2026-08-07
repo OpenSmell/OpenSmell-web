@@ -9,6 +9,50 @@ import { useTheme } from "next-themes"
 import AnimatedHero from "@/components/animated-hero"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+
+const moats = [
+  {
+    eyebrow: "SEARCH",
+    icon: Search,
+    title: "Scent Search",
+    desc: "Explore 4,800+ chemical–odour relationships from Pyrfume. Search by smell or by molecule, then dive into PubChem data.",
+    cta: "Start searching",
+    href: "/search",
+  },
+  {
+    eyebrow: "SOFTWARE",
+    icon: Monitor,
+    title: "Osmograph",
+    desc: "Zero-code e-nose workflow. Flash firmware, record live traces, and train classifiers — no coding required.",
+    cta: "Open Osmograph",
+    href: "/osmograph",
+  },
+  {
+    eyebrow: "HARDWARE",
+    icon: Cpu,
+    title: "E-Nose Builder",
+    desc: "Open reference hardware with a live configurator. Pick sensors, preview your rig, and download a full build plan.",
+    cta: "Build your rig",
+    href: "/enose",
+  },
+  {
+    eyebrow: "ECOSYSTEM",
+    icon: Store,
+    title: "Appstore",
+    desc: "A community home for e-nose apps, datasets, and rigs. Launching soon.",
+    cta: "Preview",
+    href: "/appstore",
+  },
+  {
+    eyebrow: "LEARNING",
+    icon: BookOpen,
+    title: "Academy",
+    desc: "Essays on the science, data, and engineering behind digitising smell.",
+    cta: "Read the essays",
+    href: "/academy",
+  },
+]
 
 export default function Home() {
   const [hydrated, setHydrated] = useState(false)
@@ -76,11 +120,11 @@ export default function Home() {
               Osmograph
             </Link>
             <Link
-              href="/appstore"
+              href="/enose"
               className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
             >
-              <Store className="w-3.5 h-3.5" />
-              Appstore
+              <Cpu className="w-3.5 h-3.5" />
+              E-Nose
             </Link>
             <Link
               href="/academy"
@@ -135,16 +179,14 @@ export default function Home() {
                 classify odours — with open hardware, open data, and open software.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://github.com/opensmell/electronic-nose"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/enose"
                   className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
                 >
                   <Cpu className="w-4 h-4" />
                   Build an E-Nose
                   <ChevronRight className="w-4 h-4" />
-                </a>
+                </Link>
                 <a
                   href="https://mox.opensmell.xyz"
                   target="_blank"
@@ -184,6 +226,52 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="border-t border-border py-24 bg-hex">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                  The open stack, slide by slide
+                </h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Five surfaces that together make digital smell real — from data to hardware to community.
+              </p>
+            </div>
+            <Carousel className="max-w-4xl mx-auto" opts={{ loop: true }}>
+              <CarouselContent>
+                {moats.map((m) => (
+                  <CarouselItem key={m.title}>
+                    <div className="hex-box border border-border p-8 md:p-12 text-center bg-background">
+                      <div className="mx-auto w-16 h-16 border border-border flex items-center justify-center mb-6 bg-background">
+                        <m.icon className="w-8 h-8" />
+                      </div>
+                      <div className="text-xs text-muted-foreground font-mono uppercase tracking-widest mb-2">
+                        {m.eyebrow}
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">{m.title}</h3>
+                      <p className="text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
+                        {m.desc}
+                      </p>
+                      <Link
+                        href={m.href}
+                        className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                      >
+                        {m.cta}
+                        <ChevronRight className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
+            </Carousel>
           </div>
         </section>
 
@@ -274,14 +362,12 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <a
-                  href="https://github.com/opensmell/electronic-nose"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/enose"
                   className="inline-flex items-center gap-2 text-sm font-medium hover:underline"
                 >
-                  See the hardware specs <ChevronRight className="w-4 h-4" />
-                </a>
+                  Configure your e-nose <ChevronRight className="w-4 h-4" />
+                </Link>
               </div>
               <div className="hex-box border border-border p-8 bg-background">
                 <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">How it works</div>

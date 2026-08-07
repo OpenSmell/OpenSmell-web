@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Search, Monitor, Store, BookOpen, MessageSquare, Github } from "lucide-react"
+import { Menu, X, Search, Monitor, Cpu, BookOpen, MessageSquare, Github } from "lucide-react"
 
 const links = [
   { label: "Search", href: "/search", icon: Search },
   { label: "Osmograph", href: "/osmograph", icon: Monitor },
-  { label: "Appstore", href: "/appstore", icon: Store },
+  { label: "E-Nose", href: "/enose", icon: Cpu },
   { label: "Academy", href: "/academy", icon: BookOpen },
 ]
 

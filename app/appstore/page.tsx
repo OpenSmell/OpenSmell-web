@@ -234,9 +234,9 @@ export default function AppStorePage() {
               <Monitor className="w-3.5 h-3.5" />
               Osmograph
             </Link>
-            <Link href="/appstore" className="text-foreground font-medium inline-flex items-center gap-1">
-              <Store className="w-3.5 h-3.5" />
-              Appstore
+            <Link href="/enose" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
+              <Cpu className="w-3.5 h-3.5" />
+              E-Nose
             </Link>
             <Link href="/academy" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
               <BookOpen className="w-3.5 h-3.5" />

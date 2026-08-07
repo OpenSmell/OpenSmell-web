@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Store, Globe } from "lucide-react"
+import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Globe } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 
@@ -42,9 +42,9 @@ export default function OsmographPage() {
               <Monitor className="w-3.5 h-3.5" />
               Osmograph
             </Link>
-            <Link href="/appstore" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Store className="w-3.5 h-3.5" />
-              Appstore
+            <Link href="/enose" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
+              <Cpu className="w-3.5 h-3.5" />
+              E-Nose
             </Link>
             <Link href="/academy" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
               <BookOpen className="w-3.5 h-3.5" />
@@ -251,11 +251,11 @@ export default function OsmographPage() {
                 Order the parts, assemble your e-nose, and Osmograph handles the rest.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://github.com/opensmell/electronic-nose" target="_blank" rel="noopener noreferrer"
+                <Link href="/enose"
                   className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all">
                   <Cpu className="w-4 h-4" />
                   Build an e-nose
-                </a>
+                </Link>
                 <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all">
                   <GitBranch className="w-4 h-4" />

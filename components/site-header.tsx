@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Search, Monitor, Store, BookOpen, ExternalLink } from "lucide-react"
+import { Search, Monitor, Cpu, BookOpen, ExternalLink } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 
@@ -53,7 +53,7 @@ export default function SiteHeader({ active }: { active?: string }) {
         <nav className="hidden md:flex items-center gap-8 text-sm">
           {link("/search", <Search className="w-3.5 h-3.5" />, "Search", "search")}
           {link("/osmograph", <Monitor className="w-3.5 h-3.5" />, "Osmograph", "osmograph")}
-          {link("/appstore", <Store className="w-3.5 h-3.5" />, "Appstore", "appstore")}
+          {link("/enose", <Cpu className="w-3.5 h-3.5" />, "E-Nose", "enose")}
           {link("/academy", <BookOpen className="w-3.5 h-3.5" />, "Academy", "academy")}
           <a
             href="https://discord.gg/CGER3tHxbH"

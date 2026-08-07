@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, ExternalLink, Copy, Check, Database, BookOpen, Monitor, Store } from "lucide-react"
+import { ArrowLeft, ExternalLink, Copy, Check, Database, BookOpen, Monitor, Cpu } from "lucide-react"
 import MoleculeViewer from "@/components/molecule-viewer"
 import { getChemicalByCID, Chemical } from "@/lib/odor-index"
 import ThemeToggle from "@/components/theme-toggle"
@@ -114,11 +114,11 @@ function ChemicalDetailPage() {
               <Monitor className="w-4 h-4" />
             </Link>
             <Link
-              href="/appstore"
+              href="/enose"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Appstore"
+              title="E-Nose"
             >
-              <Store className="w-4 h-4" />
+              <Cpu className="w-4 h-4" />
             </Link>
             <Link
               href="/academy"

@@ -1060,8 +1060,8 @@ So R_s/R_0 cancels the *electronics* and leaves you holding the *sensor*. Two un
 
 This is the point at which most projects quietly wish for zero-shot transfer: train once, deploy anywhere, no per-device calibration. The OpenSmell project tried exactly that, repeatedly, and published the results. The honest summary is in the experiment log:
 
-- A **domain-adversarial encoder** trained to hide device identity failed outright — the domain classifier reached 100% accuracy, meaning the latent space still encoded which device produced each sample. There is no device-invariant representation to be had by adversarial trickery here.
-- **Cross-device transfer** of trained classifiers landed at 10–18% accuracy against a 25% chance baseline — worse than a coin flip per class, decisively below chance for a 4-class setup.
+- A **domain-adversarial encoder** trained to hide device identity failed outright — the domain classifier reached **99.2% accuracy (chance = 50%)**, meaning the latent space still encoded which device produced each sample. There is no device-invariant representation to be had by adversarial trickery here.
+- **Cross-device transfer** of trained classifiers failed outright: **25.3%** accuracy for a classifier trained on the OpenSmell rig and tested on SmellNet recordings, and **18.6%** for the reverse direction — at or below the chance level for the four-substance task (banana, cinnamon, garlic, ginger). The two feature spaces did not overlap meaningfully.
 - **Chemoprint-as-prior** transfer (using a molecule's chemical descriptor vector as the target representation) collapsed from 99.6% within-device to 2.4% across devices.
 - Cosine similarity of the same substance across two different rigs was *negative*: banana −0.0638 and cinnamon −0.1440 in one measured pair. The same smell, on two devices, produced representations pointing away from each other.
 
@@ -1649,11 +1649,13 @@ The data budget matters as much as the fit. The point-count grid shows how error
 
 | Reference points | σ = 5% | σ = 10% |
 |---|---|---|
-| 4 | ≈ 9.5% | ≈ 19% |
-| 6 | ≈ 7.1% | ≈ 14% |
-| 8 | ≈ 6.6% | ≈ 12% |
+| 4 | 9.5% | 19.0% |
+| 5 | 8.2% | 16.2% |
+| 8 | 6.6% | 13.1% |
 
-Two rules fall out. **Span sets the reportable range, not the in-range accuracy**: extrapolating past the top calibrated ppm is penalized, so the calibration's legal range is exactly the range you measured. And **noise compounds fast**: a rig with within-session scatter of σ ≈ 12% — which is roughly where real user devices sit — will show ~20–40% concentration error on a single exposure, which is why the protocol prescribes **multiple replicates** (four per point pulls the effective σ back toward 5%).
+The flagship recovery run above (6 points, σ = 5%, two decades, 300 reps) measured 7.1% LOO error, consistent with this grid.
+
+Two rules fall out. **Span sets the reportable range, not the in-range accuracy**: extrapolating past the top calibrated ppm is penalized, so the calibration's legal range is exactly the range you measured. And **noise compounds fast**: a rig with within-session scatter of σ ≈ 12% — the level measured on the OpenSmell rig — will show ~20–40% concentration error on a single exposure, which is why the protocol prescribes **multiple replicates** (four per point pulls the effective σ back toward 5%).
 
 ## The One-Point Trap and the Affine Dead End
 
