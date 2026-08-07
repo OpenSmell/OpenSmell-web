@@ -204,6 +204,81 @@ export default function OsmographPage() {
 
         <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Streaming modes</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Same sensor, three ways to get the data off the board. The one-click firmware runs USB Serial and WiFi at once — no modes to select.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
+              {[
+                {
+                  icon: Usb,
+                  title: "USB Serial",
+                  tag: "On the one-click firmware",
+                  desc: "Data over the USB cable, always on.",
+                  pts: [
+                    "OSM-prefixed CSV at 115200 baud, every 500 ms",
+                    "Default path for recording sessions",
+                    "The OSM prefix keeps bootloader chatter out of your traces",
+                  ],
+                },
+                {
+                  icon: Wifi,
+                  title: "WiFi AP",
+                  tag: "On the one-click firmware",
+                  desc: "Stream over the air once it is flashed.",
+                  pts: [
+                    "ESP32 broadcasts its own network — no router needed",
+                    "TCP server on port 8080, mDNS advertises _osmograph._tcp",
+                    "Power from a battery bank and unplug the laptop",
+                  ],
+                },
+                {
+                  icon: Bluetooth,
+                  title: "BLE",
+                  tag: "Separate firmware variant",
+                  desc: "Untethered, lower power, 10 Hz streaming.",
+                  pts: [
+                    "Flashing the BLE variant + Osmograph's BLE reader",
+                    "Same CSV payload pushed over BLE notify",
+                    "Best for long, battery-powered sessions",
+                  ],
+                },
+              ].map((s) => (
+                <div key={s.title} className="bg-background p-8 hex-box flex flex-col">
+                  <span className="inline-flex self-start items-center gap-2 px-3 py-1 border border-border text-[11px] text-muted-foreground mb-4">{s.tag}</span>
+                  <s.icon className="w-8 h-8 mb-4 text-muted-foreground" />
+                  <h3 className="text-lg font-semibold mb-1">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">{s.desc}</p>
+                  <ul className="space-y-2 mt-auto">
+                    {s.pts.map((p) => (
+                      <li key={p} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground mt-8 max-w-3xl mx-auto text-center">
+              The one-click binary is compiled for the classic ESP32. ESP32-S3, C3, Uno, and Pico share the same
+              CSV stream contract but need their own toolchain —{" "}
+              <Link href="/enose" className="text-foreground font-medium hover:underline">
+                compare boards in the e-nose builder
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+
+        <section className="border-t border-border py-24">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
                 <h3 className="text-2xl font-bold tracking-tight mb-4">For developers</h3>
