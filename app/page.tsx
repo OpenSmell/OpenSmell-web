@@ -9,7 +9,7 @@ import { useTheme } from "next-themes"
 import AnimatedHero from "@/components/animated-hero"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import OpenStack from "@/components/open-stack"
 
 const moats = [
@@ -58,6 +58,8 @@ const moats = [
 export default function Home() {
   const [hydrated, setHydrated] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null)
+  const [activeMoat, setActiveMoat] = useState(0)
   const searchRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const { theme } = useTheme()
@@ -65,6 +67,16 @@ export default function Home() {
   useEffect(() => {
     setHydrated(true)
   }, [])
+
+  useEffect(() => {
+    if (!carouselApi) return
+    const onSelect = () => setActiveMoat(carouselApi.selectedScrollSnap())
+    onSelect()
+    carouselApi.on("select", onSelect)
+    return () => {
+      carouselApi.off("select", onSelect)
+    }
+  }, [carouselApi])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -244,13 +256,48 @@ export default function Home() {
                 Scent search, Osmograph, e-nose builder, appstore, Academy.
               </p>
             </div>
-            <Carousel className="max-w-4xl mx-auto" opts={{ loop: true }}>
+            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap mb-12">
+              {moats.map((m, i) => (
+                <button
+                  key={m.title}
+                  type="button"
+                  aria-label={m.title}
+                  onClick={() => carouselApi?.scrollTo(i)}
+                  className={`w-10 h-11 sm:w-12 sm:h-14 flex items-center justify-center transition-all duration-300 ${
+                    i === activeMoat
+                      ? "bg-foreground text-background"
+                      : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground"
+                  }`}
+                  style={{ clipPath: "polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%)" }}
+                >
+                  <m.icon className="w-5 h-5" />
+                </button>
+              ))}
+            </div>
+            <Carousel
+              className="max-w-4xl mx-auto"
+              opts={{ loop: true, align: "center" }}
+              setApi={setCarouselApi}
+            >
               <CarouselContent>
-                {moats.map((m) => (
-                  <CarouselItem key={m.title}>
-                    <div className="hex-box border border-border p-8 md:p-12 text-center bg-background">
-                      <div className="mx-auto w-16 h-16 border border-border flex items-center justify-center mb-6 bg-background">
-                        <m.icon className="w-8 h-8" />
+                {moats.map((m, i) => (
+                  <CarouselItem key={m.title} className="basis-[88%] md:basis-[72%]">
+                    <div
+                      className={`hex-box relative border border-border p-8 md:p-12 text-center bg-background h-full transition-all duration-500 ${
+                        i === activeMoat ? "opacity-100" : "opacity-40"
+                      }`}
+                    >
+                      <span
+                        aria-hidden
+                        className="absolute top-3 right-5 text-6xl md:text-7xl font-bold text-foreground/[0.05] select-none leading-none"
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div
+                        className="mx-auto w-16 h-16 flex items-center justify-center mb-6 bg-border"
+                        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
+                      >
+                        <m.icon className="w-7 h-7" />
                       </div>
                       <div className="text-xs text-muted-foreground font-mono uppercase tracking-widest mb-2">
                         {m.eyebrow}
@@ -562,7 +609,7 @@ export default function Home() {
                 title: "Hardware",
                 links: [
                   { label: "Electronic Nose", href: "https://github.com/opensmell/electronic-nose" },
-                  { label: "Osmograph", href: "https://github.com/opensmell/Osmograph" },
+                  { label: "Osmograph", href: "/osmograph" },
                   { label: "Data Commons", href: "https://github.com/opensmell/data-commons" },
                 ],
               },
