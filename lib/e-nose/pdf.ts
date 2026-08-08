@@ -117,6 +117,9 @@ function para(text: string, size = 9, opts?: { bold?: boolean; muted?: boolean }
 
 function bullet(text: string) {
   text = sanitize(text)
+  doc.setFont("helvetica", "normal")
+  doc.setFontSize(9)
+  doc.setTextColor(40)
   const lines = doc.splitTextToSize(text, PAGE_W - M * 2 - 6)
   lines.forEach((ln: string, i: number) => {
     ensure(5)
@@ -221,6 +224,44 @@ function table(cols: TableCol[], rows: (string[] | string)[][], opts?: { mutedRo
   y += 3
 }
 
+// Rasterizes an SVG string to a PNG data URL using the browser's native
+// SVG→canvas pipeline (no canvg dependency), at a fixed pixel density so the
+// figure stays crisp in the PDF. Resolves with "" if rasterization fails.
+function rasterizeSvgToPng(svg: string, pxPerMm: number): Promise<string> {
+  return new Promise<string>((resolve) => {
+    const img = new Image()
+    const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" })
+    const url = URL.createObjectURL(blob)
+    img.onload = () => {
+      try {
+        const pxW = Math.round((PAGE_W - M * 2) * pxPerMm)
+        const pxH = Math.round(pxW * (520 / 640))
+        const canvas = document.createElement("canvas")
+        canvas.width = pxW
+        canvas.height = pxH
+        const ctx = canvas.getContext("2d")
+        if (!ctx) {
+          resolve("")
+          return
+        }
+        ctx.fillStyle = "#ffffff"
+        ctx.fillRect(0, 0, pxW, pxH)
+        ctx.drawImage(img, 0, 0, pxW, pxH)
+        resolve(canvas.toDataURL("image/png"))
+      } catch {
+        resolve("")
+      } finally {
+        URL.revokeObjectURL(url)
+      }
+    }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      resolve("")
+    }
+    img.src = url
+  })
+}
+
 async function createDoc(input: PlanInput): Promise<any> {
   ;({ doc } = await import("jspdf").then((m) => ({ doc: new m.jsPDF({ unit: "mm", format: "a4" }) })))
   y = M
@@ -252,7 +293,25 @@ async function createDoc(input: PlanInput): Promise<any> {
     sensors.map((s) => ({ id: s.id, name: s.name, kind: s.kind })),
     { color: "#1a1a1a" },
   )
-  doc.addSvgAsImage(svg, (PAGE_W - rigW) / 2, y, rigW, rigH)
+  const png = await rasterizeSvgToPng(svg, 4)
+  if (png) {
+    doc.addImage(png, "PNG", (PAGE_W - rigW) / 2, y, rigW, rigH)
+  } else {
+    // Rasterization unavailable — keep the plan usable without the schematic
+    // rather than failing the whole document.
+    doc.setDrawColor(150)
+    doc.setLineWidth(0.3)
+    doc.rect((PAGE_W - rigW) / 2, y, rigW, rigH)
+    doc.setFont("helvetica", "italic")
+    doc.setFontSize(8)
+    doc.setTextColor(120)
+    doc.text(
+      "Schematic unavailable — see the repo's wiring reference.",
+      PAGE_W / 2,
+      y + rigH / 2,
+      { align: "center" },
+    )
+  }
   y += rigH + 4
   note("Schematic: the sensor array on a breadboard, wired to the ESP32. Pin numbers shown at each tap.")
 

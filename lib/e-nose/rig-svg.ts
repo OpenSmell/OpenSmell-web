@@ -158,5 +158,5 @@ export function buildRigSvgContent(sensors: RigModule[], opts: RigSvgOptions = {
 
 export function buildRigSvg(sensors: RigModule[], opts: RigSvgOptions = {}): string {
   const color = opts.color ?? "currentColor"
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" fill="none" stroke="${color}">${buildRigSvgContent(sensors, opts)}</svg>`
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="520" viewBox="0 0 640 520" fill="none" stroke="${color}">${buildRigSvgContent(sensors, opts)}</svg>`
 }
