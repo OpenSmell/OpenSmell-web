@@ -111,6 +111,7 @@ export default function EnosePage() {
 
   const [filter, setFilter] = useState<"all" | SupportLevel>("all")
   const [query, setQuery] = useState("")
+  const [catalogOpen, setCatalogOpen] = useState(false)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
   useEffect(() => {
@@ -170,6 +171,11 @@ export default function EnosePage() {
       return [s.name, s.target, s.use, s.note].join(" ").toLowerCase().includes(q)
     })
   }, [filter, query])
+
+  const supportCounts = (["full", "partial", "conditioned", "research"] as const).map((lvl) => ({
+    level: lvl,
+    count: SENSORS.filter((s) => s.support === lvl).length,
+  }))
 
   const handlePdf = async () => {
     if (planSensors.length === 0) return
@@ -394,78 +400,119 @@ export default function EnosePage() {
               </div>
               <p className="text-muted-foreground">
                 What's on the market, what each one detects, how it connects, and exactly how much OpenSmell
-                supports it today. Support level is the first thing to read.
+                supports it today. Support level is the first thing to read — the per-sensor detail is
+                one click away below.
               </p>
             </div>
 
-            <div className="max-w-3xl mx-auto mb-10 flex flex-col gap-4">
-              <div className="flex border border-border">
-                <div className="px-3 flex items-center text-muted-foreground">
-                  <Search className="w-4 h-4" />
-                </div>
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search sensors, gases, uses…"
-                  className="flex-1 bg-transparent px-3 py-3 text-sm focus:outline-none"
-                />
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {(["all", "full", "partial", "conditioned", "research"] as const).map((f) => (
-                  <button
-                    key={f}
-                    onClick={() => setFilter(f)}
-                    className={`text-xs border px-3 py-1.5 transition-all ${
-                      filter === f ? "bg-foreground text-background border-foreground" : "border-border hover:border-foreground"
-                    }`}
-                  >
-                    {f === "all" ? "All" : SUPPORT_BADGES[f].short}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {catalog.map((s) => {
-                const km = KIND_META[s.kind]
-                return (
-                  <div key={s.id} className="border border-border bg-background p-6 hex-box flex flex-col">
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                      <h3 className="text-lg font-semibold font-mono">{s.name}</h3>
-                      <km.icon className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-1" />
+            <div className="max-w-3xl mx-auto mb-10">
+              <div className="border border-border bg-background hex-box p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1">
+                    <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-3">
+                      {SENSORS.length} sensors · 4 support tiers
                     </div>
-                    <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">
-                      Detects
-                    </div>
-                    <div className="text-sm font-medium mb-3">{s.target}</div>
-                    <div className="text-sm text-muted-foreground mb-3 leading-relaxed">{s.use}</div>
-                    <div className="text-xs text-muted-foreground mb-4">
-                      {s.io} · {s.supply}
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed mb-4 flex-1">{s.note}</p>
-                    <div className="mb-4">
-                      <SupportChip level={s.support} small />
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {s.links.map((l) => (
-                        <a
-                          key={l.href + l.label}
-                          href={l.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[11px] border border-border px-2 py-1 text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
-                        >
-                          {l.label}
-                        </a>
+                    <div className="flex flex-wrap gap-x-4 gap-y-2">
+                      {supportCounts.map(({ level, count }) => (
+                        <span key={level} className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <span className="font-mono">{count}</span>
+                          <span>{SUPPORT_BADGES[level].short}</span>
+                        </span>
                       ))}
                     </div>
                   </div>
-                )
-              })}
+                  <div className="flex flex-col items-stretch gap-2 sm:items-end">
+                    <button
+                      onClick={() => setCatalogOpen((v) => !v)}
+                      aria-expanded={catalogOpen}
+                      className="inline-flex items-center justify-center gap-2 border px-4 py-2 text-sm transition-all border-foreground text-foreground hover:bg-foreground hover:text-background"
+                    >
+                      <ChevronRight className={`w-4 h-4 transition-transform ${catalogOpen ? "rotate-90" : ""}`} />
+                      {catalogOpen ? "Hide full catalog" : "Browse the full catalog"}
+                    </button>
+                    <a
+                      href="#builder"
+                      className="text-xs text-muted-foreground hover:text-foreground text-center sm:text-right underline underline-offset-4 transition-colors"
+                    >
+                      Skip straight to the builder ↓
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {catalogOpen && (
+                <div className="mt-8">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex border border-border">
+                      <div className="px-3 flex items-center text-muted-foreground">
+                        <Search className="w-4 h-4" />
+                      </div>
+                      <input
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder="Search sensors, gases, uses…"
+                        className="flex-1 bg-transparent px-3 py-3 text-sm focus:outline-none"
+                      />
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {(["all", "full", "partial", "conditioned", "research"] as const).map((f) => (
+                        <button
+                          key={f}
+                          onClick={() => setFilter(f)}
+                          className={`text-xs border px-3 py-1.5 transition-all ${
+                            filter === f ? "bg-foreground text-background border-foreground" : "border-border hover:border-foreground"
+                          }`}
+                        >
+                          {f === "all" ? "All" : SUPPORT_BADGES[f].short}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                    {catalog.map((s) => {
+                      const km = KIND_META[s.kind]
+                      return (
+                        <div key={s.id} className="border border-border bg-background p-6 hex-box flex flex-col">
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <h3 className="text-lg font-semibold font-mono">{s.name}</h3>
+                            <km.icon className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-1" />
+                          </div>
+                          <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">
+                            Detects
+                          </div>
+                          <div className="text-sm font-medium mb-3">{s.target}</div>
+                          <div className="text-sm text-muted-foreground mb-3 leading-relaxed">{s.use}</div>
+                          <div className="text-xs text-muted-foreground mb-4">
+                            {s.io} · {s.supply}
+                          </div>
+                          <p className="text-xs text-muted-foreground leading-relaxed mb-4 flex-1">{s.note}</p>
+                          <div className="mb-4">
+                            <SupportChip level={s.support} small />
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {s.links.map((l) => (
+                              <a
+                                key={l.href + l.label}
+                                href={l.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[11px] border border-border px-2 py-1 text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+                              >
+                                {l.label}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                  {catalog.length === 0 && (
+                    <div className="text-center text-muted-foreground text-sm py-12">No sensors match.</div>
+                  )}
+                </div>
+              )}
             </div>
-            {catalog.length === 0 && (
-              <div className="text-center text-muted-foreground text-sm py-12">No sensors match.</div>
-            )}
           </div>
         </section>
 
@@ -495,8 +542,12 @@ export default function EnosePage() {
               ))}
             </div>
             <p className="text-sm text-muted-foreground text-center mt-10">
-              The 6-sensor configuration matches the reference SmellNet dataset. Start with three if unsure —
-              you can add sensors later and the firmware handles any count automatically.
+              The 6-sensor kit feeds the same 6-channel layout the encoder and session-invariance models
+              consume — the exact shape the reference proof was validated on
+              (<a href="https://github.com/opensmell/session-invariance" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:opacity-70">OpenSmell/session-invariance</a>,
+              using SmellNet's processed <code className="font-mono text-xs bg-foreground/5 border border-border px-1.5 py-0.5">base_data</code> subset:
+              NO₂, ethanol, VOC, CO, alcohol, LPG). Start with three if unsure — you can add sensors later
+              and the firmware handles any count automatically.
             </p>
           </div>
         </section>
@@ -921,10 +972,15 @@ export default function EnosePage() {
                   <div className="mt-6 border-t border-border pt-4">
                     <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-3">Calibration & interoperability</div>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      The calibration pipeline translates a new device's voltages into the shared representation
-                      behind SmellNet's substance prototypes. The Osmograph Calibration Wizard is under
-                      active development; within-session experiments work today. The full protocol — a 2-substance
-                      quick test or a 5-substance validation — is in the repo's EXPERIMENT.md.
+                      Calibration research maps a new device's voltages into a shared representation anchored to
+                      reference prototypes — but it is still research, not a shipped feature. Within-session
+                      experiments work today; cross-device alignment is under active development. The working
+                      protocol (a 2D-Procrustes alignment against reference prototypes) is in the{" "}
+                      <a href="https://github.com/opensmell/electronic-nose/blob/main/EXPERIMENT.md" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:opacity-70">electronic-nose EXPERIMENT.md</a>;
+                      the latest results live in{" "}
+                      <a href="https://github.com/opensmell/interoperability/tree/main/alignment_experiments" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:opacity-70">interoperability/alignment_experiments</a>{" "}
+                      and{" "}
+                      <a href="https://github.com/opensmell/encoder/tree/main/research/calibration-experiments" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:opacity-70">encoder/research/calibration-experiments</a>.
                     </p>
                   </div>
                 </div>

@@ -1712,7 +1712,7 @@ The most common error is subtle, structural, and quiet. A recording is a continu
 
 The model then looks brilliant because it memorized a specific afternoon, not because it learned a substance. The tell is the accuracy gap: the leaked model scores 95% on windows it has effectively seen and collapses when you hand it a recording from a different session.
 
-The fix is a grouping rule that sounds like common sense and is violated constantly: **never split windows from the same physical recording across the train/test boundary.** Group by recording (or by cut, induction, or substance — the natural unit of your dataset), and do grouped cross-validation: \`GroupKFold\`, \`LeaveOneGroupOut\`, or leave-one-out over the natural grouping. Every headline number in the OpenSmell use-case suite was produced under this rule, with the null baselines in the same table.
+The fix is a grouping rule that sounds like common sense and is violated constantly: **never split windows from the same physical recording across the train/test boundary.** Group by recording (or by cut, induction, or substance — the natural unit of your dataset), and do grouped cross-validation: \`GroupKFold\`, \`LeaveOneGroupOut\`, or leave-one-out over the natural grouping. Every headline number in the OpenSmell evaluation suite was produced under this rule, with the null baselines in the same table.
 
 ## The Two Questions
 
@@ -1748,7 +1748,7 @@ The pattern: adapters help in narrow, well-specified settings (the MSE result is
 
 ## The Recording-Fair Baseline Table
 
-The strongest habit to borrow from the use-case suite is its *baseline table discipline*: every headline number ships next to chance accuracy and the majority-class predictor in the same table, so nobody has to trust a single number in isolation. A sample of the pattern, from six use cases:
+The strongest habit to borrow from the evaluation suite is its *baseline table discipline*: every headline number ships next to chance accuracy and the majority-class predictor in the same table, so nobody has to trust a single number in isolation. A sample of the pattern, from six evaluations:
 
 | Task | Result | Balanced / chance | Majority |
 |---|---|---|---|
@@ -1775,116 +1775,158 @@ The value of the discipline is best shown by the leak that got caught. The taxon
 ## Sources & Further Reading
 
 - OpenSmell master reference, §7.11 (honesty rules), §8.3 (the session-invariance and leave-substance-out results), §11.7 (ML evaluation hygiene), §12 (the recording-fair use-case suite and its leak catch).
-- \`research/use-cases/\` — the harness (\`harness/evaluate.py\`) and per-experiment \`results/*_metrics.json\`.
+- \`opensmell/e-nose-evals\` — the reproducible evaluation suite (\`harness/evaluate.py\`) and per-experiment \`results/*_metrics.json\`.
 - The interoperability essay — why evaluation design and calibration limits are the same story.
 `,
   },
   {
     slug: "the-u-suite-use-cases",
-    title: "Six Use Cases, One Validation Protocol: What the U-Suite Proved",
+    title: "The U-Suite: Six Evaluations, One Honest Protocol",
     excerpt:
-      "Gas detection, onset timing, spoilage quantification, indoor-air monitoring, rig fingerprinting, and smell taxonomy — six product-relevant jobs, one recording-fair protocol, and one honest summary table with baselines. This is what a MOX array using the OpenSmell framework can and cannot do, measured on public data.",
+      "Gas detection, onset timing, spoilage quantification, indoor-air monitoring, rig chemoprinting, and smell taxonomy — six recording-fair evaluations of the OpenSmell framework on public data, one shared harness, null baselines beside every headline. This is what a MOX array using the framework can and cannot do — measured, reproducible, and committed with provenance.",
     category: "Research",
-    tags: ["use cases", "u-suite", "validation", "food spoilage", "gas detection"],
+    tags: ["u-suite", "e-nose-evals", "evaluation", "reproducibility", "validation"],
     readTime: "18 min",
     date: "2026-08-06",
     author: "OpenSmell Academy",
     thumbnail: "/thumbnails/u-suite-results.svg",
     content: `
-A feature framework is only worth something if it survives contact with real problems. The U-suite (U1–U6) is that contact: six product-relevant use cases, each run on public research data through a shared harness, each scored under the same recording-fair protocol with null baselines in the same table. This essay walks the suite and reads its summary honestly — what the array can do, what it cannot, and why the shape of the results is as informative as the numbers.
+Can a low-cost metal-oxide array, driving the OpenSmell framework's feature extractor, do real jobs — gas alarms, spoilage checks, indoor-air events, device identity — and can we measure the answer without fooling ourselves? The U-suite (U1–U6) is that measurement: six evaluations of the framework on public e-nose datasets, run through one shared harness, scored under a recording-fair protocol, with null baselines printed in the same table as every headline.
 
-## The Shared Protocol
+One framing note before the numbers. This suite is an **evaluation suite, not a benchmark**. A benchmark means frozen standardized splits, a fixed task-and-metric contract, and a leaderboard others submit to; the U-suite has none of those (some numbers move between runs — U5's k-shot curve is averaged over five seeds). What it guarantees instead is *reproducibility*: the harness, the committed result artifacts with \`generated_utc\` provenance, and honest baselines. Anyone can re-run it and check that the claims hold. That is the whole point of publishing it.
 
-Every experiment used the same pipeline — dataset loader → windowing + framework feature extraction → evaluation → report — and every one obeyed three rules:
+## 1. Protocol
 
-1. **Recording-fair grouping**: windows from the same physical recording never cross the train/test boundary (GroupKFold / LeaveOneGroupOut / leave-one-out over the natural grouping).
-2. **Baselines in the table**: chance accuracy and the majority predictor (or the mean predictor, for regression) beside every headline.
-3. **Public data only**: research corpora, never product training data.
+Every experiment used the same pipeline — dataset loader → windowing + framework feature extraction → evaluation → report — and every one obeyed the same three rules:
+
+1. **Recording-fair grouping.** Windows from the same physical recording never cross the train/test boundary (GroupKFold / LeaveOneGroupOut / leave-one-out over the natural grouping: recording, cut, induction, or substance). The group key is an explicit, versioned argument to the evaluator.
+2. **Baselines in the table.** Chance accuracy and the majority predictor (or the mean predictor, for regression) sit beside every headline. A number that beats its baseline is a result; one that does not is printed anyway.
+3. **Public data only, research/validation-only.** No product training data, and the UCI corpora are research-only even where their badge reads CC BY 4.0.
 
 Those rules are what make the numbers comparable to each other and to the field.
 
-## U2 — Gas Leaks and Mixtures (UCI wind-tunnel data)
+## 2. Datasets
+
+| Dataset | Source | Sensors | License |
+|---------|--------|---------|---------|
+| Gas sensor array exposed to turbulent gas mixtures | [UCI id 309](https://archive.ics.uci.edu/dataset/309) · Fonollosa et al. 2014 | 8 Figaro TGS | research-only |
+| Gas sensor array under dynamic gas mixtures | [UCI id 322](https://archive.ics.uci.edu/dataset/322) · Fonollosa et al. 2015 | 16 Figaro TGS | research-only |
+| Gas sensor array drift | [UCI id 146](https://archive.ics.uci.edu/dataset/146) | 16 MOX, 6 gases, 10 batches / 36 months | research-only |
+| Gas sensors for home activity monitoring | [UCI id 362](https://archive.ics.uci.edu/dataset/362) · Huerta et al. 2016 | 8 Figaro TGS + temp/humidity | research-only |
+| Electronic nose from various beef cuts | [Harvard Dataverse 10.7910/DVN/XNFVTS](https://doi.org/10.7910/DVN/XNFVTS) | 11 MQ, 12 cuts | CC0 1.0 |
+| SmellNet | [arXiv:2506.00239](https://arxiv.org/abs/2506.00239) · HF \`DeweiFeng/smell-net\` | 6 MOX, 50 substances | research |
+
+All provenance, conversion formulas, and sha256s are committed in \`data/DATASETS.md\` inside the code repo.
+
+## 3. U2 — Gas leaks and mixtures (UCI wind-tunnel data)
 
 Detecting gas in air is the easiest job an e-nose has, and the numbers reflect it:
 
-- **Binary gas-present detection:** **94.1%** accuracy, 94.4% balanced (chance 50%, majority 65.5%).
-- **Onset detection:** an onset window was classified correctly at **84.2%**, and onset latency was found in **180/180 recordings** with a median of **10 s**.
-- **Mixture identity** (ethylene-only / CO-only / methane-only / both): **89.2%** / 83.9% balanced against a 25% chance baseline.
-- **Dynamic concentration tracking:** on continuous two-gas runs, per-gas regression hit R² ≈ 0.92–0.95 with mean-predictor-baseline R² of zero.
+- **Binary gas-present detection:** **94.1%** / 94.4% balanced (chance 50%, majority 65.5%), 5,220 windows over 180 recordings.
+- **Onset detection:** 180/180 recordings detected, median latency **10 s**; the onset window itself was classified correctly at **84.2%** / 85.2% balanced.
+- **Mixture identity** (ethylene-only / CO-only / methane-only / both): **89.2%** / 83.9% balanced (chance 25%, majority 60.0%); secondary gas id (CO vs methane) **94.9%**.
+- **Dynamic concentration tracking:** on a continuous two-gas run, per-gas regression hit **R² 0.922** (ethylene, MAE 0.62 ppm) and **R² 0.952** (methane, MAE 5.7 ppm) — against a mean-predictor baseline of R² 0. Event/state classification reached **98.1%** / 97.7% balanced (any-gas) and **96.7%** / 96.6% balanced (four-state).
 
 The read: *detection and onset are solved for realistic conditions.* A MOX array using the framework reliably tells you something is there, and tells you within about ten seconds. That is the entire value proposition of a gas alarm, and it holds.
 
-## U3 — Food Spoilage (Harvard Dataverse beef cuts)
+**The calibration caveat, measured.** The suite also tested power-law concentration recovery on the turbulent data. Per-channel log-log R² is weak — median R² 0.276 for ethylene, 0.320 for CO, 0.067 for methane — and leave-one-out recovery lands within one decade on 94–100% of predictions (median log₁₀ error 0.16–0.30 decades). In words: the sensor *responds* to concentration, and recovery is a usable detection reference, but it is **not metrology**. Nobody should read a calibrated ppm from this family of results.
 
-The dataset is electronic-nose readings from 12 beef cuts with hourly microbial ground truth — total viable counts (TVC) in log₁₀ CFU/g plus a 4-class freshness grade. Evaluation was leave-one-cut-out (12 groups). TVC ranged 1.876–5.758 log₁₀ CFU/g.
+## 4. U3 — Food spoilage (Harvard Dataverse beef cuts)
 
-- **TVC regression:** R² = **0.793**, MAE = **0.384** log₁₀ CFU/g (the mean predictor's MAE is 0.935, so this is a 59% improvement), Spearman ρ = 0.849.
+Electronic-nose readings from 12 beef cuts with hourly microbial ground truth — total viable counts (TVC) in log₁₀ CFU/g plus a 4-class freshness grade. Evaluation was leave-one-cut-out (12 groups); 876 windows, TVC range 1.88–5.76 log₁₀ CFU/g.
+
+- **TVC regression:** **R² 0.793**, MAE **0.384** log₁₀ CFU/g (the mean predictor's MAE is 0.935 — a 59% improvement), RMSE 0.495, Spearman ρ 0.849.
 - **Four-class freshness:** **78.4%** / 64.5% balanced (chance 25%, majority 60.3%). Per class: 1→81.1%, 2→66.7%, 3→17.3%, 4→93.0%.
-- **Binary "spoiled" (TVC ≥ 5):** **85.0%** / 84.8% balanced.
-- The strongest single-channel signals were MQ5 (ρ = 0.93) and MQ4 (ρ = −0.904) against TVC.
+- **Binary "spoiled" (TVC ≥ 5):** **85.0%** / 84.8% balanced (chance 50%, majority 60.3%).
+- Strongest single-channel signals against TVC: MQ5 (ρ = 0.93), MQ4 (ρ = −0.90), MQ137 (ρ = 0.83).
 
-Two honest notes. Class 3 — the *transitional* freshness bin — is a known weak spot (17.3%), which is exactly what the chemistry predicts: the middle of a spoilage curve is where the sensor signal stops changing monotonically. And the binary "spoiled/not-spoiled" question is the practically useful one — a regulator or a consumer does not need "freshness class 2," they need "is this meat safe" — and that works at 85%.
+Two honest notes. Class 3 — the *transitional* freshness bin — is a real weak spot (17.3%), which is exactly what the chemistry predicts: the middle of a spoilage curve is where the sensor signal stops changing monotonically. And the binary "spoiled/not-spoiled" question is the practically useful one — a consumer does not need "freshness class 2," they need "is this meat safe" — and that works at 85%.
 
-## U4 — Indoor-Air Monitoring (UCI-362 home activity)
+## 5. U4 — Indoor-air monitoring (UCI-362 home activity)
 
-Eight Figaro sensors in a real home, 99 gas inductions of background/wine/banana activity, ~929k rows. Temperature and humidity were excluded so the claim is MOX-only.
+Eight Figaro sensors in a real home, 99 gas inductions of background/wine/banana activity, ~929k rows. Temperature and humidity were excluded so the claim stays MOX-only; 3,960 windows, leave-one-induction-out.
 
 - **Binary stimulus detection:** **87.6%** / 74.1% balanced (chance 50%, majority 81.7%); background detected at 95.4%, stimulus at 52.8%.
-- **Three-class** (background/wine/banana): **86.0%** / 55.0% balanced. Banana: **4.5%**.
+- **Three-class** (background/wine/banana): **86.0%** / 55.0% balanced (chance 33.3%, majority 81.7%). Banana: **4.5%**.
 
-This experiment earns its place in the suite for its honesty. The balanced accuracy (74.1%) tells the true story: the model beats the majority baseline but struggles on the *stimulus* class, and the banana detection is essentially noise. "Detecting *an* event" works; "detecting *which* event, in a home, with a MOX array" is hard. Both numbers are printed because both are true.
+This experiment earns its place for its honesty. The balanced accuracy tells the true story: the model beats the majority baseline but struggles on the *stimulus* class, and banana detection is essentially noise. "Detecting *an* event" works; "detecting *which* event, in a home, with a MOX array" is hard. Both numbers are printed because both are true.
 
-## U5 — Rig Chemoprinting (UCI gas drift benchmark)
+## 6. U5 — Rig chemoprinting (UCI gas drift benchmark)
 
-Six gases, 16 sensors, 10 batches over 36 months of real drift. Rigs = four distinct hardware instances (batches 6/7/9/10).
+Six gases, 16 sensors, 10 batches over 36 months of real drift. Batches model rig / device-time states; fingerprinting uses batches 6/7/9/10 (all six gases, ≥20 samples each).
 
-- **Rig fingerprinting:** pooled **78.5%** (chance 25%), leave-gas-out — training on five gases, identifying the rig on the sixth. Per gas: Acetaldehyde 91.5% down to Ethylene 68.8%.
-- **Zero-shot transfer ceiling:** trained on source batches 1–5, tested on targets 6–10: **52.3%** vs chance 16.7% / majority 20.0% — while the in-target supervised ceiling is **99.5%**.
+- **Rig fingerprinting:** pooled **78.5%** (chance 25%), evaluated leave-gas-out — trained on five gases, identifying the rig on the sixth, so the rig pattern must generalize to a never-seen gas to count. Per gas: Acetaldehyde 91.5%, Ammonia 79.4%, Toluene 79.1%, Ethanol 78.1%, Acetone 77.7%, Ethylene 68.8%.
+- **Per-rig calibration curve:** source batches 1–5 (3,633 measurements) → target batches 6–10 (10,277). Zero-shot transfer **52.3%** (chance 16.7%, majority 20.0%); in-target supervised ceiling **99.5%** (balanced 99.4%).
+- **The k-shot curve** (labeled target samples added to the source training set, 5 seeds): k=5 → **65.6% ± 1.5**, k=10 → **73.4% ± 2.3**, k=25 → **83.5% ± 0.9**, k=50 → **91.2% ± 0.4**.
 
-This is the suite's most important experiment. A rig is identifiable from sensor statistics alone (78.5%) — which is the honest foundation for per-rig reference calibration, and simultaneously the proof that every rig is subtly different. The 99.5% ceiling versus 52.3% zero-shot is the measured price of drift. The k-shot curve — labeled samples added in the target domain — shows the fix: k=5 → 65.6%, k=10 → 73.4%, k=25 → 83.5%, k=50 → 91.2%. A handful of reference samples on the target rig recovers most of the gap. That curve is the empirical case for reference-point calibration in one chart.
+This is the suite's most important result. A rig is identifiable from sensor statistics alone (78.5%) — which is the honest foundation for per-rig reference calibration, and simultaneously the proof that every rig is subtly different. The 99.5% ceiling versus 52.3% zero-shot is the measured price of drift. The k-shot curve shows the fix: a handful of reference samples on the target rig recovers most of the gap. That curve is the empirical case for reference-point calibration in one chart.
 
-## U6 — Smell Taxonomy (SmellNet + OSMO families)
+**Honesty note.** The drift batches are one physical array aging over time, so they model rig identity and device-time shift, not distinct manufactured hardware. Results describe *these batches / this array*, not a guarantee for other hardware.
 
-SmellNet's 50 food substances, labeled with eight perceptual grand families (Woody 19, Fruity 10, Green 8, Herbal 7, and four tiny families of 1–2 substances each).
+## 7. U6 — Smell taxonomy (SmellNet + OSMO families)
 
-- **Fine substance identity:** **89.4%** / 89.5% balanced (chance 2.0%), stratified group-6-fold over 250 recordings. Recognizing *which of 50 foods* works.
-- **Perceptual family** (leave-one-substance-out, 50 groups): **40.2%** vs majority **38.1%**. Per class: Woody 65.2%, Green 41.7%, Fruity 28.5%, Herbal 21.7%; Citrus/Floral/Mineral/Soulful **0.0%**.
+SmellNet's 50 food substances (250 recordings, 4,903 windows), labeled with eight perceptual grand families from the OSMO taxonomy.
+
+- **Fine substance identity:** **89.4%** / 89.5% balanced (chance 2.0%, majority 2.3%), stratified group-6-fold over 250 recordings. Recognizing *which of 50 foods* works.
+- **Perceptual family** (leave-one-substance-out, 50 groups): **40.2%** vs majority **38.1%** (chance 12.5%). Per class: Woody 65.2%, Green 41.7%, Fruity 28.5%, Herbal 21.7%; Citrus/Floral/Mineral/Soulful **0.0%**.
 - **Fine→coarse collapse:** 35.7% — predicting families from fine predictions does not recover family structure.
 
-The honest read is stark: *identity is learned, family is not.* The sensor distinguishes the 50 foods beautifully, but the perceptual categories ("woody," "floral") do not fall out of raw sensor identity — the model can tell cumin from pineapple but cannot generalize to "this is a woody thing." And the tiny families score 0.0% because with one or two substances per family there is nothing to generalize from. This is the *substance-generalization* wall from the evaluation essay, measured at the perceptual level.
+The honest read is stark: *identity is learned, family is not.* The sensor distinguishes the 50 foods beautifully, but the perceptual categories ("woody," "floral") do not fall out of raw sensor identity — the model can tell cumin from pineapple but cannot generalize to "this is a woody thing." The tiny families score 0.0% because with one or two substances per family there is nothing to generalize from. This is the substance-generalization wall, measured at the perceptual level.
 
-## The Synthesis Table
+## 8. Synthesis table
 
-Every headline, one frame, with baselines:
-
-| Use case | Headline | Balanced / chance | Majority |
+| Evaluation | Headline | Balanced / chance | Majority |
 |---|---|---|---|
 | U2a mixture identity | 89.2% | 83.9% / 25% | 60.0% |
 | U2b gas-present | 94.1% | 94.4% / 50% | 65.5% |
 | U2b onset window | 84.2% | 85.2% / 50% | 60.0% |
-| U2c any-gas (best) | 98.1% | 97.9% / 50% | 68.6% |
+| U2c any-gas (best) | 98.1% | 97.7% / 50% | 67.2% |
+| U2c dynamic ppm | R² 0.922–0.952 | ρ 0.886–0.949 | mean-pred R² 0 |
 | U3 TVC regression | R² 0.793 | ρ 0.849 | mean-pred MAE 0.935 |
 | U3 4-class freshness | 78.4% | 64.5% / 25% | 60.3% |
 | U4 binary stimulus | 87.6% | 74.1% / 50% | 81.7% |
 | U5 rig fingerprint | 78.5% | — / 25% | — |
 | U5 zero-shot | 52.3% | — / 16.7% | 20.0% |
+| U5 in-target ceiling | 99.5% | — / 16.7% | 20.0% |
 | U6 fine substance | 89.4% | 89.5% / 2.0% | 2.3% |
 | U6 family (LSO) | 40.2% | — / 12.5% | 38.1% |
 
-## What This Proves — and Does Not
+## 9. What this proves — and does not
 
-**Proves** (recording-fair, public data, baselines in the same table): a single MOX device using the framework separates gases, detects onsets within ~10 seconds, tracks concentration, scores beef spoilage against microbial ground truth, and identifies 50 food substances at ~89% — all on held-out recordings from the same rig. Rig identity is learnable from sensor statistics, which is the honest foundation for per-rig calibration.
+**Proves** (recording-fair, public data, baselines in the same table): a single MOX device using the framework separates gases, detects onsets within ~10 seconds, tracks concentration, scores beef spoilage against microbial ground truth, and identifies 50 food substances at ~89% — all on held-out recordings. Rig identity is learnable from sensor statistics, which is the honest foundation for per-rig calibration.
 
-**Does not prove:** zero-shot cross-device transfer (52.3% vs the 99.5% ceiling says no, reference-free), novel-substance generalization (the family result and R² = −14.62 say no), or certified absolute quantification (power-law recovery is a detection reference, ±0.16–0.30 decades, not metrology).
+**Does not prove:** zero-shot cross-device transfer (52.3% vs the 99.5% ceiling says no, reference-free), novel-substance generalization (the family result — 40.2% ≈ majority 38.1% — says no), or certified absolute quantification (power-law recovery is a detection reference at ±0.16–0.30 decades median, not metrology).
 
-The suite's real deliverable is the shape of that table: detection beats identification, quantification works against real ground truth, and every wall it hits is the same wall — the need for per-rig reference calibration. An honest protocol, six jobs, and the boundaries drawn from measurements. That is what reproducible e-nose research looks like.
+The suite's real deliverable is the shape of that table: detection beats identification, quantification works against real ground truth, and every wall it hits is the same wall — the need for per-rig reference calibration.
 
-## Sources & Further Reading
+## 10. Reproducibility
 
-- OpenSmell master reference, §12 (the full U1–U6 record, §12.1–12.10) and §8.7 (how the suite relates to the publishable-results list).
-- \`research/use-cases/\` — the shared harness and per-experiment \`results/*_metrics.json\` with \`generated_utc\` provenance.
-- \`research/use-cases/data/DATASETS.md\` — data registry and sha256 provenance.
-- The reference-point calibration essay — the k-shot curve is its empirical justification.
+The entire suite is a standalone repository, \`opensmell/e-nose-evals\`: the shared \`harness/\` (loaders, feature extraction, grouped evaluation, report emitter), all six \`uN_*/run_*.py\` entrypoints, and the committed \`results/*_metrics.json\` + \`*_analysis.md\` artifacts with \`generated_utc\` provenance — plus the dataset registry (\`data/DATASETS.md\`) and the bundled small datasets (drift batches, SmellNet offline recordings, OSMO taxonomy, beef-cut sheets) so U3/U5/U6 run out of the box. The three large UCI corpora are re-downloadable and never committed.
+
+\`\`\`bash
+pip install -r requirements.txt
+python selftest.py                     # U1 — no dataset needed
+python u5_chemoprint/run_experiment.py # U5 — bundled drift data
+\`\`\`
+
+If you re-run an experiment and your numbers differ, that is a finding — report it. The suite is designed so the comparison is possible.
+
+## 11. Limitations
+
+- **Procedure-defined splits, not a frozen benchmark.** No leaderboard exists; a formal benchmark (frozen splits, submission harness) is a separate, future project. Do not read this suite as one.
+- **One array, one time series per domain.** U2–U4 each rest on a single device's recordings; U5 models device-time shift rather than manufactured hardware variation.
+- **Research-only data.** The UCI corpora are restricted to non-commercial research; anything built on these numbers inherits that restriction.
+- **Feature-level, not raw, for U5.** The drift dataset ships pre-extracted features, so the chemoprint experiments consume them directly rather than through the windowing pipeline.
+
+## 12. References
+
+- Fonollosa et al. 2014 — chemical discrimination in turbulent gas mixtures with MOX arrays (UCI 309).
+- Fonollosa et al. 2015 — gas sensor arrays for real-time identification of dynamic gas mixtures (UCI 322).
+- Vergara et al. 2012 — drift compensation for gas sensor arrays (UCI 146).
+- Huerta et al. 2016 — gas sensors for home activity monitoring (UCI 362).
+- Wijaya et al. — electronic nose from various beef cuts, Harvard Dataverse 10.7910/DVN/XNFVTS.
+- Feng et al. 2025 — SmellNet: an end-to-end neural odor recognition system, arXiv:2506.00239; dataset \`DeweiFeng/smell-net\`.
+- Code and results: \`opensmell/e-nose-evals\`.
 `,
   },
   {
