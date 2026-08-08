@@ -1775,7 +1775,7 @@ The value of the discipline is best shown by the leak that got caught. The taxon
 ## Sources & Further Reading
 
 - OpenSmell master reference, §7.11 (honesty rules), §8.3 (the session-invariance and leave-substance-out results), §11.7 (ML evaluation hygiene), §12 (the recording-fair use-case suite and its leak catch).
-- \`opensmell/e-nose-evals\` — the reproducible evaluation suite (\`harness/evaluate.py\`) and per-experiment \`results/*_metrics.json\`.
+- [\`opensmell/e-nose-evals\`](https://github.com/opensmell/e-nose-evals) — the reproducible evaluation suite (\`harness/evaluate.py\`) and per-experiment \`results/*_metrics.json\`.
 - The interoperability essay — why evaluation design and calibration limits are the same story.
 `,
   },
@@ -1901,7 +1901,7 @@ The suite's real deliverable is the shape of that table: detection beats identif
 
 ## 10. Reproducibility
 
-The entire suite is a standalone repository, \`opensmell/e-nose-evals\`: the shared \`harness/\` (loaders, feature extraction, grouped evaluation, report emitter), all six \`uN_*/run_*.py\` entrypoints, and the committed \`results/*_metrics.json\` + \`*_analysis.md\` artifacts with \`generated_utc\` provenance — plus the dataset registry (\`data/DATASETS.md\`) and the bundled small datasets (drift batches, SmellNet offline recordings, OSMO taxonomy, beef-cut sheets) so U3/U5/U6 run out of the box. The three large UCI corpora are re-downloadable and never committed.
+The entire suite is a standalone repository, [\`opensmell/e-nose-evals\`](https://github.com/opensmell/e-nose-evals): the shared \`harness/\` (loaders, feature extraction, grouped evaluation, report emitter), all six \`uN_*/run_*.py\` entrypoints, and the committed \`results/*_metrics.json\` + \`*_analysis.md\` artifacts with \`generated_utc\` provenance — plus the dataset registry (\`data/DATASETS.md\`) and the bundled small datasets (drift batches, SmellNet offline recordings, OSMO taxonomy, beef-cut sheets) so U3/U5/U6 run out of the box. The three large UCI corpora are re-downloadable and never committed.
 
 \`\`\`bash
 pip install -r requirements.txt
@@ -1926,7 +1926,7 @@ If you re-run an experiment and your numbers differ, that is a finding — repor
 - Huerta et al. 2016 — gas sensors for home activity monitoring (UCI 362).
 - Wijaya et al. — electronic nose from various beef cuts, Harvard Dataverse 10.7910/DVN/XNFVTS.
 - Feng et al. 2025 — SmellNet: an end-to-end neural odor recognition system, arXiv:2506.00239; dataset \`DeweiFeng/smell-net\`.
-- Code and results: \`opensmell/e-nose-evals\`.
+- Code and results: [\`opensmell/e-nose-evals\`](https://github.com/opensmell/e-nose-evals).
 `,
   },
   {
