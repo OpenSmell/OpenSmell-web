@@ -207,7 +207,7 @@ export default function Home() {
                   className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
                 >
                   <Monitor className="w-4 h-4" />
-                  Try It
+                  Try Osmograph
                 </a>
                 <button
                   onClick={() => searchRef.current?.scrollIntoView({ behavior: "smooth" })}
