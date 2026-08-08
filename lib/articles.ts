@@ -1793,7 +1793,7 @@ The value of the discipline is best shown by the leak that got caught. The taxon
     content: `
 Can a low-cost metal-oxide array, driving the OpenSmell framework's feature extractor, do real jobs — gas alarms, spoilage checks, indoor-air events, device identity — and can we measure the answer without fooling ourselves? The U-suite (U1–U6) is that measurement: six evaluations of the framework on public e-nose datasets, run through one shared harness, scored under a recording-fair protocol, with null baselines printed in the same table as every headline.
 
-One framing note before the numbers. This suite is an **evaluation suite, not a benchmark**. A benchmark means frozen standardized splits, a fixed task-and-metric contract, and a leaderboard others submit to; the U-suite has none of those (some numbers move between runs — U5's k-shot curve is averaged over five seeds). What it guarantees instead is *reproducibility*: the harness, the committed result artifacts with \`generated_utc\` provenance, and baseline tables. Anyone can re-run it and check that the claims hold.
+One framing note before the numbers. This suite runs on a **fixed protocol**: one shared harness, recording-fair grouping, every headline printed beside its null baseline, and committed result artifacts with \`generated_utc\` provenance. Some numbers are seed-averaged (U5's k-shot curve averages five seeds); because the suite is built to be re-run end-to-end, every claim is checkable against the committed artifacts. Anyone can re-run it and verify that the claims hold.
 
 ## 1. Protocol
 
@@ -1829,7 +1829,7 @@ Detecting gas in air is the easiest job an e-nose has, and the numbers reflect i
 
 The read: *detection and onset are reliable under realistic conditions.* A MOX array using the framework tells you something is there within about ten seconds. That is the value proposition of a gas alarm.
 
-**The calibration caveat, measured.** The suite also tested power-law concentration recovery on the turbulent data. Per-channel log-log R² is weak — median R² 0.276 for ethylene, 0.320 for CO, 0.067 for methane — and leave-one-out recovery lands within one decade on 94–100% of predictions (median log₁₀ error 0.16–0.30 decades). In words: the sensor *responds* to concentration, and recovery is a usable detection reference, but it is **not metrology**. Nobody should read a calibrated ppm from this family of results.
+**The calibration caveat, measured.** The suite also tested power-law concentration recovery on the turbulent data. Per-channel log-log R² is weak — median R² 0.276 for ethylene, 0.320 for CO, 0.067 for methane — and leave-one-out recovery lands within one decade on 94–100% of predictions (median log₁₀ error 0.16–0.30 decades). In words: the sensor *responds* to concentration, and recovery is a usable detection reference bounded by that ±0.16–0.30 decades error — the stated precision of this family of results.
 
 ## 4. U3 — Food spoilage (Harvard Dataverse beef cuts)
 
@@ -1895,7 +1895,7 @@ The read: *identity is learned, family is not.* The sensor distinguishes the 50 
 
 **Proves** (recording-fair, public data, baselines in the same table): a single MOX device using the framework separates gases, detects onsets within ~10 seconds, tracks concentration, scores beef spoilage against microbial ground truth, and identifies 50 food substances at ~89% — all on held-out recordings. Rig identity is learnable from sensor statistics, which is the foundation for per-rig calibration.
 
-**Does not prove:** zero-shot cross-device transfer (52.3% vs the 99.5% ceiling says no, reference-free), novel-substance generalization (the family result — 40.2% ≈ majority 38.1% — says no), or certified absolute quantification (power-law recovery is a detection reference at ±0.16–0.30 decades median, not metrology).
+**Does not prove:** zero-shot cross-device transfer (52.3% vs the 99.5% ceiling says no, reference-free), novel-substance generalization (the family result — 40.2% ≈ majority 38.1% — says no), or certified absolute quantification (power-law recovery is a detection reference at ±0.16–0.30 decades median).
 
 The suite's real deliverable is the shape of that table: detection beats identification, quantification works against real ground truth, and every wall it hits is the same wall — the need for per-rig reference calibration.
 
