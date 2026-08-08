@@ -261,7 +261,7 @@ export default function EnosePage() {
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-[0.95]">
                   Build an e-nose
                   <br />
-                  that speaks <span className="text-muted-foreground">OpenSmell</span>.
+                  that sniffs <span className="text-muted-foreground">OpenSmell</span>.
                 </h1>
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                   An electronic nose from off-the-shelf parts — no PCB milling, no
@@ -1097,7 +1097,7 @@ export default function EnosePage() {
                   className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
                 >
                   <GitBranch className="w-4 h-4" />
-                  Reference hardware on GitHub
+                  Reference hardware
                 </a>
                 <a
                   href={REPO_LINKS.discord}
@@ -1115,7 +1115,7 @@ export default function EnosePage() {
                   className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
                 >
                   <Radio className="w-4 h-4" />
-                  Osmograph — the GUI
+                  Osmograph
                 </a>
               </div>
             </div>
