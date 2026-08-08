@@ -225,11 +225,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
               {[
+                { label: "Chemical–Odour Pairs", value: "4,842" },
+                { label: "Compounds Resolvable Live", value: "100M+" },
+                { label: "Curated Odour Profiles", value: "230" },
+                { label: "Sensor Models", value: "17" },
                 { label: "Open Repositories", value: "16" },
-                { label: "Chemical–Odour Pairs", value: "4,800+" },
-                { label: "Streaming Modes", value: "3" },
-                { label: "ML Features / Recording", value: "145" },
-                { label: "Max Sensors / Rig", value: "6" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-3xl font-bold tracking-tight mb-1">
