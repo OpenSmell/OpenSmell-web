@@ -4,7 +4,7 @@ import { useParams } from "next/navigation"
 import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, ExternalLink, Copy, Check, Database, BookOpen, Monitor, Cpu } from "lucide-react"
+import { ArrowLeft, ExternalLink, Copy, Check, Database, BookOpen, Monitor, Cpu, Activity } from "lucide-react"
 import MoleculeViewer from "@/components/molecule-viewer"
 import { getChemicalByCID, Chemical } from "@/lib/odor-index"
 import ThemeToggle from "@/components/theme-toggle"
@@ -229,6 +229,15 @@ function ChemicalDetailPage() {
             <div className="border border-border p-6">
               <h3 className="text-sm font-semibold mb-4">Actions</h3>
               <div className="space-y-3">
+                <a
+                  href={`https://mox.opensmell.xyz/?q=${encodeURIComponent(chemical.name)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 border border-foreground/40 bg-foreground text-background px-4 py-3 text-sm hover:bg-foreground/90 transition-all"
+                >
+                  <Activity className="w-4 h-4" />
+                  Will a MOX e-nose detect it?
+                </a>
                 <button
                   onClick={openPubChem}
                   className="w-full flex items-center justify-center gap-2 border border-border px-4 py-3 text-sm hover:bg-foreground hover:text-background transition-all"

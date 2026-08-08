@@ -891,6 +891,29 @@ export default function EnosePage() {
                 </div>
               ))}
             </div>
+            <div className="max-w-2xl mx-auto mt-10 border border-border bg-background hex-box p-5">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Stuck at any step? Builders share rig photos and catch mistakes early on the{" "}
+                <a
+                  href={REPO_LINKS.discord}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground underline underline-offset-4 hover:opacity-70"
+                >
+                  Discord
+                </a>
+                {" "}— mention your sensor list and goal. Day-to-day progress lands on{" "}
+                <a
+                  href="https://opensmell.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground underline underline-offset-4 hover:opacity-70"
+                >
+                  opensmell.xyz
+                </a>
+                .
+              </p>
+            </div>
           </div>
         </section>
 

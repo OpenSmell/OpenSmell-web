@@ -531,7 +531,7 @@ Osmo has built the most significant map of odor space yet published, and the who
 - Lee, B. K., et al. "A principal odor map unifies diverse tasks in olfactory perception." *Science* 381, 999–1006 (2023).
 - Qian, W. W., et al. "Metabolic activity organizes olfactory representations." *eLife* (2023).
 - Osmo, *About* and *Building a map of odor*: <https://www.osmo.ai>
-- Osmo Scent Taxonomy (open data, ODC-ODbL, v1.1, 2025): <https://github.com/osmoai/taxonomy>
+- Osmo Labs, PBC. "The Osmo Scent Taxonomy," v1.1, 2025 (ODC-ODbL): <https://github.com/osmoai/taxonomy>
 - Laudamiel, C. "The Osmo Scent Taxonomy" (letter): <https://www.generationbyosmo.com/blog/osmo-scent-taxonomy>
 - Google Cloud blog, "How Osmo is digitizing smell with AI" (2023).
 - Monell Chemical Senses Center, "A step closer to digitizing the sense of smell" (2023).
@@ -1925,8 +1925,9 @@ If you re-run an experiment and your numbers differ, that is a finding — repor
 - Vergara et al. 2012 — drift compensation for gas sensor arrays (UCI 146).
 - Huerta et al. 2016 — gas sensors for home activity monitoring (UCI 362).
 - Wijaya et al. — electronic nose from various beef cuts, Harvard Dataverse 10.7910/DVN/XNFVTS.
-- Feng et al. 2025 — SmellNet: an end-to-end neural odor recognition system, arXiv:2506.00239; dataset \`DeweiFeng/smell-net\`.
-- Code and results: [\`opensmell/e-nose-evals\`](https://github.com/opensmell/e-nose-evals).
+- Feng, D., Dai, W., Li, C., Pernigo, A., Wen, Y. & Liang, P. P. "SmellNet: A Large-scale Dataset for Real-world Smell Recognition." *arXiv:2506.00239* (2025); ICLR 2026; dataset \`DeweiFeng/smell-net\`.
+- Osmo Labs, PBC. "The Osmo Scent Taxonomy," v1.1, 2025 (ODC-ODbL): <https://github.com/osmoai/taxonomy>.
+- Code and results: [\`opensmell/e-nose-evals\`](https://github.com/opensmell/e-nose-evals); SmellNet code and ScentFormer: <https://github.com/MIT-MI/SmellNet>.
 `,
   },
   {
