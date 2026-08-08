@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
-import { ExternalLink, Copy, Check, BarChart3 } from 'lucide-react'
+import { ExternalLink, Copy, Check, BarChart3, Activity } from 'lucide-react'
 import Link from 'next/link'
 
 const loadRDKit = (): Promise<any> => {
@@ -241,6 +241,15 @@ export function ChemicalCard({ chemical, priority = false, showDetails = true }:
           >
             View Details
           </Link>
+          <a
+            href={`https://mox.opensmell.xyz/?q=${encodeURIComponent(chemical.name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 flex w-full items-center justify-center gap-2 border border-foreground/40 bg-foreground text-background px-4 py-2 transition-colors text-sm hover:bg-foreground/90"
+          >
+            <Activity className="w-4 h-4" />
+            Will a MOX e-nose detect it?
+          </a>
         </>
       )}
     </div>
