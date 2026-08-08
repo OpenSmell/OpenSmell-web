@@ -277,7 +277,7 @@ export default function EnosePage() {
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
                   <button
                     onClick={() => scrollTo("builder")}
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
                   >
                     <Wrench className="w-4 h-4" />
                     Build yours
@@ -285,23 +285,23 @@ export default function EnosePage() {
                   </button>
                   <button
                     onClick={() => scrollTo("sensors")}
-                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
                   >
                     <Gauge className="w-4 h-4" />
-                    Browse the sensor catalog
+                    Sensor catalog
                   </button>
                   <a
                     href={REPO_LINKS.repo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
                   >
                     <GitBranch className="w-4 h-4" />
                     Build guide
                   </a>
                 </div>
                 <p className="text-sm text-muted-foreground max-w-xl leading-relaxed">
-                  Honest support model: the fully automated path today is the MQ sensor family (1–6 sensors).
+                  The support model: the fully automated path today is the MQ sensor family (1–6 sensors).
                   Digital sensors wire in and stream the same way but need DIY firmware. Everything else is on
                   the catalog so you know it exists and what it needs — the builder never promises a plan it
                   can't back up.
@@ -1126,10 +1126,10 @@ export default function EnosePage() {
                   href={REPO_LINKS.discord}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  Watch it happen on Discord
+                  Follow on Discord
                 </a>
               </div>
             </div>
@@ -1150,7 +1150,7 @@ export default function EnosePage() {
                   href={REPO_LINKS.repo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
                 >
                   <GitBranch className="w-4 h-4" />
                   Reference hardware
@@ -1159,7 +1159,7 @@ export default function EnosePage() {
                   href={REPO_LINKS.discord}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
                 >
                   <MessageSquare className="w-4 h-4" />
                   Get help on Discord
@@ -1168,7 +1168,7 @@ export default function EnosePage() {
                   href={REPO_LINKS.osmograph}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
                 >
                   <Radio className="w-4 h-4" />
                   Osmograph

@@ -281,7 +281,7 @@ export default function AppStorePage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={openForm}
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
                   >
                     <Upload className="w-4 h-4" />
                     Submit Your Work
@@ -516,7 +516,7 @@ export default function AppStorePage() {
                 ))}
               </div>
               <button onClick={openForm}
-                className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all">
+                className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto">
                 <Upload className="w-4 h-4" />
                 Submit Your Work
               </button>

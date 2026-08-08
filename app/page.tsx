@@ -194,7 +194,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/enose"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
                 >
                   <Cpu className="w-4 h-4" />
                   Build an E-Nose
@@ -204,14 +204,14 @@ export default function Home() {
                   href="https://mox.opensmell.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
                 >
                   <Monitor className="w-4 h-4" />
-                  Try Osmograph Web
+                  Try It
                 </a>
                 <button
                   onClick={() => searchRef.current?.scrollIntoView({ behavior: "smooth" })}
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
                 >
                   <Search className="w-4 h-4" />
                   Scent Search
@@ -516,7 +516,7 @@ export default function Home() {
                   href="https://discord.gg/CGER3tHxbH"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
                 >
                   <MessageSquare className="w-4 h-4" />
                   Join Discord
@@ -525,7 +525,7 @@ export default function Home() {
                   href="https://github.com/opensmell"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
                 >
                   <Github className="w-4 h-4" />
                   GitHub

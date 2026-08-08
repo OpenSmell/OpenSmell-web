@@ -126,7 +126,7 @@ The signal chain is the whole subject of digital olfaction in miniature:
 SAMPLE → HEADSPACE CHAMBER → SENSOR ARRAY ×N → ADC/MCU → FEATURES → CLASSIFIER
 \`\`\`
 
-A fan pulls air from above an odor source into a chamber holding several MOX sensors. The microcontroller samples each sensor's analog output, normalises the readings into features, and hands them to a classifier that outputs "this is coffee" or "this is tap water." Once the plumbing works, everything above the sensors is software—which is where the field's real leverage lives.
+A fan pulls air from above an odor source into a chamber holding several MOX sensors. The microcontroller samples each sensor's analog output, normalises the readings into features, and hands them to a classifier that outputs "this is coffee" or "this is tap water." Once the plumbing works, everything above the sensors is software.
 
 ## Bill of Materials
 
@@ -578,11 +578,11 @@ SmellNet's most distinctive trick is **cross-modal supervision**. At training ti
 
 This mirrors the intuition behind OpenSmell's own representation stack: structure-based chemistry (the molecule-level *chemoprint*) and sensor-based measurements (the hardware-level trace) describe the same smell from two ends, and aligning them makes each half better.
 
-## What the Numbers Say (Honestly)
+## What the Numbers Say
 
-On **SmellNet-Base**, ScentFormer reaches **63.3% Top-1 accuracy** with GC-MS supervision. On mixtures it hits **50.2% Top-1@0.1 on seen mixtures** and **16.0% on unseen mixtures**—better than random, and a clear sign of *compositional* learning, but still far from solved. And when the same models meet genuinely novel environments, performance drops sharply: **real-world machine olfaction remains substantially below human-level**.
+On **SmellNet-Base**, ScentFormer reaches **63.3% Top-1 accuracy** with GC-MS supervision. On mixtures it reaches **50.2% Top-1@0.1 on seen mixtures** and **16.0% on unseen mixtures** — above random, and consistent with *compositional* learning. On novel environments the numbers are lower: real-world machine olfaction has not yet reached human-level performance.
 
-That honesty is the point. SmellNet's own authors frame generalization to unseen mixtures and environmental drift as the core open challenge—temperature, airflow, sensor location, and aging all shift the readings. A benchmark that publishes its failures is worth more than a demo that hides them.
+SmellNet's own authors frame generalization to unseen mixtures and environmental drift as a core open challenge—temperature, airflow, sensor location, and aging all shift the readings. Publishing the full set of results, including the harder cases, is what makes a benchmark useful.
 
 ## Why This Matters for Open Smell
 
@@ -592,7 +592,7 @@ SmellNet is external validation of the open-stack thesis this Academy has been b
 - It provides the **sensor-side benchmark** the field lacked, complementing perceptual datasets (Dravnieks, Pyrfume) and the UCI gas-sensor drift benchmark.
 - It is **open**: code, data, and models released on GitHub, so anyone can build on it. That is exactly the "raise the tide" move the field needs.
 
-The remaining gaps—mixture generalization, environmental robustness, and the gap between sensor readings and human perception—are the same problems OpenSmell works on. Benchmark culture is how a field compounds, and SmellNet is a large step in the right direction.
+The remaining gaps—mixture generalization, environmental robustness, and the gap between sensor readings and human perception—are the same problems OpenSmell works on. Benchmark culture is how a field compounds, and SmellNet is a step in that direction.
 
 ## Sources & Further Reading
 
@@ -942,7 +942,7 @@ $$
 a = \\frac{R_{s1}/R_0}{C_1^{\\,b}}
 $$
 
-Note the shape of the denominator in the first equation: b is only defined when the two reference concentrations are *different*. Calibrating with one point and an assumed "zero" point is degenerate, because log(C₁/C₂) blows up as C₂ → 0. That single fact explains why "one-point calibration" attempts in this field produce garbage, and why the sanctioned reference-point protocol always spans at least two decades of concentration. The *Reference-Point Calibration* essay develops this properly.
+Note the shape of the denominator in the first equation: b is only defined when the two reference concentrations are *different*. Calibrating with one point and an assumed "zero" point is degenerate, because log(C₁/C₂) blows up as C₂ → 0. That single fact explains why "one-point calibration" attempts in this field produce unusable results, and why the sanctioned reference-point protocol always spans at least two decades of concentration. The *Reference-Point Calibration* essay develops this properly.
 
 ## Cross-Sensitivity: Selectivity Is a Ratio, Not a Switch
 
@@ -990,7 +990,7 @@ Everything in this essay compresses into a few engineering rules:
 5. Humidity, temperature, and flow are not noise to average away; they are variables to control or log.
 6. Drift and poisoning are surface processes; they respond to protocol (baseline windows, clean-air references, environmental discipline), not to software patches.
 
-An electronic nose is a chemical instrument whose physics is well understood. The reason this field is hard is not mystery — it is variability: a, b, drift, humidity, batch. The reason it is *possible* is that the physics is stable enough to be modeled, normalized, and calibrated. The remaining essays in this series show how that is done, honestly, with the numbers to prove it.
+An electronic nose is a chemical instrument whose physics is well understood. The reason this field is hard is not mystery — it is variability: a, b, drift, humidity, batch. The reason it is *possible* is that the physics is stable enough to be modeled, normalized, and calibrated. The remaining essays in this series show how that is done, with the numbers to prove it.
 
 ## Sources & Further Reading
 
@@ -1020,7 +1020,7 @@ $$
 
 Two devices — different V_cc, different R_L, different ADC — will therefore report wildly different voltages for the same gas. This looks like a fatal portability problem for electronic noses. It is not. The algebraic identity at the heart of the OpenSmell framework shows that the ratio R_s/R_0 removes both quantities completely, leaving a reading that is comparable across electronics — but only up to the sensor itself.
 
-This essay proves that theorem, then spends the rest of its length being honest about its boundary: **what normalization cancels, what it cannot cancel, and what the measured limits of cross-device transfer actually are.**
+This essay proves that theorem, then spends the rest of its length on its boundary: **what normalization cancels, what it cannot cancel, and what the measured limits of cross-device transfer actually are.**
 
 ## The Theorem: Rs/R₀ Cancels the Electronics
 
@@ -1058,7 +1058,7 @@ So R_s/R_0 cancels the *electronics* and leaves you holding the *sensor*. Two un
 
 ## The Impossibility Result, Measured
 
-This is the point at which most projects quietly wish for zero-shot transfer: train once, deploy anywhere, no per-device calibration. The OpenSmell project tried exactly that, repeatedly, and published the results. The honest summary is in the experiment log:
+This is the point at which most projects quietly wish for zero-shot transfer: train once, deploy anywhere, no per-device calibration. The OpenSmell project tried exactly that, repeatedly, and published the results. The summary is in the experiment log:
 
 - A **domain-adversarial encoder** trained to hide device identity failed outright — the domain classifier reached **99.2% accuracy (chance = 50%)**, meaning the latent space still encoded which device produced each sample. There is no device-invariant representation to be had by adversarial trickery here.
 - **Cross-device transfer** of trained classifiers failed outright: **25.3%** accuracy for a classifier trained on the OpenSmell rig and tested on SmellNet recordings, and **18.6%** for the reverse direction — at or below the chance level for the four-substance task (banana, cinnamon, garlic, ginger). The two feature spaces did not overlap meaningfully.
@@ -1086,16 +1086,16 @@ The arithmetic and the experiments together point to one workable definition of 
 
 Reference-point calibration is exactly the route validated in the *Reference-Point Calibration* essay: unbiased recovery of a and b under realistic sensor noise (σ = 5%, six points, two decades → median concentration error ≈ 7.1%, recovered a = 2.0042 vs true 2.0, b = −0.6001 vs true −0.6). The method exists, the SDK implements it, and it converts a per-rig fingerprint into a quantity that another rig of the same model can compare against.
 
-## The Honest Claim
+## The Interoperability Claim
 
-The honest interoperability claim for this stack is specific and defensible:
+The interoperability claim for this stack is specific and defensible:
 
 - **Electronics are normalized away exactly** — V_cc and R_L never appear in the exchanged representation.
 - **Sensors are not normalized away by math** — a and b survive, and drift with time and temperature.
 - **Session invariance for trained substances on a single device is real** — 81.78%, reproducible.
 - **Zero-shot cross-device transfer is falsified on every family tried** — single-point M, two-point power, CORAL, supervised anchors, taxonomy coarsening, and chemoprint-as-prior all fail reference-free (each LOO-fair ≤ +0.0 to +8 percentage points).
 
-Interoperability, done honestly, is a protocol and a calibration contract — not a magic network. It is a much less exciting sentence than "any nose can read any smell," and it is the one the evidence supports. The whole rest of this series is the engineering that makes that sentence work in practice.
+Interoperability is a protocol and a calibration contract — not a magic network. It is a less exciting sentence than "any nose can read any smell," and it is the one the evidence supports. The rest of this series is the engineering that makes that sentence work in practice.
 
 ## Sources & Further Reading
 
@@ -1117,7 +1117,7 @@ Interoperability, done honestly, is a protocol and a calibration contract — no
     author: "OpenSmell Academy",
     thumbnail: "/thumbnails/sensor-count-and-dimensionality.svg",
     content: `
-"How many sensors should my electronic nose have?" is the first question everyone asks and the hardest to answer with a single number. The honest answer is a curve: discriminative power grows steeply at first, flattens, and then nearly stops. The exact shape of that curve is governed by a few pieces of information theory, and knowing them saves you money and disappointment.
+"How many sensors should my electronic nose have?" is the first question everyone asks and the hardest to answer with a single number. The answer is a curve: discriminative power grows steeply at first, flattens, and then nearly stops. The exact shape of that curve is governed by a few pieces of information theory, and knowing them saves you money and disappointment.
 
 The shortest version: **one sensor is a gas detector, not a nose. Six well-chosen sensors are a research instrument. Eight or more buy you almost nothing.** Here is the reasoning.
 
@@ -1175,9 +1175,9 @@ dimensions. The connection to e-noses is direct: each substance is a point, the 
 | 20 | 6 | 15 | 133 |
 | 50 | 7 | 17 | 157 |
 
-Two things stand out. First, for a *handful* of substances — the realistic target of a research or hobby array — a handful of dimensions genuinely suffices. Six effective dims cleanly separates 20 substances at ε = 0.5. That is the whole case for a six-sensor research array.
+Two things stand out. First, for a *handful* of substances — the realistic target of a research or hobby array — a handful of dimensions genuinely suffices. Six effective dims cleanly separates 20 substances at ε = 0.5, which is the quantitative case for a six-sensor research array.
 
-Second, the bound is a floor under ideal conditions. In practice, sensor noise and residual correlations double or triple the requirement, which is exactly why the measured "max substances" column of the capacity table (20–40 at six sensors) is so much smaller than the bound's ideal. And if your ambition is the entire odorant universe — the ~4,565 odorants in one common reference corpus — the bound says you need roughly 270 effective dimensions at ε = 0.5. No single-array e-nose on earth is close to that, and none will be by adding cheap sensors. That ceiling is why the field's honest goal is *reference libraries and per-rig calibration*, not a universal nose.
+Second, the bound is a floor under ideal conditions. In practice, sensor noise and residual correlations double or triple the requirement, which is exactly why the measured "max substances" column of the capacity table (20–40 at six sensors) is so much smaller than the bound's ideal. And if your ambition is the entire odorant universe — the ~4,565 odorants in one common reference corpus — the bound says you need roughly 270 effective dimensions at ε = 0.5. No single-array e-nose is close to that, and none will be by adding cheap sensors. That ceiling is why the field's goal is *reference libraries and per-rig calibration*, not a universal nose.
 
 ## Choosing an Array for a Job
 
@@ -1266,9 +1266,9 @@ None of this is asserted from a textbook; the property estimates are validated a
 - **Implementation parity**: the pure-Python and RDKit-SMARTS paths reproduce each other **exactly** (|Δ| = 0.000 K) on the 720-compound odour-threshold corpus. Parity is path-to-path — the two implementations agree with each other perfectly, which is a reproducibility guarantee, not a prediction-accuracy guarantee.
 - **Odour-threshold prediction**: the smellability model predicts human detection thresholds with R² ≈ 0.575 on a reference corpus — a mediocre but real correlation, and it is reported as exactly that.
 
-These numbers matter because they define the *honest envelope* of the tool. The estimates are strong enough to sort molecules into feasibility tiers and to rank candidate targets before lab work. They are not strong enough to print a certified concentration on a bottle. The tool says so itself, everywhere.
+These numbers matter because they define the tool's envelope. The estimates are strong enough to sort molecules into feasibility tiers and to rank candidate targets before lab work. They are not strong enough to print a certified concentration on a bottle. The tool says so itself, everywhere.
 
-## The Feasibility Verdict, and Its Honest Boundary
+## The Feasibility Verdict, and Its Boundary
 
 The verdict is a grade with three inputs — volatility, redox, and the sensor's own operating floor:
 
@@ -1279,7 +1279,7 @@ The verdict is a grade with three inputs — volatility, redox, and the sensor's
 | No | Yes | Yellow — need headspace concentration |
 | No | No | **Red** — effectively invisible |
 
-Two hard limits keep the verdict honest. First, **it is not a calibrated concentration.** Headspace ppm from vapor pressure is a *thermodynamic estimate* of the saturated case at a given temperature; it says nothing about your actual jar, your airflow, or your sensor's (a, b) on that day. Second, **it is per-molecule, not per-mixture.** Real smells are blends, and the feasibility verdict is computed for isolated molecules. A mixture's verdict is the composition of its components' verdicts, weighted by their relative volatility — a statement about the headspace, not a guarantee of identification in a blend.
+Two hard limits bound the verdict. First, **it is not a calibrated concentration.** Headspace ppm from vapor pressure is a *thermodynamic estimate* of the saturated case at a given temperature; it says nothing about your actual jar, your airflow, or your sensor's (a, b) on that day. Second, **it is per-molecule, not per-mixture.** Real smells are blends, and the feasibility verdict is computed for isolated molecules. A mixture's verdict is the composition of its components' verdicts, weighted by their relative volatility — a statement about the headspace, not a guarantee of identification in a blend.
 
 ## Why This Matters Before You Build Anything
 
@@ -1350,7 +1350,7 @@ The failure mode to fear is not low rate; it is **irregular gaps**. A recorder t
 
 ## Link 4 — The Baseline Window
 
-The ratio R_s/R_0 is only as trustworthy as R_0. The framework's contract defines R_0 from a clean-air window at the start of a recording: **15 samples / roughly 1.5 seconds, aggregated by median** (robust against a single glitchy sample). Two rules keep it honest:
+The ratio R_s/R_0 is only as trustworthy as R_0. The framework's contract defines R_0 from a clean-air window at the start of a recording: **15 samples / roughly 1.5 seconds, aggregated by median** (robust against a single glitchy sample). Two rules protect it:
 
 - **The baseline must be stable.** The health dimension tracks \`noise_floor\` and \`drift_rate\` on the baseline window. If the baseline is itself moving (sensor still warming up, air flow changing), the recording fails the readiness gate and its features are unreliable — the capture protocol prescribes *clean-air baseline → exposure → recovery*, and the quality scorer refuses to pretend otherwise.
 - **Provenance must be recorded.** Was R_0 measured (explicit, from a real clean-air window) or inferred (auto, from the first samples of whatever you happened to record)? Cross-session comparability depends on the answer. The manifest carries \`baseline.source\` and \`r0Samples\` so that a later reader can tell which case they are looking at — explicit R_0 from a real clean-air window, or auto-inferred R_0 from the first samples of whatever you happened to record.
@@ -1365,7 +1365,7 @@ $$
 cv_k = \\frac{\\sigma_k}{\\mu_k} < 0.001 \\Rightarrow \\text{dead}
 $$
 
-When a channel is flagged dead, the honest move is to drop it and recompute the feature set for the reduced array — not to pad it with a mean. The framework's count model (the *187-dimension* essay) recomputes cleanly for any channel count, and the hardware-insufficiency gate ensures a model trained with six channels is never silently run on five by filling the gap.
+When a channel is flagged dead, the correct move is to drop it and recompute the feature set for the reduced array — not to pad it with a mean. The framework's count model (the *187-dimension* essay) recomputes cleanly for any channel count, and the hardware-insufficiency gate ensures a model trained with six channels is never silently run on five by filling the gap.
 
 ## The Feature Vector at the End
 
@@ -1465,7 +1465,7 @@ Because the container keeps raw + baseline + manifest separate, normalization is
 - **R_s/R₀** — the ratio that cancels V_cc and R_L (see the normalization theorem essay).
 - **z-score** — per-recording standardization; the measured winner for encoder input.
 
-The format does not pick one for you. It preserves the raw + baseline structure so that any client can pick its own — and so that the choice is auditable in any re-analysis. That is the actual definition of interoperability used in this project: not "one pipeline," but "a container that keeps every pipeline honest."
+The format does not pick one for you. It preserves the raw + baseline structure so that any client can pick its own — and so that the choice is auditable in any re-analysis. That is the definition of interoperability used in this project: not "one pipeline," but "a container that keeps every pipeline auditable."
 
 ## Quality: Seven Factors, Scored Not Assumed
 
@@ -1485,7 +1485,7 @@ The zero-weight on the last factor is deliberate: duration is logged but not sco
 
 ## Loose CSV Ingress: Meeting Reality
 
-Not everyone will adopt the container tomorrow, so the pipeline accepts loose CSVs and upgrades them: it infers the sampling rate from the median gap, builds an auto-manifest, and defaults to \`r0Samples = 15\` with \`baseline.source = "auto"\`. The upgrade path is explicit about what was inferred and what was measured — a loose CSV becomes a valid \`.osmell\` file whose manifest states, honestly, that R_0 was not recorded properly.
+Not everyone will adopt the container tomorrow, so the pipeline accepts loose CSVs and upgrades them: it infers the sampling rate from the median gap, builds an auto-manifest, and defaults to \`r0Samples = 15\` with \`baseline.source = "auto"\`. The upgrade path is explicit about what was inferred and what was measured — a loose CSV becomes a valid \`.osmell\` file whose manifest states that R_0 was not recorded properly.
 
 ## Why the Boring Details Win
 
@@ -1575,9 +1575,9 @@ A structured taxonomy changes how you work with a model in three practical ways:
 
 1. **You can reason about features by name.** "Amplitude on the CO channel" is a concept; "column 137" is not. When a classifier leans on one feature, you can ask *why it makes sense* — or notice that it is a hardware-bound absolute feature that will not survive a rig change.
 2. **You can drop a whole category cleanly.** Recording without a recovery phase? Drop the temporal and decay features rather than feeding in garbage. Unknown concentration? The framework warns that selectivity ratios degrade unless exponents match. The taxonomy makes these decisions structural instead of ad hoc.
-3. **You can state transfer honestly.** The cross-device story of this framework is precisely the category story: device-agnostic features transfer, absolute and hardware features do not, and per-rig calibration is what upgrades a device-agnostic model into a cross-rig one (the *calibration* essay).
+3. **Transfer is scoped by feature category.** The cross-device story of this framework is precisely the category story: device-agnostic features transfer, absolute and hardware features do not, and per-rig calibration is what upgrades a device-agnostic model into a cross-rig one (the *calibration* essay).
 
-## The Honest Bottom Line
+## The Bottom Line
 
 187 dimensions is not a number to be impressed by — it is a number to be *explained*. The framework's entire point is that the feature space is auditable: every one of the 187 has a name, a category, a transfer class, and a failure mode. That is the difference between a feature extractor and a *feature framework*, and it is why the same taxonomy appears, 1:1, in the Python SDK and the TypeScript web stack, kept equal by tests.
 
@@ -1601,7 +1601,7 @@ A structured taxonomy changes how you work with a model in three practical ways:
     author: "OpenSmell Academy",
     thumbnail: "/thumbnails/reference-point-calibration.svg",
     content: `
-Here is the position the whole field keeps dancing around: a MOX sensor does not measure concentration, it measures *resistance*, and the mapping between the two contains two unknowns that differ for every unit you buy. Calibration is the honest procedure for turning resistance readings into quantities you can report. This essay gives you the procedure, the arithmetic, and — most importantly — the measured error bars.
+Here is the position at the center of this essay: a MOX sensor does not measure concentration, it measures *resistance*, and the mapping between the two contains two unknowns that differ for every unit you buy. Calibration is the procedure for turning resistance readings into quantities you can report. This essay gives you the procedure, the arithmetic, and — most importantly — the measured error bars.
 
 ## What You Are Calibrating
 
@@ -1636,14 +1636,14 @@ Neither method claims laboratory-grade metrology. Both claim the thing that matt
 
 ## The Verified Error Bars
 
-The method's honesty comes from a numerical falsification that was actually run: simulate a sensor with known truth, add realistic noise, and see how well calibration recovers the truth. The setup — a = 2.0, b = −0.6, measurement noise σ = 5%, n = 6 reference points across two decades, 300 repetitions — produced:
+The method's credibility comes from a numerical falsification that was actually run: simulate a sensor with known truth, add realistic noise, and see how well calibration recovers the truth. The setup — a = 2.0, b = −0.6, measurement noise σ = 5%, n = 6 reference points across two decades, 300 repetitions — produced:
 
 - recovered **a = 2.0042** (true 2.0)
 - recovered **b = −0.6001** (true −0.6)
 - fit R² = **0.9984**
 - **leave-one-out median concentration error ≈ 7.1%**
 
-The method is *unbiased*: it does not systematically drift the constants, and the LOO error — predicting each reference point from the other five — is the honest number to quote when someone asks "how wrong is this calibration?"
+The method is *unbiased*: it does not systematically drift the constants, and the LOO error — predicting each reference point from the other five — is the number to quote when someone asks "how wrong is this calibration?"
 
 The data budget matters as much as the fit. The point-count grid shows how error falls as you add references:
 
@@ -1678,11 +1678,11 @@ Putting it together, the reference-point protocol is:
 
 The SDK implements the whole pipeline — \`fit_power_law\`, \`loocv_power_law\`, \`invert_concentration\`, \`build_calibration_payload\` — and the calibration contract round-trips through the \`.osmell\` manifest. The only missing piece in the project is real labeled-ppm recordings from hardware, which is a data problem, not a method problem.
 
-## The Honest Limit: Anchors Are Not Universes
+## The Limit: Anchors Are Not Universes
 
 Calibration is a *reference-point strategy*, not a universal map. Six pure reference compounds — even well chosen — cover roughly **0.1% of the ~4,565 odorants** in a standard reference corpus (a convex-hull analysis of the measured result). The consequence is operational, not philosophical: you calibrate for the substances you actually care about, per rig, and you ship a *contribution loop* so the community's reference library grows — rather than pretending six bottles can span the smell of the world.
 
-The payoff of doing it honestly is that calibrated readings become *comparable artifacts*: two rigs, calibrated against the same ladder, produce concentration estimates that can be pooled. That is the entire foundation the interoperability essay demands, and it is reachable with a bottle, a bag, and a spreadsheet.
+The payoff is that calibrated readings become *comparable artifacts*: two rigs, calibrated against the same ladder, produce concentration estimates that can be pooled. That is the entire foundation the interoperability essay demands, and it is reachable with a bottle, a bag, and a spreadsheet.
 
 ## Sources & Further Reading
 
@@ -1698,7 +1698,7 @@ The payoff of doing it honestly is that calibrated readings become *comparable a
     excerpt:
       "The most common reason e-nose models fail in the field is evaluation design, not model quality: windows from the same recording leak across train and test, and session invariance gets reported as substance generalization. This essay lays out leak-aware, recording-fair evaluation and the numbers that separate real results from artifacts.",
     category: "Research",
-    tags: ["evaluation", "cross-validation", "leakage", "session invariance", "honesty"],
+    tags: ["evaluation", "cross-validation", "leakage", "session invariance", "reproducibility"],
     readTime: "17 min",
     date: "2026-08-06",
     author: "OpenSmell Academy",
@@ -1725,7 +1725,7 @@ These are different claims with different engineering meaning. Session invarianc
 
 ## Pre-Registered Thresholds and Fixed Seeds
 
-The other pillar of honest evaluation is *deciding before fitting*. The session-invariance work declared a >70% threshold in advance, then ran the experiment, then published the result — so the threshold cannot be moved after the fact to make a near-miss look like a win. The discipline extends to:
+The other pillar of evaluation is *deciding before fitting*. The session-invariance work declared a >70% threshold in advance, then ran the experiment, then published the result — so the threshold cannot be moved after the fact to make a near-miss look like a win. The discipline extends to:
 
 - **Fixed seeds** (the project uses 42) so every run is reproducible bit-for-bit.
 - **A fixed CV structure**, stated before the run, so the grouping choice cannot be tuned to flatter the result.
@@ -1744,7 +1744,7 @@ The perennial hope is that a small "adapter" layer lets a model trained on devic
 | Parameterised adapter | 0.879 on held-out config | confirmed |
 | Conv1 fine-tune | garlic–ginger cosine 0.409 | partial |
 
-The pattern: adapters help in narrow, well-specified settings (the MSE result is a simulation; the parameterised result is on one held-out configuration), and they stop helping when the gap is structural. The honest reading is the one the whole experiment arc converged on — a small set of labeled reference samples on the target device, used for reference-point calibration, beats every reference-free adapter family tried. Adapters are a complement to calibration, not a replacement for it.
+The pattern: adapters help in narrow, well-specified settings (the MSE result is a simulation; the parameterised result is on one held-out configuration), and they stop helping when the gap is structural. The reading the whole experiment arc converged on: a small set of labeled reference samples on the target device, used for reference-point calibration, beats every reference-free adapter family tried. Adapters are a complement to calibration, not a replacement for it.
 
 ## The Recording-Fair Baseline Table
 
@@ -1757,7 +1757,7 @@ The strongest habit to borrow from the evaluation suite is its *baseline table d
 | Fine substance identity | 89.4% | 89.5% / 2.0% | 2.3% |
 | Perceptual family (LSO) | 40.2% | — / 12.5% | 38.1% |
 
-Read the last row carefully: 40.2% *looks* impressive until you see the majority baseline is 38.1%. The family result is nearly a null result, and the honest table says so. That is the entire point — an evaluation that cannot embarrass you is not an evaluation.
+Read the last row carefully: 40.2% looks substantial until you see the majority baseline is 38.1%. The family result is close to a null result. Without the baseline column the row would be misread; the baseline is why it reads this way.
 
 ## A Leak Caught and Fixed
 
@@ -1774,16 +1774,16 @@ The value of the discipline is best shown by the leak that got caught. The taxon
 
 ## Sources & Further Reading
 
-- OpenSmell master reference, §7.11 (honesty rules), §8.3 (the session-invariance and leave-substance-out results), §11.7 (ML evaluation hygiene), §12 (the recording-fair use-case suite and its leak catch).
+- OpenSmell master reference, §7.11 (honesty rules), §8.3 (the session-invariance and leave-substance-out results), §11.7 (ML evaluation hygiene), §12 (the recording-fair evaluation suite and its leak catch).
 - [\`opensmell/e-nose-evals\`](https://github.com/opensmell/e-nose-evals) — the reproducible evaluation suite (\`harness/evaluate.py\`) and per-experiment \`results/*_metrics.json\`.
 - The interoperability essay — why evaluation design and calibration limits are the same story.
 `,
   },
   {
     slug: "the-u-suite-use-cases",
-    title: "The U-Suite: Six Evaluations, One Honest Protocol",
+    title: "The U-Suite: Six Evaluations, One Shared Protocol",
     excerpt:
-      "Gas detection, onset timing, spoilage quantification, indoor-air monitoring, rig chemoprinting, and smell taxonomy — six recording-fair evaluations of the OpenSmell framework on public data, one shared harness, null baselines beside every headline. This is what a MOX array using the framework can and cannot do — measured, reproducible, and committed with provenance.",
+      "Gas detection, onset timing, spoilage quantification, indoor-air monitoring, rig chemoprinting, and smell taxonomy — six recording-fair evaluations of the OpenSmell framework on public data, one shared harness, null baselines beside every headline. Every number is measured, reproducible, and committed with provenance.",
     category: "Research",
     tags: ["u-suite", "e-nose-evals", "evaluation", "reproducibility", "validation"],
     readTime: "18 min",
@@ -1793,7 +1793,7 @@ The value of the discipline is best shown by the leak that got caught. The taxon
     content: `
 Can a low-cost metal-oxide array, driving the OpenSmell framework's feature extractor, do real jobs — gas alarms, spoilage checks, indoor-air events, device identity — and can we measure the answer without fooling ourselves? The U-suite (U1–U6) is that measurement: six evaluations of the framework on public e-nose datasets, run through one shared harness, scored under a recording-fair protocol, with null baselines printed in the same table as every headline.
 
-One framing note before the numbers. This suite is an **evaluation suite, not a benchmark**. A benchmark means frozen standardized splits, a fixed task-and-metric contract, and a leaderboard others submit to; the U-suite has none of those (some numbers move between runs — U5's k-shot curve is averaged over five seeds). What it guarantees instead is *reproducibility*: the harness, the committed result artifacts with \`generated_utc\` provenance, and honest baselines. Anyone can re-run it and check that the claims hold. That is the whole point of publishing it.
+One framing note before the numbers. This suite is an **evaluation suite, not a benchmark**. A benchmark means frozen standardized splits, a fixed task-and-metric contract, and a leaderboard others submit to; the U-suite has none of those (some numbers move between runs — U5's k-shot curve is averaged over five seeds). What it guarantees instead is *reproducibility*: the harness, the committed result artifacts with \`generated_utc\` provenance, and baseline tables. Anyone can re-run it and check that the claims hold.
 
 ## 1. Protocol
 
@@ -1827,7 +1827,7 @@ Detecting gas in air is the easiest job an e-nose has, and the numbers reflect i
 - **Mixture identity** (ethylene-only / CO-only / methane-only / both): **89.2%** / 83.9% balanced (chance 25%, majority 60.0%); secondary gas id (CO vs methane) **94.9%**.
 - **Dynamic concentration tracking:** on a continuous two-gas run, per-gas regression hit **R² 0.922** (ethylene, MAE 0.62 ppm) and **R² 0.952** (methane, MAE 5.7 ppm) — against a mean-predictor baseline of R² 0. Event/state classification reached **98.1%** / 97.7% balanced (any-gas) and **96.7%** / 96.6% balanced (four-state).
 
-The read: *detection and onset are solved for realistic conditions.* A MOX array using the framework reliably tells you something is there, and tells you within about ten seconds. That is the entire value proposition of a gas alarm, and it holds.
+The read: *detection and onset are reliable under realistic conditions.* A MOX array using the framework tells you something is there within about ten seconds. That is the value proposition of a gas alarm.
 
 **The calibration caveat, measured.** The suite also tested power-law concentration recovery on the turbulent data. Per-channel log-log R² is weak — median R² 0.276 for ethylene, 0.320 for CO, 0.067 for methane — and leave-one-out recovery lands within one decade on 94–100% of predictions (median log₁₀ error 0.16–0.30 decades). In words: the sensor *responds* to concentration, and recovery is a usable detection reference, but it is **not metrology**. Nobody should read a calibrated ppm from this family of results.
 
@@ -1840,7 +1840,7 @@ Electronic-nose readings from 12 beef cuts with hourly microbial ground truth �
 - **Binary "spoiled" (TVC ≥ 5):** **85.0%** / 84.8% balanced (chance 50%, majority 60.3%).
 - Strongest single-channel signals against TVC: MQ5 (ρ = 0.93), MQ4 (ρ = −0.90), MQ137 (ρ = 0.83).
 
-Two honest notes. Class 3 — the *transitional* freshness bin — is a real weak spot (17.3%), which is exactly what the chemistry predicts: the middle of a spoilage curve is where the sensor signal stops changing monotonically. And the binary "spoiled/not-spoiled" question is the practically useful one — a consumer does not need "freshness class 2," they need "is this meat safe" — and that works at 85%.
+Two scope notes. Class 3 — the *transitional* freshness bin — is a real weak spot (17.3%), which is exactly what the chemistry predicts: the middle of a spoilage curve is where the sensor signal stops changing monotonically. And the binary "spoiled/not-spoiled" question is the practically useful one — a consumer does not need "freshness class 2," they need "is this meat safe" — and that works at 85%.
 
 ## 5. U4 — Indoor-air monitoring (UCI-362 home activity)
 
@@ -1849,7 +1849,7 @@ Eight Figaro sensors in a real home, 99 gas inductions of background/wine/banana
 - **Binary stimulus detection:** **87.6%** / 74.1% balanced (chance 50%, majority 81.7%); background detected at 95.4%, stimulus at 52.8%.
 - **Three-class** (background/wine/banana): **86.0%** / 55.0% balanced (chance 33.3%, majority 81.7%). Banana: **4.5%**.
 
-This experiment earns its place for its honesty. The balanced accuracy tells the true story: the model beats the majority baseline but struggles on the *stimulus* class, and banana detection is essentially noise. "Detecting *an* event" works; "detecting *which* event, in a home, with a MOX array" is hard. Both numbers are printed because both are true.
+The balanced accuracy carries the detail: the model beats the majority baseline but struggles on the *stimulus* class, and banana detection is at chance. "Detecting *an* event" works; "detecting *which* event, in a home, with a MOX array" is hard. Both numbers are printed because both are true.
 
 ## 6. U5 — Rig chemoprinting (UCI gas drift benchmark)
 
@@ -1859,9 +1859,9 @@ Six gases, 16 sensors, 10 batches over 36 months of real drift. Batches model ri
 - **Per-rig calibration curve:** source batches 1–5 (3,633 measurements) → target batches 6–10 (10,277). Zero-shot transfer **52.3%** (chance 16.7%, majority 20.0%); in-target supervised ceiling **99.5%** (balanced 99.4%).
 - **The k-shot curve** (labeled target samples added to the source training set, 5 seeds): k=5 → **65.6% ± 1.5**, k=10 → **73.4% ± 2.3**, k=25 → **83.5% ± 0.9**, k=50 → **91.2% ± 0.4**.
 
-This is the suite's most important result. A rig is identifiable from sensor statistics alone (78.5%) — which is the honest foundation for per-rig reference calibration, and simultaneously the proof that every rig is subtly different. The 99.5% ceiling versus 52.3% zero-shot is the measured price of drift. The k-shot curve shows the fix: a handful of reference samples on the target rig recovers most of the gap. That curve is the empirical case for reference-point calibration in one chart.
+This is the suite's central result. A rig is identifiable from sensor statistics alone (78.5%) — the foundation for per-rig reference calibration, and the demonstration that every rig is subtly different. The 99.5% ceiling versus 52.3% zero-shot is the measured price of drift. The k-shot curve shows the fix: a handful of reference samples on the target rig recovers most of the gap. That curve is the empirical case for reference-point calibration in one chart.
 
-**Honesty note.** The drift batches are one physical array aging over time, so they model rig identity and device-time shift, not distinct manufactured hardware. Results describe *these batches / this array*, not a guarantee for other hardware.
+**Scope note.** The drift batches are one physical array aging over time, so they model rig identity and device-time shift, not distinct manufactured hardware. Results describe *these batches / this array*, not a guarantee for other hardware.
 
 ## 7. U6 — Smell taxonomy (SmellNet + OSMO families)
 
@@ -1871,7 +1871,7 @@ SmellNet's 50 food substances (250 recordings, 4,903 windows), labeled with eigh
 - **Perceptual family** (leave-one-substance-out, 50 groups): **40.2%** vs majority **38.1%** (chance 12.5%). Per class: Woody 65.2%, Green 41.7%, Fruity 28.5%, Herbal 21.7%; Citrus/Floral/Mineral/Soulful **0.0%**.
 - **Fine→coarse collapse:** 35.7% — predicting families from fine predictions does not recover family structure.
 
-The honest read is stark: *identity is learned, family is not.* The sensor distinguishes the 50 foods beautifully, but the perceptual categories ("woody," "floral") do not fall out of raw sensor identity — the model can tell cumin from pineapple but cannot generalize to "this is a woody thing." The tiny families score 0.0% because with one or two substances per family there is nothing to generalize from. This is the substance-generalization wall, measured at the perceptual level.
+The read: *identity is learned, family is not.* The sensor distinguishes the 50 foods well, but the perceptual categories ("woody," "floral") do not fall out of raw sensor identity — the model can tell cumin from pineapple but cannot generalize to "this is a woody thing." The tiny families score 0.0% because one or two substances per family is too little data to learn a category from. This is the substance-generalization wall, measured at the perceptual level.
 
 ## 8. Synthesis table
 
@@ -1893,7 +1893,7 @@ The honest read is stark: *identity is learned, family is not.* The sensor disti
 
 ## 9. What this proves — and does not
 
-**Proves** (recording-fair, public data, baselines in the same table): a single MOX device using the framework separates gases, detects onsets within ~10 seconds, tracks concentration, scores beef spoilage against microbial ground truth, and identifies 50 food substances at ~89% — all on held-out recordings. Rig identity is learnable from sensor statistics, which is the honest foundation for per-rig calibration.
+**Proves** (recording-fair, public data, baselines in the same table): a single MOX device using the framework separates gases, detects onsets within ~10 seconds, tracks concentration, scores beef spoilage against microbial ground truth, and identifies 50 food substances at ~89% — all on held-out recordings. Rig identity is learnable from sensor statistics, which is the foundation for per-rig calibration.
 
 **Does not prove:** zero-shot cross-device transfer (52.3% vs the 99.5% ceiling says no, reference-free), novel-substance generalization (the family result — 40.2% ≈ majority 38.1% — says no), or certified absolute quantification (power-law recovery is a detection reference at ±0.16–0.30 decades median, not metrology).
 
@@ -1933,7 +1933,7 @@ If you re-run an experiment and your numbers differ, that is a finding — repor
     slug: "the-opensmell-stack",
     title: "The OpenSmell Stack: An Orientation Map",
     excerpt:
-      "SDK, web platform, desktop app, hardware build guide, and a research layer — plus the 1:1 Python/TypeScript mirroring contract that keeps the stack honest. If you are new to the project, start here: where everything lives, how the pieces mirror each other, and the order in which to read the code and this Academy.",
+      "SDK, web platform, desktop app, hardware build guide, and a research layer — plus the 1:1 Python/TypeScript mirroring contract. If you are new to the project, start here: where everything lives, how the pieces mirror each other, and the order in which to read the code and this Academy.",
     category: "Foundations",
     tags: ["orientation", "repository map", "mirroring", "getting started", "open source"],
     readTime: "12 min",
@@ -1988,7 +1988,7 @@ The project's own onboarding order, which doubles as an Academy reading order:
 3. **Sensor theory** — the *band bending* and *sensor count* essays (the physics and the limits).
 4. **Data formats** — the *.osmell* essay (the container everything flows through).
 5. **Decay model** — the multi-exponential fit that powers the advanced features.
-6. **Honesty** — the *interoperability* and *evaluating models* essays (the walls and the protocol).
+6. **Discipline** — the *interoperability* and *evaluating models* essays (the walls and the protocol).
 7. **Evidence** — the *U-suite* essay (what the stack actually does on real data).
 
 Each Academy essay carries a "Sources & Further Reading" section that points back to the master reference section it came from, so the code is never more than one click away.
@@ -1999,7 +1999,7 @@ The same honesty rules apply to the project's own open items, which are tracked 
 
 ## The Point of the Map
 
-Every layer of this stack exists to make one sentence true: *a smell recording is a comparable, self-describing artifact, and every claim made from it is traceable to measured data.* The SDK makes the features; the format makes the artifact; the mirrors keep the logic honest; the science layer keeps the claims honest; the Academy explains all of it. You can start anywhere — but the order above is the one that builds understanding fastest, and it is the order the rest of the series assumes.
+Every layer of this stack exists to make one sentence true: *a smell recording is a comparable, self-describing artifact, and every claim made from it is traceable to measured data.* The SDK makes the features; the format makes the artifact; the mirrors keep the logic consistent; the science layer keeps the claims verifiable; the Academy explains all of it. You can start anywhere — but the order above is the one that builds understanding fastest, and it is the order the rest of the series assumes.
 
 ## Sources & Further Reading
 
