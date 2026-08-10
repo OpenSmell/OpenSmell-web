@@ -2010,6 +2010,145 @@ Every layer of this stack exists to make one sentence true: *a smell recording i
 - The U-suite essay — the evidence the stack points to.
 `,
   },
+  {
+    slug: "mox-smellability",
+    title: "Will My E-Nose Actually Smell It? The 4-Step Physics Chain",
+    excerpt:
+      "A compound can be intensely smelly to a human and nearly invisible to a MOX sensor. Feasibility is a physics question — identity, volatility, signal, reactivity — and it deserves a falsifiable answer before you buy hardware.",
+    category: "Research",
+    tags: ["mox", "smellability", "feasibility", "headspace", "vapor pressure", "reactivity"],
+    readTime: "11 min",
+    date: "2026-08-10",
+    author: "OpenSmell Academy",
+    thumbnail: "/thumbnails/mox-smellability.svg",
+    content: `
+Before you buy sensors, choose a sensor count, or record a single exposure, there is a boring question you should answer first: **will the target molecule actually produce a detectable response on a MOX array?**
+
+That question is not answered by your nose. The human nose and a metal-oxide semiconductor (MOX) sensor are different instruments with different response functions, and confusing the two is the most common source of failed e-nose projects. This essay is about the *physics* of the question — the four-step chain that turns "will it smell?" into a falsifiable verdict. It is the theory behind the **smellability** engine in the OpenSmell SDK and the browser toolkit.
+
+## Your Nose Is Not a MOX Sensor
+
+Humans detect thiols and mercaptans down at parts-per-trillion to parts-per-billion concentrations. That is why a few drops of ethyl mercaptan can make a gas leak obvious to every nose on a street. Commodity MOX sensors do not work that way: their datasheets specify response ranges in the *parts-per-million* decade (an MQ-3, for instance, is rated for roughly 25–5,000 ppm of ethanol-family gases). A compound can therefore be:
+
+- **Strongly smelly to humans, nearly invisible to a MOX** — a volatile thiol at trace concentration;
+- **Dull to humans, obvious to a MOX** — ethanol in hand sanitizer smells faint but saturates a headspace with tens of thousands of ppm;
+- **Smelly to everyone, dead on a MOX** — pure nitrogen has no smell, but neither does it reduce the sensor surface, so a flow of nitrogen is not a signal.
+
+The nose detects *specific receptors firing*; a MOX detects *reduction of a hot metal-oxide surface*. That single mechanistic difference drives everything below.
+
+## What a MOX Sensor Actually Measures
+
+A MOX sensor is a sintered film of tin dioxide (SnO₂) held at roughly 350–450 °C. At that temperature, oxygen chemisorbs onto the surface, trapping electrons and raising the film's resistance. When a gas arrives that can be *oxidised by the surface oxygen* — a reducing gas — the surface releases those electrons and the resistance drops. The resistance change is the signal.
+
+So feasibility decomposes into exactly two physical requirements:
+
+1. **Volatility** — enough of the molecule must reach the sensor surface in the gas phase.
+2. **Reactivity** — the molecule must be redox-active at the operating temperature.
+
+Both must hold. A perfectly reactive molecule that never leaves the liquid phase is invisible. A volatile molecule that cannot reduce the surface produces only background changes. The smellability engine grades both, and the answer is only as good as the worst of the two.
+
+## The Four-Step Chain
+
+The engine runs the following chain for every substance under test. Each step emits a verdict in **green / yellow / red**; the overall verdict is the **worst** step. A red anywhere is a red everywhere.
+
+### Step 1 — Identity
+
+First the engine must know what it is looking at. A lookup can resolve a name to:
+
+- a **curated** entry (measured boiling point, curated functional groups) — the most trustworthy path;
+- a **composite** entry (a known mixture with recorded constituents and weight fractions);
+- a **chemical class** term (e.g. "terpene", "thiol") with class-level properties;
+- or, when you hand it a **SMILES string**, a *de novo* estimate via group-contribution (Joback) theory — a boiling point and functional groups inferred from the structure.
+
+Every property in the chain carries a *provenance*: measured, estimated, or unknown. That provenance is what sets the verdict's confidence — estimated properties never pretend to be measurements.
+
+### Step 2 — Volatility
+
+The engine estimates vapor pressure at 25 °C. For curated substances it uses Antoine coefficients (NIST data); otherwise it falls back to the Clausius–Clapeyron equation with Trouton's rule for the heat of vaporization:
+
+    ΔH_vap ≈ 88 × T_boil          (J/mol, Trouton)
+    P_vap(298 K) via Clausius–Clapeyron
+
+Pure gases are assigned full atmospheric pressure (they *are* the vapor phase). The result is graded against volatility bands: ≥10,000 Pa "very high", 1,000–10,000 "high", 100–1,000 "moderate", 1–100 "low", below 1 Pa "negligible".
+
+### Step 3 — Signal
+
+Next: how strong would the *sensor signal* actually be? The engine computes the saturated headspace concentration an ideal enclosed chamber would present:
+
+    ppm_headspace = (P_vap / P_atm) × 10^6
+
+and a **flux ratio** of the compound's diffusion-weighted flux to that of ethanol (the reference substance), using the Fuller–Schettler–Giddings method where diffusivity scales roughly with molecular weight.
+
+The headspace is graded against the sensor's detection floor — **1 ppm** — in bands: ≥1,000 ppm "strong", 100–1,000 "moderate", 10–100 "weak", 1–10 "marginal", below 1 ppm "none". Note how strict this is: the engine's *floor* is 1 ppm while an MQ-3's *rated range* starts at 25 ppm. A "marginal" verdict is already optimistic for most cheap arrays.
+
+### Step 4 — Reactivity
+
+Finally, the chemistry: are the molecule's functional groups redox-active at MOX operating temperature? The engine maps groups (alcohols, aldehydes, ketones, esters, acids, terpenes, thiols, sulfides, amines, phenols, aromatics, ethers) as **reducing / oxidisable** → green. True inerts — N₂, O₂, CO₂, noble gases, water — are **red**: they cannot undergo the surface reduction the sensor detects. Anything unclassified is **yellow**: any response would be indirect (humidity baseline shifts, oxygen partial-pressure changes, matrix effects), not a true analyte signal.
+
+### Aggregation
+
+The verdict is the worst of the four steps. For composites, each constituent runs the full chain and the constituents' signal scores are combined by weight: red if red weight dominates, yellow if the non-green fraction is substantial. Confidence falls to **low/medium** whenever properties were estimated rather than measured. Two extra blocks round out the answer:
+
+- **crossCheck** — a capacity check: can an N-sensor array resolve this substance *within your existing labeled library*? It reports label overlap. It does not promise mixture decomposition, and it explicitly flags that cross-sensitivity to your library is unknown until you add labeled sessions.
+- **guidance** — capture advice tuned to the expected signal: short exposures for strong/fast responses, maximised headspace and long windows for weak/slow ones, always clean-air baseline → exposure → recovery.
+
+## "It's a Complex Material" — the Constituent Fallback
+
+Most real targets are not a single curated molecule. A ripe banana is dozens of compounds; a diesel exhaust is hundreds. The chain has a principled answer rather than a shrug: **decompose, grade, and combine.**
+
+If you know the material's constituents — as SMILES strings or formulas and rough weight fractions — the engine runs the full four-step chain **per constituent** and produces a weighted composite verdict. A banana's profile, for example, is dominated by isoamyl acetate (an ester — green reactivity, moderate volatility), backed by ethyl butyrate and 2-methyl-1-butanol; each contributes a verdict proportional to its share of the headspace.
+
+This keeps the honesty rules intact: the engine is not hallucinating a compound it cannot identify. If you supply \`O=C=O\` it tells you it is carbon dioxide — an inert oxide with no reducing chemistry — and grades it red for MOX reactivity, regardless of how strongly you might associate "CO₂" with a smell. The verdict always traces back to the chemistry you actually handed it.
+
+## Making It Falsifiable
+
+Every verdict should be a prediction you can go and break. That is the discipline the whole stack tries to hold itself to, and the smellability engine is no exception.
+
+**Concrete example — ethanol.** The chain predicts: saturated headspace at 25 °C ≈ **78,000 ppm** (well into "strong"), flux ratio 1.0 (it *is* the reference), reactivity green (an alcohol oxidises at ~350 °C), response fast. Overall: **green**.
+
+**How you would falsify that:** put a few ml of ethanol in a sealed jar at room temperature, let it equilibrate, run the capture protocol, and check. If *no* channel moves above the noise floor while a "moderate" compound does, the volatility estimate is wrong for your rig. If nitrogen produces a response equal to ethanol, the reactivity classification is broken — or your flow control and oxygen baseline are.
+
+**Troubleshooting, in order:**
+
+- **No response on a predicted "strong" substance** — is the container sealed? Did you let the baseline settle to a stable resistance *before* exposure? Is the sensor actually at operating temperature? (A cold sensor is a resistor, not a detector.)
+- **Response only during the recovery phase** — you are probably measuring a humidity swing from your breath or the room, not the analyte.
+- **Everything triggers everything** — your flow rate or oxygen baseline is uncontrolled; MOX responses are strongly modulated by oxygen partial pressure, which is exactly why pure O₂ or N₂ must *not* be graded green.
+- **Cross-sensitivity surprises** — a compound you did not expect is dominating. Add its label to the library and re-run the crossCheck.
+
+Two claims the engine deliberately does **not** make, because it lacks the per-rig reference data to back them up: calibrated parts-per-million measurements (calibration on real cross-device data measured a *fall* from 47% to 33% accuracy — see the evaluating-models essay) and the ability to separate isomers like limonene from pinene on a small array. The honest next step is a rig-reference layer: record known concentrations on *your* hardware and let the chain's predictions be tested against them. The chain ships the prediction; you supply the reference.
+
+## Actionable Guidance
+
+The single highest-leverage lever for weak signals is temperature. Vapor pressure grows roughly **exponentially** with temperature (Clausius–Clapeyron again), roughly doubling every 10–15 °C. A compound that is "negligible" at 25 °C can jump two or three decades by warming the sample to 60 °C — within a sealed bag or glass jar, never an open flame. The engine's guidance block will tell you when to do exactly this: it maximises headspace and lengthens capture windows for anything below "moderate", and it keeps exposures short for the strong/fast cases so you do not saturate the array.
+
+Beyond that, the rules are short:
+
+- **Maximise headspace** — a sealed bag or jar, not an open dish; sniff the headspace, not the liquid.
+- **Keep the distance short** — a few centimeters, not a meter; concentration falls with distance.
+- **Control the baseline** — clean air, stable resistance, then expose, then let it recover fully.
+- **Match the sensor family to the target** — different MOX parts are tuned to different gas classes; a carbon-monoxide detector is not an ethanol monitor.
+- **Do not over-promise the array** — four real MOX sensors have effective dimensionality around 2–3; grade a single substance, resolve against your library, and stop there.
+
+## What the Verdict Is and Is Not
+
+| The verdict **is** | The verdict **is not** |
+|---|---|
+| Physical feasibility: volatility × redox, given the chemistry you supplied | A calibrated concentration measurement |
+| A capacity grade: can an N-sensor array resolve this within your labeled library | A guarantee of mixture decomposition |
+| Honest uncertainty: low/medium confidence when properties are estimated | A promise across unseen devices or unlabeled sessions |
+| Actionable capture guidance tuned to the expected signal | A replacement for baseline → exposure → recovery discipline |
+
+The chain never fabricates missing data and never upgrades an estimate into a measurement. If it does not know the boiling point, it says so and drops the confidence — it does not guess a number and print a confident green. Those limits are not omissions; they are the measured lessons of the calibration experiments, and they are what keep a feasibility verdict worth acting on.
+
+## Sources & Further Reading
+
+- The smellability engine source — \`opensmell/mox/smellability/\` (Python) and \`osmograph-web/lib/smellability/\` (TypeScript mirror), with the two implementations held in parity by mirrored tests.
+- The feasibility-chain spec and calibration-lessons documents in \`osmograph-web/docs/smellability/\` — the evidence base for every number above.
+- The *from-SMILES-to-smell* and *chemoprint* essays — structure-derived representations that feed Step 1.
+- The *sensor-count* and *band-bending* essays — why effective dimensionality is far below sensor count, and what a MOX surface actually does.
+- The *evaluating-models* essay — the calibration honesty rules (47% → 33% affine failure) that forbid calibrated-ppm claims.
+`,
+  },
 ]
 
 export function getArticle(slug: string): Article | undefined {
