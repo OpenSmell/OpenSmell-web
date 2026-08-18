@@ -4,62 +4,15 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, Hexagon, Sigma, Database, Cpu, Monitor, Store, BarChart3, Settings } from "lucide-react"
+import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, Hexagon, Sigma, Database, Cpu, Monitor, Store, BarChart3, Settings, Wind, Plug, AlertTriangle, Code } from "lucide-react"
 import { useTheme } from "next-themes"
 import AnimatedHero from "@/components/animated-hero"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
-import OpenStack from "@/components/open-stack"
-
-const moats = [
-  {
-    eyebrow: "SEARCH",
-    icon: Search,
-    title: "Scent Search",
-    desc: "Explore 4,800+ chemical–odour relationships from Pyrfume. Search by smell or by molecule, then dive into PubChem data.",
-    cta: "Start searching",
-    href: "/search",
-  },
-  {
-    eyebrow: "SOFTWARE",
-    icon: Monitor,
-    title: "Osmograph",
-    desc: "Zero-code e-nose workflow. Flash firmware, record live traces, and train classifiers — no coding required.",
-    cta: "Open Osmograph",
-    href: "/osmograph",
-  },
-  {
-    eyebrow: "HARDWARE",
-    icon: Cpu,
-    title: "E-Nose Builder",
-    desc: "Open reference hardware with a live configurator. Pick sensors, preview your rig, and download a full build plan.",
-    cta: "Build your rig",
-    href: "/enose",
-  },
-  {
-    eyebrow: "ECOSYSTEM",
-    icon: Store,
-    title: "Appstore",
-    desc: "A community home for e-nose apps, datasets, and rigs. Launching soon.",
-    cta: "Preview",
-    href: "/appstore",
-  },
-  {
-    eyebrow: "LEARNING",
-    icon: BookOpen,
-    title: "Academy",
-    desc: "Essays on the science, data, and engineering behind digitising smell.",
-    cta: "Read the essays",
-    href: "/academy",
-  },
-]
 
 export default function Home() {
   const [hydrated, setHydrated] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null)
-  const [activeMoat, setActiveMoat] = useState(0)
   const searchRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const { theme } = useTheme()
@@ -67,16 +20,6 @@ export default function Home() {
   useEffect(() => {
     setHydrated(true)
   }, [])
-
-  useEffect(() => {
-    if (!carouselApi) return
-    const onSelect = () => setActiveMoat(carouselApi.selectedScrollSnap())
-    onSelect()
-    carouselApi.on("select", onSelect)
-    return () => {
-      carouselApi.off("select", onSelect)
-    }
-  }, [carouselApi])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -126,6 +69,13 @@ export default function Home() {
               Search
             </Link>
             <Link
+              href="/smell-monitor"
+              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
+            >
+              <Monitor className="w-3.5 h-3.5" />
+              Smell Monitor
+            </Link>
+            <Link
               href="/osmograph"
               className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
             >
@@ -133,11 +83,11 @@ export default function Home() {
               Osmograph
             </Link>
             <Link
-              href="/enose"
+              href="/appstore"
               className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
             >
-              <Cpu className="w-3.5 h-3.5" />
-              E-Nose
+              <Store className="w-3.5 h-3.5" />
+              Appstore
             </Link>
             <Link
               href="/academy"
@@ -188,30 +138,30 @@ export default function Home() {
                 <span className="text-muted-foreground">for everyone.</span>
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
-                The open platform for digital olfaction. Build an e-nose, record smells,
-                classify odours — with open hardware, open data, and open software.
+                The open platform for digital olfaction. Hardware, software, and data —
+                built for researchers, operators, and developers.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  href="/enose"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
+                  href="/smell-monitor"
+                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
                 >
-                  <Cpu className="w-4 h-4" />
-                  Build an E-Nose
+                  <Monitor className="w-4 h-4" />
+                  The Smell Monitor
                   <ChevronRight className="w-4 h-4" />
                 </Link>
                 <a
                   href="https://mox.opensmell.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
                 >
                   <Monitor className="w-4 h-4" />
-                  Try Osmograph
+                  Try Osmograph Web
                 </a>
                 <button
                   onClick={() => searchRef.current?.scrollIntoView({ behavior: "smooth" })}
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
                 >
                   <Search className="w-4 h-4" />
                   Scent Search
@@ -225,11 +175,11 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-12">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
               {[
-                { label: "Chemical–Odour Pairs", value: "4,842" },
-                { label: "Compounds Resolvable Live", value: "100M+" },
-                { label: "Curated Odour Profiles", value: "230" },
-                { label: "Sensor Models", value: "17" },
-                { label: "Open Repositories", value: "16" },
+                { label: "Open Repositories", value: "15" },
+                { label: "Chemical–Odour Pairs", value: "4,800+" },
+                { label: "Community ★", value: "42" },
+                { label: "ML Features / Recording", value: "145" },
+                { label: "E-Nose Parts (all in)", value: "<$50" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-3xl font-bold tracking-tight mb-1">
@@ -242,84 +192,62 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-grid">
+        <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-14">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                  The open stack, slide by slide
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
+                  <Monitor className="w-3.5 h-3.5" />
+                  Hardware Product
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                  The Smell Monitor.
                 </h2>
-                <span className="hex-icon text-muted-foreground" />
+                <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
+                  Continuous chemical anomaly detection for industrial processes.
+                </p>
+                <p className="text-muted-foreground mb-8 leading-relaxed">
+                  A modular, plug-and-play monitoring node with hot-swappable sensor
+                  cartridges. Connect via Bluetooth to Osmograph for analytics, or run
+                  standalone with local alerts. Built for fermentation lines, VOC
+                  monitoring, and cold-chain storage.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href="/smell-monitor"
+                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                  >
+                    Learn More
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                  <a
+                    href="https://github.com/opensmell/Osmograph"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+                  >
+                    <Code className="w-4 h-4" />
+                    Open-Source SDK
+                  </a>
+                </div>
               </div>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Scent search, Osmograph, e-nose builder, appstore, Academy.
-              </p>
-            </div>
-            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap mb-12">
-              {moats.map((m, i) => (
-                <button
-                  key={m.title}
-                  type="button"
-                  aria-label={m.title}
-                  onClick={() => carouselApi?.scrollTo(i)}
-                  className={`w-10 h-11 sm:w-12 sm:h-14 flex items-center justify-center transition-all duration-300 ${
-                    i === activeMoat
-                      ? "bg-foreground text-background"
-                      : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground"
-                  }`}
-                  style={{ clipPath: "polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%)" }}
-                >
-                  <m.icon className="w-5 h-5" />
-                </button>
-              ))}
-            </div>
-            <Carousel
-              className="max-w-4xl mx-auto"
-              opts={{ loop: true, align: "center" }}
-              setApi={setCarouselApi}
-            >
-              <CarouselContent>
-                {moats.map((m, i) => (
-                  <CarouselItem key={m.title} className="basis-[88%] md:basis-[72%]">
-                    <div
-                      className={`hex-box relative border border-border p-8 md:p-12 text-center bg-background h-full transition-all duration-500 ${
-                        i === activeMoat ? "opacity-100" : "opacity-40"
-                      }`}
-                    >
-                      <span
-                        aria-hidden
-                        className="absolute top-3 right-5 text-6xl md:text-7xl font-bold text-foreground/[0.05] select-none leading-none"
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div
-                        className="mx-auto w-16 h-16 flex items-center justify-center mb-6 bg-border"
-                        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-                      >
-                        <m.icon className="w-7 h-7" />
-                      </div>
-                      <div className="text-xs text-muted-foreground font-mono uppercase tracking-widest mb-2">
-                        {m.eyebrow}
-                      </div>
-                      <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">{m.title}</h3>
-                      <p className="text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
-                        {m.desc}
-                      </p>
-                      <Link
-                        href={m.href}
-                        className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
-                      >
-                        {m.cta}
-                        <ChevronRight className="w-4 h-4" />
-                      </Link>
+              <div className="hex-box border border-border p-8 bg-background">
+                <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">How it works</div>
+                <div className="space-y-4">
+                  {[
+                    { step: "1", icon: Plug, text: "Insert a sensor cartridge for your environment" },
+                    { step: "2", icon: Wind, text: "Active airflow pulls air across the sensor in real-time" },
+                    { step: "3", icon: AlertTriangle, text: "Get instant local alerts + stream to Osmograph" },
+                  ].map((s) => (
+                    <div key={s.step} className="flex items-center gap-3">
+                      <span className="w-6 h-6 border border-border flex items-center justify-center text-xs font-mono text-muted-foreground flex-shrink-0">{s.step}</span>
+                      <s.icon className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground">{s.text}</span>
                     </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex" />
-              <CarouselNext className="hidden sm:flex" />
-            </Carousel>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -334,10 +262,51 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Hardware · Data · Protocol · Software — the four pieces every rig relies on.
+                Four pillars that together make digitised olfaction possible.
               </p>
             </div>
-            <OpenStack />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  icon: Cpu,
+                  title: "Open Hardware",
+                  desc: "The Smell Monitor — a modular industrial monitoring node. Open-source 4-pin sensor interface.",
+                  link: "/smell-monitor",
+                },
+                {
+                  icon: Database,
+                  title: "Open Data",
+                  desc: "Community-contributed Data Commons for training shared, device-invariant representations.",
+                  link: "https://github.com/opensmell/data-commons",
+                },
+                {
+                  icon: Hexagon,
+                  title: "Open Protocol",
+                  desc: "Standardised recording procedure making temporal features reproducible across devices.",
+                  link: "https://github.com/opensmell/interoperability",
+                },
+                {
+                  icon: Sigma,
+                  title: "Open Software",
+                  desc: "Zero-code GUI (Osmograph) + Python SDK. Flash firmware, record, classify with clicks.",
+                  link: "https://github.com/opensmell/Osmograph",
+                },
+              ].map((item) => (
+                <a
+                  key={item.title}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hex-box group p-6 border border-border hover:bg-foreground hover:text-background transition-all duration-300"
+                >
+                  <item.icon className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground group-hover:text-background/70 transition-colors">
+                    {item.desc}
+                  </p>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -353,15 +322,15 @@ export default function Home() {
                   Real applications, real hardware.
                 </h2>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  From food quality to breath to environmental sensing —
-                  the open stack lets you explore olfactory applications with
-                  sensors you can buy today.
+                  From industrial fermentation monitoring to cold-chain storage to
+                  custom gas detection — the open stack lets you build olfactory
+                  applications that actually work.
                 </p>
                 <div className="space-y-4 mb-8">
                   {[
-                    { title: "Track fermentation and ripening", desc: "Follow coffee roast, fruit ripening, or fermentation on live sensor traces." },
-                    { title: "Explore gas discrimination", desc: "LPG, methane, CO — train a classifier to tell them apart from live traces. A research tool, not a certified alarm." },
-                    { title: "Prototype breath analysis", desc: "VOC-rich breath signals — the pipeline is open, but biomarker claims need your own validation." },
+                    { title: "Detect spoilage before it happens", desc: "Track fermentation, coffee roast, or fruit ripening with live sensor traces." },
+                    { title: "Build gas leak alarms", desc: "LPG, methane, CO — classify dangerous gases in real time with a $15 sensor array." },
+                    { title: "Monitor cold-chain storage", desc: "Early warning for mold and degradation in sealed storage environments." },
                   ].map((item) => (
                     <div key={item.title} className="border border-border p-4">
                       <div className="font-semibold text-sm mb-1">{item.title}</div>
@@ -370,18 +339,18 @@ export default function Home() {
                   ))}
                 </div>
                 <Link
-                  href="/enose"
+                  href="/smell-monitor"
                   className="inline-flex items-center gap-2 text-sm font-medium hover:underline"
                 >
-                  Configure your e-nose <ChevronRight className="w-4 h-4" />
+                  See the Smell Monitor <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
               <div className="hex-box border border-border p-8 bg-background">
                 <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">How it works</div>
                 <div className="space-y-4">
                   {[
-                    { step: "1", icon: Cpu, text: "Build or buy an e-nose (off-the-shelf parts)" },
-                    { step: "2", icon: Monitor, text: "Flash firmware with Osmograph (one click)" },
+                    { step: "1", icon: Cpu, text: "Get a Smell Monitor or build an open e-nose" },
+                    { step: "2", icon: Monitor, text: "Connect to Osmograph (Bluetooth or USB)" },
                     { step: "3", icon: BarChart3, text: "Record live sensor traces of any smell" },
                     { step: "4", icon: Settings, text: "Train a classifier — no coding required" },
                     { step: "5", icon: Database, text: "Share data to the community Data Commons" },
@@ -497,7 +466,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-t border-border py-24 bg-grid">
+        <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center max-w-3xl mx-auto">
               <div className="flex items-center justify-center gap-3 mb-4">
@@ -516,7 +485,7 @@ export default function Home() {
                   href="https://discord.gg/CGER3tHxbH"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
                 >
                   <MessageSquare className="w-4 h-4" />
                   Join Discord
@@ -525,7 +494,7 @@ export default function Home() {
                   href="https://github.com/opensmell"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
                 >
                   <Github className="w-4 h-4" />
                   GitHub
@@ -608,8 +577,9 @@ export default function Home() {
               {
                 title: "Hardware",
                 links: [
+                  { label: "Smell Monitor", href: "/smell-monitor" },
+                  { label: "Osmograph", href: "https://github.com/opensmell/Osmograph" },
                   { label: "Electronic Nose", href: "https://github.com/opensmell/electronic-nose" },
-                  { label: "Osmograph", href: "/osmograph" },
                   { label: "Data Commons", href: "https://github.com/opensmell/data-commons" },
                 ],
               },

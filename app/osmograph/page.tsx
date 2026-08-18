@@ -38,6 +38,10 @@ export default function OsmographPage() {
               <Search className="w-3.5 h-3.5" />
               Search
             </Link>
+            <Link href="/smell-monitor" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
+              <Monitor className="w-3.5 h-3.5" />
+              Smell Monitor
+            </Link>
             <Link href="/osmograph" className="text-foreground font-medium inline-flex items-center gap-1">
               <Monitor className="w-3.5 h-3.5" />
               Osmograph

@@ -6,6 +6,7 @@ import { Menu, X, Search, Monitor, Cpu, BookOpen, MessageSquare, Github } from "
 
 const links = [
   { label: "Search", href: "/search", icon: Search },
+  { label: "Smell Monitor", href: "/smell-monitor", icon: Monitor },
   { label: "Osmograph", href: "/osmograph", icon: Monitor },
   { label: "E-Nose", href: "/enose", icon: Cpu },
   { label: "Academy", href: "/academy", icon: BookOpen },

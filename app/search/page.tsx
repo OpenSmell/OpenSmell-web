@@ -94,6 +94,13 @@ export default function SearchPage() {
           </Link>
           <div className="flex items-center gap-3">
             <Link
+              href="/smell-monitor"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              title="Smell Monitor"
+            >
+              <Monitor className="w-4 h-4" />
+            </Link>
+            <Link
               href="/osmograph"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               title="Osmograph"

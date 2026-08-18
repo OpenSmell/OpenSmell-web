@@ -52,6 +52,7 @@ export default function SiteHeader({ active }: { active?: string }) {
 
         <nav className="hidden md:flex items-center gap-8 text-sm">
           {link("/search", <Search className="w-3.5 h-3.5" />, "Search", "search")}
+          {link("/smell-monitor", <Monitor className="w-3.5 h-3.5" />, "Smell Monitor", "smell-monitor")}
           {link("/osmograph", <Monitor className="w-3.5 h-3.5" />, "Osmograph", "osmograph")}
           {link("/enose", <Cpu className="w-3.5 h-3.5" />, "E-Nose", "enose")}
           {link("/academy", <BookOpen className="w-3.5 h-3.5" />, "Academy", "academy")}
