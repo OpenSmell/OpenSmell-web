@@ -4,15 +4,69 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, Hexagon, Sigma, Database, Cpu, Monitor, Store, BarChart3, Settings, Wind, Plug, AlertTriangle, Code } from "lucide-react"
+import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, Hexagon, Sigma, Database, Cpu, Monitor, BarChart3, Settings, Wind, Plug, AlertTriangle, Code, FlaskConical, Store } from "lucide-react"
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import { useTheme } from "next-themes"
 import AnimatedHero from "@/components/animated-hero"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 
+const moats = [
+  {
+    eyebrow: "SEARCH",
+    icon: Search,
+    title: "Scent Search",
+    desc: "Explore 4,800+ chemical–odour relationships from Pyrfume. Search by smell or by molecule, then dive into PubChem data.",
+    cta: "Start searching",
+    href: "/search",
+  },
+  {
+    eyebrow: "HARDWARE",
+    icon: Monitor,
+    title: "The Smell Monitor",
+    desc: "Continuous chemical anomaly detection for industrial processes. Modular cartridges, Bluetooth connectivity, open-source interface.",
+    cta: "See the hardware",
+    href: "/smell-monitor",
+  },
+  {
+    eyebrow: "SOFTWARE",
+    icon: BarChart3,
+    title: "Osmograph",
+    desc: "Zero-code e-nose workflow. Flash firmware, record live traces, and train classifiers — no coding required.",
+    cta: "Open Osmograph",
+    href: "/osmograph",
+  },
+  {
+    eyebrow: "E-NOSE",
+    icon: FlaskConical,
+    title: "Build Your Own E-Nose",
+    desc: "Open reference hardware with a live configurator. Pick sensors, preview your rig, and download a full build plan.",
+    cta: "Build your rig",
+    href: "/enose",
+  },
+  {
+    eyebrow: "LEARNING",
+    icon: BookOpen,
+    title: "Academy",
+    desc: "Essays on the science, data, and engineering behind digitising smell.",
+    cta: "Read the essays",
+    href: "/academy",
+  },
+  {
+    eyebrow: "ECOSYSTEM",
+    icon: Store,
+    title: "Appstore",
+    desc: "A community home for e-nose apps, datasets, and rigs. Launching soon.",
+    cta: "Preview",
+    href: "/appstore",
+  },
+]
+
 export default function Home() {
   const [hydrated, setHydrated] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null)
+  const [activeMoat, setActiveMoat] = useState(0)
   const searchRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const { theme } = useTheme()
@@ -26,6 +80,16 @@ export default function Home() {
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  useEffect(() => {
+    if (!carouselApi) return
+    const onSelect = () => setActiveMoat(carouselApi.selectedScrollSnap())
+    onSelect()
+    carouselApi.on("select", onSelect)
+    return () => {
+      carouselApi.off("select", onSelect)
+    }
+  }, [carouselApi])
 
   const handleSearchSubmit = (query: string, type: "odor" | "chemical") => {
     if (!query.trim()) return
@@ -79,15 +143,8 @@ export default function Home() {
               href="/osmograph"
               className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
             >
-              <Monitor className="w-3.5 h-3.5" />
+              <BarChart3 className="w-3.5 h-3.5" />
               Osmograph
-            </Link>
-            <Link
-              href="/appstore"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-            >
-              <Store className="w-3.5 h-3.5" />
-              Appstore
             </Link>
             <Link
               href="/academy"
@@ -156,7 +213,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
                 >
-                  <Monitor className="w-4 h-4" />
+                  <BarChart3 className="w-4 h-4" />
                   Try Osmograph Web
                 </a>
                 <button
@@ -173,13 +230,12 @@ export default function Home() {
 
         <section className="border-t border-border bg-background">
           <div className="max-w-7xl mx-auto px-6 py-12">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
                 { label: "Open Repositories", value: "15" },
                 { label: "Chemical–Odour Pairs", value: "4,800+" },
                 { label: "Community ★", value: "42" },
                 { label: "ML Features / Recording", value: "145" },
-                { label: "E-Nose Parts (all in)", value: "<$50" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-3xl font-bold tracking-tight mb-1">
@@ -189,6 +245,87 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="border-t border-border py-24 bg-hex">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                  The open stack, slide by slide
+                </h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Search, hardware, software, e-nose builder, appstore, academy.
+              </p>
+            </div>
+            <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap mb-12">
+              {moats.map((m, i) => (
+                <button
+                  key={m.title}
+                  type="button"
+                  aria-label={m.title}
+                  onClick={() => carouselApi?.scrollTo(i)}
+                  className={`w-10 h-11 sm:w-12 sm:h-14 flex items-center justify-center transition-all duration-300 ${
+                    i === activeMoat
+                      ? "bg-foreground text-background"
+                      : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground"
+                  }`}
+                  style={{ clipPath: "polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%)" }}
+                >
+                  <m.icon className="w-5 h-5" />
+                </button>
+              ))}
+            </div>
+            <Carousel
+              className="max-w-4xl mx-auto"
+              opts={{ loop: true, align: "center" }}
+              setApi={setCarouselApi}
+            >
+              <CarouselContent>
+                {moats.map((m, i) => (
+                  <CarouselItem key={m.title} className="basis-[88%] md:basis-[72%]">
+                    <div
+                      className={`hex-box relative border border-border p-8 md:p-12 text-center bg-background h-full transition-all duration-500 ${
+                        i === activeMoat ? "opacity-100" : "opacity-40"
+                      }`}
+                    >
+                      <span
+                        aria-hidden
+                        className="absolute top-3 right-5 text-6xl md:text-7xl font-bold text-foreground/[0.05] select-none leading-none"
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div
+                        className="mx-auto w-16 h-16 flex items-center justify-center mb-6 bg-border"
+                        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
+                      >
+                        <m.icon className="w-7 h-7" />
+                      </div>
+                      <div className="text-xs text-muted-foreground font-mono uppercase tracking-widest mb-2">
+                        {m.eyebrow}
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">{m.title}</h3>
+                      <p className="text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
+                        {m.desc}
+                      </p>
+                      <Link
+                        href={m.href}
+                        className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                      >
+                        {m.cta}
+                        <ChevronRight className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
+            </Carousel>
           </div>
         </section>
 
@@ -350,7 +487,7 @@ export default function Home() {
                 <div className="space-y-4">
                   {[
                     { step: "1", icon: Cpu, text: "Get a Smell Monitor or build an open e-nose" },
-                    { step: "2", icon: Monitor, text: "Connect to Osmograph (Bluetooth or USB)" },
+                    { step: "2", icon: BarChart3, text: "Connect to Osmograph (Bluetooth or USB)" },
                     { step: "3", icon: BarChart3, text: "Record live sensor traces of any smell" },
                     { step: "4", icon: Settings, text: "Train a classifier — no coding required" },
                     { step: "5", icon: Database, text: "Share data to the community Data Commons" },

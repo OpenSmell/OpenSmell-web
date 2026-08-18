@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Globe, Usb, Wifi, Bluetooth } from "lucide-react"
+import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Globe, Usb, Wifi, Bluetooth, Radio } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 
@@ -43,7 +43,7 @@ export default function OsmographPage() {
               Smell Monitor
             </Link>
             <Link href="/osmograph" className="text-foreground font-medium inline-flex items-center gap-1">
-              <Monitor className="w-3.5 h-3.5" />
+              <BarChart3 className="w-3.5 h-3.5" />
               Osmograph
             </Link>
             <Link href="/enose" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">

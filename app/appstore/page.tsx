@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Store, Download, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, TrendingUp, Grid3X3, Database, Puzzle, X, Send, Coins, Loader2 } from "lucide-react"
+import { Store, Download, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, TrendingUp, Grid3X3, Database, Puzzle, X, Send, Coins, Loader2, BarChart3 } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
 import { AppstoreArt } from "@/components/hero-art"
@@ -235,7 +235,7 @@ export default function AppStorePage() {
               Smell Monitor
             </Link>
             <Link href="/osmograph" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Monitor className="w-3.5 h-3.5" />
+              <BarChart3 className="w-3.5 h-3.5" />
               Osmograph
             </Link>
             <Link href="/enose" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
