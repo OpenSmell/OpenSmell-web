@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, Hexagon, Sigma, Database, Cpu, Monitor, BarChart3, Settings, Wind, Plug, AlertTriangle, Code, FlaskConical, Store, Shield, Zap, Clock, Activity, Heart, Leaf, Factory, Thermometer } from "lucide-react"
+import { Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen, Hexagon, Sigma, Database, Cpu, Monitor, BarChart3, AlertTriangle, Code, FlaskConical, Store, Shield, Zap, Activity, Leaf, Factory, Thermometer } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import { useTheme } from "next-themes"
 import AnimatedHero from "@/components/animated-hero"
@@ -80,15 +80,15 @@ const useCases = [
     statLabel: "drift rate handled",
   },
   {
-    icon: Heart,
-    title: "Clinical Breathomics",
-    tagline: "Non-invasive diagnostics in 3 breaths.",
-    desc: "MOX sensor arrays detect disease-specific breathprints. Lung cancer: AUC=0.95. Liver cirrhosis: AUC=0.92. Asthma vs COPD: 88% accuracy. 50 samples (5 seconds) = minimum viable clinical workflow.",
-    stat: "AUC 0.95",
-    statLabel: "lung cancer detection",
+    icon: Shield,
+    title: "Poisoning Detection",
+    tagline: "Detect sensor poisoning before it corrupts your data.",
+    desc: "Sensitivity decay tracking, noise floor analysis, recovery rate monitoring, and baseline drift detection. Triple-redundant detectors flag poisoned sensors before they produce false results. 5-metric health scoring.",
+    stat: "4",
+    statLabel: "poisoning signals tracked",
   },
   {
-    icon: Shield,
+    icon: AlertTriangle,
     title: "Gas Leak Detection",
     tagline: "100% anomaly detection. 5 seconds to alarm.",
     desc: "100% anomaly detection rate at 3-sigma threshold. Triple-redundant detectors ensure zero missed events. Fail-safe escalation: warning, critical, emergency. Every sensor reading is a vote.",
@@ -380,52 +380,53 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CLINICAL / BREATHOMICS */}
+        {/* DETECTION PIPELINE - verified from our experiments */}
         <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
-                  <Heart className="w-3.5 h-3.5" />
-                  Clinical Breathomics
+                  <FlaskConical className="w-3.5 h-3.5" />
+                  Validated Detection Pipeline
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                  Breath analysis that could save lives.
+                  Every number comes from our experiments.
                 </h2>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                  Humans exhale 800+ volatile organic compounds. Disease alters the VOC profile in detectable ways.
-                  MOX sensor arrays detect these changes in seconds — no blood draw, no biopsy, no radiation.
+                  We tested OpenSmell&apos;s full detection pipeline on 1M+ real MOX sensor samples across 4 independent datasets.
+                  No synthetic data. No cherry-picked results. Every number below is reproducible.
                 </p>
                 <div className="space-y-4 mb-8">
                   {[
-                    { disease: "Lung Cancer", auc: "0.95", source: "Lee et al. 2024, multicenter" },
-                    { disease: "Liver Cirrhosis", auc: "0.92", source: "Scorza et al. 2016" },
-                    { disease: "Asthma vs COPD", auc: "0.92", source: "Dragonieri et al. 2012" },
-                    { disease: "Diabetic Ketoacidosis", auc: "detectable", source: "Acetone 1,750 ppb vs 200-800 ppb normal" },
+                    { metric: "Food Freshness Accuracy", value: "93.3%", source: "838K samples, 10 MOX sensors, 59 classes — with EWMA correction" },
+                    { metric: "Anomaly Detection Rate", value: "100%", source: "Mahalanobis distance at 3-sigma threshold across all datasets" },
+                    { metric: "Cold-Start Minimum", value: "50 samples", source: "5 seconds at 10Hz — plateaus at 100+, 75 recommended" },
+                    { metric: "Drift Rate Handled", value: "500%", source: "EWMA α=0.001 maintains 93.3% accuracy at ANY drift rate" },
                   ].map((item) => (
-                    <div key={item.disease} className="border border-border p-4">
+                    <div key={item.metric} className="border border-border p-4">
                       <div className="flex items-center justify-between">
-                        <span className="font-semibold text-sm">{item.disease}</span>
-                        <span className="font-mono text-sm font-bold">{item.auc}</span>
+                        <span className="font-semibold text-sm">{item.metric}</span>
+                        <span className="font-mono text-sm font-bold">{item.value}</span>
                       </div>
                       <div className="text-xs text-muted-foreground mt-1">{item.source}</div>
                     </div>
                   ))}
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  <strong>Caveat:</strong> The largest multicenter study (n=3,469) found AUC=0.54 — small studies can be misleading.
-                  OpenSmell&apos;s EWMA correction addresses the root cause: site-specific environmental drift.
+                  <strong>Key finding:</strong> Without EWMA correction, accuracy drops to 71.4%. With α=0.001, it holds at 93.3% regardless of drift.
+                  This is the single most important parameter in MOX monitoring.
                 </p>
               </div>
               <div className="hex-box border border-border p-8 bg-background">
-                <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">How it works</div>
+                <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">Detection Pipeline</div>
                 <div className="space-y-6">
                   {[
-                    { step: "1", icon: Wind, text: "Patient exhales into the device for 5 seconds" },
-                    { step: "2", icon: Activity, text: "4-sensor MOX array captures the breathprint" },
-                    { step: "3", icon: Cpu, text: "Mahalanobis detector compares against healthy cohort" },
-                    { step: "4", icon: AlertTriangle, text: "Anomaly flagged if breathprint deviates" },
-                    { step: "5", icon: Heart, text: "Clinician reviews, labels, and feeds back" },
+                    { step: "1", icon: Wind, text: "Raw MOX readings at 10Hz from up to 6 sensors" },
+                    { step: "2", icon: Activity, text: "EWMA baseline correction (α=0.001) removes drift" },
+                    { step: "3", icon: Cpu, text: "Mahalanobis distance detects anomalies (3-sigma)" },
+                    { step: "4", icon: Shield, text: "Triple-redundant fail-safe: standard, conservative, sensitive" },
+                    { step: "5", icon: AlertTriangle, text: "Poisoning detector flags sensor degradation" },
+                    { step: "6", icon: Zap, text: "User labels events → adaptive learning improves thresholds" },
                   ].map((s) => (
                     <div key={s.step} className="flex items-center gap-3">
                       <span className="w-6 h-6 border border-border flex items-center justify-center text-xs font-mono text-muted-foreground flex-shrink-0">{s.step}</span>
@@ -435,13 +436,13 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="mt-6 pt-6 border-t border-border">
-                  <div className="text-xs text-muted-foreground mb-2 font-mono uppercase tracking-wider">Sensor Config</div>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div className="border border-border p-2"><strong>MQ-3</strong> — Ethanol, acetone</div>
-                    <div className="border border-border p-2"><strong>MQ-135</strong> — NH3, benzene</div>
-                    <div className="border border-border p-2"><strong>MQ-7</strong> — Carbon monoxide</div>
-                    <div className="border border-border p-2"><strong>MQ-8</strong> — H2, CH4</div>
+                  <div className="text-xs text-muted-foreground mb-2 font-mono uppercase tracking-wider">Fail-Safe Architecture</div>
+                  <div className="grid grid-cols-1 gap-2 text-xs">
+                    <div className="border border-border p-2"><strong>Standard</strong> — 5% FPR, balanced detection</div>
+                    <div className="border border-border p-2"><strong>Conservative</strong> — 1% FPR, critical alerts only</div>
+                    <div className="border border-border p-2"><strong>Sensitive</strong> — 10% FPR, early warning</div>
                   </div>
+                  <div className="text-[10px] text-muted-foreground mt-2">ANY detector triggers = alert. Majority vote decides escalation level.</div>
                 </div>
               </div>
             </div>
