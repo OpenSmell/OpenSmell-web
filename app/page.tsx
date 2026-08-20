@@ -67,7 +67,7 @@ const useCases = [
     icon: Leaf,
     title: "Food Safety",
     tagline: "Detect spoilage before it reaches the shelf.",
-    desc: "Mahalanobis anomaly detection on real food freshness data: 93.3% accuracy. 59 food types distinguished across 838K samples. 5-second cold-start means no warm-up delays on the production line.",
+    desc: "Mahalanobis anomaly detection on food freshness data: 93.3% accuracy. 59 food types distinguished across 838K samples. 5-second cold-start means no warm-up delays on the production line.",
     stat: "93.3%",
     statLabel: "accuracy with EWMA",
   },
@@ -248,7 +248,7 @@ export default function Home() {
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
                 The open platform for digital olfaction. Hardware, software, and data —
-                built for researchers, operators, and developers. Validated on 1M+ real sensor samples.
+                built for researchers, operators, and developers. Validated on 1M+ sensor samples.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
@@ -326,7 +326,7 @@ export default function Home() {
                 {
                   problem: "Lab results don't generalize",
                   reality: "A 3,469-patient clinical study found AUC=0.54 — essentially random. Small studies lie.",
-                  solution: "1M+ real samples across 4 datasets. Every claim backed by reproducible experiments.",
+                  solution: "1M+ samples across 4 datasets. Every claim backed by reproducible experiments.",
                 },
                 {
                   problem: "No standard data format",
@@ -353,12 +353,12 @@ export default function Home() {
               <div className="flex items-center justify-center gap-3 mb-4">
                 <span className="hex-icon text-muted-foreground" />
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                  Real applications, real hardware
+                  Real applications
                 </h2>
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                From food safety to clinical diagnostics — applications that actually work, backed by real numbers.
+                From food safety to clinical diagnostics — applications that work, backed by measured results.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -393,7 +393,7 @@ export default function Home() {
                   Every number comes from our experiments.
                 </h2>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                  We tested OpenSmell&apos;s full detection pipeline on 1M+ real MOX sensor samples across 4 independent datasets.
+                  We tested OpenSmell&apos;s detection pipeline on 1M+ MOX sensor samples across 4 independent datasets.
                   No synthetic data. No cherry-picked results. Every number below is reproducible.
                 </p>
                 <div className="space-y-4 mb-8">
@@ -456,12 +456,12 @@ export default function Home() {
               <div className="flex items-center justify-center gap-3 mb-4">
                 <span className="hex-icon text-muted-foreground" />
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                  Validated on real data
+                  Validated on open data
                 </h2>
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Every number on this page comes from experiments on real MOX sensor datasets. No synthetic data. No shortcuts.
+                Every number on this page comes from experiments on MOX sensor datasets. No synthetic data. No shortcuts.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -555,7 +555,7 @@ export default function Home() {
                 },
                 {
                   title: "Clinical Breath Analysis",
-                  finding: "97.1% accuracy on real COPD breath data (8 MOX sensors, 68 patients). MQ-3 steady-state is the top discriminator (FDR=3.26).",
+                  finding: "97.1% accuracy on COPD breath data (8 MOX sensors, 68 patients). MQ-3 steady-state is the top discriminator (FDR=3.26).",
                 },
               ].map((finding) => (
                 <div key={finding.title} className="border border-border p-6">
@@ -675,7 +675,7 @@ export default function Home() {
                 {
                   icon: Database,
                   title: "Open Data",
-                  desc: "5-metric quality scoring (SNR, stability, metadata, duration, novelty). SHA-256 dedup. 1M+ real samples validated across 4 datasets.",
+                  desc: "5-metric quality scoring (SNR, stability, metadata, duration, novelty). SHA-256 dedup. 1M+ samples validated across 4 datasets.",
                   link: "https://github.com/opensmell/data-commons",
                 },
                 {

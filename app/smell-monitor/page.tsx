@@ -16,51 +16,104 @@ import MobileNav from "@/components/mobile-nav"
 function DeviceDrawing({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Bottom enclosure */}
-      <rect x="60" y="220" width="280" height="100" stroke="currentColor" strokeWidth="1.5" />
-      <line x1="60" y1="240" x2="340" y2="240" stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.3" />
-      <text x="200" y="275" textAnchor="middle" fill="currentColor" fontSize="10" fontFamily="monospace" opacity="0.5">SEALED ENCLOSURE</text>
-      <text x="200" y="290" textAnchor="middle" fill="currentColor" fontSize="8" fontFamily="monospace" opacity="0.35">PCB · WIRING · POWER</text>
-
-      {/* Top rigid half - left side */}
-      <rect x="60" y="120" width="140" height="100" stroke="currentColor" strokeWidth="1.5" />
-      {/* E-ink display */}
-      <rect x="80" y="135" width="60" height="35" stroke="currentColor" strokeWidth="1" opacity="0.7" />
-      <text x="110" y="157" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.5">E-INK</text>
-      {/* Fan grille */}
-      <circle cx="240" cy="170" r="28" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-      <line x1="222" y1="170" x2="258" y2="170" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <line x1="240" y1="152" x2="240" y2="188" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <line x1="227" y1="157" x2="253" y2="183" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <line x1="253" y1="157" x2="227" y2="183" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <text x="240" y="210" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.4">MICRO-FAN</text>
-
-      {/* Top openable hatch - right side */}
-      <rect x="200" y="120" width="140" height="100" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6 3" />
-      {/* Hatch latch */}
-      <rect x="325" y="160" width="10" height="20" stroke="currentColor" strokeWidth="1" opacity="0.6" rx="2" />
-      {/* Sensor cartridge slot */}
-      <rect x="240" y="145" width="50" height="60" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-      <text x="265" y="172" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.4">4-PIN</text>
-      <text x="265" y="183" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.4">CARTRIDGE</text>
-
-      {/* Airflow arrows */}
-      <path d="M 30 170 L 55 170" stroke="currentColor" strokeWidth="1" markerEnd="url(#arrowhead)" opacity="0.4" />
-      <path d="M 345 170 L 370 170" stroke="currentColor" strokeWidth="1" markerEnd="url(#arrowhead)" opacity="0.4" />
-      <text x="20" y="158" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.35">AIR IN</text>
-      <text x="355" y="158" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.35">AIR OUT</text>
-
-      {/* Label lines */}
-      <line x1="60" y1="335" x2="130" y2="335" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <text x="95" y="350" textAnchor="middle" fill="currentColor" fontSize="8" fontFamily="monospace" opacity="0.4">RIGID TOP</text>
-      <line x1="200" y1="335" x2="270" y2="335" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <text x="235" y="350" textAnchor="middle" fill="currentColor" fontSize="8" fontFamily="monospace" opacity="0.4">HATCH</text>
-
       <defs>
-        <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
-          <polygon points="0 0, 6 2, 0 4" fill="currentColor" opacity="0.4" />
-        </marker>
+        <linearGradient id="airflow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
+          <stop offset="50%" stopColor="currentColor" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="glow" x1="0.5" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+        </linearGradient>
+        <filter id="blur">
+          <feGaussianBlur stdDeviation="2" />
+        </filter>
       </defs>
+
+      {/* Ambient glow */}
+      <ellipse cx="200" cy="180" rx="160" ry="120" fill="url(#glow)" />
+
+      {/* Airflow streams - left side incoming */}
+      <path d="M 20 140 Q 60 140 80 160" stroke="currentColor" strokeWidth="1" opacity="0.15" fill="none" />
+      <path d="M 10 170 Q 50 170 80 170" stroke="currentColor" strokeWidth="1.5" opacity="0.25" fill="none" />
+      <path d="M 20 200 Q 60 200 80 180" stroke="currentColor" strokeWidth="1" opacity="0.15" fill="none" />
+
+      {/* Smell particles - incoming */}
+      <circle cx="35" cy="155" r="2" fill="currentColor" opacity="0.2" />
+      <circle cx="50" cy="168" r="1.5" fill="currentColor" opacity="0.3" />
+      <circle cx="42" cy="185" r="2.5" fill="currentColor" opacity="0.15" />
+      <circle cx="60" cy="175" r="1" fill="currentColor" opacity="0.35" />
+      <circle cx="28" cy="172" r="1.8" fill="currentColor" opacity="0.25" />
+
+      {/* Device body - isometric-ish */}
+      <rect x="80" y="120" width="240" height="120" rx="4" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="80" y="240" width="240" height="40" rx="2" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+
+      {/* Top panel glow */}
+      <rect x="80" y="120" width="240" height="120" rx="4" fill="currentColor" opacity="0.03" />
+
+      {/* Display area */}
+      <rect x="100" y="140" width="80" height="50" rx="2" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      {/* Waveform on display */}
+      <path d="M 108 165 Q 115 155 122 165 Q 129 175 136 165 Q 143 155 150 165 Q 157 175 164 165 Q 171 155 178 165"
+        stroke="currentColor" strokeWidth="1.5" opacity="0.5" fill="none" />
+      <text x="140" y="182" textAnchor="middle" fill="currentColor" fontSize="6" fontFamily="monospace" opacity="0.4">LIVE</text>
+
+      {/* Sensor array visualization */}
+      <g opacity="0.6">
+        {/* 6 sensor slots */}
+        {[0,1,2,3,4,5].map(i => (
+          <g key={i}>
+            <rect x={200 + (i % 3) * 30} y={140 + Math.floor(i / 3) * 30} width="24" height="24" rx="2"
+              stroke="currentColor" strokeWidth="0.8" />
+            {/* Sensor glow */}
+            <circle cx={212 + (i % 3) * 30} cy={152 + Math.floor(i / 3) * 30} r="6"
+              fill="currentColor" opacity={0.1 + (i * 0.05)} />
+            <circle cx={212 + (i % 3) * 30} cy={152 + Math.floor(i / 3) * 30} r="2"
+              fill="currentColor" opacity={0.3 + (i * 0.08)} />
+          </g>
+        ))}
+      </g>
+
+      {/* Fan visualization */}
+      <circle cx="310" cy="180" r="18" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+      <circle cx="310" cy="180" r="12" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
+      <circle cx="310" cy="180" r="6" stroke="currentColor" strokeWidth="0.5" opacity="0.2" />
+      {/* Fan blades */}
+      <path d="M 310 162 L 314 175 L 310 180" stroke="currentColor" strokeWidth="0.8" opacity="0.3" fill="none" />
+      <path d="M 328 180 L 315 184 L 310 180" stroke="currentColor" strokeWidth="0.8" opacity="0.3" fill="none" />
+      <path d="M 310 198 L 306 185 L 310 180" stroke="currentColor" strokeWidth="0.8" opacity="0.3" fill="none" />
+      <path d="M 292 180 L 305 176 L 310 180" stroke="currentColor" strokeWidth="0.8" opacity="0.3" fill="none" />
+
+      {/* Airflow streams - right side outgoing */}
+      <path d="M 320 160 Q 360 140 390 130" stroke="currentColor" strokeWidth="1" opacity="0.15" fill="none" />
+      <path d="M 320 180 Q 360 180 390 180" stroke="currentColor" strokeWidth="1.5" opacity="0.25" fill="none" />
+      <path d="M 320 200 Q 360 220 390 230" stroke="currentColor" strokeWidth="1" opacity="0.15" fill="none" />
+
+      {/* Exhaust particles */}
+      <circle cx="360" cy="160" r="1.5" fill="currentColor" opacity="0.2" />
+      <circle cx="375" cy="175" r="2" fill="currentColor" opacity="0.15" />
+      <circle cx="368" cy="195" r="1" fill="currentColor" opacity="0.25" />
+      <circle cx="382" cy="168" r="1.8" fill="currentColor" opacity="0.1" />
+
+      {/* Bottom section details */}
+      <line x1="80" y1="260" x2="320" y2="260" stroke="currentColor" strokeWidth="0.5" opacity="0.3" strokeDasharray="4 4" />
+      <text x="200" y="255" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.35">ESP32 · DHT11 · PWR</text>
+
+      {/* Status indicators */}
+      <circle cx="100" cy="250" r="3" fill="currentColor" opacity="0.4" />
+      <circle cx="115" cy="250" r="3" fill="currentColor" opacity="0.25" />
+      <circle cx="130" cy="250" r="3" fill="currentColor" opacity="0.15" />
+
+      {/* Connection port */}
+      <rect x="300" y="248" width="16" height="8" rx="1" stroke="currentColor" strokeWidth="0.8" opacity="0.4" />
+      <text x="308" y="270" textAnchor="middle" fill="currentColor" fontSize="5" fontFamily="monospace" opacity="0.3">USB-C</text>
+
+      {/* Data flow lines */}
+      <path d="M 140 190 L 140 240" stroke="currentColor" strokeWidth="0.5" opacity="0.2" strokeDasharray="2 2" />
+      <path d="M 200 190 L 200 240" stroke="currentColor" strokeWidth="0.5" opacity="0.2" strokeDasharray="2 2" />
+      <path d="M 310 198 L 310 240" stroke="currentColor" strokeWidth="0.5" opacity="0.2" strokeDasharray="2 2" />
     </svg>
   )
 }

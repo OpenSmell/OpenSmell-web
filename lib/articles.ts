@@ -2129,6 +2129,50 @@ Beyond that, the rules are short:
 - **Match the sensor family to the target** — different MOX parts are tuned to different gas classes; a carbon-monoxide detector is not an ethanol monitor.
 - **Do not over-promise the array** — four real MOX sensors have effective dimensionality around 2–3; grade a single substance, resolve against your library, and stop there.
 
+## Sensor Poisoning: The Silent Killer
+
+The smellability chain tells you whether a compound *can* produce a signal. It does not tell you whether that signal will still be there next week. **Poisoning** is the catastrophic cousin of drift — while drift is gradual, poisoning is often irreversible and can render a sensor permanently unresponsive.
+
+### What Poisoning Is
+
+At MOX operating temperatures (350–450 °C), certain molecules do not just reduce the surface — they *bind irreversibly* to the SnO₂ lattice. The most common culprits:
+
+- **Hydrogen sulfide (H₂S)** — forms stable metal sulfides on the oxide surface
+- **Siloxanes** — found in perfumes, cleaning products, and even some food packaging; polymerize on hot surfaces
+- **Halogens (Cl₂, HCl)** — etch the oxide lattice, permanently altering its structure
+- **Phosphorus compounds** — from pesticides, flame retardants
+
+A clean-air MOX sensor in a typical office environment might live one to three years before baseline drift forces replacement. In a food processing plant, a bakery, or anywhere with high concentrations of these compounds, that lifetime can drop to *weeks*.
+
+### How to Detect Poisoning
+
+The OpenSmell SDK's PoisoningDetector monitors four signatures:
+
+1. **Sensitivity decay** — the sensor's response to known compounds gradually weakens
+2. **Noise increase** — the signal becomes noisier as surface defects accumulate
+3. **Recovery slowdown** — after exposure, resistance takes longer to return to baseline
+4. **Baseline drift** — linear regression on clean-air readings shows consistent upward or downward trend
+
+When any two signatures appear together, the system flags the sensor as "poisoned" and recommends replacement.
+
+### Preventing Poisoning
+
+- **PTFE filter** — a microporous PTFE membrane over the sensor inlet blocks particulates and some larger molecules while allowing gas-phase compounds through
+- **Cartridge design** — OpenSmell's sensor cartridges are designed for field replacement; when a sensor poisons, you swap the cartridge, not the whole device
+- **Baseline discipline** — always establish a clean-air baseline before exposure; poisoned sensors often show anomalous baseline behavior first
+- **Environmental monitoring** — track cumulative exposure to known poisons in your operating environment
+
+### The Cartridge Model
+
+This is why OpenSmell uses a razor-blade cartridge model. Sensors are consumables. The calibration data (\`R₀\`, variance, Fisher discriminant ratios) lives in the firmware, not on the sensor itself. When you swap a cartridge:
+
+- The old \`R₀\` is retained for drift analysis
+- The new cartridge gets a fresh baseline
+- Variance resets but the system's adaptive learning preserves your labeled library
+- The cartridge ID is tracked in the data-commons for provenance
+
+The goal is not infinite sensor life — it is predictable, manageable sensor replacement with minimal downtime and zero loss of learned behavior.
+
 ## What the Verdict Is and Is Not
 
 | The verdict **is** | The verdict **is not** |
