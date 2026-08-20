@@ -554,8 +554,8 @@ export default function Home() {
                   finding: "50 samples (5 seconds at 10Hz) = minimum viable. 75 samples = recommended. Plateaus at 100+.",
                 },
                 {
-                  title: "Sensor Count Proof",
-                  finding: "10 sensors (FDR=321M) beat 128 sensors (FDR=1.05). Feature selection beats hardware every time.",
+                  title: "Clinical Breath Analysis",
+                  finding: "97.1% accuracy on real COPD breath data (8 MOX sensors, 68 patients). MQ-3 steady-state is the top discriminator (FDR=3.26).",
                 },
               ].map((finding) => (
                 <div key={finding.title} className="border border-border p-6">
