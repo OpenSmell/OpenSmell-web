@@ -8,7 +8,7 @@ import {
   Plug, Monitor, AlertTriangle, Wind, Thermometer, Usb, Shield,
   FlaskConical, Warehouse, Snowflake, Wrench, Code, MessageSquare,
   GitBranch, Github, Download, Play, Settings,
-  Send, CheckCircle
+  Send
 } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
@@ -121,9 +121,6 @@ function DeviceDrawing({ className }: { className?: string }) {
 export default function SmellMonitorPage() {
   const [hydrated, setHydrated] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [formSubmitted, setFormSubmitted] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
-  const [unitCount, setUnitCount] = useState("")
   const contactRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => { setHydrated(true) }, [])
@@ -136,27 +133,6 @@ export default function SmellMonitorPage() {
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
-
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setSubmitting(true)
-    const form = e.currentTarget
-    const data = new FormData(form)
-    try {
-      await fetch("/api/smell-monitor", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.get("name"),
-          company: data.get("company"),
-          email: data.get("email"),
-          process: data.get("process"),
-          units: unitCount,
-        }),
-      })
-    } catch { /* best effort */ }
-    setFormSubmitted(true)
   }
 
   if (!hydrated) return null
@@ -524,111 +500,30 @@ export default function SmellMonitorPage() {
           </div>
         </section>
 
-        {/* 8. CTA FORM — Lead Generation */}
+        {/* 8. CTA — Lead Generation */}
         <section ref={contactRef} className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <span className="hex-icon text-muted-foreground" />
-                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                    Reserve a Pilot Unit
-                  </h2>
-                  <span className="hex-icon text-muted-foreground" />
-                </div>
-                <p className="text-muted-foreground">
-                  We&apos;ll get back to you within 2-3 business days with pricing and pilot details.
-                </p>
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                  Reserve a Pilot Unit
+                </h2>
+                <span className="hex-icon text-muted-foreground" />
               </div>
-
-              {formSubmitted ? (
-                <div className="border border-border p-12 bg-background hex-box text-center">
-                  <CheckCircle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Request received</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Check your email for a confirmation. We&apos;ll be in touch within 2-3 business days.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleFormSubmit} className="border border-border p-8 bg-background hex-box space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">Name</label>
-                      <input
-                        name="name"
-                        type="text"
-                        required
-                        className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">Company / Organization</label>
-                      <input
-                        name="company"
-                        type="text"
-                        required
-                        className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">Email Address</label>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">What process are you trying to monitor?</label>
-                    <input
-                      name="process"
-                      type="text"
-                      required
-                      placeholder="e.g. fermentation, VOC monitoring, cold-chain storage"
-                      className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">Estimated number of units</label>
-                    <input
-                      name="units"
-                      type="number"
-                      min="1"
-                      required
-                      value={unitCount}
-                      onChange={(e) => setUnitCount(e.target.value)}
-                      placeholder="e.g. 5"
-                      className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
-                    />
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {["1", "5", "10", "25", "50+"].map((n) => (
-                        <button
-                          key={n}
-                          type="button"
-                          onClick={() => setUnitCount(n)}
-                          className={`text-xs border px-3 py-1.5 transition-all ${
-                            unitCount === n
-                              ? "border-foreground text-foreground"
-                              : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
-                          }`}
-                        >
-                          {n} unit{n !== "1" && n !== "50+" ? "s" : ""}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto disabled:opacity-50"
-                  >
-                    <Send className="w-4 h-4" />
-                    {submitting ? "Submitting..." : "Request Quote & Pilot Details"}
-                  </button>
-                </form>
-              )}
+              <p className="text-muted-foreground mb-8">
+                Tell us about your use case. We&apos;ll get back to you with pricing and pilot details.
+              </p>
+              <a
+                href="mailto:praise@opensmell.xyz?subject=Pilot%20Unit%20Request&body=Hi%20OpenSmell%20team%2C%0A%0AI%27m%20interested%20in%20reserving%20a%20pilot%20unit.%0A%0AUse%20case%3A%20%0ANumber%20of%20units%3A%20%0ACompany%3A%20%0A"
+                className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-8 py-4 text-sm font-medium hover:opacity-90 transition-all"
+              >
+                <Send className="w-4 h-4" />
+                Request Quote &amp; Pilot Details
+              </a>
+              <p className="text-xs text-muted-foreground mt-4">
+                praise@opensmell.xyz — we respond within 2-3 business days.
+              </p>
             </div>
           </div>
         </section>
