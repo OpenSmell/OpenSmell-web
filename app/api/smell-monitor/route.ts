@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-const TARGET_EMAIL = "praisejx@proton.me"
+const TARGET_EMAIL = "praise@opensmell.xyz"
 const FORMSUBMIT_URL = `https://formsubmit.co/ajax/${TARGET_EMAIL}`
 
 export async function POST(request: Request) {
