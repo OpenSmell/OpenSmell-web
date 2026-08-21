@@ -33,6 +33,7 @@ export async function POST(request: Request) {
     })
 
     const ownerData = await ownerRes.json().catch(() => null)
+    console.log("FormSubmit owner response:", ownerRes.status, ownerData)
     if (!ownerRes.ok || ownerData?.success !== "true") {
       return NextResponse.json(
         { ok: false, error: ownerData?.message || "Could not send request. Please try again." },
@@ -55,7 +56,8 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json({ ok: true })
-  } catch {
+  } catch (err) {
+    console.error("FormSubmit error:", err)
     return NextResponse.json({ ok: false, error: "Server error" }, { status: 500 })
   }
 }
