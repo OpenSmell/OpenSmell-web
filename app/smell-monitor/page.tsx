@@ -122,6 +122,7 @@ export default function SmellMonitorPage() {
   const [hydrated, setHydrated] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const [unitCount, setUnitCount] = useState("")
   const contactRef = useRef<HTMLDivElement>(null)
 
@@ -135,6 +136,38 @@ export default function SmellMonitorPage() {
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSubmitting(true)
+    const form = e.currentTarget
+    const data = new FormData(form)
+
+    const payload = new URLSearchParams()
+    payload.set("_subject", `[Smell Monitor] New Pilot Request from ${data.get("name")}`)
+    payload.set("_template", "table")
+    payload.set("_captcha", "false")
+    payload.set("name", data.get("name") as string)
+    payload.set("company", data.get("company") as string)
+    payload.set("email", data.get("email") as string)
+    payload.set("process", data.get("process") as string)
+    payload.set("units", unitCount)
+
+    try {
+      const res = await fetch("https://formsubmit.co/praise@opensmell.xyz", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString(),
+      })
+      if (res.ok) {
+        setFormSubmitted(true)
+      } else {
+        setFormSubmitted(true)
+      }
+    } catch {
+      setFormSubmitted(true)
+    }
   }
 
   if (!hydrated) return null
@@ -528,19 +561,10 @@ export default function SmellMonitorPage() {
                   </p>
                 </div>
               ) : (
-                <>
-                  <iframe name="honeypot" className="hidden" tabIndex={-1} />
-                  <form
-                    action="https://formsubmit.co/praise@opensmell.xyz"
-                    method="POST"
-                    target="honeypot"
-                    onSubmit={() => setFormSubmitted(true)}
-                    className="border border-border p-8 bg-background hex-box space-y-6"
-                  >
-                    <input type="hidden" name="_subject" value="[Smell Monitor] New Pilot Request" />
-                    <input type="hidden" name="_template" value="table" />
-                    <input type="hidden" name="_captcha" value="false" />
-                    <input type="hidden" name="_next" value="https://opensmell.xyz/smell-monitor" />
+                <form
+                  onSubmit={handleFormSubmit}
+                  className="border border-border p-8 bg-background hex-box space-y-6"
+                >
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">Name</label>
@@ -611,13 +635,13 @@ export default function SmellMonitorPage() {
                   </div>
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
+                    disabled={submitting}
+                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
-                    Request Quote &amp; Pilot Details
+                    {submitting ? "Submitting..." : "Request Quote & Pilot Details"}
                   </button>
                 </form>
-                </>
               )}
             </div>
           </div>
