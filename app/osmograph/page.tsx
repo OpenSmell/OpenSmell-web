@@ -2,75 +2,18 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
-import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Globe, Usb, Wifi, Bluetooth, Radio } from "lucide-react"
-import ThemeToggle from "@/components/theme-toggle"
-import MobileNav from "@/components/mobile-nav"
+import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Globe, Usb, Wifi, Bluetooth, Radio } from "lucide-react"
+
 
 export default function OsmographPage() {
   const [hydrated, setHydrated] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => { setHydrated(true) }, [])
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
 
   if (!hydrated) return null
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
-      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-16">
-          <Link href="/" className="flex items-center gap-3 no-underline group">
-            <div className="relative w-8 h-8">
-              <Image src="/opensmell_logo.png" alt="OpenSmell" fill className="object-contain" priority sizes="32px" />
-            </div>
-            <span className="text-lg font-semibold tracking-tight">OpenSmell</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm">
-            <Link href="/search" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Search className="w-3.5 h-3.5" />
-              Search
-            </Link>
-            <Link href="/smell-monitor" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Monitor className="w-3.5 h-3.5" />
-              Smell Monitor
-            </Link>
-            <Link href="/osmograph" className="text-foreground font-medium inline-flex items-center gap-1">
-              <BarChart3 className="w-3.5 h-3.5" />
-              Osmograph
-            </Link>
-            <Link href="/enose" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Cpu className="w-3.5 h-3.5" />
-              E-Nose
-            </Link>
-            <Link href="/academy" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <BookOpen className="w-3.5 h-3.5" />
-              Academy
-            </Link>
-            <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <ExternalLink className="w-3.5 h-3.5" />
-              Community
-            </a>
-          </nav>
-          <div className="flex items-center gap-3">
-            <MobileNav />
-            <ThemeToggle />
-            <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity">
-              <ExternalLink className="w-4 h-4" />
-              GitHub
-            </a>
-          </div>
-        </div>
-      </header>
+    <div className="overflow-x-clip">
 
       <main>
         <section className="pt-32 pb-20 border-b border-border">
@@ -345,18 +288,6 @@ export default function OsmographPage() {
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-border py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="relative w-6 h-6">
-              <Image src="/opensmell_logo.png" alt="OpenSmell" fill className="object-contain" sizes="24px" />
-            </div>
-            Osmograph — OpenSmell
-          </div>
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Back to Home</Link>
-        </div>
-      </footer>
     </div>
   )
 }

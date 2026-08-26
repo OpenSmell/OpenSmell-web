@@ -1,11 +1,19 @@
 "use client"
 
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Search, Monitor, BarChart3, Cpu, BookOpen, ExternalLink } from "lucide-react"
+import { Github } from "lucide-react"
 import ThemeToggle from "@/components/theme-toggle"
 import MobileNav from "@/components/mobile-nav"
+
+const navLinks = [
+  { href: "/smell-monitor", label: "Smell Monitor", key: "smell-monitor" },
+  { href: "/osmograph", label: "Platform", key: "platform" },
+  { href: "/academy", label: "Research", key: "research" },
+  { href: "/enose", label: "Developers", key: "developers" },
+  { href: "/search", label: "Data", key: "data" },
+]
 
 export default function SiteHeader({ active }: { active?: string }) {
   const [scrolled, setScrolled] = useState(false)
@@ -15,19 +23,6 @@ export default function SiteHeader({ active }: { active?: string }) {
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
-
-  const link = (href: string, icon: ReactNode, label: string, key: string) => {
-    const isActive = active === key
-    const cls = `inline-flex items-center gap-1 transition-colors ${
-      isActive ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"
-    }`
-    return (
-      <Link key={key} href={href} className={cls}>
-        {icon}
-        {label}
-      </Link>
-    )
-  }
 
   return (
     <header
@@ -51,25 +46,39 @@ export default function SiteHeader({ active }: { active?: string }) {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 text-sm">
-          {link("/search", <Search className="w-3.5 h-3.5" />, "Search", "search")}
-          {link("/smell-monitor", <Monitor className="w-3.5 h-3.5" />, "Smell Monitor", "smell-monitor")}
-          {link("/osmograph", <BarChart3 className="w-3.5 h-3.5" />, "Osmograph", "osmograph")}
-          {link("/enose", <Cpu className="w-3.5 h-3.5" />, "E-Nose", "enose")}
-          {link("/academy", <BookOpen className="w-3.5 h-3.5" />, "Academy", "academy")}
+          {navLinks.map((link) => {
+            const isActive = active === link.key
+            return (
+              <Link
+                key={link.key}
+                href={link.href}
+                className={`transition-colors ${
+                  isActive ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
           <a
-            href="https://discord.gg/CGER3tHxbH"
+            href="https://github.com/opensmell"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
           >
-            <ExternalLink className="w-3.5 h-3.5" />
-            Community
+            GitHub
           </a>
         </nav>
 
         <div className="flex items-center gap-3">
           <MobileNav />
           <ThemeToggle />
+          <Link
+            href="/smell-monitor"
+            className="hidden md:inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            Run a Pilot
+          </Link>
         </div>
       </div>
     </header>

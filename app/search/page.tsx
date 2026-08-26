@@ -7,7 +7,7 @@ import Image from "next/image"
 import { ArrowLeft, Loader2, ExternalLink, Copy, Check, Search, BookOpen, Monitor, Cpu, BarChart3 } from "lucide-react"
 import { searchByOdor, searchByChemical } from "@/lib/odor-index"
 import BatchedChemicalViewer from "@/components/batched-molecule-viewer"
-import ThemeToggle from "@/components/theme-toggle"
+
 
 interface Chemical {
   cid: number
@@ -70,63 +70,9 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Home</span>
-          </Link>
-          <Link href="/" className="flex items-center gap-2 no-underline">
-            <div className="relative w-7 h-7">
-              <Image
-                src="/opensmell_logo.png"
-                alt="OpenSmell"
-                fill
-                className="object-contain"
-                sizes="28px"
-              />
-            </div>
-            <span className="font-semibold text-sm">OpenSmell</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/smell-monitor"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Smell Monitor"
-            >
-              <Monitor className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/osmograph"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Osmograph"
-            >
-              <BarChart3 className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/enose"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="E-Nose"
-            >
-              <Cpu className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/academy"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Academy"
-            >
-              <BookOpen className="w-4 h-4" />
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+    <div className="overflow-x-clip">
 
-      <div className="max-w-5xl mx-auto px-6 py-8">
+      <div className="max-w-5xl mx-auto px-6 py-8 pt-24">
         <div className="border border-border p-4 mb-8">
           <div className="flex gap-3">
             <div className="flex-1">

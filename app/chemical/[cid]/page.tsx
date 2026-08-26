@@ -7,7 +7,7 @@ import Image from "next/image"
 import { ArrowLeft, ExternalLink, Copy, Check, Database, BookOpen, Monitor, Cpu, Activity, BarChart3 } from "lucide-react"
 import MoleculeViewer from "@/components/molecule-viewer"
 import { getChemicalByCID, Chemical } from "@/lib/odor-index"
-import ThemeToggle from "@/components/theme-toggle"
+
 
 function ChemicalDetailPage() {
   const params = useParams()
@@ -50,22 +50,8 @@ function ChemicalDetailPage() {
 
   if (!chemical) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <header className="border-b border-border px-6 py-4">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="relative w-7 h-7">
-              <Image
-                src="/opensmell_logo.png"
-                alt="OpenSmell"
-                fill
-                className="object-contain"
-                sizes="28px"
-              />
-            </div>
-            <span className="font-semibold text-sm">OpenSmell</span>
-          </Link>
-        </header>
-        <main className="max-w-7xl mx-auto px-6 py-16">
+      <div className="overflow-x-clip">
+        <main className="max-w-7xl mx-auto px-6 py-16 pt-24">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Chemical not found</h1>
             <p className="text-muted-foreground mb-6 font-mono text-sm">CID_{cid} doesn't exist in our database.</p>
@@ -83,63 +69,9 @@ function ChemicalDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link
-            href="/search"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Search</span>
-          </Link>
-          <Link href="/" className="flex items-center gap-2 no-underline">
-            <div className="relative w-7 h-7">
-              <Image
-                src="/opensmell_logo.png"
-                alt="OpenSmell"
-                fill
-                className="object-contain"
-                sizes="28px"
-              />
-            </div>
-            <span className="font-semibold text-sm">OpenSmell</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/smell-monitor"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Smell Monitor"
-            >
-              <Monitor className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/osmograph"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Osmograph"
-            >
-              <BarChart3 className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/enose"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="E-Nose"
-            >
-              <Cpu className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/academy"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Academy"
-            >
-              <BookOpen className="w-4 h-4" />
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+    <div className="overflow-x-clip">
 
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-8 pt-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <div className="border border-border p-6 mb-6">
