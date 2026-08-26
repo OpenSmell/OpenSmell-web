@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, Clock, GraduationCap } from "lucide-react"
 import { articles, getArticle, getRelated } from "@/lib/articles"
 import Markdown from "@/components/markdown"
+import SiteHeader from "@/components/site-header"
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }))
@@ -48,7 +49,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const related = getRelated(article)
 
   return (
-    <div className="overflow-x-clip">
+    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
+      <SiteHeader active="academy" />
 
       <main>
         <article>

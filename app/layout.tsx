@@ -3,20 +3,18 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
-import SiteHeader from "@/components/site-header"
-import SiteFooter from "@/components/site-footer"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "OpenSmell — Infrastructure for Machines to Smell",
-  description: "Continuous chemical anomaly monitoring using modular gas-sensor arrays. Open-source hardware, software, and data for digital olfaction.",
+  title: "OpenSmell — Open Infrastructure for Digital Olfaction",
+  description: "Building the tools, standards, and community to make smell as programmable as light and sound. Open-source chemoprint, e-nose hardware, and data commons.",
   metadataBase: new URL("https://opensmell.org"),
   openGraph: {
-    title: "OpenSmell — Infrastructure for Machines to Smell",
-    description: "Continuous chemical anomaly monitoring using modular gas-sensor arrays.",
+    title: "OpenSmell — Open Infrastructure for Digital Olfaction",
+    description: "Building the tools, standards, and community to make smell as programmable as light and sound.",
     type: "website",
   },
   icons: {
@@ -39,9 +37,7 @@ export default function RootLayout({
           enableSystem={false}
           storageKey="opensmell-theme"
         >
-          <SiteHeader />
-          <main className="min-h-screen">{children}</main>
-          <SiteFooter />
+          {children}
         </ThemeProvider>
         <Analytics />
       </body>
