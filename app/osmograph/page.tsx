@@ -32,18 +32,18 @@ export default function OsmographPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto">
+                    className="hex-btn hex-btn-primary w-full sm:w-auto">
                     <Globe className="w-4 h-4" />
                     Try It
                     <ChevronRight className="w-4 h-4" />
                   </a>
                   <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto">
+                    className="hex-btn hex-btn-outline w-full sm:w-auto">
                     <Download className="w-4 h-4" />
                     Download
                   </a>
                   <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto">
+                    className="hex-btn hex-btn-outline w-full sm:w-auto">
                     <GitBranch className="w-4 h-4" />
                     Source Code
                   </a>
@@ -273,12 +273,12 @@ export default function OsmographPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/enose"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto">
+                  className="hex-btn hex-btn-primary w-full sm:w-auto">
                   <Cpu className="w-4 h-4" />
                   Build an e-nose
                 </Link>
                 <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto">
+                  className="hex-btn hex-btn-outline w-full sm:w-auto">
                   <GitBranch className="w-4 h-4" />
                   GitHub
                 </a>

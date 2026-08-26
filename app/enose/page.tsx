@@ -215,7 +215,7 @@ export default function EnosePage() {
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
                   <button
                     onClick={() => scrollTo("builder")}
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
+                    className="hex-btn hex-btn-primary w-full sm:w-auto"
                   >
                     <Wrench className="w-4 h-4" />
                     Build yours
@@ -223,7 +223,7 @@ export default function EnosePage() {
                   </button>
                   <button
                     onClick={() => scrollTo("sensors")}
-                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
+                    className="hex-btn hex-btn-outline w-full sm:w-auto"
                   >
                     <Gauge className="w-4 h-4" />
                     Sensor catalog
@@ -232,7 +232,7 @@ export default function EnosePage() {
                     href={REPO_LINKS.repo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
+                    className="hex-btn hex-btn-outline w-full sm:w-auto"
                   >
                     <GitBranch className="w-4 h-4" />
                     Build guide
@@ -1087,7 +1087,7 @@ export default function EnosePage() {
                   href={REPO_LINKS.discord}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
+                  className="hex-btn hex-btn-primary w-full sm:w-auto"
                 >
                   <MessageSquare className="w-4 h-4" />
                   Follow on Discord
@@ -1111,7 +1111,7 @@ export default function EnosePage() {
                   href={REPO_LINKS.repo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
+                  className="hex-btn hex-btn-primary w-full sm:w-auto"
                 >
                   <GitBranch className="w-4 h-4" />
                   Reference hardware
@@ -1120,7 +1120,7 @@ export default function EnosePage() {
                   href={REPO_LINKS.discord}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
+                  className="hex-btn hex-btn-outline w-full sm:w-auto"
                 >
                   <MessageSquare className="w-4 h-4" />
                   Get help on Discord
@@ -1129,7 +1129,7 @@ export default function EnosePage() {
                   href={REPO_LINKS.osmograph}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all w-full sm:w-auto"
+                  className="hex-btn hex-btn-outline w-full sm:w-auto"
                 >
                   <Radio className="w-4 h-4" />
                   Osmograph

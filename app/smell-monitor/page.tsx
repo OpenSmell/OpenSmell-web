@@ -187,13 +187,13 @@ export default function SmellMonitorPage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={scrollToContact}
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                    className="hex-btn hex-btn-primary"
                   >
                     Reserve a Pilot Unit
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all">
+                    className="hex-btn hex-btn-outline">
                     <Code className="w-4 h-4" />
                     View the Open-Source SDK
                   </a>
@@ -673,7 +673,7 @@ export default function SmellMonitorPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto disabled:opacity-50"
+                    className="hex-btn hex-btn-primary w-full sm:w-auto disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
                     {submitting ? "Submitting..." : "Request Quote & Pilot Details"}

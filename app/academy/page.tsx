@@ -135,7 +135,7 @@ export default function AcademyPage() {
                 href="https://discord.gg/CGER3tHxbH"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                className="hex-btn hex-btn-primary"
               >
                 Get in touch on Discord
                 <ChevronRight className="w-4 h-4" />

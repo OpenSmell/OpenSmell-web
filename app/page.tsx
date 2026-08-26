@@ -105,23 +105,17 @@ export default function Home() {
           <AnimatedHero />
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div
-                  className="w-10 h-10 flex items-center justify-center bg-foreground text-background"
-                  style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-                >
-                  <Hexagon className="w-5 h-5" />
-                </div>
-                <span className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-                  Open infrastructure for digital olfaction
-                </span>
-              </div>
-              <p className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
-                Machines can see. Machines can hear.
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground mb-8">
+                Σ Open infrastructure
               </p>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[0.95]">
-                We build for machines to smell.
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-4 leading-[0.95]">
+                Digital smell
+                <br />
+                <span className="text-muted-foreground">for everyone.</span>
               </h1>
+              <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
+                Open sensors, open data, open protocol. The full stack for making machines smell.
+              </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
                   Explore Smell Monitor

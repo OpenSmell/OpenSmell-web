@@ -235,7 +235,7 @@ export default function AppStorePage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={openForm}
-                    className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto"
+                    className="hex-btn hex-btn-primary w-full sm:w-auto"
                   >
                     <Upload className="w-4 h-4" />
                     Submit Your Work
@@ -367,7 +367,7 @@ export default function AppStorePage() {
                     <div className="flex flex-col sm:flex-row gap-3 pt-2">
                       <button onClick={handleSubmit}
                         disabled={!form.name || !form.author || !form.email || !form.description || sending}
-                        className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-2.5 text-sm font-medium hover:opacity-90 transition-all disabled:opacity-40">
+                        className="hex-btn hex-btn-primary disabled:opacity-40">
                         {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                         {sending ? "Submitting…" : "Submit"}
                       </button>
@@ -470,7 +470,7 @@ export default function AppStorePage() {
                 ))}
               </div>
               <button onClick={openForm}
-                className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all w-full sm:w-auto">
+                className="hex-btn hex-btn-primary w-full sm:w-auto">
                 <Upload className="w-4 h-4" />
                 Submit Your Work
               </button>

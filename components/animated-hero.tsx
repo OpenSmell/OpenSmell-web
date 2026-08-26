@@ -100,7 +100,7 @@ export default function AnimatedHero() {
 
     const initMolecules = (w: number, h: number) => {
       molecules = []
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 3; i++) {
         const d = molDefs[i % molDefs.length]
         molecules.push({
           atoms: d.atoms.map(a => ({ ...a })),
@@ -128,7 +128,7 @@ export default function AnimatedHero() {
     }
 
     const drawMol = (m: Molecule, dark: boolean) => {
-      const ba = dark ? 0.35 : 0.2
+      const ba = dark ? 0.12 : 0.08
       const cos = Math.cos(m.rotation)
       const sin = Math.sin(m.rotation)
       ctx.strokeStyle = dark ? `rgba(255,255,255,${ba * 0.9})` : `rgba(0,0,0,${ba * 0.9})`
