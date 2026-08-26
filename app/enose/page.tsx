@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import {
@@ -98,8 +98,6 @@ function SupportChip({ level, small }: { level: SupportLevel; small?: boolean })
 }
 
 export default function EnosePage() {
-  const [hydrated, setHydrated] = useState(false)
-
   const [goalId, setGoalId] = useState("food")
   const [mq, setMq] = useState<string[]>(USE_CASES[1].sensors)
   const [digital, setDigital] = useState<string | null>(null)
@@ -110,10 +108,6 @@ export default function EnosePage() {
   const [query, setQuery] = useState("")
   const [catalogOpen, setCatalogOpen] = useState(false)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-
-  useEffect(() => {
-    setHydrated(true)
-  }, [])
 
   const goal = USE_CASES.find((u) => u.id === goalId) ?? USE_CASES[1]
 
@@ -187,8 +181,6 @@ export default function EnosePage() {
     if (previewUrl) URL.revokeObjectURL(previewUrl)
     setPreviewUrl(null)
   }
-
-  if (!hydrated) return null
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">

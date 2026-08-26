@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, GraduationCap, ChevronRight } from "lucide-react"
@@ -9,19 +9,12 @@ import { articles } from "@/lib/articles"
 const filters = ["All", "Foundations", "Hardware", "Tutorial", "Research"]
 
 export default function AcademyPage() {
-  const [hydrated, setHydrated] = useState(false)
   const [activeFilter, setActiveFilter] = useState("All")
-
-  useEffect(() => {
-    setHydrated(true)
-  }, [])
 
   const visible = useMemo(
     () => (activeFilter === "All" ? articles : articles.filter((a) => a.category === activeFilter)),
     [activeFilter]
   )
-
-  if (!hydrated) return null
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">

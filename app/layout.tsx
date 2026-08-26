@@ -32,6 +32,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="light">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('opensmell-theme');if(t&&t!=='light'){localStorage.setItem('opensmell-theme','light')}document.documentElement.classList.remove('dark');document.documentElement.classList.add('light')}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"

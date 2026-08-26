@@ -74,13 +74,10 @@ const useCases = [
 ]
 
 export default function Home() {
-  const [hydrated, setHydrated] = useState(false)
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null)
   const [activeProduct, setActiveProduct] = useState(0)
   const searchRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
-
-  useEffect(() => { setHydrated(true) }, [])
 
   useEffect(() => {
     if (!carouselApi) return
@@ -94,8 +91,6 @@ export default function Home() {
     if (!query.trim()) return
     router.push(`/search?type=${type}&q=${encodeURIComponent(query.trim())}`)
   }
-
-  if (!hydrated) return null
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
@@ -114,7 +109,7 @@ export default function Home() {
                 <span className="text-muted-foreground">for everyone.</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
-                Open sensors, open data, open protocol. The full stack for making machines smell.
+                Hardware, data, and software for digital olfaction. Open-source, reproducible, built for research and industry.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link href="/smell-monitor" className="hex-btn hex-btn-primary">

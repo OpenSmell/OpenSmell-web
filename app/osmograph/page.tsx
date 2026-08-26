@@ -1,17 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, BookOpen, ExternalLink, ChevronRight, Cpu, Search, Globe, Usb, Wifi, Bluetooth, Radio } from "lucide-react"
 
 export default function OsmographPage() {
-  const [hydrated, setHydrated] = useState(false)
-
-  useEffect(() => { setHydrated(true) }, [])
-
-  if (!hydrated) return null
-
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <main>

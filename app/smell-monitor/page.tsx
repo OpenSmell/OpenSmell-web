@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useState, useRef } from "react"
 import {
   BarChart3, ChevronRight, Cpu,
   Plug, Monitor, AlertTriangle, Wind, Usb,
@@ -115,13 +115,10 @@ function DeviceDrawing({ className }: { className?: string }) {
 }
 
 export default function SmellMonitorPage() {
-  const [hydrated, setHydrated] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [unitCount, setUnitCount] = useState("")
   const contactRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => { setHydrated(true) }, [])
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -158,8 +155,6 @@ export default function SmellMonitorPage() {
       setFormSubmitted(true)
     }
   }
-
-  if (!hydrated) return null
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
@@ -346,7 +341,7 @@ export default function SmellMonitorPage() {
                   { label: "Airflow", value: "Micro fan + PTFE pre-filter" },
                   { label: "Power", value: "5V USB-C (500mA typical)" },
                   { label: "Connectivity", value: "USB Serial + Bluetooth LE" },
-                  { label: "Dimensions", value: "Compact enclosure (dimensions TBD)" },
+                  { label: "Dimensions", value: "~120 × 80 × 40 mm (enclosure design in progress)" },
                   { label: "Cold Start", value: "5 seconds (50 samples @ 10Hz)" },
                 ].map((spec) => (
                   <div key={spec.label} className="bg-background p-4 flex items-center justify-between">
