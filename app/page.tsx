@@ -10,7 +10,6 @@ import {
 } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import AnimatedHero from "@/components/animated-hero"
-import MobileNav from "@/components/mobile-nav"
 
 const products = [
   {
@@ -24,7 +23,7 @@ const products = [
   {
     eyebrow: "HARDWARE",
     icon: Monitor,
-    title: "The Smell Monitor",
+    title: "Smell Monitor",
     desc: "Continuous chemical monitoring for industrial processes. Modular sensor arrays, Bluetooth, open-source firmware.",
     cta: "See the hardware",
     href: "/smell-monitor",
@@ -64,70 +63,14 @@ const products = [
 ]
 
 const useCases = [
-  {
-    icon: Leaf,
-    title: "Food Safety",
-    tagline: "Detect spoilage before it reaches the shelf.",
-    desc: "Mahalanobis anomaly detection on 838K food-freshness samples. 59 food types, 10 MOX sensors, 5-second cold-start.",
-    stat: "93.3%",
-    statLabel: "accuracy with EWMA",
-  },
-  {
-    icon: Factory,
-    title: "Industrial Monitoring",
-    tagline: "Continuous VOC monitoring with drift correction.",
-    desc: "EWMA alpha=0.001 maintains 93.3% accuracy across tested drift rates. Configurable per use case — fermentation, safety, or research.",
-    stat: "93.3%",
-    statLabel: "with drift correction",
-  },
-  {
-    icon: Shield,
-    title: "Poisoning Detection",
-    tagline: "Detect sensor degradation before it corrupts your data.",
-    desc: "Sensitivity decay, noise floor, recovery rate, and baseline drift. Triple-redundant detectors flag issues before false results.",
-    stat: "4",
-    statLabel: "signals tracked",
-  },
-  {
-    icon: AlertTriangle,
-    title: "Gas Leak Detection",
-    tagline: "Anomaly detection with fail-safe escalation.",
-    desc: "Mahalanobis distance at 3-sigma threshold. Triple-redundant voting: standard, conservative, sensitive detectors.",
-    stat: "3-sigma",
-    statLabel: "detection threshold",
-  },
-  {
-    icon: Thermometer,
-    title: "Cold Chain Storage",
-    tagline: "Temperature excursion detection in real-time.",
-    desc: "DHT11 temperature/humidity compensation. Sensors detect chemical changes before temperature loggers register the event.",
-    stat: "5 sec",
-    statLabel: "cold start",
-  },
-  {
-    icon: FlaskConical,
-    title: "Breath Analysis Research",
-    tagline: "MOX sensor arrays for exhaled-VOC studies.",
-    desc: "Open protocol for reproducible experiments. 8 MOX sensors achieved 97.1% accuracy on COPD breath data (Acevedo et al. 2021).",
-    stat: "97.1%",
-    statLabel: "COPD accuracy",
-  },
-  {
-    icon: Zap,
-    title: "Smart Agriculture",
-    tagline: "Soil health and crop decay monitoring.",
-    desc: "6-slot sensor array with swappable elements. Fleet management for multiple field sensors.",
-    stat: "6",
-    statLabel: "sensor slots",
-  },
-  {
-    icon: Cpu,
-    title: "Robotics & Custom",
-    tagline: "Embed chemical sensing into autonomous systems.",
-    desc: "Open SDK, open protocol, 4-pin sensor interface. Build custom software profiles for any environment.",
-    stat: "Open",
-    statLabel: "SDK & protocol",
-  },
+  { icon: Leaf, title: "Food Safety", stat: "93.3%", statLabel: "accuracy", desc: "838K samples, 59 food types, 10 MOX sensors. Mahalanobis anomaly detection with EWMA drift correction." },
+  { icon: Factory, title: "Industrial VOC", stat: "alpha=0.001", statLabel: "EWMA", desc: "Continuous monitoring with configurable drift correction. Fermentation, safety, or research presets." },
+  { icon: Shield, title: "Poisoning Detection", stat: "4", statLabel: "signals", desc: "Sensitivity decay, noise floor, recovery rate, baseline drift. Triple-redundant flagging." },
+  { icon: AlertTriangle, title: "Gas Leak", stat: "3-sigma", statLabel: "threshold", desc: "Mahalanobis distance. Triple-redundant voting: standard, conservative, sensitive detectors." },
+  { icon: Thermometer, title: "Cold Chain", stat: "5 sec", statLabel: "cold start", desc: "DHT11 temp/humidity compensation. Chemical changes detected before temperature loggers register." },
+  { icon: FlaskConical, title: "Breath Analysis", stat: "97.1%", statLabel: "COPD", desc: "8 MOX sensors on exhaled-VOC data (Acevedo et al. 2021). Single-dataset result — larger validation needed." },
+  { icon: Zap, title: "Smart Agriculture", stat: "6", statLabel: "sensor slots", desc: "Soil health, crop decay. Fleet management for multiple field sensors." },
+  { icon: Cpu, title: "Robotics", stat: "Open", statLabel: "SDK", desc: "Embed chemical sensing into autonomous systems. Open protocol, 4-pin sensor interface." },
 ]
 
 export default function Home() {
@@ -162,31 +105,30 @@ export default function Home() {
           <AnimatedHero />
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl">
-              <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground mb-6">
-                Open infrastructure for digital olfaction
+              <div className="flex items-center gap-3 mb-6">
+                <div
+                  className="w-10 h-10 flex items-center justify-center bg-foreground text-background"
+                  style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
+                >
+                  <Hexagon className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+                  Open infrastructure for digital olfaction
+                </span>
+              </div>
+              <p className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                Machines can see. Machines can hear.
               </p>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-2 leading-[1.0]">
-                Machines can see.
-              </h1>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-2 leading-[1.0]">
-                Machines can hear.
-              </h1>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.0] text-muted-foreground">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[0.95]">
                 We build for machines to smell.
               </h1>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/smell-monitor"
-                  className="btn-primary"
-                >
+                <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
                   Explore Smell Monitor
                   <ChevronRight className="w-4 h-4" />
                 </Link>
-                <Link
-                  href="/enose"
-                  className="btn-outline"
-                >
-                  Build with OpenSmell
+                <Link href="/osmograph" className="hex-btn hex-btn-outline">
+                  Open Osmograph
                 </Link>
               </div>
             </div>
@@ -199,8 +141,8 @@ export default function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { label: "Validated Samples", value: "1M+" },
-                { label: "EWMA-Corrected Accuracy", value: "93.3%" },
-                { label: "Cold-Start Time", value: "5 sec" },
+                { label: "EWMA Accuracy", value: "93.3%" },
+                { label: "Cold Start", value: "5 sec" },
                 { label: "Anomaly Detection", value: "100%" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
@@ -212,7 +154,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SMELL MONITOR — primary product */}
+        {/* SMELL MONITOR + DETECTION PIPELINE (merged) */}
         <section className="border-t border-border py-20 relative">
           <span className="section-marginalia">Detection Pipeline</span>
           <div className="max-w-7xl mx-auto px-6">
@@ -228,8 +170,9 @@ export default function Home() {
                 <div className="space-y-2 mb-6">
                   {[
                     "Up to 6 MOX sensor channels — configure for your chemistry",
-                    "Temperature and humidity compensation",
+                    "Temperature and humidity compensation (DHT11)",
                     "OLED status display and programmable buzzer",
+                    "IMU for motion compensation — no false alarms from vibration",
                     "Fleet management for multiple devices",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -238,39 +181,42 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <Link
-                  href="/smell-monitor"
-                  className="btn-primary"
-                >
+                <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
                   See the Smell Monitor
                   <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
               <div className="hud-corners border border-border p-6 bg-background relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">Detection Pipeline</div>
-                <div className="space-y-4 data-readout">
+                <div className="coord-tag mb-3">Pipeline</div>
+                <div className="space-y-3 data-readout">
                   {[
-                    { step: "01", text: "Raw MOX readings at 10Hz" },
-                    { step: "02", text: "EWMA baseline correction" },
+                    { step: "01", text: "Raw MOX readings at 10 Hz" },
+                    { step: "02", text: "EWMA baseline correction (alpha configurable)" },
                     { step: "03", text: "Mahalanobis distance anomaly detection" },
                     { step: "04", text: "Triple-redundant fail-safe voting" },
                     { step: "05", text: "Poisoning detector flags degradation" },
                     { step: "06", text: "User labels events — adaptive learning" },
                   ].map((s) => (
                     <div key={s.step} className="flex items-center gap-3">
-                      <span className="text-muted-foreground opacity-50">{s.step}</span>
+                      <span className="text-muted-foreground opacity-50 font-mono text-xs">{s.step}</span>
                       <span className="h-px flex-1 bg-border" />
                       <span className="text-sm text-muted-foreground">{s.text}</span>
                     </div>
                   ))}
+                </div>
+                <div className="mt-4 pt-3 border-t border-border">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Without EWMA: 71.4% accuracy. With alpha=0.001: 93.3%.
+                    EWMA is not suitable for all use cases — fermentation monitoring requires different parameters because the target signal is slow-changing.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* USE CASES */}
+        {/* USE CASES — single grid, no duplication */}
         <section className="border-t border-border py-20 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -280,7 +226,7 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                From food safety to clinical diagnostics — backed by measured results on MOX sensor data.
+                From food safety to clinical diagnostics — every number from our experiments on MOX sensor data.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -303,47 +249,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* DETECTION PIPELINE */}
-        <section className="border-t border-border py-20 bg-grid relative">
-          <span className="section-marginalia">Validation</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Detection pipeline</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Every number comes from our experiments on MOX sensor datasets.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              {[
-                { metric: "Food Freshness Accuracy", value: "93.3%", source: "838K samples, 10 MOX sensors, 59 food types — with EWMA correction" },
-                { metric: "Anomaly Detection", value: "100%", source: "Mahalanobis distance at 3-sigma threshold across all datasets" },
-                { metric: "Cold-Start Minimum", value: "5 sec", source: "50 samples at 10Hz — plateaus at 100+, 75 recommended" },
-                { metric: "EWMA Drift Correction", value: "alpha=0.001", source: "Maintains 93.3% accuracy across tested drift rates. Configurable per use case." },
-              ].map((item) => (
-                <div key={item.metric} className="hud-corners border border-border p-4 relative">
-                  <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-sm">{item.metric}</span>
-                    <span className="font-mono text-sm font-bold">{item.value}</span>
-                  </div>
-                  <div className="h-px bg-border mb-2" />
-                  <div className="text-xs text-muted-foreground">{item.source}</div>
-                </div>
-              ))}
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed max-w-2xl">
-              Without EWMA correction, accuracy drops to 71.4%. With alpha=0.001, it holds at 93.3%.
-              EWMA is not suitable for all use cases — fermentation monitoring, for example, requires different parameters because the signal you want to detect is slow-changing. See the detection pipeline docs for details.
-            </p>
-          </div>
-        </section>
-
-        {/* OPEN DATA */}
-        <section className="border-t border-border py-20 bg-hex relative">
+        {/* OPEN DATA — datasets only, no redundant summary cards */}
+        <section className="border-t border-border py-20 relative">
           <span className="section-marginalia">Data Commons</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -356,7 +263,7 @@ export default function Home() {
                 1M+ samples across 4 independent datasets. Every claim traceable to a source.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { name: "Food Freshness", samples: "838K", sensors: "10 MOX", fdr: "321M", source: "Zenodo", url: "https://zenodo.org/records/17285312" },
                 { name: "SmellNet", samples: "150K", sensors: "6 gas", fdr: "8.1E+18", source: "HuggingFace", url: "https://huggingface.co/datasets/DeweiFeng/SmellNet" },
@@ -396,25 +303,11 @@ export default function Home() {
                 </a>
               ))}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {[
-                { title: "EWMA Baseline Correction", text: "alpha=0.001 maintains 93.3% across tested drift rates. Without it: 71.4%." },
-                { title: "Cold-Start Performance", text: "50 samples (5 seconds) minimum viable. 75 recommended. Plateaus at 100+." },
-                { title: "Clinical Breath Analysis", text: "97.1% LOO accuracy on COPD data (Acevedo et al. 2021, 8 sensors, 68 patients, CC BY 4.0). Single-dataset result — larger validation needed." },
-              ].map((item) => (
-                <div key={item.title} className="hud-corners border border-border p-4 relative">
-                  <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                  <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
-                  <div className="h-px bg-border mb-2" />
-                  <p className="text-xs text-muted-foreground leading-relaxed">{item.text}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
         {/* THE STACK CAROUSEL */}
-        <section className="border-t border-border py-20 relative">
+        <section className="border-t border-border py-20 bg-hex relative">
           <span className="section-marginalia">Stack</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-10">
@@ -476,10 +369,7 @@ export default function Home() {
                       <p className="text-sm text-muted-foreground max-w-lg mx-auto mb-6 leading-relaxed">
                         {m.desc}
                       </p>
-                      <Link
-                        href={m.href}
-                        className="btn-primary"
-                      >
+                      <Link href={m.href} className="hex-btn hex-btn-primary">
                         {m.cta}
                         <ChevronRight className="w-4 h-4" />
                       </Link>
@@ -490,46 +380,6 @@ export default function Home() {
               <CarouselPrevious className="hidden sm:flex" />
               <CarouselNext className="hidden sm:flex" />
             </Carousel>
-          </div>
-        </section>
-
-        {/* THE FOUR PILLARS */}
-        <section className="border-t border-border py-20 bg-hex relative">
-          <span className="section-marginalia">Infrastructure</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">The four pillars</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-sm mt-1">
-                Hardware, data, protocol, software — each open, each essential.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { icon: Cpu, title: "Open Hardware", desc: "Modular monitoring node. Open 4-pin sensor interface. Cartridge-swap architecture.", link: "/smell-monitor" },
-                { icon: Database, title: "Open Data", desc: "5-metric quality scoring. SHA-256 dedup. 1M+ samples validated across 4 datasets.", link: "https://github.com/opensmell/data-commons" },
-                { icon: Hexagon, title: "Open Protocol", desc: "OSM serial format. .osmell data files. Temporal features reproducible across devices.", link: "https://github.com/opensmell/interoperability" },
-                { icon: Sigma, title: "Open SDK", desc: "Mahalanobis detection, adaptive baselines, fail-safe system, poisoning detection.", link: "https://github.com/opensmell/Osmograph" },
-              ].map((item) => (
-                <a
-                  key={item.title}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hud-corners group p-5 border border-border hover:bg-foreground hover:text-background transition-all duration-300 relative"
-                >
-                  <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                  <item.icon className="w-7 h-7 mb-3 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-sm font-semibold mb-1">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground group-hover:text-background/70 transition-colors leading-relaxed">
-                    {item.desc}
-                  </p>
-                </a>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -559,10 +409,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <Link
-                  href="/osmograph"
-                  className="btn-primary"
-                >
+                <Link href="/osmograph" className="hex-btn hex-btn-primary">
                   Manage with Osmograph
                   <ChevronRight className="w-4 h-4" />
                 </Link>
@@ -675,86 +522,65 @@ export default function Home() {
           </div>
         </section>
 
-        {/* MULTI-PATH CTA */}
+        {/* FOUR PILLARS + DONATE (combined footer section) */}
         <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Get Started</span>
+          <span className="section-marginalia">Infrastructure</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center gap-3 mb-3">
                 <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Start here</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">The open stack</h2>
                 <span className="hex-icon text-muted-foreground" />
               </div>
+              <p className="text-muted-foreground text-sm mt-1">
+                Hardware, data, protocol, software — each open, each essential.
+              </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
               {[
-                {
-                  eyebrow: "I want to monitor",
-                  title: "Deploy Smell Monitor",
-                  desc: "Industrial monitoring, food safety, leak detection. Plug in sensors, connect via USB or Bluetooth, start getting readings.",
-                  cta: "See the hardware",
-                  href: "/smell-monitor",
-                },
-                {
-                  eyebrow: "I want to build",
-                  title: "Use the OpenSmell SDK",
-                  desc: "Anomaly detection, adaptive baselines, poisoning detection. Open protocol, reproducible results.",
-                  cta: "Read the docs",
-                  href: "https://github.com/opensmell/Osmograph",
-                },
-                {
-                  eyebrow: "I want to research",
-                  title: "Explore the data",
-                  desc: "4,800+ chemical-odor relationships, 1M+ validated samples, open datasets.",
-                  cta: "Try Scent Search",
-                  href: "/search",
-                },
-              ].map((path) => (
-                <Link
-                  key={path.title}
-                  href={path.href}
-                  className="hud-corners border border-border p-5 hover:bg-foreground hover:text-background transition-all duration-300 group relative"
+                { icon: Cpu, title: "Open Hardware", desc: "Modular monitoring node. Open 4-pin sensor interface. Cartridge-swap architecture.", link: "/smell-monitor" },
+                { icon: Database, title: "Open Data", desc: "5-metric quality scoring. SHA-256 dedup. 1M+ samples validated across 4 datasets.", link: "https://github.com/opensmell/data-commons" },
+                { icon: Hexagon, title: "Open Protocol", desc: "OSM serial format. .osmell data files. Temporal features reproducible across devices.", link: "https://github.com/opensmell/interoperability" },
+                { icon: Sigma, title: "Open SDK", desc: "Mahalanobis detection, adaptive baselines, fail-safe system, poisoning detection.", link: "https://github.com/opensmell/Osmograph" },
+              ].map((item) => (
+                <a
+                  key={item.title}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hud-corners group p-5 border border-border hover:bg-foreground hover:text-background transition-all duration-300 relative"
                 >
                   <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                  <div className="coord-tag mb-2">{path.eyebrow}</div>
-                  <h3 className="text-base font-semibold mb-1">{path.title}</h3>
-                  <p className="text-xs text-muted-foreground group-hover:text-background/70 leading-relaxed mb-4">{path.desc}</p>
-                  <div className="inline-flex items-center gap-1.5 text-sm font-medium">
-                    {path.cta}
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </div>
-                </Link>
+                  <item.icon className="w-7 h-7 mb-3 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-sm font-semibold mb-1">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground group-hover:text-background/70 transition-colors leading-relaxed">
+                    {item.desc}
+                  </p>
+                </a>
               ))}
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-10">
-              <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
-                className="btn-outline">
-                <MessageSquare className="w-4 h-4" />
-                Join Discord
-              </a>
-              <a href="https://github.com/opensmell" target="_blank" rel="noopener noreferrer"
-                className="btn-outline">
-                <Github className="w-4 h-4" />
-                GitHub
-              </a>
-            </div>
-          </div>
-        </section>
 
-        {/* DONATE */}
-        <section className="border-t border-border py-20 bg-hex">
-          <div className="max-w-7xl mx-auto px-6">
+            {/* DONATE — compact, at the bottom */}
             <div className="max-w-xl mx-auto text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
-                Support open research
-              </h2>
-              <p className="text-muted-foreground text-sm mb-6">
-                Donations go directly to cloud compute, sensor prototyping, and community building.
+              <p className="text-muted-foreground text-sm mb-4">
+                Donations go to cloud compute, sensor prototyping, and community building.
               </p>
-              <div className="hud-corners border border-border p-6 bg-background/80 backdrop-blur-sm w-full relative">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+                <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
+                  className="hex-btn hex-btn-outline">
+                  <MessageSquare className="w-4 h-4" />
+                  Join Discord
+                </a>
+                <a href="https://github.com/opensmell" target="_blank" rel="noopener noreferrer"
+                  className="hex-btn hex-btn-outline">
+                  <Github className="w-4 h-4" />
+                  GitHub
+                </a>
+              </div>
+              <div className="hud-corners border border-border p-4 bg-background/80 backdrop-blur-sm w-full relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">
-                  Donate USDC — Polygon Network
+                <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-2">
+                  Donate USDC — Polygon
                 </div>
                 <div className="flex items-center gap-2 w-full min-w-0">
                   <code className="flex-1 min-w-0 text-xs font-mono border border-border px-3 py-2 bg-foreground/5 truncate">
@@ -762,7 +588,7 @@ export default function Home() {
                   </code>
                   <button
                     onClick={() => navigator.clipboard.writeText("0x699d0178f16484509f57d4d77f310b6b617621ce")}
-                    className="btn-primary flex-shrink-0"
+                    className="hex-btn hex-btn-primary flex-shrink-0"
                   >
                     Copy
                   </button>

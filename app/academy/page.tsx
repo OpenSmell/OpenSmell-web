@@ -144,26 +144,6 @@ export default function AcademyPage() {
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-border py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="relative w-6 h-6">
-              <Image
-                src="/opensmell_logo.png"
-                alt="OpenSmell"
-                fill
-                className="object-contain"
-                sizes="24px"
-              />
-            </div>
-            <span>OpenSmell Academy</span>
-          </div>
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Back to Home
-          </Link>
-        </div>
-      </footer>
     </div>
   )
 }

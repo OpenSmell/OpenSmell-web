@@ -1,11 +1,9 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState, useMemo } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { Store, Download, Upload, Cpu, Search, BookOpen, Monitor, ExternalLink, ChevronRight, Tag, Check, Shield, TrendingUp, Grid3X3, Database, Puzzle, X, Send, Coins, Loader2, BarChart3 } from "lucide-react"
-import ThemeToggle from "@/components/theme-toggle"
-import MobileNav from "@/components/mobile-nav"
+
 import { AppstoreArt } from "@/components/hero-art"
 import { loadSubmissions, addSubmission, submitToServer, loadApproved, type SubmissionType, type AppStoreSubmission } from "@/lib/appstore-submissions"
 
@@ -130,11 +128,12 @@ const typeLabels: Record<SubmissionType, string> = {
 }
 
 export default function AppStorePage() {
-  const [hydrated, setHydrated] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const [filter, setFilter] = useState<SubmissionType | "all">("all")
   const [showForm, setShowForm] = useState(false)
-  const [approved, setApproved] = useState<AppStoreSubmission[]>([])
+  const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [submitError, setSubmitError] = useState("")
+  const [honey, setHoney] = useState("")
   const [form, setForm] = useState({
     name: "",
     type: "plugin" as SubmissionType,
@@ -145,65 +144,37 @@ export default function AppStorePage() {
     link: "",
     tags: "",
   })
-  const [submitted, setSubmitted] = useState(false)
-  const [sending, setSending] = useState(false)
-  const [submitError, setSubmitError] = useState("")
-  const [honey, setHoney] = useState("")
+
   const formRef = useRef<HTMLDivElement>(null)
 
   const openForm = () => {
     setShowForm(true)
     setTimeout(() => {
       formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-    }, 50)
+    }, 100)
   }
 
-  useEffect(() => { setHydrated(true); setApproved(loadApproved()) }, [])
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-
-  if (!hydrated) return null
-
-  const allApps = [
-    ...builtinApps,
-    ...approved.map((s) => ({
-      name: s.name,
-      desc: s.description,
-      author: s.author,
-      rating: 0,
-      reviews: 0,
-      downloads: "—",
-      price: s.price || "Free",
-      tags: s.tags,
-      rigs: ["Community"],
-      icon: typeIcons[s.type],
-      href: s.link || "#",
-      featured: false,
-      type: s.type,
-    })),
-  ]
-
-  const filtered = filter === "all" ? allApps : allApps.filter((a) => a.type === filter)
-
   const handleSubmit = async () => {
-    if (!form.name || !form.author || !form.email || !form.description) return
     if (honey) return
+    setSubmitError("")
     const payload = {
-      ...form,
+      name: form.name,
+      type: form.type,
+      description: form.description,
+      author: form.author,
+      email: form.email,
+      price: form.price,
+      link: form.link,
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
     }
-    addSubmission(payload)
     setSending(true)
-    setSubmitError("")
     const res = await submitToServer(payload)
     setSending(false)
     if (!res.ok) {
       setSubmitError(res.error || "Something went wrong. Please try again.")
       return
     }
+    addSubmission({ ...payload, tags: payload.tags })
     setSubmitted(true)
     setTimeout(() => {
       setSubmitted(false)
@@ -213,51 +184,30 @@ export default function AppStorePage() {
     }, 3500)
   }
 
+  const filtered = useMemo(() => {
+    const items = builtinApps.map((a) => ({ ...a, source: "builtin" as const }))
+    const approved = loadApproved().map((s) => ({
+      name: s.name,
+      desc: s.description,
+      author: s.author,
+      rating: 0,
+      reviews: 0,
+      downloads: "0",
+      price: s.price || "Free",
+      tags: s.tags,
+      rigs: [] as string[],
+      icon: Puzzle,
+      href: s.link,
+      featured: false,
+      type: s.type,
+      source: "community" as const,
+    }))
+    const all = [...items, ...approved]
+    return filter === "all" ? all : all.filter((a) => a.type === filter)
+  }, [filter])
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
-      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-16">
-          <Link href="/" className="flex items-center gap-3 no-underline group">
-            <div className="relative w-8 h-8">
-              <Image src="/opensmell_logo.png" alt="OpenSmell" fill className="object-contain" priority sizes="32px" />
-            </div>
-            <span className="text-lg font-semibold tracking-tight">OpenSmell</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm">
-            <Link href="/search" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Search className="w-3.5 h-3.5" />
-              Search
-            </Link>
-            <Link href="/smell-monitor" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Monitor className="w-3.5 h-3.5" />
-              Smell Monitor
-            </Link>
-            <Link href="/osmograph" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <BarChart3 className="w-3.5 h-3.5" />
-              Osmograph
-            </Link>
-            <Link href="/enose" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Cpu className="w-3.5 h-3.5" />
-              E-Nose
-            </Link>
-            <Link href="/academy" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <BookOpen className="w-3.5 h-3.5" />
-              Academy
-            </Link>
-            <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <ExternalLink className="w-3.5 h-3.5" />
-              Community
-            </a>
-          </nav>
-          <div className="flex items-center gap-3">
-            <MobileNav />
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
 
       <main>
         <section className="pt-32 pb-20 border-b border-border bg-grid">
@@ -455,8 +405,8 @@ export default function AppStorePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
               {filtered.map((app) => {
                 const TypeIcon = typeIcons[app.type]
-                return (
-                  <div key={app.name} className="bg-background p-6 hex-box group flex flex-col">
+                  return (
+                    <div key={app.name} className="bg-background p-6 hex-box group flex flex-col">
                     <div className="flex items-center gap-2 mb-3">
                       <TypeIcon className="w-4 h-4 text-muted-foreground" />
                       <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{typeLabels[app.type]}</span>
@@ -528,18 +478,6 @@ export default function AppStorePage() {
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-border py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="relative w-6 h-6">
-              <Image src="/opensmell_logo.png" alt="OpenSmell" fill className="object-contain" sizes="24px" />
-            </div>
-            OpenSmell Appstore
-          </div>
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Back to Home</Link>
-        </div>
-      </footer>
     </div>
   )
 }

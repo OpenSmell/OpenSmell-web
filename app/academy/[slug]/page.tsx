@@ -5,7 +5,6 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, Clock, GraduationCap } from "lucide-react"
 import { articles, getArticle, getRelated } from "@/lib/articles"
 import Markdown from "@/components/markdown"
-import SiteHeader from "@/components/site-header"
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }))
@@ -50,8 +49,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
-      <SiteHeader active="academy" />
-
       <main>
         <article>
           <section className="pt-28 pb-12 border-b border-border">
@@ -144,20 +141,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-border py-12">
-        <div className="max-w-4xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="relative w-6 h-6">
-              <Image src="/opensmell_logo.png" alt="OpenSmell" fill className="object-contain" sizes="24px" />
-            </div>
-            <span>OpenSmell Academy</span>
-          </div>
-          <Link href="/academy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Browse all articles
-          </Link>
-        </div>
-      </footer>
     </div>
   )
 }
