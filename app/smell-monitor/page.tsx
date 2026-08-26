@@ -341,7 +341,6 @@ export default function SmellMonitorPage() {
                   { label: "Airflow", value: "Micro fan + PTFE pre-filter" },
                   { label: "Power", value: "5V USB-C (500mA typical)" },
                   { label: "Connectivity", value: "USB Serial + Bluetooth LE" },
-                  { label: "Dimensions", value: "~120 × 80 × 40 mm (enclosure design in progress)" },
                   { label: "Cold Start", value: "5 seconds (50 samples @ 10Hz)" },
                 ].map((spec) => (
                   <div key={spec.label} className="bg-background p-4 flex items-center justify-between">
@@ -357,9 +356,9 @@ export default function SmellMonitorPage() {
         {/* 3.9 OLED DISPLAY EXAMPLES */}
         <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16">
+            <div className="mb-16 text-center">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">OLED Display</h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mt-2">
+              <p className="text-muted-foreground text-lg max-w-2xl mt-2 mx-auto">
                 Programmable layouts. Show what matters for your process.
               </p>
             </div>
@@ -396,7 +395,7 @@ export default function SmellMonitorPage() {
         {/* 4. YOU NEED THIS IF */}
         <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-12">
+            <div className="mb-12 text-center">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 You need this if
               </h2>
@@ -421,7 +420,7 @@ export default function SmellMonitorPage() {
         {/* 5. USE CASES */}
         <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16">
+            <div className="mb-16 text-center">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Use Cases</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
@@ -543,7 +542,7 @@ export default function SmellMonitorPage() {
         {/* 7. FAQ */}
         <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mx-auto">
+            <div className="max-w-3xl mx-auto text-center">
               <div className="mb-16">
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">FAQ</h2>
               </div>

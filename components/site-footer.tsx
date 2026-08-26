@@ -22,9 +22,9 @@ export default function SiteFooter() {
               title: "Products",
               links: [
                 { label: "Smell Monitor", href: "/smell-monitor" },
-                { label: "Osmograph Desktop", href: "/osmograph" },
-                { label: "Osmograph Web", href: "https://mox.opensmell.xyz" },
-                { label: "Electronic Nose", href: "/enose" },
+                { label: "Osmograph", href: "/osmograph" },
+                { label: "E-Nose Builder", href: "/enose" },
+                { label: "Scent Search", href: "/search" },
               ],
             },
             {
@@ -32,7 +32,6 @@ export default function SiteFooter() {
               links: [
                 { label: "SDK", href: "https://github.com/opensmell/Osmograph" },
                 { label: "Data Commons", href: "https://github.com/opensmell/data-commons" },
-                { label: "Protocol Spec", href: "https://github.com/opensmell/interoperability" },
                 { label: "Academy", href: "/academy" },
               ],
             },
@@ -41,7 +40,6 @@ export default function SiteFooter() {
               links: [
                 { label: "Discord", href: "https://discord.gg/CGER3tHxbH" },
                 { label: "GitHub", href: "https://github.com/opensmell" },
-                { label: "Scent Search", href: "/search" },
               ],
             },
           ].map((col) => (

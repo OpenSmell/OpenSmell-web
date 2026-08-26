@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
   Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen,
-  Hexagon, Sigma, Database, Cpu, Monitor, BarChart3, Wind, AlertTriangle,
+  Cpu, Monitor, BarChart3, Wind, AlertTriangle,
   FlaskConical, Store, Shield, Zap, Activity, Leaf, Factory, Thermometer
 } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
@@ -113,7 +113,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
-                  Explore Smell Monitor
+                  Smell Monitor
                   <ChevronRight className="w-4 h-4" />
                 </Link>
                 <Link href="/osmograph" className="hex-btn hex-btn-outline">
@@ -511,77 +511,40 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FOUR PILLARS + DONATE (combined footer section) */}
+        {/* DONATE */}
         <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Infrastructure</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">The open stack</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-sm mt-1">
-                Hardware, data, protocol, software — each open, each essential.
-              </p>
+          <span className="section-marginalia">Support</span>
+          <div className="max-w-xl mx-auto text-center px-6">
+            <p className="text-muted-foreground text-sm mb-4">
+              Donations go to cloud compute, sensor prototyping, and community building.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+              <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
+                className="hex-btn hex-btn-outline">
+                <MessageSquare className="w-4 h-4" />
+                Join Discord
+              </a>
+              <a href="https://github.com/opensmell" target="_blank" rel="noopener noreferrer"
+                className="hex-btn hex-btn-outline">
+                <Github className="w-4 h-4" />
+                GitHub
+              </a>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
-              {[
-                { icon: Cpu, title: "Open Hardware", desc: "Modular monitoring node. Open 4-pin sensor interface. Cartridge-swap architecture.", link: "/smell-monitor" },
-                { icon: Database, title: "Open Data", desc: "5-metric quality scoring. SHA-256 dedup. 1M+ samples validated across 4 datasets.", link: "https://github.com/opensmell/data-commons" },
-                { icon: Hexagon, title: "Open Protocol", desc: "OSM serial format. .osmell data files. Temporal features reproducible across devices.", link: "https://github.com/opensmell/interoperability" },
-                { icon: Sigma, title: "Open SDK", desc: "Mahalanobis detection, adaptive baselines, fail-safe system, poisoning detection.", link: "https://github.com/opensmell/Osmograph" },
-              ].map((item) => (
-                <a
-                  key={item.title}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hud-corners group p-5 border border-border hover:bg-foreground hover:text-background transition-all duration-300 relative"
+            <div className="hud-corners border border-border p-4 bg-background/80 backdrop-blur-sm w-full relative">
+              <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+              <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-2">
+                Donate USDC — Polygon
+              </div>
+              <div className="flex items-center gap-2 w-full min-w-0">
+                <code className="flex-1 min-w-0 text-xs font-mono border border-border px-3 py-2 bg-foreground/5 truncate">
+                  0x699d0178f16484509f57d4d77f310b6b617621ce
+                </code>
+                <button
+                  onClick={() => navigator.clipboard.writeText("0x699d0178f16484509f57d4d77f310b6b617621ce")}
+                  className="hex-btn hex-btn-primary flex-shrink-0"
                 >
-                  <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                  <item.icon className="w-7 h-7 mb-3 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-sm font-semibold mb-1">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground group-hover:text-background/70 transition-colors leading-relaxed">
-                    {item.desc}
-                  </p>
-                </a>
-              ))}
-            </div>
-
-            {/* DONATE — compact, at the bottom */}
-            <div className="max-w-xl mx-auto text-center">
-              <p className="text-muted-foreground text-sm mb-4">
-                Donations go to cloud compute, sensor prototyping, and community building.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-                <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
-                  className="hex-btn hex-btn-outline">
-                  <MessageSquare className="w-4 h-4" />
-                  Join Discord
-                </a>
-                <a href="https://github.com/opensmell" target="_blank" rel="noopener noreferrer"
-                  className="hex-btn hex-btn-outline">
-                  <Github className="w-4 h-4" />
-                  GitHub
-                </a>
-              </div>
-              <div className="hud-corners border border-border p-4 bg-background/80 backdrop-blur-sm w-full relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-2">
-                  Donate USDC — Polygon
-                </div>
-                <div className="flex items-center gap-2 w-full min-w-0">
-                  <code className="flex-1 min-w-0 text-xs font-mono border border-border px-3 py-2 bg-foreground/5 truncate">
-                    0x699d0178f16484509f57d4d77f310b6b617621ce
-                  </code>
-                  <button
-                    onClick={() => navigator.clipboard.writeText("0x699d0178f16484509f57d4d77f310b6b617621ce")}
-                    className="hex-btn hex-btn-primary flex-shrink-0"
-                  >
-                    Copy
-                  </button>
-                </div>
+                  Copy
+                </button>
               </div>
             </div>
           </div>
