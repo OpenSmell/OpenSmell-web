@@ -153,83 +153,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
-      <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-border"
-            : "bg-transparent"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-16">
-          <Link href="/" className="flex items-center gap-3 no-underline group">
-            <div className="relative w-8 h-8">
-              <Image
-                src="/opensmell_logo.png"
-                alt="OpenSmell"
-                fill
-                className="object-contain"
-                priority
-                sizes="32px"
-              />
-            </div>
-            <span className="text-lg font-semibold tracking-tight">OpenSmell</span>
-          </Link>
-
-          <nav className="hidden md:flex items-center gap-8 text-sm">
-            <Link
-              href="/search"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-            >
-              <Search className="w-3.5 h-3.5" />
-              Search
-            </Link>
-            <Link
-              href="/smell-monitor"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-            >
-              <Monitor className="w-3.5 h-3.5" />
-              Smell Monitor
-            </Link>
-            <Link
-              href="/osmograph"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-            >
-              <BarChart3 className="w-3.5 h-3.5" />
-              Osmograph
-            </Link>
-            <Link
-              href="/academy"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-            >
-              <BookOpen className="w-3.5 h-3.5" />
-              Academy
-            </Link>
-            <a
-              href="https://discord.gg/CGER3tHxbH"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
-            >
-              <MessageSquare className="w-3.5 h-3.5" />
-              Community
-            </a>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <MobileNav />
-            <ThemeToggle />
-            <a
-              href="https://github.com/opensmell"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
-            >
-              <Github className="w-4 h-4" />
-              GitHub
-            </a>
-          </div>
-        </div>
-      </header>
 
       <main>
         {/* HERO */}
@@ -241,40 +164,28 @@ export default function Home() {
                 <Sigma className="w-3.5 h-3.5" />
                 Open source Infrastructure
               </div>
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tighter mb-6 leading-[0.95]">
-                Digital Smell
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter mb-6 leading-[0.95]">
+                Machines can see. Machines can hear.
                 <br />
-                <span className="text-muted-foreground">for everyone.</span>
+                <span className="text-muted-foreground">We build for machines to smell.</span>
               </h1>
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed">
-                The open platform for digital olfaction. Hardware, software, and data —
-                built for researchers, operators, and developers. Validated on 1M+ sensor samples.
+              <p className="text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
+                Continuous chemical anomaly monitoring using modular gas-sensor arrays.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/smell-monitor"
                   className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
                 >
-                  <Monitor className="w-4 h-4" />
-                  The Smell Monitor
+                  Explore Smell Monitor
                   <ChevronRight className="w-4 h-4" />
                 </Link>
-                <a
-                  href="https://mox.opensmell.xyz"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/enose"
                   className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
                 >
-                  <BarChart3 className="w-4 h-4" />
-                  Try Osmograph Web
-                </a>
-                <button
-                  onClick={() => searchRef.current?.scrollIntoView({ behavior: "smooth" })}
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
-                >
-                  <Search className="w-4 h-4" />
-                  Scent Search
-                </button>
+                  Build with OpenSmell
+                </Link>
               </div>
             </div>
           </div>
@@ -297,6 +208,76 @@ export default function Home() {
                   <div className="text-xs text-muted-foreground">{stat.label}</div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SMELL MONITOR - Primary Product */}
+        <section className="border-t border-border py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs font-mono text-muted-foreground mb-6">
+                  <Monitor className="w-3.5 h-3.5" />
+                  SMELL MONITOR
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                  Continuous chemical anomaly monitoring.
+                </h2>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Smell Monitor turns inexpensive gas-sensor arrays into continuously monitored chemical signals — so you can detect changes before they become failures.
+                </p>
+                <div className="space-y-3 mb-8">
+                  {[
+                    "Up to 8 sensing channels — configure the array for your chemistry",
+                    "Temperature and humidity compensation",
+                    "Local OLED status display and programmable buzzer",
+                    "Fleet management for multiple devices",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/smell-monitor"
+                  className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                >
+                  See the Smell Monitor
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="hex-box hud-corners border border-border p-8 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-4">From Sensor to Decision</div>
+                <div className="space-y-3 data-readout">
+                  <div className="text-muted-foreground">PHYSICAL WORLD</div>
+                  <div className="ml-4 text-muted-foreground opacity-60">fermentation / food / air / storage</div>
+                  <div className="ml-4 text-muted-foreground">&darr;</div>
+                  <div className="border border-border p-3">
+                    <div className="text-muted-foreground">SENSOR ARRAY</div>
+                    <div className="text-[10px] text-muted-foreground opacity-60">up to 8 MOX channels + temp/humidity</div>
+                  </div>
+                  <div className="ml-4 text-muted-foreground">&darr;</div>
+                  <div className="text-muted-foreground">RAW RESPONSE</div>
+                  <div className="ml-4 text-muted-foreground">&darr;</div>
+                  <div className="text-muted-foreground">QUALITY + ENVIRONMENT</div>
+                  <div className="ml-4 text-muted-foreground">&darr;</div>
+                  <div className="text-muted-foreground">FEATURE EXTRACTION</div>
+                  <div className="ml-4 text-muted-foreground">&darr;</div>
+                  <div className="text-muted-foreground">BASELINE / MODEL</div>
+                  <div className="ml-4 text-muted-foreground">&darr;</div>
+                  <div className="text-muted-foreground">DEVIATION</div>
+                  <div className="ml-4 text-muted-foreground">&darr;</div>
+                  <div className="text-muted-foreground">ALERT / EVENT</div>
+                  <div className="ml-4 text-muted-foreground">&darr;</div>
+                  <div className="text-foreground font-medium">HUMAN ACTION</div>
+                </div>
+                <div className="mt-4 pt-4 border-t border-border text-[10px] text-muted-foreground opacity-60">
+                  The hardware measures. OpenSmell turns the measurements into usable information.
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -417,8 +398,9 @@ export default function Home() {
                   This is the single most important parameter in MOX monitoring.
                 </p>
               </div>
-              <div className="hex-box border border-border p-8 bg-background">
-                <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">Detection Pipeline</div>
+              <div className="hex-box hud-corners border border-border p-8 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-4">Detection Pipeline</div>
                 <div className="space-y-6">
                   {[
                     { step: "1", icon: Wind, text: "Raw MOX readings at 10Hz from up to 6 sensors" },
@@ -709,6 +691,127 @@ export default function Home() {
           </div>
         </section>
 
+        {/* FLEET MANAGEMENT */}
+        <section className="border-t border-border py-24 bg-hex relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
+                  <Monitor className="w-3.5 h-3.5" />
+                  Fleet Management
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                  Not one device. A fleet.
+                </h2>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Smell Monitor is designed for scale. Deploy multiple units across a production line, warehouse, or field site. Each device operates independently; Osmograph Desktop aggregates everything into one view.
+                </p>
+                <div className="space-y-3 mb-8">
+                  {[
+                    "Independent baselines per device — no cross-contamination",
+                    "Centralized session recording with device identification",
+                    "OLED layouts and buzzer patterns configurable per unit",
+                    "Health status, poisoning alerts, and battery at a glance",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/osmograph"
+                  className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+                >
+                  Manage with Osmograph
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="hex-box hud-corners border border-border p-8 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-4">Fleet Overview</div>
+                <div className="space-y-4 data-readout">
+                  {[
+                    { id: "SM-001", location: "Line A — Fermentation", status: "ACTIVE", health: "98%", lastSeen: "2s ago" },
+                    { id: "SM-002", location: "Line B — Packaging", status: "ACTIVE", health: "94%", lastSeen: "5s ago" },
+                    { id: "SM-003", location: "Cold Storage", status: "ALERT", health: "87%", lastSeen: "1s ago" },
+                    { id: "SM-004", location: "Warehouse East", status: "IDLE", health: "91%", lastSeen: "3h ago" },
+                  ].map((device) => (
+                    <div key={device.id} className="border border-border p-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-foreground font-medium">{device.id}</span>
+                        <span className={`text-[10px] ${device.status === "ALERT" ? "text-red-500" : device.status === "IDLE" ? "text-muted-foreground" : "text-green-500"}`}>
+                          {device.status}
+                        </span>
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">{device.location}</div>
+                      <div className="flex items-center justify-between mt-2 text-[10px] text-muted-foreground">
+                        <span>Health: {device.health}</span>
+                        <span>Last: {device.lastSeen}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 pt-4 border-t border-border text-[10px] text-muted-foreground opacity-60">
+                  Mockup of Osmograph fleet dashboard. Each device streams independently via USB or Bluetooth.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* RESEARCH LIMITATIONS — what we know, what we don't */}
+        <section className="border-t border-border py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                  What we know, what we don&apos;t
+                </h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Honest about the science. No overclaiming, no underclaiming.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="border border-border p-6">
+                <div className="text-xs text-green-500 font-mono uppercase tracking-widest mb-3">Verified</div>
+                <div className="space-y-4">
+                  {[
+                    { claim: "EWMA alpha=0.001 corrects drift", evidence: "838K samples, 59 food types, FDR=321M. Maintains 93.3% at 500% drift rate." },
+                    { claim: "Mahalanobis distance detects anomalies", evidence: "100% detection at 3-sigma threshold across all 4 datasets." },
+                    { claim: "COPD detection via breath analysis", evidence: "97.1% LOO accuracy, 8 MOX sensors, 68 patients (Acevedo et al. 2021, CC BY 4.0)." },
+                    { claim: "Cold-start: 50 samples (5 seconds)", evidence: "Plateaus at 100+. 75 recommended for production use." },
+                  ].map((item) => (
+                    <div key={item.claim} className="border border-border p-4">
+                      <div className="font-semibold text-sm mb-1">{item.claim}</div>
+                      <div className="text-xs text-muted-foreground leading-relaxed">{item.evidence}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="border border-border p-6">
+                <div className="text-xs text-amber-500 font-mono uppercase tracking-widest mb-3">Limitations</div>
+                <div className="space-y-4">
+                  {[
+                    { issue: "Clinical results need larger validation", detail: "68 patients is promising but not definitive. AUC=0.54 in the 3,469-patient study (unrelated dataset) shows clinical MOX detection is hard at scale." },
+                    { issue: "Beef spoilage: 12 cuts too similar", detail: "FDR=3.85 — not enough discrimination between cuts. Freshness works; cut identification doesn't." },
+                    { issue: "Sensor lifespan is finite", detail: "MOX sensors degrade over months. Poisoning detection helps, but cartridge replacement is eventually necessary." },
+                    { issue: "No long-term field validation yet", detail: "Lab experiments, not production deployments. Fleet management is designed but untested at scale." },
+                  ].map((item) => (
+                    <div key={item.issue} className="border border-border p-4">
+                      <div className="font-semibold text-sm mb-1">{item.issue}</div>
+                      <div className="text-xs text-muted-foreground leading-relaxed">{item.detail}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* SCENT SEARCH */}
         <section ref={searchRef} className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
@@ -809,41 +912,76 @@ export default function Home() {
           </div>
         </section>
 
-        {/* JOIN / CTA */}
+        {/* MULTI-PATH CTA */}
         <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto">
+            <div className="text-center mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <span className="hex-icon text-muted-foreground" />
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                  Join the mission
+                  Start here
                 </h2>
                 <span className="hex-icon text-muted-foreground" />
               </div>
-              <p className="text-muted-foreground text-lg mb-10">
-                OpenSmell is a community endeavour. We need builders, developers,
-                researchers, and domain experts. The future of smell is open.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="https://discord.gg/CGER3tHxbH"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition-all"
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  eyebrow: "I want to monitor",
+                  title: "Deploy Smell Monitor",
+                  desc: "Industrial monitoring, food safety, leak detection. Plug in a cartridge, connect via USB or Bluetooth, start getting readings.",
+                  cta: "See the hardware",
+                  href: "/smell-monitor",
+                },
+                {
+                  eyebrow: "I want to build",
+                  title: "Use the OpenSmell SDK",
+                  desc: "Rust SDK with anomaly detection, adaptive baselines, poisoning detection. Open protocol, reproducible results.",
+                  cta: "Read the docs",
+                  href: "https://github.com/opensmell/Osmograph",
+                },
+                {
+                  eyebrow: "I want to research",
+                  title: "Explore the data",
+                  desc: "4,800+ chemical-odor relationships, 1M+ validated samples, open datasets. Search by molecule or by smell.",
+                  cta: "Try Scent Search",
+                  href: "/search",
+                },
+              ].map((path) => (
+                <Link
+                  key={path.title}
+                  href={path.href}
+                  className="hex-box border border-border p-6 hover:bg-foreground hover:text-background transition-all duration-300 group"
                 >
-                  <MessageSquare className="w-4 h-4" />
-                  Join Discord
-                </a>
-                <a
-                  href="https://github.com/opensmell"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
-                >
-                  <Github className="w-4 h-4" />
-                  GitHub
-                </a>
-              </div>
+                  <div className="coord-tag mb-3">{path.eyebrow}</div>
+                  <h3 className="text-lg font-semibold mb-2">{path.title}</h3>
+                  <p className="text-sm text-muted-foreground group-hover:text-background/70 leading-relaxed mb-6">{path.desc}</p>
+                  <div className="inline-flex items-center gap-2 text-sm font-medium">
+                    {path.cta}
+                    <ChevronRight className="w-4 h-4" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+              <a
+                href="https://discord.gg/CGER3tHxbH"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+              >
+                <MessageSquare className="w-4 h-4" />
+                Join Discord
+              </a>
+              <a
+                href="https://github.com/opensmell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium hover:bg-foreground hover:text-background transition-all"
+              >
+                <Github className="w-4 h-4" />
+                GitHub
+              </a>
             </div>
           </div>
         </section>

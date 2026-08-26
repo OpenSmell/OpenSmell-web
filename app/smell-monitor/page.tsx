@@ -4,14 +4,12 @@ import { useEffect, useState, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import {
-  BarChart3, ChevronRight, Cpu, Search, BookOpen, ExternalLink,
-  Plug, Monitor, AlertTriangle, Wind, Thermometer, Usb, Shield,
-  FlaskConical, Warehouse, Snowflake, Wrench, Code, MessageSquare,
-  GitBranch, Github, Download, Play, Settings,
+  BarChart3, ChevronRight, Cpu,
+  Plug, Monitor, AlertTriangle, Wind, Usb,
+  FlaskConical, Warehouse, Snowflake, Wrench, Code,
+  Github, Download, Play, Settings,
   Send, CheckCircle
 } from "lucide-react"
-import ThemeToggle from "@/components/theme-toggle"
-import MobileNav from "@/components/mobile-nav"
 
 function DeviceDrawing({ className }: { className?: string }) {
   return (
@@ -120,19 +118,12 @@ function DeviceDrawing({ className }: { className?: string }) {
 
 export default function SmellMonitorPage() {
   const [hydrated, setHydrated] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [unitCount, setUnitCount] = useState("")
   const contactRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => { setHydrated(true) }, [])
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -174,55 +165,6 @@ export default function SmellMonitorPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
-      <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-16">
-          <Link href="/" className="flex items-center gap-3 no-underline group">
-            <div className="relative w-8 h-8">
-              <Image src="/opensmell_logo.png" alt="OpenSmell" fill className="object-contain" priority sizes="32px" />
-            </div>
-            <span className="text-lg font-semibold tracking-tight">OpenSmell</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm">
-            <Link href="/search" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Search className="w-3.5 h-3.5" />
-              Search
-            </Link>
-            <Link href="/smell-monitor" className="text-foreground font-medium inline-flex items-center gap-1">
-              <Monitor className="w-3.5 h-3.5" />
-              Smell Monitor
-            </Link>
-            <Link href="/osmograph" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <BarChart3 className="w-3.5 h-3.5" />
-              Osmograph
-            </Link>
-            <Link href="/enose" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <Cpu className="w-3.5 h-3.5" />
-              E-Nose
-            </Link>
-            <Link href="/academy" className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <BookOpen className="w-3.5 h-3.5" />
-              Academy
-            </Link>
-            <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1">
-              <MessageSquare className="w-3.5 h-3.5" />
-              Community
-            </a>
-          </nav>
-          <div className="flex items-center gap-3">
-            <MobileNav />
-            <ThemeToggle />
-            <a href="https://github.com/opensmell" target="_blank" rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 bg-foreground text-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity">
-              <Github className="w-4 h-4" />
-              GitHub
-            </a>
-          </div>
-        </div>
-      </header>
-
       <main>
         {/* 1. HERO */}
         <section className="pt-32 pb-20 border-b border-border">
@@ -348,6 +290,127 @@ export default function SmellMonitorPage() {
                   <f.icon className="w-8 h-8 mb-4 text-muted-foreground" />
                   <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 3.5 WHAT IT IS / WHAT IT IS NOT */}
+        <section className="border-t border-border py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="border border-border p-6">
+                <div className="text-xs text-green-500 font-mono uppercase tracking-widest mb-3">What it is</div>
+                <div className="space-y-3">
+                  {[
+                    "A continuously-running chemical anomaly detector",
+                    "A modular sensor platform with hot-swappable cartridges",
+                    "A fleet-ready device with independent baselines per unit",
+                    "An open-source platform — firmware, SDK, protocol all public",
+                    "A production tool backed by 1M+ validated sensor samples",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <span className="w-1 h-1 bg-green-500 mt-2 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="border border-border p-6">
+                <div className="text-xs text-red-500 font-mono uppercase tracking-widest mb-3">What it is not</div>
+                <div className="space-y-3">
+                  {[
+                    "A gas chromatograph — it detects changes, not specific molecules",
+                    "A replacement for lab analysis — it complements it",
+                    "A magic box — it needs calibration and clean-air baselines",
+                    "A finished product — it is a dev kit for early adopters",
+                    "A medical device — not FDA-cleared, not for clinical diagnosis",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <span className="w-1 h-1 bg-red-500 mt-2 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3.7 TECHNICAL SPECS */}
+        <section className="border-t border-border py-24 bg-hex">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Technical Specifications</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+            </div>
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
+                {[
+                  { label: "Processor", value: "ESP32 (dual-core, Wi-Fi + BLE)" },
+                  { label: "Sensor Slots", value: "Up to 6 MOX channels" },
+                  { label: "Connector", value: "4-pin standardized interface" },
+                  { label: "Temperature", value: "DHT11 (0-50C, +/-2C)" },
+                  { label: "Humidity", value: "DHT11 (20-80% RH)" },
+                  { label: "Display", value: "0.96\" OLED (128x64, I2C)" },
+                  { label: "Alerts", value: "Passive buzzer (programmable)" },
+                  { label: "Airflow", value: "Micro fan + PTFE pre-filter" },
+                  { label: "Power", value: "5V USB-C (500mA typical)" },
+                  { label: "Connectivity", value: "USB Serial + Bluetooth LE" },
+                  { label: "Dimensions", value: "TBD (dev kit form factor)" },
+                  { label: "Cold Start", value: "5 seconds (50 samples @ 10Hz)" },
+                ].map((spec) => (
+                  <div key={spec.label} className="bg-background p-4 flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground font-mono uppercase tracking-wider">{spec.label}</span>
+                    <span className="text-sm font-medium">{spec.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3.9 OLED DISPLAY EXAMPLES */}
+        <section className="border-t border-border py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">OLED Display</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Programmable layouts. Show what matters for your process.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {[
+                {
+                  title: "Fermentation",
+                  lines: ["BREW-042  LINE-A", "", "ETHANOL  1.23V", "TEMP  22.4C  RH 68%", "", "STATUS: NORMAL", "TREND: +0.3%/hr"],
+                },
+                {
+                  title: "VOC Leak Detection",
+                  lines: ["SM-003  WAREHOUSE", "", "TOLUENE  0.87V", "HUMIDITY  45%", "", "ALERT: ELEVATED", "SINCE: 14:32:08"],
+                },
+                {
+                  title: "Cold Chain",
+                  lines: ["COLD-STORAGE-02", "", "AMMONIA  0.42V", "TEMP  4.1C  RH 92%", "", "STATUS: NORMAL", "BASELINE: 0.41V"],
+                },
+              ].map((display) => (
+                <div key={display.title} className="border border-border p-6 bg-background">
+                  <div className="coord-tag mb-3">{display.title}</div>
+                  <div className="bg-black border border-border p-4 font-mono text-xs leading-relaxed" style={{ color: "#00ff41" }}>
+                    {display.lines.map((line, i) => (
+                      <div key={i} className={line === "" ? "h-3" : ""}>
+                        {line}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
