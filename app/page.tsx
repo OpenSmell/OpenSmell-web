@@ -167,11 +167,11 @@ export default function Home() {
           <AnimatedHero />
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-28 pb-16">
             <div className="max-w-3xl">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-[1.05]">
-                Open infrastructure for<br />
-                <span className="text-muted-foreground">digital olfaction.</span>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-[1.1]">
+                Machines can see. Machines can hear.<br />
+                We build for machines to <span className="text-muted-foreground">smell.</span>
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground max-w-lg mb-6 leading-relaxed">
                 Continuous chemical anomaly monitoring using modular gas-sensor arrays. Open-source firmware, SDK, and data commons.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
@@ -349,7 +349,7 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {[
                 { name: "Food Freshness", samples: "838K", sensors: "10 MOX", fdr: "321M", source: "Zenodo", url: "https://zenodo.org/records/17285312" },
-                { name: "SmellNet", samples: "150K", sensors: "7 gas", fdr: "8.1E+18", source: "HuggingFace", url: "https://huggingface.co/datasets/DeweiFeng/SmellNet" },
+                { name: "SmellNet", samples: "150K", sensors: "6 gas", fdr: "8.1E+18", source: "HuggingFace", url: "https://huggingface.co/datasets/DeweiFeng/SmellNet" },
                 { name: "Beef Spoilage", samples: "26K", sensors: "12 MOX", fdr: "3.85", source: "Harvard Dataverse", url: "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XNFVTS" },
                 { name: "UCI Gas Drift", samples: "14K", sensors: "128", fdr: "1.05", source: "UCI ML Repository", url: "https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset" },
               ].map((ds) => (
@@ -565,7 +565,7 @@ export default function Home() {
                     <div key={device.id} className="border border-border p-3">
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-foreground font-medium">{device.id}</span>
-                        <span className={`text-[10px] ${device.status === "ALERT" ? "text-red-500" : device.status === "IDLE" ? "text-muted-foreground" : "text-green-500"}`}>
+                        <span className={`text-[10px] font-mono ${device.status === "ALERT" ? "text-red-400" : device.status === "IDLE" ? "text-muted-foreground" : "text-green-400"}`}>
                           {device.status}
                         </span>
                       </div>

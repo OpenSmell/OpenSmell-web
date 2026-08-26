@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, GraduationCap, ChevronRight } from "lucide-react"
-import SiteHeader from "@/components/site-header"
 import { articles } from "@/lib/articles"
 
 const filters = ["All", "Foundations", "Hardware", "Tutorial", "Research"]
@@ -26,8 +25,6 @@ export default function AcademyPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
-      <SiteHeader active="academy" />
-
       <main>
         <section className="pt-32 pb-20 border-b border-border">
           <div className="max-w-7xl mx-auto px-6">

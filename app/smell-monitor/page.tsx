@@ -209,12 +209,8 @@ export default function SmellMonitorPage() {
         {/* 2. HOW IT WORKS */}
         <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">How It Works</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
+            <div className="mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">How It Works</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
               {[
@@ -251,13 +247,9 @@ export default function SmellMonitorPage() {
         {/* 3. WHAT'S INSIDE */}
         <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">What&apos;s Inside</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <div className="mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">What&apos;s Inside</h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mt-2">
                 Designed for real environments, not just lab benches.
               </p>
             </div>
@@ -299,7 +291,7 @@ export default function SmellMonitorPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="border border-border p-6">
-                <div className="text-xs text-green-500 font-mono uppercase tracking-widest mb-3">What it is</div>
+                <div className="text-xs text-green-400 font-mono uppercase tracking-widest mb-3">What it is</div>
                 <div className="space-y-3">
                   {[
                     "A continuously-running chemical anomaly detector",
@@ -309,14 +301,14 @@ export default function SmellMonitorPage() {
                     "Backed by 1M+ validated sensor samples across 4 datasets",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 bg-green-500 mt-2 flex-shrink-0" />
+                      <span className="w-1 h-1 bg-green-400 mt-2 flex-shrink-0" />
                       {item}
                     </div>
                   ))}
                 </div>
               </div>
               <div className="border border-border p-6">
-                <div className="text-xs text-red-500 font-mono uppercase tracking-widest mb-3">What it is not</div>
+                <div className="text-xs text-red-400 font-mono uppercase tracking-widest mb-3">What it is not</div>
                 <div className="space-y-3">
                   {[
                     "A gas chromatograph — it detects changes, not specific molecules",
@@ -325,7 +317,7 @@ export default function SmellMonitorPage() {
                     "A medical device — not FDA-cleared, not for clinical diagnosis",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 bg-red-500 mt-2 flex-shrink-0" />
+                      <span className="w-1 h-1 bg-red-400 mt-2 flex-shrink-0" />
                       {item}
                     </div>
                   ))}
@@ -338,12 +330,8 @@ export default function SmellMonitorPage() {
         {/* 3.7 TECHNICAL SPECS */}
         <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Technical Specifications</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
+            <div className="mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Technical Specifications</h2>
             </div>
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
@@ -374,13 +362,9 @@ export default function SmellMonitorPage() {
         {/* 3.9 OLED DISPLAY EXAMPLES */}
         <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">OLED Display</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <div className="mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">OLED Display</h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mt-2">
                 Programmable layouts. Show what matters for your process.
               </p>
             </div>
@@ -417,14 +401,10 @@ export default function SmellMonitorPage() {
         {/* 4. YOU NEED THIS IF */}
         <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mx-auto text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                  You need this if
-                </h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
+            <div className="mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                You need this if
+              </h2>
             </div>
             <div className="max-w-2xl mx-auto">
               <div className="space-y-4">
@@ -446,12 +426,8 @@ export default function SmellMonitorPage() {
         {/* 5. USE CASES */}
         <section className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Use Cases</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
+            <div className="mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Use Cases</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
               {[
@@ -573,12 +549,8 @@ export default function SmellMonitorPage() {
         <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-16">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <span className="hex-icon text-muted-foreground" />
-                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">FAQ</h2>
-                  <span className="hex-icon text-muted-foreground" />
-                </div>
+              <div className="mb-16">
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">FAQ</h2>
               </div>
               <div className="space-y-px bg-border">
                 {[
@@ -610,18 +582,11 @@ export default function SmellMonitorPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-12">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <span className="hex-icon text-muted-foreground" />
-                  <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                    Reserve a Pilot Unit
-                  </h2>
-                  <span className="hex-icon text-muted-foreground" />
-                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                  Reserve a Pilot Unit
+                </h2>
                 <p className="text-muted-foreground">
-                  We&apos;ll get back to you within 2-3 business days with pricing and pilot details.
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  For general enquiries (research, collaboration, press): <a href="mailto:praise@opensmell.xyz" className="underline hover:text-foreground transition-colors">praise@opensmell.xyz</a>
+                  We&apos;ll get back to you within 2-3 hours with pricing and pilot details.
                 </p>
               </div>
 
@@ -630,7 +595,7 @@ export default function SmellMonitorPage() {
                   <CheckCircle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">Request received</h3>
                   <p className="text-sm text-muted-foreground">
-                    Check your email for a confirmation. We&apos;ll be in touch within 2-3 business days.
+                    Check your email for a confirmation. We&apos;ll be in touch within 2-3 hours.
                   </p>
                 </div>
               ) : (
