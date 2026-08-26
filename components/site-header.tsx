@@ -3,8 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Search, Monitor, BarChart3, Cpu, BookOpen, ExternalLink } from "lucide-react"
-import ThemeToggle from "@/components/theme-toggle"
+import { Search, Monitor, BarChart3, Cpu, BookOpen, ExternalLink, Github } from "lucide-react"
 import MobileNav from "@/components/mobile-nav"
 
 export default function SiteHeader({ active }: { active?: string }) {
@@ -68,8 +67,15 @@ export default function SiteHeader({ active }: { active?: string }) {
         </nav>
 
         <div className="flex items-center gap-3">
+          <a
+            href="https://github.com/opensmell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Github className="w-4 h-4" />
+          </a>
           <MobileNav />
-          <ThemeToggle />
         </div>
       </div>
     </header>
