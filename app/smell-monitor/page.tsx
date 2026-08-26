@@ -1,14 +1,12 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
-import Link from "next/link"
-import Image from "next/image"
 import {
   BarChart3, ChevronRight, Cpu,
   Plug, Monitor, AlertTriangle, Wind, Usb,
   FlaskConical, Warehouse, Snowflake, Wrench, Code,
-  Github, Download, Play, Settings,
-  Send, CheckCircle
+  Download, Play, Settings,
+  Send, CheckCircle, Leaf, Thermometer
 } from "lucide-react"
 
 function DeviceDrawing({ className }: { className?: string }) {
@@ -182,7 +180,7 @@ export default function SmellMonitorPage() {
                   Continuous chemical anomaly detection for industrial processes.
                 </p>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                  A modular, plug-and-play monitoring node. Swap the sensor cartridge for
+                  A modular, plug-and-play monitoring node. Configure the sensor array for
                   your specific application. Connect via Bluetooth to Osmograph for analytics,
                   or let it run standalone with local alerts.
                 </p>
@@ -224,7 +222,7 @@ export default function SmellMonitorPage() {
                   icon: Plug,
                   step: "01",
                   title: "Plug In",
-                  desc: "Insert the hot-swappable sensor cartridge for your environment — fermentation, VOCs, cold-chain.",
+                  desc: "Insert the sensor array for your environment — fermentation, VOCs, cold-chain.",
                 },
                 {
                   icon: Monitor,
@@ -268,7 +266,7 @@ export default function SmellMonitorPage() {
                 {
                   icon: Cpu,
                   title: "True Modularity",
-                  desc: "Standardized 4-pin connector for hot-swappable, application-specific sensor cartridges.",
+                  desc: "Standardized 4-pin connector for hot-swappable, application-specific sensor arrays.",
                 },
                 {
                   icon: Wind,
@@ -278,7 +276,7 @@ export default function SmellMonitorPage() {
                 {
                   icon: Monitor,
                   title: "Standalone Operation",
-                  desc: "Built-in E-ink display and passive buzzer for immediate local alerts without a phone or PC.",
+                  desc: "Built-in OLED display and passive buzzer for immediate local alerts without a phone or PC.",
                 },
                 {
                   icon: Usb,
@@ -305,10 +303,10 @@ export default function SmellMonitorPage() {
                 <div className="space-y-3">
                   {[
                     "A continuously-running chemical anomaly detector",
-                    "A modular sensor platform with hot-swappable cartridges",
+                    "A modular sensor platform with hot-swappable sensors",
                     "A fleet-ready device with independent baselines per unit",
                     "An open-source platform — firmware, SDK, protocol all public",
-                    "A production tool backed by 1M+ validated sensor samples",
+                    "Backed by 1M+ validated sensor samples across 4 datasets",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
                       <span className="w-1 h-1 bg-green-500 mt-2 flex-shrink-0" />
@@ -324,7 +322,6 @@ export default function SmellMonitorPage() {
                     "A gas chromatograph — it detects changes, not specific molecules",
                     "A replacement for lab analysis — it complements it",
                     "A magic box — it needs calibration and clean-air baselines",
-                    "A finished product — it is a dev kit for early adopters",
                     "A medical device — not FDA-cleared, not for clinical diagnosis",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
@@ -361,7 +358,7 @@ export default function SmellMonitorPage() {
                   { label: "Airflow", value: "Micro fan + PTFE pre-filter" },
                   { label: "Power", value: "5V USB-C (500mA typical)" },
                   { label: "Connectivity", value: "USB Serial + Bluetooth LE" },
-                  { label: "Dimensions", value: "TBD (dev kit form factor)" },
+                  { label: "Dimensions", value: "Compact enclosure (dimensions TBD)" },
                   { label: "Cold Start", value: "5 seconds (50 samples @ 10Hz)" },
                 ].map((spec) => (
                   <div key={spec.label} className="bg-background p-4 flex items-center justify-between">
@@ -404,7 +401,7 @@ export default function SmellMonitorPage() {
               ].map((display) => (
                 <div key={display.title} className="border border-border p-6 bg-background">
                   <div className="coord-tag mb-3">{display.title}</div>
-                  <div className="bg-black border border-border p-4 font-mono text-xs leading-relaxed" style={{ color: "#00ff41" }}>
+                  <div className="bg-black border border-border p-4 font-mono text-xs leading-relaxed" style={{ color: "#e8e8e8" }}>
                     {display.lines.map((line, i) => (
                       <div key={i} className={line === "" ? "h-3" : ""}>
                         {line}
@@ -474,9 +471,19 @@ export default function SmellMonitorPage() {
                   desc: "Early warning for mold and degradation in sealed storage.",
                 },
                 {
+                  icon: Leaf,
+                  title: "Agriculture Research",
+                  desc: "Soil health, crop decay, and environmental monitoring at scale.",
+                },
+                {
+                  icon: Thermometer,
+                  title: "Breath Analysis Research",
+                  desc: "MOX sensor arrays for exhaled-VOC studies. Open protocol for reproducible experiments.",
+                },
+                {
                   icon: Wrench,
-                  title: "Custom",
-                  desc: "Build your own sensor cartridge and software profile.",
+                  title: "Robotics & Custom",
+                  desc: "Embed chemical sensing into autonomous systems. Open SDK, open protocol.",
                 },
               ].map((uc) => (
                 <div key={uc.title} className="bg-background p-8 hex-box">
@@ -577,7 +584,7 @@ export default function SmellMonitorPage() {
                 {[
                   {
                     q: "How often do sensors need replacing?",
-                    a: "Sensor cartridges are consumables, typically lasting 3-6 months depending on the environment. They are designed to be unplugged and swapped in seconds.",
+                    a: "Sensors are consumables, typically lasting 3-6 months depending on the environment. They are designed to be unplugged and swapped in seconds.",
                   },
                   {
                     q: "Does it require an internet connection?",
@@ -585,7 +592,7 @@ export default function SmellMonitorPage() {
                   },
                   {
                     q: "Can I use my own custom sensors?",
-                    a: "Yes. The 4-pin interface is open. You can build custom cartridges and write your own software profiles.",
+                    a: "Yes. The 4-pin interface is open. You can build custom sensor arrays and write your own software profiles.",
                   },
                 ].map((faq, i) => (
                   <div key={i} className="bg-background p-6">
@@ -613,6 +620,9 @@ export default function SmellMonitorPage() {
                 <p className="text-muted-foreground">
                   We&apos;ll get back to you within 2-3 business days with pricing and pilot details.
                 </p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  For general enquiries (research, collaboration, press): <a href="mailto:praise@opensmell.xyz" className="underline hover:text-foreground transition-colors">praise@opensmell.xyz</a>
+                </p>
               </div>
 
               {formSubmitted ? (
@@ -639,11 +649,10 @@ export default function SmellMonitorPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">Company / Organization</label>
+                      <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">Company / Organization <span className="normal-case">(optional)</span></label>
                       <input
                         name="company"
                         type="text"
-                        required
                         className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
                       />
                     </div>
@@ -663,7 +672,7 @@ export default function SmellMonitorPage() {
                       name="process"
                       type="text"
                       required
-                      placeholder="e.g. fermentation, VOC monitoring, cold-chain storage"
+                      placeholder="e.g. fermentation, VOC monitoring, cold-chain, breath analysis research"
                       className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
                     />
                   </div>
@@ -676,11 +685,11 @@ export default function SmellMonitorPage() {
                       required
                       value={unitCount}
                       onChange={(e) => setUnitCount(e.target.value)}
-                      placeholder="e.g. 5"
+                      placeholder="e.g. 1, 5, 10"
                       className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
                     />
                     <div className="flex flex-wrap gap-2 mt-3">
-                      {["1", "5", "10", "25", "50+"].map((n) => (
+                      {["1", "5", "10", "25"].map((n) => (
                         <button
                           key={n}
                           type="button"
@@ -691,7 +700,7 @@ export default function SmellMonitorPage() {
                               : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
                           }`}
                         >
-                          {n} unit{n !== "1" && n !== "50+" ? "s" : ""}
+                          {n} unit{n !== "1" ? "s" : ""}
                         </button>
                       ))}
                     </div>
@@ -710,24 +719,6 @@ export default function SmellMonitorPage() {
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-border py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="relative w-6 h-6">
-              <Image src="/opensmell_logo.png" alt="OpenSmell" fill className="object-contain" sizes="24px" />
-            </div>
-            Smell Monitor — OpenSmell
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Home</Link>
-            <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors">Osmograph Web</a>
-            <a href="https://github.com/opensmell" target="_blank" rel="noopener noreferrer"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors">GitHub</a>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
