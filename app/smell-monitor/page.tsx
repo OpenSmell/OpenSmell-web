@@ -321,7 +321,7 @@ export default function SmellMonitorPage() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Real situations, in plain language.
+                Breweries, factories, research labs, developer desks — and the kitchen counter.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-border">
@@ -465,6 +465,7 @@ export default function SmellMonitorPage() {
                 <ul className="space-y-3 mb-6">
                   {[
                     "Connect and stream — USB Serial, Wi-Fi AP, or Bluetooth LE",
+                    "Sensor health tracking — a degrading sensor is flagged before it misleads you",
                     "Record sessions and label events",
                     "Extract 145-dimensional features for custom ML pipelines",
                     "Read everything programmatically through an open SDK and protocol",

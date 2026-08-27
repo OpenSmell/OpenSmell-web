@@ -5,8 +5,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
   Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen,
-  Cpu, Monitor, BarChart3, Wind, AlertTriangle,
-  FlaskConical, Store, Shield, Zap, Activity, Leaf, Factory, Thermometer, UtensilsCrossed
+  Cpu, Monitor, BarChart3, AlertTriangle,
+  FlaskConical, Store, Wrench, Leaf, Factory, Thermometer, UtensilsCrossed
 } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import AnimatedHero from "@/components/animated-hero"
@@ -65,12 +65,12 @@ const products = [
 const useCases = [
   { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "drift-corrected", desc: "838K samples, 59 food types, 10 MOX sensors — same sensors, only the software changed." },
   { icon: Factory, title: "Industrial VOC", stat: "24/7", statLabel: "monitoring", desc: "Continuous VOC monitoring with configurable sensitivity for your process." },
-  { icon: Shield, title: "Sensor Health", stat: "4", statLabel: "signals", desc: "Sensitivity decay, noise floor, recovery rate, baseline drift — flagged automatically." },
+  { icon: Wrench, title: "Custom Detection", stat: "Open", statLabel: "SDK", desc: "Train your own classifiers for your own smells — the SDK and protocol are open." },
   { icon: AlertTriangle, title: "Gas Leak", stat: "Rapid", statLabel: "alert", desc: "Sudden excursions flagged against the baseline with adjustable sensitivity." },
   { icon: Thermometer, title: "Cold Chain", stat: "Early", statLabel: "warning", desc: "Chemical changes in sealed storage appear before a temperature logger registers." },
-  { icon: FlaskConical, title: "Breath Analysis", stat: "97.1%", statLabel: "COPD", desc: "8 MOX sensors on exhaled-VOC data (Acevedo et al. 2021)." },
+  { icon: FlaskConical, title: "Breath Analysis Research", stat: "97.1%", statLabel: "COPD", desc: "8 MOX sensors on exhaled-VOC data (Acevedo et al. 2021)." },
   { icon: Leaf, title: "Smart Agriculture", stat: "6", statLabel: "sensor slots", desc: "Soil health, crop decay. Fleet management for multiple field sensors." },
-  { icon: Cpu, title: "Robotics", stat: "Open", statLabel: "SDK", desc: "Embed chemical sensing into autonomous systems. Open protocol, 4-pin sensor interface." },
+  { icon: Cpu, title: "Robotics", stat: "Real-time", statLabel: "awareness", desc: "Give autonomous systems a nose — gas and process awareness while they work." },
 ]
 
 export default function Home() {
@@ -132,7 +132,7 @@ export default function Home() {
                 { label: "Real samples", value: "1M+" },
                 { label: "Food types", value: "59" },
                 { label: "Drift correction", value: "71.4→93.3%" },
-                { label: "Open source", value: "100%" },
+                { label: "Open source", value: "≈90%" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 font-mono">{stat.value}</div>
@@ -515,8 +515,11 @@ export default function Home() {
         <section className="border-t border-border py-20 relative">
           <span className="section-marginalia">Support</span>
           <div className="max-w-xl mx-auto text-center px-6">
-            <p className="text-muted-foreground text-sm mb-4">
-              Donations go to cloud compute, sensor prototyping, and community building.
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
+              Join the community
+            </h2>
+            <p className="text-muted-foreground text-sm mb-6">
+              Help build digital olfaction — rigs, datasets, and early access.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
               <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
@@ -530,6 +533,9 @@ export default function Home() {
                 GitHub
               </a>
             </div>
+            <p className="text-xs text-muted-foreground mb-4">
+              Donations go to cloud compute, sensor prototyping, and community building.
+            </p>
             <div className="hud-corners border border-border p-4 bg-background/80 backdrop-blur-sm w-full relative">
               <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
               <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-2">
