@@ -6,7 +6,7 @@ import {
   BarChart3, ChevronRight, Cpu,
   Monitor, Wind, Usb,
   FlaskConical, Warehouse, Wrench,
-  Send, CheckCircle, UtensilsCrossed, Thermometer, GitBranch, Globe
+  Send, CheckCircle, UtensilsCrossed, GitBranch, Globe
 } from "lucide-react"
 
 function DeviceDrawing({ className }: { className?: string }) {
@@ -174,9 +174,8 @@ export default function SmellMonitorPage() {
                   on its own display, or streamed to your computer.
                 </p>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                  You plug in the sensor array for your environment, give it a clean-air baseline,
-                  and it monitors continuously. Standalone, or paired with Osmograph for recording
-                  and analysis.
+                  Plug in a sensor array, take a clean-air baseline, and it monitors continuously —
+                  standalone, or paired with Osmograph.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
@@ -211,8 +210,7 @@ export default function SmellMonitorPage() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-2xl mx-auto leading-relaxed">
-                Chemical changes in the air, in the kinds of environments that give off measurable gases.
-                Concrete examples, not broad claims.
+                Chemical changes in the air — concrete examples, not broad claims.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border max-w-5xl mx-auto">
@@ -220,12 +218,12 @@ export default function SmellMonitorPage() {
                 {
                   icon: FlaskConical,
                   title: "Fermentation going wrong",
-                  desc: "Ethanol off-gassing patterns shift when a batch stalls or is infected. Detected as an anomaly against the healthy baseline — hours before manual testing.",
+                  desc: "A stalled or infected batch shifts its off-gassing pattern. Flagged against the healthy baseline, hours before manual testing.",
                 },
                 {
                   icon: UtensilsCrossed,
                   title: "Food starting to spoil",
-                  desc: "Sealed storage and cold chains release spoilage VOCs before anything looks wrong. The chemical change shows up before a temperature logger notices.",
+                  desc: "Spoilage VOCs appear in sealed storage and cold chains before anything looks wrong — before a temperature logger notices.",
                 },
                 {
                   icon: Warehouse,
@@ -235,12 +233,7 @@ export default function SmellMonitorPage() {
                 {
                   icon: Wind,
                   title: "Exhaled-breath VOCs",
-                  desc: "Profiles for breath research. 97.1% COPD classification on one published dataset — single result, more validation needed.",
-                },
-                {
-                  icon: Thermometer,
-                  title: "Cold-chain chemistry",
-                  desc: "Humidity- and temperature-correlated chemical changes in sealed, temperature-sensitive storage.",
+                  desc: "Profiles for breath research. 97.1% COPD classification on a published dataset.",
                 },
                 {
                   icon: Wrench,
@@ -256,8 +249,7 @@ export default function SmellMonitorPage() {
               ))}
             </div>
             <p className="text-sm text-muted-foreground mt-6 max-w-3xl mx-auto text-center">
-              These are sensing capabilities. Each application needs its own sensor array and a
-              clean-air baseline before it can be relied on — that is normal use, not a flaw.
+              Each application needs its own sensor array and a clean-air baseline.
             </p>
           </div>
         </section>
@@ -273,15 +265,14 @@ export default function SmellMonitorPage() {
                   Cheap gas sensors drift. This turns drift into measurements.
                 </h2>
                 <p className="text-muted-foreground mb-5 leading-relaxed">
-                  The sensors themselves are $10 commodity parts. That is not the product. The product
-                  is everything after the reading: baseline correction, temperature and humidity
-                  compensation, and anomaly detection that tells you when a change is worth acting on.
+                  The sensors are $10 commodity parts. The product is everything after the reading:
+                  drift correction, temperature and humidity compensation, and anomaly detection.
                 </p>
                 <div className="space-y-3">
                   {[
                     "Automatic drift correction so a change is a change, not the weather",
                     "Baseline learned from your clean air — every process defines its own normal",
-                    "Anomaly flags with adjustable sensitivity; you decide what an alert means",
+                    "Anomaly flags with adjustable sensitivity",
                     "Continuous operation — no sampling schedule, no forgetting to check",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -343,7 +334,7 @@ export default function SmellMonitorPage() {
                 {
                   icon: UtensilsCrossed,
                   title: "A distributor",
-                  desc: "Catches food spoilage chemical changes in sealed storage before a shipment ships bad.",
+                  desc: "Flags spoilage in sealed storage before a shipment ships bad.",
                 },
                 {
                   icon: Wind,
@@ -385,7 +376,7 @@ export default function SmellMonitorPage() {
                 {
                   icon: Cpu,
                   title: "Replaceable sensor array",
-                  desc: "Up to 6 MOX channels on a standard 4-pin connector. Sensors wear out — you swap them in seconds, not ship the unit back.",
+                  desc: "Up to 6 MOX channels on a standard 4-pin connector. Sensors wear out — swap them in seconds, no shipping the unit back.",
                 },
                 {
                   icon: Wind,
@@ -395,7 +386,7 @@ export default function SmellMonitorPage() {
                 {
                   icon: Monitor,
                   title: "Local alerting",
-                  desc: "OLED status display and a programmable buzzer. It can tell you something is wrong with no phone, no PC, no internet.",
+                  desc: "OLED status display and a programmable buzzer. Faults surface with no phone, PC, or internet.",
                 },
                 {
                   icon: Usb,
@@ -437,15 +428,12 @@ export default function SmellMonitorPage() {
               </div>
               <div className="hud-corners border border-border p-6 relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">What it cannot do — yet</div>
+                <div className="coord-tag mb-3">What it cannot do</div>
                 <div className="space-y-3">
                   {[
-                    "Identify individual molecules — it detects changes, not a gas chromatograph",
-                    "Give absolute ppm concentrations without laboratory calibration",
-                    "Separate mixed gases in a complex background",
-                    "Distinguish between isomers — two chemicals with identical atomic content can smell different",
-                    "Detect chirality — mirror-image molecules can smell different but respond identically",
-                    "Run clinical diagnosis — not a medical device, not FDA-cleared",
+                    "Identify individual molecules",
+                    "Give absolute ppm without laboratory calibration",
+                    "Run clinical diagnosis — not a medical device",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
                       <span className="w-1 h-1 bg-red-400 mt-2 flex-shrink-0" />
@@ -469,8 +457,7 @@ export default function SmellMonitorPage() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Plug in sensors, collect data, visualise profiles, train detectors, run anomaly
-                detection, and read the data programmatically.
+                Stream data, train detectors, and read everything programmatically.
               </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -478,10 +465,10 @@ export default function SmellMonitorPage() {
                 <ul className="space-y-3 mb-6">
                   {[
                     "Connect and stream — USB Serial, Wi-Fi AP, or Bluetooth LE",
-                    "Record sessions and label events; detectors get smarter with your labels",
+                    "Record sessions and label events",
                     "Extract 145-dimensional features for custom ML pipelines",
                     "Read everything programmatically through an open SDK and protocol",
-                    "Contribute sensor drivers, profiles, and code — it is all public",
+                    "Contribute sensor drivers, profiles, and code",
                   ].map((item) => (
                     <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
@@ -628,11 +615,11 @@ export default function SmellMonitorPage() {
                 {[
                   {
                     q: "How often do sensors need replacing?",
-                    a: "Sensors are consumables, typically lasting 3-6 months depending on the environment. They unplug and swap in seconds — no shipping the unit back.",
+                    a: "Consumables, typically 3-6 months depending on the environment. Swap in seconds — no shipping the unit back.",
                   },
                   {
                     q: "Does it require an internet connection?",
-                    a: "No. The device operates standalone with local alerts. Bluetooth streaming to Osmograph is optional.",
+                    a: "No. It works standalone with local alerts; Bluetooth streaming to Osmograph is optional.",
                   },
                   {
                     q: "Can I use my own custom sensors?",
@@ -640,11 +627,11 @@ export default function SmellMonitorPage() {
                   },
                   {
                     q: "Why do I need a baseline before it works?",
-                    a: "Anomaly detection needs to know what normal looks like. You give it clean air for about 5 seconds; the baseline is then learned and updated. Every process defines its own normal.",
+                    a: "It learns normal from about 5 seconds of clean air and keeps the baseline updated. Every process defines its own normal.",
                   },
                   {
                     q: "Is it a real scientific instrument?",
-                    a: "It is validated on real data (the results above) and the full pipeline is public. But it is not a gas chromatograph and not a medical device. It detects changes in air chemistry, with documented limits.",
+                    a: "Validated on real data, and the full pipeline is public. It detects changes in air chemistry — not individual molecules, and not a medical device.",
                   },
                 ].map((faq, i) => (
                   <div key={i} className="bg-background p-6">
