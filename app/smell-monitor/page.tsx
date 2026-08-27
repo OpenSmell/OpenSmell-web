@@ -194,7 +194,7 @@ export default function SmellMonitorPage() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center gap-3 mb-3">
                 <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What it does for someone</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Who it's for</h2>
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
@@ -241,7 +241,7 @@ export default function SmellMonitorPage() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center gap-3 mb-3">
                 <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What you are actually getting</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What's inside</h2>
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
@@ -278,12 +278,7 @@ export default function SmellMonitorPage() {
                 </div>
               ))}
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-3xl mx-auto text-center mt-8">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-foreground mr-2">Field note</span>
-              The cheapest parts in the box — a filter and a fan — are why the readings stay worth trusting for
-              months. Dust never reaches the elements, and a steady stream of fresh air keeps moving across them,
-              so it measures your process, not whatever has settled in the room.
-            </p>
+            
           </div>
         </section>
 
@@ -336,7 +331,7 @@ export default function SmellMonitorPage() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center gap-3 mb-3">
                 <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What you can do with it</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Build with it</h2>
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
@@ -405,49 +400,6 @@ export default function SmellMonitorPage() {
           </div>
         </section>
 
-        {/* OLED DISPLAY EXAMPLES */}
-        <section className="border-t border-border py-24 bg-hex">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16 text-center">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">On-device display</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Programmable layouts. Show what matters for your process — right on the box.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {[
-                {
-                  title: "Fermentation",
-                  lines: ["BREW-042  LINE-A", "", "ETHANOL  1.23V", "TEMP  22.4C  RH 68%", "", "STATUS: NORMAL", "TREND: +0.3%/hr"],
-                },
-                {
-                  title: "VOC Leak Detection",
-                  lines: ["SM-003  WAREHOUSE", "", "TOLUENE  0.87V", "HUMIDITY  45%", "", "ALERT: ELEVATED", "SINCE: 14:32:08"],
-                },
-                {
-                  title: "Cold Chain",
-                  lines: ["COLD-STORAGE-02", "", "AMMONIA  0.42V", "TEMP  4.1C  RH 92%", "", "STATUS: NORMAL", "BASELINE: 0.41V"],
-                },
-              ].map((display) => (
-                <div key={display.title} className="border border-border p-6 bg-background">
-                  <div className="coord-tag mb-3">{display.title}</div>
-                  <div className="bg-black border border-border p-4 font-mono text-xs leading-relaxed" style={{ color: "#e8e8e8" }}>
-                    {display.lines.map((line, i) => (
-                      <div key={i} className={line === "" ? "h-3" : ""}>
-                        {line}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* FAQ */}
         <section className="border-t border-border py-24 relative">
           <div className="max-w-7xl mx-auto px-6">
@@ -477,48 +429,12 @@ export default function SmellMonitorPage() {
                     q: "Why do I need a baseline before it works?",
                     a: "It learns normal from about 5 seconds of clean air and keeps the baseline updated. Every process defines its own normal.",
                   },
-                  {
-                    q: "Is it a real scientific instrument?",
-                    a: "Validated on real data, and the full pipeline is public. It detects changes in air chemistry — not individual molecules, and not a medical device.",
-                  },
-                ].map((faq, i) => (
+                  ].map((faq, i) => (
                   <div key={i} className="bg-background p-6">
                     <h3 className="font-semibold text-sm mb-2">{faq.q}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* NEXT ACTION */}
-        <section className="border-t border-border py-20 bg-hex relative">
-          <span className="section-marginalia">Next</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Three ways in</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground mb-8">
-                Same hardware. Deploy it, build with it, or research with it.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button onClick={scrollToContact} className="hex-btn hex-btn-primary">
-                  <Monitor className="w-4 h-4" />
-                  Deploy a pilot
-                </button>
-                <Link href="/osmograph" className="hex-btn hex-btn-outline">
-                  <BarChart3 className="w-4 h-4" />
-                  Build with Osmograph
-                </Link>
-                <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
-                  className="hex-btn hex-btn-outline">
-                  <GitBranch className="w-4 h-4" />
-                  Research the code
-                </a>
               </div>
             </div>
           </div>
