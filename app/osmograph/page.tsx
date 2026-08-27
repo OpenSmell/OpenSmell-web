@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Monitor, Download, GitBranch, Play, BarChart3, Settings, Upload, ChevronRight, Cpu, Globe, Usb, Wifi, Bluetooth, AlertTriangle } from "lucide-react"
+import { Monitor, Download, GitBranch, BarChart3, Settings, Upload, ChevronRight, Cpu, Globe, Usb, Wifi, Bluetooth, Activity, Timer, Lock, Puzzle, HeartPulse, Database } from "lucide-react"
 
 export default function OsmographPage() {
   return (
@@ -79,7 +79,7 @@ export default function OsmographPage() {
                 </p>
                 <div className="space-y-2 mb-6">
                   {[
-                    "Auto-detects Smell Monitor sensor configuration",
+                    "Auto-detects boards over USB and mDNS — no manual pairing",
                     "Bluetooth or USB connection — choose your workflow",
                     "Live chemical signature traces on your desktop",
                     "One-click classifier training on recorded sessions",
@@ -120,13 +120,80 @@ export default function OsmographPage() {
           </div>
         </section>
 
+        {/* REAL-TIME IDENTIFICATION */}
+        <section className="border-t border-border py-24 bg-hex relative">
+          <span className="section-marginalia">Identify</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="coord-tag mb-3">003 // Real-Time Identification</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+                  Know what it is.
+                  <br />
+                  And what it isn&apos;t.
+                </h2>
+                <p className="text-muted-foreground mb-5 leading-relaxed">
+                  Every recorded frame is scored against your trained classes. The grid animates live, locks on
+                  sustained high confidence, and — when nothing matches — says so instead of guessing.
+                </p>
+                <div className="space-y-2 mb-6">
+                  {[
+                    "Class probabilities for every trained substance, per frame",
+                    "Locks on sustained high confidence — no flickering between guesses",
+                    "Out-of-distribution samples flagged instead of forced into a class",
+                    "Confidence threshold adjustable per process",
+                    "Substance library does nearest-neighbour matching with distance-based rejection",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="hud-corners border border-border p-6 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-3">Competition Grid</div>
+                <div className="space-y-3">
+                  {[
+                    { label: "Roasted coffee", prob: 0.94, locked: true },
+                    { label: "Garlic", prob: 0.03, locked: false },
+                    { label: "Alcohol", prob: 0.02, locked: false },
+                    { label: "Undefined", prob: 0.01, locked: false },
+                  ].map((c) => (
+                    <div key={c.label}>
+                      <div className="flex items-center justify-between text-[11px] font-mono mb-1">
+                        <span className={c.locked ? "text-foreground" : "text-muted-foreground"}>{c.label}</span>
+                        <span className="text-muted-foreground">{Math.round(c.prob * 100)}%</span>
+                      </div>
+                      <div className="h-2 bg-border">
+                        <div
+                          className={`h-full ${c.locked ? "bg-foreground" : "bg-muted-foreground/40"}`}
+                          style={{ width: `${Math.max(c.prob * 100, 3)}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 pt-3 border-t border-border flex items-center justify-between text-[10px] font-mono text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5 text-foreground">
+                    <Lock className="w-3 h-3" />
+                    LOCKED — 3.2 s sustained
+                  </span>
+                  <span>threshold 0.80</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* DEMO */}
         <section className="border-t border-border py-20 bg-hex relative">
           <span className="section-marginalia">Demo</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
               <div>
-                <div className="coord-tag mb-3">003 // Live Demo</div>
+                <div className="coord-tag mb-3">004 // Live Demo</div>
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">See it in action</h2>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   Live sensor recording, classification, and trace visualisation — no code required.
@@ -182,11 +249,11 @@ export default function OsmographPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
               {[
-                { icon: Upload, title: "One-click firmware", desc: "Flashes a pre-compiled ESP32 binary with a click after board detection. No PlatformIO or manual setup." },
-                { icon: BarChart3, title: "Live sensor traces", desc: "Displays real-time sensor readings with automatic signal quality validation." },
-                { icon: Settings, title: "Button-click training", desc: "Train substance classifiers without writing a single line of code." },
-                { icon: Monitor, title: "Zero-code GUI", desc: "Built for builders. No electronics background or programming required." },
-                { icon: GitBranch, title: "Signal validation", desc: "Validates incoming samples and filters bootloader chatter automatically." },
+                { icon: Upload, title: "One-click firmware", desc: "Auto-detects the ESP32 and flashes a pre-compiled binary via esptool. No PlatformIO, no VSCode, no setup." },
+                { icon: BarChart3, title: "Live sensor traces", desc: "Real-time traces with automatic signal quality validation as samples arrive." },
+                { icon: Settings, title: "Button-click training", desc: "RandomForest or LogisticRegression from recorded sessions — saved as reusable models." },
+                { icon: Activity, title: "Real-time identification", desc: "Class probabilities animate live and lock on sustained high confidence." },
+                { icon: Timer, title: "Burn-in tracker", desc: "New MQ sensors need 24 hours to stabilise — Osmograph counts down, and the timer survives restarts." },
                 { icon: Download, title: "Cross-platform", desc: "Works on Windows, macOS, and Linux. One download, everything included." },
               ].map((f) => (
                 <div key={f.title} className="bg-background p-8 hex-box">
@@ -276,13 +343,65 @@ export default function OsmographPage() {
           </div>
         </section>
 
+        {/* SYSTEM */}
+        <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">System</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="coord-tag mb-3">005 // System</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+                  The boring parts, automated.
+                </h2>
+                <p className="text-muted-foreground mb-5 leading-relaxed">
+                  Sensors drift while they stabilise, sessions pile up, and custom models want a home.
+                  Osmograph handles all three without you noticing.
+                </p>
+                <div className="space-y-2 mb-6">
+                  {[
+                    "Burn-in tracker — 24-hour stabilisation countdown for new MQ sensors, resumes across restarts",
+                    "Sensor health strip — per-channel status for all six inputs at a glance",
+                    "Labeled CSV sessions auto-save; export a session or a smell fingerprint anytime (Ctrl+E)",
+                    "Plugin folder — drop .py scripts or .head models, each runs on every prediction",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="hud-corners border border-border p-6 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-3">System Readout</div>
+                <div className="space-y-3 data-readout">
+                  {[
+                    { icon: Timer, label: "Burn-in", value: "13:52:11 remaining", note: "24 h stabilisation, resumes after restart" },
+                    { icon: HeartPulse, label: "Sensor health", value: "CH1–CH6", note: "per-channel status strip" },
+                    { icon: Database, label: "Sessions", value: "CSV auto-save", note: "export session or fingerprint (Ctrl+E)" },
+                    { icon: Puzzle, label: "Plugins", value: ".py / .head", note: "drop into the plugins folder — runs on every prediction" },
+                  ].map((row) => (
+                    <div key={row.label} className="border border-border p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <row.icon className="w-4 h-4 text-foreground" />
+                        <span className="text-xs font-medium">{row.label}</span>
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">{row.value} · {row.note}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* FOR DEVELOPERS */}
         <section className="border-t border-border py-24 bg-hex relative">
           <span className="section-marginalia">SDK</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
-                <div className="coord-tag mb-3">004 // For Developers</div>
+                <div className="coord-tag mb-3">006 // For Developers</div>
                 <h3 className="text-2xl font-bold tracking-tight mb-4">Build on the SDK</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   Osmograph is built on a modular Python backend. You can extract the
@@ -292,7 +411,7 @@ export default function OsmographPage() {
                 <ul className="space-y-3 mb-8">
                   {[
                     "Extract framework features for custom ML pipelines",
-                    "Extend with your own sensor drivers and classifiers",
+                    "Pin-mapping dialog exports a custom firmware sketch for non-standard wiring",
                     "Contribute to the open-source codebase on GitHub",
                     "Integrate with the OpenSmell Data Commons",
                   ].map((item) => (

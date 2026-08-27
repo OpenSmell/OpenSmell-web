@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation"
 import {
   Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen,
   Cpu, Monitor, BarChart3, AlertTriangle,
-  FlaskConical, Store, Wrench, Leaf, Factory, Thermometer, UtensilsCrossed
+  FlaskConical, Store, Wrench, Leaf, Factory, Thermometer, UtensilsCrossed,
+  Send, CheckCircle, X
 } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import AnimatedHero from "@/components/animated-hero"
@@ -73,9 +74,157 @@ const useCases = [
   { icon: Cpu, title: "Robotics", stat: "Real-time", statLabel: "awareness", desc: "Give autonomous systems a nose — gas and process awareness while they work." },
 ]
 
+const clipPath = "polygon(0 0, calc(100% - 56px) 0, 100% 56px, 100% calc(100% - 24px), 24px 100%, 0 100%)"
+
+function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [submitting, setSubmitting] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [unitCount, setUnitCount] = useState("1")
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSubmitting(true)
+    const data = new FormData(e.currentTarget)
+
+    const payload = new URLSearchParams()
+    payload.set("_subject", `[Web] Pilot Request from ${data.get("name")}`)
+    payload.set("_template", "table")
+    payload.set("_captcha", "false")
+    payload.set("name", data.get("name") as string)
+    payload.set("email", data.get("email") as string)
+    payload.set("process", data.get("process") as string)
+    payload.set("units", unitCount)
+
+    try {
+      await fetch("https://formsubmit.co/praise@opensmell.xyz", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString(),
+      })
+    } catch {
+      // no-op — still confirm the request
+    } finally {
+      setSubmitting(false)
+      setFormSubmitted(true)
+    }
+  }
+
+  if (!open) return null
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)", backgroundSize: "26px 26px" }}
+      />
+      <div className="relative w-full max-w-lg" style={{ clipPath }}>
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-foreground/15 translate-x-2 translate-y-2"
+          style={{ clipPath }}
+        />
+        <div className="bg-background border border-border">
+          <div className="flex items-center justify-between px-6 py-3.5 border-b border-border">
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
+              Request a pilot // 001
+            </span>
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="w-8 h-8 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {formSubmitted ? (
+            <div className="px-6 sm:px-10 py-12 text-center">
+              <CheckCircle className="w-12 h-12 text-foreground mx-auto mb-5" />
+              <h3 className="text-xl font-bold tracking-tight mb-2">Request received</h3>
+              <p className="text-sm text-muted-foreground mb-8">
+                Check your email for a confirmation. We&apos;ll be in touch with pricing and pilot details.
+              </p>
+              <button onClick={onClose} className="hex-btn hex-btn-outline">
+                Close
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="px-6 sm:px-10 py-8">
+              <h3 className="text-2xl font-bold tracking-tight mb-2">Put a nose on your process.</h3>
+              <p className="text-sm text-muted-foreground mb-7 leading-relaxed">
+                Deploy 1–25 Smell Monitor units. We&apos;ll reply within 2–3 hours with pricing and pilot details.
+              </p>
+              <div className="space-y-5">
+                <div>
+                  <label className="block text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-2">Name</label>
+                  <input
+                    name="name"
+                    type="text"
+                    required
+                    className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-2">Email Address</label>
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-2">What are you monitoring?</label>
+                  <input
+                    name="process"
+                    type="text"
+                    required
+                    placeholder="e.g. fermentation, cold storage, VOC, breath research"
+                    className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-2">Units</label>
+                  <div className="flex flex-wrap gap-2">
+                    {["1", "5", "10", "25"].map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => setUnitCount(n)}
+                        className={`text-xs border px-3 py-1.5 transition-all ${
+                          unitCount === n
+                            ? "border-foreground text-foreground"
+                            : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
+                        }`}
+                      >
+                        {n} unit{n !== "1" ? "s" : ""}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="hex-btn hex-btn-primary w-full disabled:opacity-50"
+                >
+                  <Send className="w-4 h-4" />
+                  {submitting ? "Sending..." : "Request a pilot"}
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Home() {
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null)
   const [activeProduct, setActiveProduct] = useState(0)
+  const [pilotOpen, setPilotOpen] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
@@ -86,6 +235,17 @@ export default function Home() {
     carouselApi.on("select", onSelect)
     return () => { carouselApi.off("select", onSelect) }
   }, [carouselApi])
+
+  useEffect(() => {
+    if (!pilotOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setPilotOpen(false) }
+    document.addEventListener("keydown", onKey)
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.removeEventListener("keydown", onKey)
+      document.body.style.overflow = ""
+    }
+  }, [pilotOpen])
 
   const handleSearchSubmit = (query: string, type: "odor" | "chemical") => {
     if (!query.trim()) return
@@ -108,8 +268,11 @@ export default function Home() {
                 <br />
                 <span className="text-muted-foreground">for everyone.</span>
               </h1>
+              <p className="text-sm font-mono uppercase tracking-[0.18em] text-foreground mb-3">
+                Breweries, food plants, factories, research labs, developer desks — and the kitchen counter.
+              </p>
               <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
-                Hardware, data, and software for digital olfaction. Open-source, reproducible, built for research and industry.
+                Hardware, data, and software for digital olfaction. Open, reproducible, ready to deploy.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
@@ -132,7 +295,7 @@ export default function Home() {
                 { label: "Real samples", value: "1M+" },
                 { label: "Food types", value: "59" },
                 { label: "Drift correction", value: "71.4→93.3%" },
-                { label: "Open source", value: "≈90%" },
+                { label: "Open source", value: "90%" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 font-mono">{stat.value}</div>
@@ -170,10 +333,10 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
-                  See the Smell Monitor
+                <button onClick={() => setPilotOpen(true)} className="hex-btn hex-btn-primary">
+                  Request a pilot
                   <ChevronRight className="w-4 h-4" />
-                </Link>
+                </button>
               </div>
               <div className="hud-corners border border-border p-6 bg-background relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
@@ -556,6 +719,8 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      {pilotOpen && <PilotModal open={pilotOpen} onClose={() => setPilotOpen(false)} />}
     </div>
   )
 }
