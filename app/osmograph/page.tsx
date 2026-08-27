@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Monitor, Download, GitBranch, BarChart3, Settings, Upload, ChevronRight, Cpu, Globe, Usb, Wifi, Bluetooth, Activity, Timer, Lock, Puzzle, HeartPulse, Database, Search, FlaskConical, Wrench } from "lucide-react"
+import { Monitor, Download, GitBranch, BarChart3, Settings, Upload, ChevronRight, Cpu, Globe, Usb, Wifi, Bluetooth, Activity, Timer, Lock, Puzzle, HeartPulse, Database, Search } from "lucide-react"
 
 export default function OsmographPage() {
   return (
@@ -501,60 +501,6 @@ export default function OsmographPage() {
             <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto">
               A smellability verdict is a feasibility range, not a calibrated concentration —
               it tells you whether to buy the parts, not how strong the smell is.
-            </p>
-          </div>
-        </section>
-
-        {/* ON THE BENCH */}
-        <section className="border-t border-border py-24 bg-hex relative">
-          <span className="section-marginalia">Roadmap</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-14">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">On the bench</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Shipped, nearly shipped, and blocked on data we do not have. Nothing here is claimed before it works.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border mb-10">
-              {[
-                {
-                  icon: FlaskConical,
-                  tag: "PLANNED",
-                  title: "Web training",
-                  desc: "Train classifiers from a browser tab. 187-feature extraction, fit, and cross-validation — wired through the SDK.",
-                },
-                {
-                  icon: Activity,
-                  tag: "IN PROGRESS",
-                  title: "Decay kinetics",
-                  desc: "Multi-exponential recovery-curve fitting. On device, decayTimeMs is still reported as null — the path is not trusted yet.",
-                },
-                {
-                  icon: Wrench,
-                  tag: "BLOCKED ON DATA",
-                  title: "Calibration mode",
-                  desc: "Guided multi-point calibration toward ppm readings. Needs labeled reference data at known concentrations first.",
-                },
-              ].map((f) => (
-                <div key={f.title} className="bg-background p-8 hex-box flex flex-col">
-                  <span className="inline-flex self-start items-center px-3 py-1 border border-border text-[11px] text-muted-foreground mb-4">{f.tag}</span>
-                  <f.icon className="w-8 h-8 mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-                </div>
-              ))}
-            </div>
-            <p className="text-sm text-muted-foreground max-w-2xl mx-auto text-center">
-              Have labeled reference data or a calibration rig?{" "}
-              <a href="https://github.com/opensmell/Osmograph/issues" target="_blank" rel="noopener noreferrer"
-                className="text-foreground font-medium hover:underline">
-                Open an issue
-              </a>{" "}
-              — this is exactly where we want help.
             </p>
           </div>
         </section>

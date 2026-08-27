@@ -130,28 +130,22 @@ export default function SmellMonitorPage() {
     const form = e.currentTarget
     const data = new FormData(form)
 
-    const payload = new URLSearchParams()
-    payload.set("_subject", `[Smell Monitor] New Pilot Request from ${data.get("name")}`)
-    payload.set("_template", "table")
-    payload.set("_captcha", "false")
-    payload.set("name", data.get("name") as string)
-    payload.set("company", data.get("company") as string)
-    payload.set("email", data.get("email") as string)
-    payload.set("process", data.get("process") as string)
-    payload.set("units", unitCount)
-
     try {
-      const res = await fetch("https://formsubmit.co/praise@opensmell.xyz", {
+      await fetch("/api/smell-monitor", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: payload.toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          company: data.get("company"),
+          email: data.get("email"),
+          process: data.get("process"),
+          units: unitCount,
+        }),
       })
-      if (res.ok) {
-        setFormSubmitted(true)
-      } else {
-        setFormSubmitted(true)
-      }
     } catch {
+      // no-op — still confirm the request
+    } finally {
+      setSubmitting(false)
       setFormSubmitted(true)
     }
   }
@@ -401,6 +395,12 @@ export default function SmellMonitorPage() {
                 </div>
               ))}
             </div>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-3xl mx-auto text-center mt-8">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-foreground mr-2">Field note</span>
+              The cheapest parts in the box — a filter and a fan — are why the readings stay worth trusting for
+              months. Dust never reaches the elements, and a steady stream of fresh air keeps moving across them,
+              so it measures your process, not whatever has settled in the room.
+            </p>
           </div>
         </section>
 

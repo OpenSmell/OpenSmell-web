@@ -84,20 +84,17 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
     setSubmitting(true)
     const data = new FormData(e.currentTarget)
 
-    const payload = new URLSearchParams()
-    payload.set("_subject", `[Web] Pilot Request from ${data.get("name")}`)
-    payload.set("_template", "table")
-    payload.set("_captcha", "false")
-    payload.set("name", data.get("name") as string)
-    payload.set("email", data.get("email") as string)
-    payload.set("process", data.get("process") as string)
-    payload.set("units", unitCount)
-
     try {
-      await fetch("https://formsubmit.co/praise@opensmell.xyz", {
+      await fetch("/api/smell-monitor", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: payload.toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          company: data.get("company"),
+          email: data.get("email"),
+          process: data.get("process"),
+          units: data.get("units"),
+        }),
       })
     } catch {
       // no-op — still confirm the request
@@ -107,11 +104,20 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
     }
   }
 
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [open, onClose])
+
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" onClick={onClose} />
       <div aria-hidden className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2" />
       <div aria-hidden className="absolute top-1/2 left-0 right-0 h-px bg-white/10" />
       <div aria-hidden className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white/25 font-mono text-xs leading-none">
@@ -179,14 +185,22 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Email</label>
+                      <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Company <span className="normal-case">(optional)</span></label>
                       <input
-                        name="email"
-                        type="email"
-                        required
+                        name="company"
+                        type="text"
                         className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
                       />
                     </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Email</label>
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
+                    />
                   </div>
                   <div>
                     <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Monitoring</label>
@@ -198,23 +212,35 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
                       className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
                     />
                   </div>
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-[10px] font-mono uppercase tracking-[0.18em]">Units</span>
-                    <div className="flex gap-1.5">
-                      {["1", "5", "10", "25"].map((n) => (
-                        <button
-                          key={n}
-                          type="button"
-                          onClick={() => setUnitCount(n)}
-                          className={`text-[11px] border px-2.5 py-1 transition-colors ${
-                            unitCount === n
-                              ? "border-foreground bg-foreground text-background"
-                              : "border-foreground/40 text-foreground/70 hover:border-foreground hover:text-foreground"
-                          }`}
-                        >
-                          {n}
-                        </button>
-                      ))}
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Units</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        name="units"
+                        type="number"
+                        min="1"
+                        required
+                        value={unitCount}
+                        onChange={(e) => setUnitCount(e.target.value)}
+                        placeholder="any"
+                        className="w-20 bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
+                      />
+                      <div className="flex gap-1.5">
+                        {["1", "5", "10", "25"].map((n) => (
+                          <button
+                            key={n}
+                            type="button"
+                            onClick={() => setUnitCount(n)}
+                            className={`text-[11px] border px-2.5 py-1 transition-colors ${
+                              unitCount === n
+                                ? "border-foreground bg-foreground text-background"
+                                : "border-foreground/40 text-foreground/70 hover:border-foreground hover:text-foreground"
+                            }`}
+                          >
+                            {n}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                   <button
@@ -226,11 +252,6 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
                     {submitting ? "Sending..." : "Request a pilot"}
                   </button>
                 </form>
-
-                <div className="mt-4 pt-2.5 border-t border-foreground flex items-center justify-between text-[9px] font-mono tracking-widest text-foreground/70">
-                  <span>SYS://FORMSUBMIT.CO</span>
-                  <span>SM-001</span>
-                </div>
               </div>
             </div>
           )}
