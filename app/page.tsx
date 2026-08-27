@@ -334,7 +334,7 @@ export default function Home() {
               {[
                 { label: "Real samples", value: "1M+" },
                 { label: "Food types", value: "59" },
-                { label: "Drift correction", value: "71.4→93.3%" },
+                { label: "Drift-corrected accuracy", value: "93.3%" },
                 { label: "Open source", value: "90%" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
@@ -362,7 +362,7 @@ export default function Home() {
                 <div className="space-y-2 mb-6">
                   {[
                     "Up to 6 MOX sensor channels — configure for your chemistry",
-                    "Temperature and humidity compensation (DHT11)",
+                    "Temperature and humidity compensation",
                     "OLED status display and programmable buzzer",
                     "IMU for motion compensation — no false alarms from vibration",
                     "Fleet management for multiple devices",
@@ -399,8 +399,9 @@ export default function Home() {
                 </div>
                 <div className="mt-4 pt-3 border-t border-border">
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Same sensors, same 838K samples, same task — 71.4% → 93.3% with drift correction.
-                    Different processes need different parameters — fermentation is slow-changing.
+                    Same sensors, same 838K samples, same task — drift correction alone lifts accuracy
+                    from 71.4% to 93.3%. Different processes need different parameters — fermentation
+                    is slow-changing.
                   </p>
                 </div>
               </div>

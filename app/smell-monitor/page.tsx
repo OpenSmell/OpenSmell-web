@@ -95,7 +95,7 @@ function DeviceDrawing({ className }: { className?: string }) {
 
       {/* Bottom section details */}
       <line x1="80" y1="260" x2="320" y2="260" stroke="currentColor" strokeWidth="0.5" opacity="0.3" strokeDasharray="4 4" />
-      <text x="200" y="255" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.35">ESP32 · DHT11 · PWR</text>
+      <text x="200" y="255" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.35">ESP32 · TEMP/HUM · PWR</text>
 
       {/* Status indicators */}
       <circle cx="100" cy="250" r="3" fill="currentColor" opacity="0.4" />
@@ -256,7 +256,7 @@ export default function SmellMonitorPage() {
               <div>
                 <div className="coord-tag mb-3">002 // The part we built</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                  Cheap gas sensors drift. This turns drift into measurements.
+                  Cheap gas sensors drift. This corrects for it.
                 </h2>
                 <p className="text-muted-foreground mb-5 leading-relaxed">
                   The sensors are $10 commodity parts. The product is everything after the reading:
@@ -264,7 +264,7 @@ export default function SmellMonitorPage() {
                 </p>
                 <div className="space-y-3">
                   {[
-                    "Automatic drift correction so a change is a change, not the weather",
+                    "Automatic drift correction — a flagged change is a real change, not temperature or humidity",
                     "Baseline learned from your clean air — every process defines its own normal",
                     "Anomaly flags with adjustable sensitivity",
                     "Continuous operation — no sampling schedule, no forgetting to check",
@@ -278,26 +278,14 @@ export default function SmellMonitorPage() {
               </div>
               <div className="hud-corners border border-border p-6 bg-background relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">The evidence</div>
-                <div className="mb-6">
-                  <div className="flex items-center justify-between text-sm mb-1">
-                    <span className="text-muted-foreground">Raw sensor baseline</span>
-                    <span className="font-mono text-foreground">71.4%</span>
-                  </div>
-                  <div className="h-2 bg-border relative">
-                    <div className="absolute inset-y-0 left-0 bg-muted" style={{ width: "71.4%" }} />
-                  </div>
-                  <div className="flex items-center justify-between text-sm mt-4 mb-1">
-                    <span className="text-muted-foreground">With drift correction</span>
-                    <span className="font-mono text-foreground">93.3%</span>
-                  </div>
-                  <div className="h-2 bg-border relative">
-                    <div className="absolute inset-y-0 left-0 bg-foreground" style={{ width: "93.3%" }} />
-                  </div>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Same sensors, same 838K samples, same classification task — only the software changed.
-                  Dataset: 59 food types across 10 MOX sensors (public, linked below).
+                <div className="coord-tag mb-4">The evidence</div>
+                <div className="font-mono text-5xl font-bold tracking-tight leading-none">93.3%</div>
+                <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
+                  Accuracy with automatic drift correction — 71.4% on the same 838K samples without it.
+                  Only the software changed.
+                </p>
+                <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
+                  Public dataset: 59 food types across 10 MOX sensors.
                 </p>
               </div>
             </div>

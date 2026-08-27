@@ -354,7 +354,7 @@ export default function OsmographPage() {
                   The boring parts, automated.
                 </h2>
                 <p className="text-muted-foreground mb-5 leading-relaxed">
-                  Sensors drift while they stabilise, sessions pile up, and custom models want a home.
+                  Sensors drift while they stabilise, sessions pile up, and custom models need a place to run.
                   Osmograph handles all three without you noticing.
                 </p>
                 <div className="space-y-2 mb-6">
