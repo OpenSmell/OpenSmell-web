@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useRef } from "react"
+import Link from "next/link"
 import {
   BarChart3, ChevronRight, Cpu,
-  Plug, Monitor, AlertTriangle, Wind, Usb,
-  FlaskConical, Warehouse, Snowflake, Wrench, Code,
-  Download, Play, Settings,
-  Send, CheckCircle, Leaf, Thermometer
+  Monitor, Wind, Usb,
+  FlaskConical, Warehouse, Wrench,
+  Send, CheckCircle, UtensilsCrossed, Thermometer, GitBranch, Globe
 } from "lucide-react"
 
 function DeviceDrawing({ className }: { className?: string }) {
@@ -159,27 +159,26 @@ export default function SmellMonitorPage() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <main>
-        {/* 1. HERO */}
-        <section className="pt-32 pb-20 border-b border-border">
+        {/* 1. WHAT IS IT — one sentence + the device */}
+        <section className="pt-32 pb-20 border-b border-border bg-grid relative">
+          <span className="section-marginalia">Hardware</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
-                  <Monitor className="w-3.5 h-3.5" />
-                  Hardware Product
-                </div>
+                <div className="coord-tag mb-3">001 // Smell Monitor</div>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-[0.95]">
                   The Smell Monitor.
                 </h1>
                 <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
-                  Continuous chemical anomaly detection for industrial processes.
+                  A small box that watches the air around your process and tells you when it changes —
+                  on its own display, or streamed to your computer.
                 </p>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                  A modular, plug-and-play monitoring node. Configure the sensor array for
-                  your specific application. Connect via Bluetooth to Osmograph for analytics,
-                  or let it run standalone with local alerts.
+                  You plug in the sensor array for your environment, give it a clean-air baseline,
+                  and it monitors continuously. Standalone, or paired with Osmograph for recording
+                  and analysis.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={scrollToContact}
                     className="hex-btn hex-btn-primary"
@@ -187,88 +186,221 @@ export default function SmellMonitorPage() {
                     Reserve a Pilot Unit
                     <ChevronRight className="w-4 h-4" />
                   </button>
-                  <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
-                    className="hex-btn hex-btn-outline">
-                    <Code className="w-4 h-4" />
-                    View the Open-Source SDK
-                  </a>
+                  <Link href="/osmograph" className="hex-btn hex-btn-outline">
+                    <BarChart3 className="w-4 h-4" />
+                    Pair with Osmograph
+                  </Link>
                 </div>
               </div>
-              <div className="border border-border bg-background hex-box p-8 flex items-center justify-center">
+              <div className="hud-corners border border-border bg-background p-8 relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
                 <DeviceDrawing className="w-full max-w-md text-foreground" />
               </div>
             </div>
           </div>
         </section>
 
-        {/* 2. HOW IT WORKS */}
-        <section className="border-t border-border py-24">
+        {/* 2. WHAT IT CAN DETECT — concrete, honest */}
+        <section className="border-t border-border py-20 relative">
+          <span className="section-marginalia">What it detects</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">How It Works</h2>
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What it detects</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto leading-relaxed">
+                Chemical changes in the air, in the kinds of environments that give off measurable gases.
+                Concrete examples, not broad claims.
+              </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border max-w-5xl mx-auto">
               {[
                 {
-                  icon: Plug,
-                  step: "01",
-                  title: "Plug In",
-                  desc: "Insert the sensor array for your environment — fermentation, VOCs, cold-chain.",
+                  icon: FlaskConical,
+                  title: "Fermentation going wrong",
+                  desc: "Ethanol off-gassing patterns shift when a batch stalls or is infected. Detected as an anomaly against the healthy baseline — hours before manual testing.",
                 },
                 {
-                  icon: Monitor,
-                  step: "02",
-                  title: "Monitor",
-                  desc: "The device actively pulls air in and pushes it out, reading the chemical signature in real-time while ignoring environmental noise.",
+                  icon: UtensilsCrossed,
+                  title: "Food starting to spoil",
+                  desc: "Sealed storage and cold chains release spoilage VOCs before anything looks wrong. The chemical change shows up before a temperature logger notices.",
                 },
                 {
-                  icon: AlertTriangle,
-                  step: "03",
-                  title: "Alert",
-                  desc: "Get instant visual and audio warnings if the chemical signature deviates from normal, and stream data to Osmograph for deeper analysis.",
+                  icon: Warehouse,
+                  title: "VOC levels in a room",
+                  desc: "Solvent or process VOC patterns in industrial spaces. Continuous awareness instead of handheld spot-checks.",
                 },
-              ].map((s) => (
-                <div key={s.step} className="bg-background p-8 hex-box">
-                  <div className="text-xs font-mono text-muted-foreground mb-4 tracking-wider">{s.step}</div>
-                  <s.icon className="w-8 h-8 mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-semibold mb-2">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                {
+                  icon: Wind,
+                  title: "Exhaled-breath VOCs",
+                  desc: "Profiles for breath research. 97.1% COPD classification on one published dataset — single result, more validation needed.",
+                },
+                {
+                  icon: Thermometer,
+                  title: "Cold-chain chemistry",
+                  desc: "Humidity- and temperature-correlated chemical changes in sealed, temperature-sensitive storage.",
+                },
+                {
+                  icon: Wrench,
+                  title: "Custom environments",
+                  desc: "Choose your sensors and build a profile for your own process — the interface is open.",
+                },
+              ].map((d) => (
+                <div key={d.title} className="bg-background p-8 hex-box">
+                  <d.icon className="w-8 h-8 mb-4 text-muted-foreground" />
+                  <h3 className="text-lg font-semibold mb-2">{d.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{d.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground mt-6 max-w-3xl mx-auto text-center">
+              These are sensing capabilities. Each application needs its own sensor array and a
+              clean-air baseline before it can be relied on — that is normal use, not a flaw.
+            </p>
+          </div>
+        </section>
+
+        {/* 3. WHY THIS INSTEAD OF A RAW GAS SENSOR — the software value */}
+        <section className="border-t border-border py-20 bg-hex relative">
+          <span className="section-marginalia">Why this</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="coord-tag mb-3">002 // The part we built</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+                  Cheap gas sensors drift. This turns drift into measurements.
+                </h2>
+                <p className="text-muted-foreground mb-5 leading-relaxed">
+                  The sensors themselves are $10 commodity parts. That is not the product. The product
+                  is everything after the reading: baseline correction, temperature and humidity
+                  compensation, and anomaly detection that tells you when a change is worth acting on.
+                </p>
+                <div className="space-y-3">
+                  {[
+                    "Automatic drift correction so a change is a change, not the weather",
+                    "Baseline learned from your clean air — every process defines its own normal",
+                    "Anomaly flags with adjustable sensitivity; you decide what an alert means",
+                    "Continuous operation — no sampling schedule, no forgetting to check",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="hud-corners border border-border p-6 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-3">The evidence</div>
+                <div className="mb-6">
+                  <div className="flex items-center justify-between text-sm mb-1">
+                    <span className="text-muted-foreground">Raw sensor baseline</span>
+                    <span className="font-mono text-foreground">71.4%</span>
+                  </div>
+                  <div className="h-2 bg-border relative">
+                    <div className="absolute inset-y-0 left-0 bg-muted" style={{ width: "71.4%" }} />
+                  </div>
+                  <div className="flex items-center justify-between text-sm mt-4 mb-1">
+                    <span className="text-muted-foreground">With drift correction</span>
+                    <span className="font-mono text-foreground">93.3%</span>
+                  </div>
+                  <div className="h-2 bg-border relative">
+                    <div className="absolute inset-y-0 left-0 bg-foreground" style={{ width: "93.3%" }} />
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Same sensors, same 838K samples, same classification task — only the software changed.
+                  Dataset: 59 food types across 10 MOX sensors (public, linked below).
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. WHAT IT DOES FOR SOMEONE — applications */}
+        <section className="border-t border-border py-20 relative">
+          <span className="section-marginalia">Use it for</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What it does for someone</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-sm max-w-xl mx-auto">
+                Real situations, in plain language.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-border">
+              {[
+                {
+                  icon: FlaskConical,
+                  title: "A brewmaster",
+                  desc: "Watches a fermentation go abnormal overnight and is woken before the batch is ruined.",
+                },
+                {
+                  icon: UtensilsCrossed,
+                  title: "A distributor",
+                  desc: "Catches food spoilage chemical changes in sealed storage before a shipment ships bad.",
+                },
+                {
+                  icon: Wind,
+                  title: "A researcher",
+                  desc: "Records breath and odour profiles with a reproducible, documented pipeline.",
+                },
+                {
+                  icon: Warehouse,
+                  title: "A plant manager",
+                  desc: "Gets continuous VOC leak awareness instead of weekly handheld spot-checks.",
+                },
+              ].map((uc) => (
+                <div key={uc.title} className="bg-background p-8 hex-box">
+                  <uc.icon className="w-8 h-8 mb-4 text-muted-foreground" />
+                  <h3 className="text-lg font-semibold mb-2">{uc.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{uc.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 3. WHAT'S INSIDE */}
-        <section className="border-t border-border py-24">
+        {/* 5. INSIDE THE BOX — device architecture */}
+        <section className="border-t border-border py-24 bg-hex relative">
+          <span className="section-marginalia">Inside the box</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">What&apos;s Inside</h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mt-2">
-                Designed for real environments, not just lab benches.
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What you are actually getting</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+                Replaceable sensors, active airflow, local alerting, and connections you can program.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border max-w-5xl mx-auto">
               {[
                 {
                   icon: Cpu,
-                  title: "True Modularity",
-                  desc: "Standardized 4-pin connector for hot-swappable, application-specific sensor arrays.",
+                  title: "Replaceable sensor array",
+                  desc: "Up to 6 MOX channels on a standard 4-pin connector. Sensors wear out — you swap them in seconds, not ship the unit back.",
                 },
                 {
                   icon: Wind,
-                  title: "Active Intake & Exhaust",
-                  desc: "Micro-fan + PTFE pre-filter for rapid, clean air sampling.",
+                  title: "Active intake & exhaust",
+                  desc: "Micro-fan pulls a constant, clean air sample across the sensors. PTFE pre-filter keeps particulates off the elements.",
                 },
                 {
                   icon: Monitor,
-                  title: "Standalone Operation",
-                  desc: "Built-in OLED display and passive buzzer for immediate local alerts without a phone or PC.",
+                  title: "Local alerting",
+                  desc: "OLED status display and a programmable buzzer. It can tell you something is wrong with no phone, no PC, no internet.",
                 },
                 {
                   icon: Usb,
-                  title: "Universal Power",
-                  desc: "5V USB-C powered — runs on standard power banks or wall adapters.",
+                  title: "Connections you can program",
+                  desc: "USB Serial, Wi-Fi, and Bluetooth LE. The protocol is open, so your software can talk to it directly.",
                 },
               ].map((f) => (
                 <div key={f.title} className="bg-background p-8 hex-box">
@@ -281,19 +413,20 @@ export default function SmellMonitorPage() {
           </div>
         </section>
 
-        {/* 3.5 WHAT IT IS / WHAT IT IS NOT */}
-        <section className="border-t border-border py-24">
+        {/* 6. LIMITATIONS — honest, for researchers */}
+        <section className="border-t border-border py-20 relative">
+          <span className="section-marginalia">Limits</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="border border-border p-6">
-                <div className="text-xs text-green-400 font-mono uppercase tracking-widest mb-3">What it is</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              <div className="hud-corners border border-border p-6 relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-3">What it is</div>
                 <div className="space-y-3">
                   {[
                     "A continuously-running chemical anomaly detector",
                     "A modular sensor platform with hot-swappable sensors",
-                    "A fleet-ready device with independent baselines per unit",
-                    "An open-source platform — firmware, SDK, protocol all public",
-                    "Backed by 1M+ validated sensor samples across 4 datasets",
+                    "Open-source — firmware, SDK, and protocol are public",
+                    "Validated on real data: 838K samples across public datasets",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
                       <span className="w-1 h-1 bg-green-400 mt-2 flex-shrink-0" />
@@ -302,14 +435,17 @@ export default function SmellMonitorPage() {
                   ))}
                 </div>
               </div>
-              <div className="border border-border p-6">
-                <div className="text-xs text-red-400 font-mono uppercase tracking-widest mb-3">What it is not</div>
+              <div className="hud-corners border border-border p-6 relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-3">What it cannot do — yet</div>
                 <div className="space-y-3">
                   {[
-                    "A gas chromatograph — it detects changes, not specific molecules",
-                    "A replacement for lab analysis — it complements it",
-                    "A magic box — it needs calibration and clean-air baselines",
-                    "A medical device — not FDA-cleared, not for clinical diagnosis",
+                    "Identify individual molecules — it detects changes, not a gas chromatograph",
+                    "Give absolute ppm concentrations without laboratory calibration",
+                    "Separate mixed gases in a complex background",
+                    "Distinguish between isomers — two chemicals with identical atomic content can smell different",
+                    "Detect chirality — mirror-image molecules can smell different but respond identically",
+                    "Run clinical diagnosis — not a medical device, not FDA-cleared",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-3 text-sm text-muted-foreground">
                       <span className="w-1 h-1 bg-red-400 mt-2 flex-shrink-0" />
@@ -322,11 +458,92 @@ export default function SmellMonitorPage() {
           </div>
         </section>
 
-        {/* 3.7 TECHNICAL SPECS */}
-        <section className="border-t border-border py-24 bg-hex">
+        {/* 7. FOR RESEARCHERS & DEVELOPERS — the platform value */}
+        <section className="border-t border-border py-24 bg-hex relative">
+          <span className="section-marginalia">Build with it</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Technical Specifications</h2>
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">What you can do with it</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-sm max-w-xl mx-auto">
+                Plug in sensors, collect data, visualise profiles, train detectors, run anomaly
+                detection, and read the data programmatically.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <ul className="space-y-3 mb-6">
+                  {[
+                    "Connect and stream — USB Serial, Wi-Fi AP, or Bluetooth LE",
+                    "Record sessions and label events; detectors get smarter with your labels",
+                    "Extract 145-dimensional features for custom ML pipelines",
+                    "Read everything programmatically through an open SDK and protocol",
+                    "Contribute sensor drivers, profiles, and code — it is all public",
+                  ].map((item) => (
+                    <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
+                    className="hex-btn hex-btn-outline">
+                    <GitBranch className="w-4 h-4" />
+                    View the SDK
+                  </a>
+                  <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
+                    className="hex-btn hex-btn-outline">
+                    <Globe className="w-4 h-4" />
+                    Try Osmograph Web
+                  </a>
+                </div>
+              </div>
+              <div className="hud-corners border border-border p-6 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-3">Quick start</div>
+                <div className="space-y-3 data-readout">
+                  {[
+                    { step: "01", text: "Download Osmograph for your OS" },
+                    { step: "02", text: "Pair or plug in your Smell Monitor" },
+                    { step: "03", text: "Take a clean-air baseline" },
+                    { step: "04", text: "Record live traces" },
+                    { step: "05", text: "Train a detector with one click" },
+                  ].map((s) => (
+                    <div key={s.step} className="flex items-center gap-3">
+                      <span className="text-muted-foreground opacity-50 font-mono text-xs">{s.step}</span>
+                      <span className="h-px flex-1 bg-border" />
+                      <span className="text-sm text-muted-foreground">{s.text}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 pt-4 border-t border-border">
+                  <div className="text-xs text-muted-foreground mb-2 font-mono">pip install opensmell</div>
+                  <pre className="text-sm leading-relaxed font-mono text-muted-foreground overflow-x-auto">
+                    <span className="text-foreground">from</span> opensmell{" "}
+                    <span className="text-foreground">import</span> monitor{"\n\n"}
+                    device = monitor.<span className="text-foreground">connect</span>(<span className="text-foreground">"BLE"</span>){"\n"}
+                    device.<span className="text-foreground">stream</span>(callback=on_anomaly)
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 8. TECHNICAL SPECS */}
+        <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">Specs</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="mb-16 text-center">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Technical specifications</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
             </div>
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
@@ -353,13 +570,17 @@ export default function SmellMonitorPage() {
           </div>
         </section>
 
-        {/* 3.9 OLED DISPLAY EXAMPLES */}
-        <section className="border-t border-border py-24">
+        {/* OLED DISPLAY EXAMPLES */}
+        <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">
             <div className="mb-16 text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">OLED Display</h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mt-2 mx-auto">
-                Programmable layouts. Show what matters for your process.
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">On-device display</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Programmable layouts. Show what matters for your process — right on the box.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -392,165 +613,22 @@ export default function SmellMonitorPage() {
           </div>
         </section>
 
-        {/* 4. YOU NEED THIS IF */}
-        <section className="border-t border-border py-24 bg-hex">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                You need this if
-              </h2>
-            </div>
-            <div className="max-w-2xl mx-auto">
-              <div className="space-y-4">
-                {[
-                  "Your process produces detectable gases — ethanol, solvents, mold metabolites.",
-                  "One ruined batch, one leak, one spoiled shipment costs more than the monitor.",
-                  "You&apos;re still relying on someone&apos;s nose, manual sampling, or expensive spot-check gear.",
-                ].map((item, i) => (
-                  <div key={i} className="border border-border bg-background p-5 flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 5. USE CASES */}
-        <section className="border-t border-border py-24">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16 text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Use Cases</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
-              {[
-                {
-                  icon: FlaskConical,
-                  title: "Fermentation",
-                  desc: "Detect stalled or infected batches hours before manual tests.",
-                },
-                {
-                  icon: Warehouse,
-                  title: "Industrial VOCs",
-                  desc: "Continuous room-level leak monitoring, replacing expensive handheld spot-checks.",
-                },
-                {
-                  icon: Snowflake,
-                  title: "Cold-Chain",
-                  desc: "Early warning for mold and degradation in sealed storage.",
-                },
-                {
-                  icon: Leaf,
-                  title: "Agriculture Research",
-                  desc: "Soil health, crop decay, and environmental monitoring at scale.",
-                },
-                {
-                  icon: Thermometer,
-                  title: "Breath Analysis Research",
-                  desc: "MOX sensor arrays for exhaled-VOC studies. Open protocol for reproducible experiments.",
-                },
-                {
-                  icon: Wrench,
-                  title: "Robotics & Custom",
-                  desc: "Embed chemical sensing into autonomous systems. Open SDK, open protocol.",
-                },
-              ].map((uc) => (
-                <div key={uc.title} className="bg-background p-8 hex-box">
-                  <uc.icon className="w-8 h-8 mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-semibold mb-2">{uc.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{uc.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 6. FOR DEVELOPERS */}
-        <section className="border-t border-border py-24">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border text-xs text-muted-foreground mb-6">
-                  <Code className="w-3.5 h-3.5" />
-                  For Developers
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                  Build applications for the Smell Monitor.
-                </h2>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  The hardware handles physical sensing and active airflow. You write the
-                  software profile for your industry. Backed by an open-source SDK,
-                  Bluetooth API, and sensor-agnostic data normalization.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {[
-                    "Open-source SDK for sensor data access and processing",
-                    "Bluetooth API for real-time streaming to Osmograph",
-                    "Write custom software profiles per industry",
-                    "Sensor-agnostic data normalization layer",
-                    "Contribute hardware profiles to the community",
-                  ].map((item) => (
-                    <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
-                    View the Open-Source SDK <ChevronRight className="w-4 h-4" />
-                  </a>
-                  <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
-                    Try Osmograph Web <ChevronRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-              <div className="border border-border p-6 bg-background hex-box">
-                <div className="text-xs text-muted-foreground mb-4 font-mono uppercase tracking-wider">Quick Start — Osmograph</div>
-                <div className="space-y-4">
-                  {[
-                    { step: "1", icon: Download, text: "Download Osmograph for your OS" },
-                    { step: "2", icon: Cpu, text: "Pair the Smell Monitor via Bluetooth" },
-                    { step: "3", icon: Play, text: "Osmograph auto-detects the sensor profile" },
-                    { step: "4", icon: BarChart3, text: "View live chemical signature traces" },
-                    { step: "5", icon: Settings, text: "Train anomaly classifiers with one click" },
-                  ].map((s) => (
-                    <div key={s.step} className="flex items-center gap-3">
-                      <span className="w-6 h-6 border border-border flex items-center justify-center text-xs font-mono text-muted-foreground flex-shrink-0">{s.step}</span>
-                      <s.icon className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                      <span className="text-sm text-muted-foreground">{s.text}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 pt-4 border-t border-border">
-                  <div className="text-xs text-muted-foreground mb-2 font-mono">pip install opensmell</div>
-                  <pre className="text-sm leading-relaxed font-mono text-muted-foreground overflow-x-auto">
-                    <span className="text-foreground">from</span> opensmell{" "}
-                    <span className="text-foreground">import</span> monitor{"\n\n"}
-                    device = monitor.<span className="text-foreground">connect</span>(<span className="text-foreground">"BLE"</span>){"\n"}
-                    device.<span className="text-foreground">stream</span>(callback=on_anomaly)
-                  </pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 7. FAQ */}
-        <section className="border-t border-border py-24 bg-hex">
+        {/* FAQ */}
+        <section className="border-t border-border py-24 relative">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center">
               <div className="mb-16">
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">FAQ</h2>
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <span className="hex-icon text-muted-foreground" />
+                  <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">FAQ</h2>
+                  <span className="hex-icon text-muted-foreground" />
+                </div>
               </div>
-              <div className="space-y-px bg-border">
+              <div className="space-y-px bg-border text-left">
                 {[
                   {
                     q: "How often do sensors need replacing?",
-                    a: "Sensors are consumables, typically lasting 3-6 months depending on the environment. They are designed to be unplugged and swapped in seconds.",
+                    a: "Sensors are consumables, typically lasting 3-6 months depending on the environment. They unplug and swap in seconds — no shipping the unit back.",
                   },
                   {
                     q: "Does it require an internet connection?",
@@ -559,6 +637,14 @@ export default function SmellMonitorPage() {
                   {
                     q: "Can I use my own custom sensors?",
                     a: "Yes. The 4-pin interface is open. You can build custom sensor arrays and write your own software profiles.",
+                  },
+                  {
+                    q: "Why do I need a baseline before it works?",
+                    a: "Anomaly detection needs to know what normal looks like. You give it clean air for about 5 seconds; the baseline is then learned and updated. Every process defines its own normal.",
+                  },
+                  {
+                    q: "Is it a real scientific instrument?",
+                    a: "It is validated on real data (the results above) and the full pipeline is public. But it is not a gas chromatograph and not a medical device. It detects changes in air chemistry, with documented limits.",
                   },
                 ].map((faq, i) => (
                   <div key={i} className="bg-background p-6">
@@ -571,7 +657,39 @@ export default function SmellMonitorPage() {
           </div>
         </section>
 
-        {/* 8. CTA FORM — Lead Generation */}
+        {/* NEXT ACTION */}
+        <section className="border-t border-border py-20 bg-hex relative">
+          <span className="section-marginalia">Next</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Three ways in</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground mb-8">
+                Same hardware. Deploy it, build with it, or research with it.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button onClick={scrollToContact} className="hex-btn hex-btn-primary">
+                  <Monitor className="w-4 h-4" />
+                  Deploy a pilot
+                </button>
+                <Link href="/osmograph" className="hex-btn hex-btn-outline">
+                  <BarChart3 className="w-4 h-4" />
+                  Build with Osmograph
+                </Link>
+                <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
+                  className="hex-btn hex-btn-outline">
+                  <GitBranch className="w-4 h-4" />
+                  Research the code
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA FORM — Lead Generation */}
         <section ref={contactRef} className="border-t border-border py-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-2xl mx-auto">
