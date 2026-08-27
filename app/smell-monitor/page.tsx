@@ -522,42 +522,6 @@ export default function SmellMonitorPage() {
           </div>
         </section>
 
-        {/* 8. TECHNICAL SPECS */}
-        <section className="border-t border-border py-24 relative">
-          <span className="section-marginalia">Specs</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16 text-center">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Technical specifications</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-            </div>
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
-                {[
-                  { label: "Processor", value: "ESP32 (dual-core, Wi-Fi + BLE)" },
-                  { label: "Sensor Slots", value: "Up to 6 MOX channels" },
-                  { label: "Connector", value: "4-pin standardized interface" },
-                  { label: "Temperature", value: "DHT11 (0-50C, +/-2C)" },
-                  { label: "Humidity", value: "DHT11 (20-80% RH)" },
-                  { label: "Display", value: "0.96\" OLED (128x64, I2C)" },
-                  { label: "Alerts", value: "Passive buzzer (programmable)" },
-                  { label: "Airflow", value: "Micro fan + PTFE pre-filter" },
-                  { label: "Power", value: "5V USB-C (500mA typical)" },
-                  { label: "Connectivity", value: "USB Serial + Bluetooth LE" },
-                  { label: "Cold Start", value: "5 seconds (50 samples @ 10Hz)" },
-                ].map((spec) => (
-                  <div key={spec.label} className="bg-background p-4 flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground font-mono uppercase tracking-wider">{spec.label}</span>
-                    <span className="text-sm font-medium">{spec.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* OLED DISPLAY EXAMPLES */}
         <section className="border-t border-border py-24 bg-hex">
           <div className="max-w-7xl mx-auto px-6">

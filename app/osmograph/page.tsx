@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Monitor, Download, GitBranch, BarChart3, Settings, Upload, ChevronRight, Cpu, Globe, Usb, Wifi, Bluetooth, Activity, Timer, Lock, Puzzle, HeartPulse, Database } from "lucide-react"
+import { Monitor, Download, GitBranch, BarChart3, Settings, Upload, ChevronRight, Cpu, Globe, Usb, Wifi, Bluetooth, Activity, Timer, Lock, Puzzle, HeartPulse, Database, Search, FlaskConical, Wrench } from "lucide-react"
 
 export default function OsmographPage() {
   return (
@@ -362,7 +362,7 @@ export default function OsmographPage() {
                     "Burn-in tracker — 24-hour stabilisation countdown for new MQ sensors, resumes across restarts",
                     "Sensor health strip — per-channel status for all six inputs at a glance",
                     "Labeled CSV sessions auto-save; export a session or a smell fingerprint anytime (Ctrl+E)",
-                    "Plugin folder — drop .py scripts or .head models, each runs on every prediction",
+                    "Plugin folder — drop .py scripts or .head models, each runs on the live sensor stream",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
@@ -379,7 +379,7 @@ export default function OsmographPage() {
                     { icon: Timer, label: "Burn-in", value: "13:52:11 remaining", note: "24 h stabilisation, resumes after restart" },
                     { icon: HeartPulse, label: "Sensor health", value: "CH1–CH6", note: "per-channel status strip" },
                     { icon: Database, label: "Sessions", value: "CSV auto-save", note: "export session or fingerprint (Ctrl+E)" },
-                    { icon: Puzzle, label: "Plugins", value: ".py / .head", note: "drop into the plugins folder — runs on every prediction" },
+                    { icon: Puzzle, label: "Plugins", value: ".py / .head", note: "drop into the plugins folder — runs on the live sensor stream" },
                   ].map((row) => (
                     <div key={row.label} className="border border-border p-3">
                       <div className="flex items-center gap-2 mb-1">
@@ -437,6 +437,125 @@ export default function OsmographPage() {
                 </pre>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* SMELLABILITY LOOKUP */}
+        <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">Feasibility</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-10">
+              <div>
+                <div className="coord-tag mb-3">007 // Smellability Lookup</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                  Before you build — can a MOX sensor even smell it?
+                </h2>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Type a compound, hit <span className="font-mono text-foreground">Ctrl+L</span>, and Osmograph
+                  walks it through a four-step chain from molecule to signal. The verdict is the weakest step.
+                </p>
+                <div className="space-y-3">
+                  {[
+                    { step: "01 identity", note: "fit against a curated library and a resolvable response profile" },
+                    { step: "02 volatility", note: "vapour pressure high enough at room temperature" },
+                    { step: "03 signal", note: "expected response lands inside the measurable ADC range" },
+                    { step: "04 reactivity", note: "a MOX layer actually reacts with the molecule" },
+                  ].map((s) => (
+                    <div key={s.step} className="flex items-center gap-3">
+                      <span className="font-mono text-xs text-muted-foreground w-24 flex-shrink-0">{s.step}</span>
+                      <span className="h-px flex-1 bg-border" />
+                      <span className="text-sm text-muted-foreground">{s.note}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="hud-corners border border-border p-6 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-4">Smellability Check // Ctrl+L</div>
+                <div className="flex items-center justify-between border border-border p-3 mb-4">
+                  <span className="text-xs text-muted-foreground">Compound</span>
+                  <span className="font-mono text-sm">ethanol</span>
+                </div>
+                <div className="space-y-2 mb-4">
+                  {[
+                    { step: "identity", state: "pass", detail: "in library" },
+                    { step: "volatility", state: "pass", detail: "vapour rich at 25 °C" },
+                    { step: "signal", state: "pass", detail: "on-scale response" },
+                    { step: "reactivity", state: "pass", detail: "TGS/MQ sensitive" },
+                  ].map((row) => (
+                    <div key={row.step} className="flex items-center justify-between border border-border px-3 py-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-foreground" />
+                        <span className="text-xs">{row.step}</span>
+                      </div>
+                      <span className="font-mono text-[10px] text-muted-foreground">{row.detail}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between bg-foreground text-background px-3 py-2">
+                  <span className="text-xs font-semibold">VERDICT</span>
+                  <span className="font-mono text-xs">build-ready</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto">
+              A smellability verdict is a feasibility range, not a calibrated concentration —
+              it tells you whether to buy the parts, not how strong the smell is.
+            </p>
+          </div>
+        </section>
+
+        {/* ON THE BENCH */}
+        <section className="border-t border-border py-24 bg-hex relative">
+          <span className="section-marginalia">Roadmap</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="hex-icon text-muted-foreground" />
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">On the bench</h2>
+                <span className="hex-icon text-muted-foreground" />
+              </div>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Shipped, nearly shipped, and blocked on data we do not have. Nothing here is claimed before it works.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border mb-10">
+              {[
+                {
+                  icon: FlaskConical,
+                  tag: "PLANNED",
+                  title: "Web training",
+                  desc: "Train classifiers from a browser tab. 187-feature extraction, fit, and cross-validation — wired through the SDK.",
+                },
+                {
+                  icon: Activity,
+                  tag: "IN PROGRESS",
+                  title: "Decay kinetics",
+                  desc: "Multi-exponential recovery-curve fitting. On device, decayTimeMs is still reported as null — the path is not trusted yet.",
+                },
+                {
+                  icon: Wrench,
+                  tag: "BLOCKED ON DATA",
+                  title: "Calibration mode",
+                  desc: "Guided multi-point calibration toward ppm readings. Needs labeled reference data at known concentrations first.",
+                },
+              ].map((f) => (
+                <div key={f.title} className="bg-background p-8 hex-box flex flex-col">
+                  <span className="inline-flex self-start items-center px-3 py-1 border border-border text-[11px] text-muted-foreground mb-4">{f.tag}</span>
+                  <f.icon className="w-8 h-8 mb-4 text-muted-foreground" />
+                  <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground max-w-2xl mx-auto text-center">
+              Have labeled reference data or a calibration rig?{" "}
+              <a href="https://github.com/opensmell/Osmograph/issues" target="_blank" rel="noopener noreferrer"
+                className="text-foreground font-medium hover:underline">
+                Open an issue
+              </a>{" "}
+              — this is exactly where we want help.
+            </p>
           </div>
         </section>
 

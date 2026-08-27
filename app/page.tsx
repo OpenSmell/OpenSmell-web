@@ -74,8 +74,6 @@ const useCases = [
   { icon: Cpu, title: "Robotics", stat: "Real-time", statLabel: "awareness", desc: "Give autonomous systems a nose — gas and process awareness while they work." },
 ]
 
-const clipPath = "polygon(0 0, calc(100% - 56px) 0, 100% 56px, 100% calc(100% - 24px), 24px 100%, 0 100%)"
-
 function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [submitting, setSubmitting] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -112,108 +110,129 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)", backgroundSize: "26px 26px" }}
-      />
-      <div className="relative w-full max-w-lg" style={{ clipPath }}>
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-foreground/15 translate-x-2 translate-y-2"
-          style={{ clipPath }}
-        />
-        <div className="bg-background border border-border">
-          <div className="flex items-center justify-between px-6 py-3.5 border-b border-border">
-            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
-              Request a pilot // 001
-            </span>
+    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
+      <div aria-hidden className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2" />
+      <div aria-hidden className="absolute top-1/2 left-0 right-0 h-px bg-white/10" />
+      <div aria-hidden className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white/25 font-mono text-xs leading-none">
+        +
+      </div>
+
+      <div className="relative w-full max-w-md">
+        <div aria-hidden className="absolute inset-0 border border-foreground translate-x-2 translate-y-2 pointer-events-none" />
+        <div aria-hidden className="absolute -right-1 -bottom-1 w-2 h-2 bg-foreground" />
+
+        <div className="relative bg-background border border-foreground">
+          <div className="relative flex items-center justify-between bg-foreground text-background pl-5 pr-3.5 py-3">
+            <div className="flex items-center gap-2.5">
+              <span className="w-2.5 h-2.5 border border-background" />
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em]">Pilot Unit // Req 001</span>
+            </div>
             <button
               onClick={onClose}
               aria-label="Close"
-              className="w-8 h-8 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+              className="w-7 h-7 flex items-center justify-center border border-background hover:bg-background hover:text-foreground transition-colors"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
+            <div aria-hidden className="absolute -top-px -right-px bg-background" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
           </div>
 
           {formSubmitted ? (
-            <div className="px-6 sm:px-10 py-12 text-center">
-              <CheckCircle className="w-12 h-12 text-foreground mx-auto mb-5" />
-              <h3 className="text-xl font-bold tracking-tight mb-2">Request received</h3>
-              <p className="text-sm text-muted-foreground mb-8">
-                Check your email for a confirmation. We&apos;ll be in touch with pricing and pilot details.
+            <div className="relative px-5 py-8 text-center">
+              <div className="inline-flex items-center justify-center w-10 h-10 border border-foreground mb-3">
+                <CheckCircle className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold tracking-tight mb-1">Request received</h3>
+              <p className="text-xs text-foreground/70 mb-5">
+                Check your email. We&apos;ll be in touch within 2–3 hours.
               </p>
-              <button onClick={onClose} className="hex-btn hex-btn-outline">
+              <button onClick={onClose} className="bg-foreground text-background px-4 py-2 text-xs font-medium hover:opacity-90">
                 Close
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="px-6 sm:px-10 py-8">
-              <h3 className="text-2xl font-bold tracking-tight mb-2">Put a nose on your process.</h3>
-              <p className="text-sm text-muted-foreground mb-7 leading-relaxed">
-                Deploy 1–25 Smell Monitor units. We&apos;ll reply within 2–3 hours with pricing and pilot details.
-              </p>
-              <div className="space-y-5">
-                <div>
-                  <label className="block text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-2">Name</label>
-                  <input
-                    name="name"
-                    type="text"
-                    required
-                    className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-2">Email Address</label>
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-2">What are you monitoring?</label>
-                  <input
-                    name="process"
-                    type="text"
-                    required
-                    placeholder="e.g. fermentation, cold storage, VOC, breath research"
-                    className="w-full bg-transparent border border-border px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors placeholder:text-muted-foreground/50"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-2">Units</label>
-                  <div className="flex flex-wrap gap-2">
-                    {["1", "5", "10", "25"].map((n) => (
-                      <button
-                        key={n}
-                        type="button"
-                        onClick={() => setUnitCount(n)}
-                        className={`text-xs border px-3 py-1.5 transition-all ${
-                          unitCount === n
-                            ? "border-foreground text-foreground"
-                            : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
-                        }`}
-                      >
-                        {n} unit{n !== "1" ? "s" : ""}
-                      </button>
-                    ))}
+            <div className="relative bg-background">
+              <div aria-hidden className="absolute top-0 right-0 h-0 w-0 border-t-[7px] border-b-[7px] border-l-[10px] border-t-transparent border-b-transparent border-l-foreground" />
+              <div className="px-5 pt-5">
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div>
+                    <h3 className="text-base font-bold tracking-tight leading-none">Put a nose on your process.</h3>
+                    <p className="text-[11px] text-foreground/70 mt-1.5">
+                      Deploy 1–25 units. Reply within 2–3 HRS.
+                    </p>
                   </div>
+                  <span className="mt-0.5 text-[9px] font-mono tracking-widest border border-foreground/40 px-2 py-1 whitespace-nowrap">
+                    ETA &lt; 3 HRS
+                  </span>
                 </div>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="hex-btn hex-btn-primary w-full disabled:opacity-50"
-                >
-                  <Send className="w-4 h-4" />
-                  {submitting ? "Sending..." : "Request a pilot"}
-                </button>
+
+                <form onSubmit={handleSubmit} className="space-y-3.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div>
+                      <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Name</label>
+                      <input
+                        name="name"
+                        type="text"
+                        required
+                        className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Email</label>
+                      <input
+                        name="email"
+                        type="email"
+                        required
+                        className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Monitoring</label>
+                    <input
+                      name="process"
+                      type="text"
+                      required
+                      placeholder="fermentation, cold storage, VOC, breath research"
+                      className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.18em]">Units</span>
+                    <div className="flex gap-1.5">
+                      {["1", "5", "10", "25"].map((n) => (
+                        <button
+                          key={n}
+                          type="button"
+                          onClick={() => setUnitCount(n)}
+                          className={`text-[11px] border px-2.5 py-1 transition-colors ${
+                            unitCount === n
+                              ? "border-foreground bg-foreground text-background"
+                              : "border-foreground/40 text-foreground/70 hover:border-foreground hover:text-foreground"
+                          }`}
+                        >
+                          {n}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full bg-foreground text-background px-4 py-2.5 text-sm font-medium inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50"
+                  >
+                    <Send className="w-4 h-4" />
+                    {submitting ? "Sending..." : "Request a pilot"}
+                  </button>
+                </form>
+
+                <div className="mt-4 pt-2.5 border-t border-foreground flex items-center justify-between text-[9px] font-mono tracking-widest text-foreground/70">
+                  <span>SYS://FORMSUBMIT.CO</span>
+                  <span>SM-001</span>
+                </div>
               </div>
-            </form>
+            </div>
           )}
         </div>
       </div>
@@ -412,15 +431,16 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Real data — 1M+ samples across 4 independent datasets, every number traceable to a source.
+                Real data — 1M+ samples across 5 independent datasets, every number traceable to a source.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {[
                 { name: "Food Freshness", samples: "838K", sensors: "10 MOX", fdr: "321M", source: "Zenodo", url: "https://zenodo.org/records/17285312" },
                 { name: "SmellNet", samples: "150K", sensors: "6 gas", fdr: "8.1E+18", source: "HuggingFace", url: "https://huggingface.co/datasets/DeweiFeng/SmellNet" },
                 { name: "Beef Spoilage", samples: "26K", sensors: "12 MOX", fdr: "3.85", source: "Harvard Dataverse", url: "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XNFVTS" },
                 { name: "UCI Gas Drift", samples: "14K", sensors: "128", fdr: "1.05", source: "UCI ML Repository", url: "https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset" },
+                { name: "WineSmell", samples: "565", sensors: "13 ch", fdr: "0.10", source: "MIT · alexnkorovin", url: "https://github.com/alexnkorovin/wine_dataset" },
               ].map((ds) => (
                 <a
                   key={ds.name}
