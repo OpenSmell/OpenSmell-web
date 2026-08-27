@@ -9,111 +9,6 @@ import {
   Send, CheckCircle, UtensilsCrossed, GitBranch, Globe
 } from "lucide-react"
 
-function DeviceDrawing({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <defs>
-        <linearGradient id="airflow" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
-          <stop offset="50%" stopColor="currentColor" stopOpacity="0.2" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="glow" x1="0.5" y1="0" x2="0.5" y2="1">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0.15" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-        </linearGradient>
-        <filter id="blur">
-          <feGaussianBlur stdDeviation="2" />
-        </filter>
-      </defs>
-
-      {/* Ambient glow */}
-      <ellipse cx="200" cy="180" rx="160" ry="120" fill="url(#glow)" />
-
-      {/* Airflow streams - left side incoming */}
-      <path d="M 20 140 Q 60 140 80 160" stroke="currentColor" strokeWidth="1" opacity="0.15" fill="none" />
-      <path d="M 10 170 Q 50 170 80 170" stroke="currentColor" strokeWidth="1.5" opacity="0.25" fill="none" />
-      <path d="M 20 200 Q 60 200 80 180" stroke="currentColor" strokeWidth="1" opacity="0.15" fill="none" />
-
-      {/* Smell particles - incoming */}
-      <circle cx="35" cy="155" r="2" fill="currentColor" opacity="0.2" />
-      <circle cx="50" cy="168" r="1.5" fill="currentColor" opacity="0.3" />
-      <circle cx="42" cy="185" r="2.5" fill="currentColor" opacity="0.15" />
-      <circle cx="60" cy="175" r="1" fill="currentColor" opacity="0.35" />
-      <circle cx="28" cy="172" r="1.8" fill="currentColor" opacity="0.25" />
-
-      {/* Device body - isometric-ish */}
-      <rect x="80" y="120" width="240" height="120" rx="4" stroke="currentColor" strokeWidth="1.5" />
-      <rect x="80" y="240" width="240" height="40" rx="2" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-
-      {/* Top panel glow */}
-      <rect x="80" y="120" width="240" height="120" rx="4" fill="currentColor" opacity="0.03" />
-
-      {/* Display area */}
-      <rect x="100" y="140" width="80" height="50" rx="2" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-      {/* Waveform on display */}
-      <path d="M 108 165 Q 115 155 122 165 Q 129 175 136 165 Q 143 155 150 165 Q 157 175 164 165 Q 171 155 178 165"
-        stroke="currentColor" strokeWidth="1.5" opacity="0.5" fill="none" />
-      <text x="140" y="182" textAnchor="middle" fill="currentColor" fontSize="6" fontFamily="monospace" opacity="0.4">LIVE</text>
-
-      {/* Sensor array visualization */}
-      <g opacity="0.6">
-        {/* 6 sensor slots */}
-        {[0,1,2,3,4,5].map(i => (
-          <g key={i}>
-            <rect x={200 + (i % 3) * 30} y={140 + Math.floor(i / 3) * 30} width="24" height="24" rx="2"
-              stroke="currentColor" strokeWidth="0.8" />
-            {/* Sensor glow */}
-            <circle cx={212 + (i % 3) * 30} cy={152 + Math.floor(i / 3) * 30} r="6"
-              fill="currentColor" opacity={0.1 + (i * 0.05)} />
-            <circle cx={212 + (i % 3) * 30} cy={152 + Math.floor(i / 3) * 30} r="2"
-              fill="currentColor" opacity={0.3 + (i * 0.08)} />
-          </g>
-        ))}
-      </g>
-
-      {/* Fan visualization */}
-      <circle cx="310" cy="180" r="18" stroke="currentColor" strokeWidth="1" opacity="0.4" />
-      <circle cx="310" cy="180" r="12" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <circle cx="310" cy="180" r="6" stroke="currentColor" strokeWidth="0.5" opacity="0.2" />
-      {/* Fan blades */}
-      <path d="M 310 162 L 314 175 L 310 180" stroke="currentColor" strokeWidth="0.8" opacity="0.3" fill="none" />
-      <path d="M 328 180 L 315 184 L 310 180" stroke="currentColor" strokeWidth="0.8" opacity="0.3" fill="none" />
-      <path d="M 310 198 L 306 185 L 310 180" stroke="currentColor" strokeWidth="0.8" opacity="0.3" fill="none" />
-      <path d="M 292 180 L 305 176 L 310 180" stroke="currentColor" strokeWidth="0.8" opacity="0.3" fill="none" />
-
-      {/* Airflow streams - right side outgoing */}
-      <path d="M 320 160 Q 360 140 390 130" stroke="currentColor" strokeWidth="1" opacity="0.15" fill="none" />
-      <path d="M 320 180 Q 360 180 390 180" stroke="currentColor" strokeWidth="1.5" opacity="0.25" fill="none" />
-      <path d="M 320 200 Q 360 220 390 230" stroke="currentColor" strokeWidth="1" opacity="0.15" fill="none" />
-
-      {/* Exhaust particles */}
-      <circle cx="360" cy="160" r="1.5" fill="currentColor" opacity="0.2" />
-      <circle cx="375" cy="175" r="2" fill="currentColor" opacity="0.15" />
-      <circle cx="368" cy="195" r="1" fill="currentColor" opacity="0.25" />
-      <circle cx="382" cy="168" r="1.8" fill="currentColor" opacity="0.1" />
-
-      {/* Bottom section details */}
-      <line x1="80" y1="260" x2="320" y2="260" stroke="currentColor" strokeWidth="0.5" opacity="0.3" strokeDasharray="4 4" />
-      <text x="200" y="255" textAnchor="middle" fill="currentColor" fontSize="7" fontFamily="monospace" opacity="0.35">ESP32 · TEMP/HUM · PWR</text>
-
-      {/* Status indicators */}
-      <circle cx="100" cy="250" r="3" fill="currentColor" opacity="0.4" />
-      <circle cx="115" cy="250" r="3" fill="currentColor" opacity="0.25" />
-      <circle cx="130" cy="250" r="3" fill="currentColor" opacity="0.15" />
-
-      {/* Connection port */}
-      <rect x="300" y="248" width="16" height="8" rx="1" stroke="currentColor" strokeWidth="0.8" opacity="0.4" />
-      <text x="308" y="270" textAnchor="middle" fill="currentColor" fontSize="5" fontFamily="monospace" opacity="0.3">USB-C</text>
-
-      {/* Data flow lines */}
-      <path d="M 140 190 L 140 240" stroke="currentColor" strokeWidth="0.5" opacity="0.2" strokeDasharray="2 2" />
-      <path d="M 200 190 L 200 240" stroke="currentColor" strokeWidth="0.5" opacity="0.2" strokeDasharray="2 2" />
-      <path d="M 310 198 L 310 240" stroke="currentColor" strokeWidth="0.5" opacity="0.2" strokeDasharray="2 2" />
-    </svg>
-  )
-}
-
 export default function SmellMonitorPage() {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -187,7 +82,7 @@ export default function SmellMonitorPage() {
               </div>
               <div className="hud-corners border border-border bg-background p-8 relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <DeviceDrawing className="w-full max-w-md text-foreground" />
+                <img src="/smell-monitor.jpg" alt="Smell Monitor device" className="w-full max-w-md h-auto" />
               </div>
             </div>
           </div>
