@@ -340,6 +340,13 @@
   color: var(--background);
 }
 
+/* Comfortable touch target on mobile */
+@media (max-width: 640px) {
+  .hex-btn {
+    min-height: 44px;
+  }
+}
+
 /* Arc reactor pulse animation */
 @keyframes arc-pulse {
   0%, 100% { opacity: 0.4; transform: scale(1); }
@@ -484,22 +491,29 @@
   color: var(--muted-foreground);
 }
 
-/* Section marginalia — rotated side label */
-@media (min-width: 1024px) {
+/* Section marginalia — rotated side label on desktop, aligned label on mobile */
+.section-marginalia {
+  display: block;
+  padding-left: 1.5rem;
+  padding-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  opacity: 0.3;
+  white-space: nowrap;
+  pointer-events: none;
+}
+@media (min-width: 768px) {
   .section-marginalia {
     position: absolute;
     left: -2rem;
     top: 50%;
     transform: rotate(-90deg) translateX(-50%);
     transform-origin: left center;
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted-foreground);
-    opacity: 0.3;
-    white-space: nowrap;
-    pointer-events: none;
+    padding-left: 0;
+    padding-bottom: 0;
   }
 }
 

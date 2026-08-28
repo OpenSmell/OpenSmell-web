@@ -86,7 +86,7 @@ export default function SearchPage() {
                   type="text"
                   defaultValue={q}
                   placeholder={type === "odor" ? "citrus, floral, woody..." : "vanillin, limonene..."}
-                  className="flex-1 bg-transparent px-3 py-2.5 text-sm focus:outline-none"
+                  className="flex-1 min-w-0 bg-transparent px-3 py-2.5 text-sm focus:outline-none"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       const val = e.currentTarget.value.trim()

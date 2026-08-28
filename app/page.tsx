@@ -308,18 +308,18 @@ export default function Home() {
                 <br />
                 <span className="text-muted-foreground">for everyone.</span>
               </h1>
-              <p className="text-sm font-mono uppercase tracking-[0.18em] text-foreground mb-3">
+              <p className="text-xs font-mono uppercase tracking-[0.18em] text-foreground mb-3">
                 Breweries, food plants, factories, research labs, developer desks — and the kitchen counter.
               </p>
               <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
                 Hardware, data, and software for digital olfaction. Open-source, reproducible, built for research and industry.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
+                <Link href="/smell-monitor" className="hex-btn hex-btn-primary w-full sm:w-auto">
                   Smell Monitor
                   <ChevronRight className="w-4 h-4" />
                 </Link>
-                <Link href="/osmograph" className="hex-btn hex-btn-outline">
+                <Link href="/osmograph" className="hex-btn hex-btn-outline w-full sm:w-auto">
                   Open Osmograph
                 </Link>
               </div>
@@ -343,9 +343,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <p className="text-[11px] text-muted-foreground font-mono uppercase tracking-[0.15em] mt-6 text-center">
-              Raw vs drift-corrected — measured on the same benchmark
-            </p>
           </div>
         </section>
 
