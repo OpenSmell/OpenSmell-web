@@ -453,7 +453,7 @@ export default function OsmographPage() {
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   Type a compound, hit <span className="font-mono text-foreground">Ctrl+L</span>, and Osmograph
                   walks it through a four-step chain from molecule to signal. The chain ends in one verdict:
-                  build-ready, or not.
+                  pass or fail.
                 </p>
                 <div className="space-y-3">
                   {[

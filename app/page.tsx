@@ -308,6 +308,9 @@ export default function Home() {
                 <br />
                 <span className="text-muted-foreground">for everyone.</span>
               </h1>
+              <p className="text-sm font-mono uppercase tracking-[0.18em] text-foreground mb-3">
+                Breweries, food plants, factories, research labs, developer desks — and the kitchen counter.
+              </p>
               <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
                 Hardware, data, and software for digital olfaction. Open-source, reproducible, built for research and industry.
               </p>
