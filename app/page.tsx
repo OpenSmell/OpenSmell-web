@@ -64,7 +64,7 @@ const products = [
 ]
 
 const useCases = [
-  { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "drift-corrected", desc: "838K samples, 59 food types, 10 MOX sensors — same sensors, only the software changed." },
+  { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "drift-corrected", desc: "838K samples, 59 food types, 10 MOX sensors — benchmarked on open data." },
   { icon: Factory, title: "Industrial VOC", stat: "24/7", statLabel: "monitoring", desc: "Continuous VOC monitoring with configurable sensitivity for your process." },
   { icon: Wrench, title: "Custom Detection", stat: "Open", statLabel: "SDK", desc: "Train your own classifiers for your own smells — the SDK and protocol are open." },
   { icon: AlertTriangle, title: "Gas excursions", stat: "Rapid", statLabel: "alerts", desc: "Sudden excursions flagged against the baseline with adjustable sensitivity." },
@@ -301,25 +301,23 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl">
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground mb-8">
-                OpenSmell — open hardware & software
+                Σ Open infrastructure
               </p>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-4 leading-[0.95]">
-                The Smell Monitor.
+                Digital smell
+                <br />
+                <span className="text-muted-foreground">for everyone.</span>
               </h1>
-              <p className="text-sm font-mono uppercase tracking-[0.18em] text-foreground mb-3">
-                Fermentation · food storage · cold chains · research
-              </p>
               <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
-                A small box that watches the air around your process and tells you when it changes —
-                on its own display, or streamed to your computer.
+                Hardware, data, and software for digital olfaction. Open-source, reproducible, built for research and industry.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <button onClick={() => setPilotOpen(true)} className="hex-btn hex-btn-primary">
-                  Reserve a pilot
+                <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
+                  Smell Monitor
                   <ChevronRight className="w-4 h-4" />
-                </button>
-                <Link href="/smell-monitor" className="hex-btn hex-btn-outline">
-                  See how it works
+                </Link>
+                <Link href="/osmograph" className="hex-btn hex-btn-outline">
+                  Open Osmograph
                 </Link>
               </div>
             </div>
@@ -343,7 +341,7 @@ export default function Home() {
               ))}
             </div>
             <p className="text-[11px] text-muted-foreground font-mono uppercase tracking-[0.15em] mt-6 text-center">
-              Same 838K samples · same sensors · only the software changed
+              Raw vs drift-corrected — measured on the same benchmark
             </p>
           </div>
         </section>
@@ -401,9 +399,8 @@ export default function Home() {
                 </div>
                 <div className="mt-4 pt-3 border-t border-border">
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Same sensors, same 838K samples, same task — drift correction alone lifts accuracy
-                    from 71.4% to 93.3%. Different processes need different parameters — fermentation
-                    is slow-changing.
+                    Drift correction lifts accuracy from 71.4% to 93.3% on the same benchmark.
+                    Different processes need different parameters — fermentation is slow-changing.
                   </p>
                 </div>
               </div>
@@ -450,12 +447,12 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="coord-tag mb-3">002 // Multiple units</div>
+                <div className="coord-tag mb-3">002 // Fleet</div>
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
-                  From one unit to many.
+                  Manage your fleet in one view.
                 </h2>
                 <p className="text-muted-foreground mb-5 text-sm leading-relaxed">
-                  Run a single unit, or several across a line, warehouse, or field site. Each device keeps its own baseline; Osmograph Desktop shows them all in one view.
+                  Run one unit or several across a line, warehouse, or field site. Every device keeps its own baseline; Osmograph Desktop shows them all in one place.
                 </p>
                 <div className="space-y-2 mb-6">
                   {[
@@ -477,7 +474,7 @@ export default function Home() {
               </div>
               <div className="hud-corners border border-border p-6 bg-background relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">Device Overview</div>
+                <div className="coord-tag mb-3">Fleet Overview</div>
                 <div className="space-y-3 data-readout">
                   {[
                     { id: "SM-001", location: "Line A — Fermentation", status: "ACTIVE", health: "98%", lastSeen: "2s ago" },
@@ -650,7 +647,10 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm mt-1">
-                4,800+ chemical-odour relationships from Pyrfume.
+                4,800+ chemical-odour relationships from{" "}
+                <a href="https://pyrfume.org" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:opacity-70">
+                  Pyrfume
+                </a>.
               </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl mx-auto">

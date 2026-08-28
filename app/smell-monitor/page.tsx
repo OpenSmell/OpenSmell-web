@@ -63,8 +63,7 @@ export default function SmellMonitorPage() {
                   on its own display, or streamed to your computer.
                 </p>
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                  Plug in a sensor array, take a clean-air baseline, and it monitors continuously —
-                  standalone, or paired with Osmograph.
+                  Plug in a sensor array, take a clean-air baseline, and it monitors continuously.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
