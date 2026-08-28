@@ -67,11 +67,11 @@ const useCases = [
   { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "drift-corrected", desc: "838K samples, 59 food types, 10 MOX sensors — same sensors, only the software changed." },
   { icon: Factory, title: "Industrial VOC", stat: "24/7", statLabel: "monitoring", desc: "Continuous VOC monitoring with configurable sensitivity for your process." },
   { icon: Wrench, title: "Custom Detection", stat: "Open", statLabel: "SDK", desc: "Train your own classifiers for your own smells — the SDK and protocol are open." },
-  { icon: AlertTriangle, title: "Gas Leak", stat: "Rapid", statLabel: "alert", desc: "Sudden excursions flagged against the baseline with adjustable sensitivity." },
+  { icon: AlertTriangle, title: "Gas excursions", stat: "Rapid", statLabel: "alerts", desc: "Sudden excursions flagged against the baseline with adjustable sensitivity." },
   { icon: Thermometer, title: "Cold Chain", stat: "Early", statLabel: "warning", desc: "Chemical changes in sealed storage appear before a temperature logger registers." },
-  { icon: FlaskConical, title: "Breath Analysis Research", stat: "97.1%", statLabel: "COPD", desc: "8 MOX sensors on exhaled-VOC data (Acevedo et al. 2021)." },
-  { icon: Leaf, title: "Smart Agriculture", stat: "6", statLabel: "sensor slots", desc: "Soil health, crop decay. Fleet management for multiple field sensors." },
-  { icon: Cpu, title: "Robotics", stat: "Real-time", statLabel: "awareness", desc: "Give autonomous systems a nose — gas and process awareness while they work." },
+  { icon: FlaskConical, title: "Breath Research", stat: "97.1%", statLabel: "COPD", desc: "8 MOX sensors on exhaled-VOC data (Acevedo et al. 2021)." },
+  { icon: Leaf, title: "Multi-sensor profiles", stat: "6", statLabel: "MOX channels", desc: "Up to six hot-swappable MOX channels — one box, several chemistries." },
+  { icon: Cpu, title: "Live data streaming", stat: "10 Hz", statLabel: "raw readings", desc: "Continuous raw MOX readings over USB, Wi-Fi, or BLE — feed your own software." },
 ]
 
 function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -301,26 +301,25 @@ export default function Home() {
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl">
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground mb-8">
-                Σ Open infrastructure
+                OpenSmell — open hardware & software
               </p>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-4 leading-[0.95]">
-                Digital smell
-                <br />
-                <span className="text-muted-foreground">for everyone.</span>
+                The Smell Monitor.
               </h1>
               <p className="text-sm font-mono uppercase tracking-[0.18em] text-foreground mb-3">
-                Breweries, food plants, factories, research labs, developer desks — and the kitchen counter.
+                Fermentation · food storage · cold chains · research
               </p>
               <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
-                Hardware, data, and software for digital olfaction. Open, reproducible, ready to deploy.
+                A small box that watches the air around your process and tells you when it changes —
+                on its own display, or streamed to your computer.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
-                  Smell Monitor
+                <button onClick={() => setPilotOpen(true)} className="hex-btn hex-btn-primary">
+                  Reserve a pilot
                   <ChevronRight className="w-4 h-4" />
-                </Link>
-                <Link href="/osmograph" className="hex-btn hex-btn-outline">
-                  Open Osmograph
+                </button>
+                <Link href="/smell-monitor" className="hex-btn hex-btn-outline">
+                  See how it works
                 </Link>
               </div>
             </div>
@@ -332,10 +331,10 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { label: "Real samples", value: "1M+" },
-                { label: "Food types", value: "59" },
-                { label: "Drift-corrected accuracy", value: "93.3%" },
-                { label: "Open source", value: "90%" },
+                { label: "Benchmark samples", value: "838K" },
+                { label: "Accuracy, corrected", value: "93.3%" },
+                { label: "Raw baseline", value: "71.4%" },
+                { label: "MOX sensor types", value: "10" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 font-mono">{stat.value}</div>
@@ -343,6 +342,9 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            <p className="text-[11px] text-muted-foreground font-mono uppercase tracking-[0.15em] mt-6 text-center">
+              Same 838K samples · same sensors · only the software changed
+            </p>
           </div>
         </section>
 
@@ -365,7 +367,7 @@ export default function Home() {
                     "Temperature and humidity compensation",
                     "OLED status display and programmable buzzer",
                     "IMU for motion compensation — no false alarms from vibration",
-                    "Fleet management for multiple devices",
+                    "Manage many devices from one view",
                   ].map((item) => (
                     <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
@@ -419,7 +421,7 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Every number below comes from our experiments on real MOX sensor data.
+                Every claim below is measured — experiments on real MOX sensor data.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -438,6 +440,67 @@ export default function Home() {
                   <p className="text-xs text-muted-foreground group-hover:text-background/70 leading-relaxed transition-colors">{uc.desc}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* DEPLOYMENT — multiple units */}
+        <section className="border-t border-border py-20 relative">
+          <span className="section-marginalia">Deployment</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="coord-tag mb-3">002 // Multiple units</div>
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
+                  From one unit to many.
+                </h2>
+                <p className="text-muted-foreground mb-5 text-sm leading-relaxed">
+                  Run a single unit, or several across a line, warehouse, or field site. Each device keeps its own baseline; Osmograph Desktop shows them all in one view.
+                </p>
+                <div className="space-y-2 mb-6">
+                  {[
+                    "Independent baselines per device — no cross-contamination",
+                    "Centralized session recording with device identification",
+                    "OLED layouts and buzzer patterns configurable per unit",
+                    "Sensor health at a glance",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <Link href="/osmograph" className="hex-btn hex-btn-primary">
+                  Manage with Osmograph
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="hud-corners border border-border p-6 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-3">Device Overview</div>
+                <div className="space-y-3 data-readout">
+                  {[
+                    { id: "SM-001", location: "Line A — Fermentation", status: "ACTIVE", health: "98%", lastSeen: "2s ago" },
+                    { id: "SM-002", location: "Line B — Packaging", status: "ACTIVE", health: "94%", lastSeen: "5s ago" },
+                    { id: "SM-003", location: "Cold Storage", status: "ALERT", health: "87%", lastSeen: "1s ago" },
+                    { id: "SM-004", location: "Warehouse East", status: "IDLE", health: "91%", lastSeen: "3h ago" },
+                  ].map((device) => (
+                    <div key={device.id} className="border border-border p-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-foreground font-medium">{device.id}</span>
+                        <span className={`text-[10px] font-mono ${device.status === "ALERT" ? "text-red-400" : device.status === "IDLE" ? "text-muted-foreground" : "text-green-400"}`}>
+                          {device.status}
+                        </span>
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">{device.location}</div>
+                      <div className="flex items-center justify-between mt-1 text-[10px] text-muted-foreground">
+                        <span>Health: {device.health}</span>
+                        <span>Last: {device.lastSeen}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -574,67 +637,6 @@ export default function Home() {
               <CarouselPrevious className="hidden sm:flex" />
               <CarouselNext className="hidden sm:flex" />
             </Carousel>
-          </div>
-        </section>
-
-        {/* FLEET MANAGEMENT */}
-        <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Fleet</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="coord-tag mb-3">002 // Fleet Management</div>
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
-                  Not one device. A fleet.
-                </h2>
-                <p className="text-muted-foreground mb-5 text-sm leading-relaxed">
-                  Deploy multiple units across a production line, warehouse, or field site. Each device operates independently; Osmograph Desktop aggregates everything into one view.
-                </p>
-                <div className="space-y-2 mb-6">
-                  {[
-                    "Independent baselines per device — no cross-contamination",
-                    "Centralized session recording with device identification",
-                    "OLED layouts and buzzer patterns configurable per unit",
-                    "Sensor health at a glance",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-                <Link href="/osmograph" className="hex-btn hex-btn-primary">
-                  Manage with Osmograph
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
-              <div className="hud-corners border border-border p-6 bg-background relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">Fleet Overview</div>
-                <div className="space-y-3 data-readout">
-                  {[
-                    { id: "SM-001", location: "Line A — Fermentation", status: "ACTIVE", health: "98%", lastSeen: "2s ago" },
-                    { id: "SM-002", location: "Line B — Packaging", status: "ACTIVE", health: "94%", lastSeen: "5s ago" },
-                    { id: "SM-003", location: "Cold Storage", status: "ALERT", health: "87%", lastSeen: "1s ago" },
-                    { id: "SM-004", location: "Warehouse East", status: "IDLE", health: "91%", lastSeen: "3h ago" },
-                  ].map((device) => (
-                    <div key={device.id} className="border border-border p-3">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-foreground font-medium">{device.id}</span>
-                        <span className={`text-[10px] font-mono ${device.status === "ALERT" ? "text-red-400" : device.status === "IDLE" ? "text-muted-foreground" : "text-green-400"}`}>
-                          {device.status}
-                        </span>
-                      </div>
-                      <div className="text-[10px] text-muted-foreground">{device.location}</div>
-                      <div className="flex items-center justify-between mt-1 text-[10px] text-muted-foreground">
-                        <span>Health: {device.health}</span>
-                        <span>Last: {device.lastSeen}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
