@@ -70,7 +70,7 @@ export default function SmellMonitorPage() {
                     onClick={scrollToContact}
                     className="hex-btn hex-btn-primary"
                   >
-                    Reserve a Pilot Unit
+                    Join the Waitlist
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <Link href="/osmograph" className="hex-btn hex-btn-outline">
@@ -344,7 +344,7 @@ export default function SmellMonitorPage() {
                     "Connect and stream — USB Serial, Wi-Fi AP, or Bluetooth LE",
                     "Sensor health tracking — a degrading sensor is flagged before it misleads you",
                     "Record sessions and label events",
-                    "Extract 145-dimensional features for custom ML pipelines",
+                    "Extract 187-dimensional features for custom ML pipelines",
                     "Read everything programmatically through an open SDK and protocol",
                     "Contribute sensor drivers, profiles, and code",
                   ].map((item) => (
@@ -445,19 +445,20 @@ export default function SmellMonitorPage() {
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                  Reserve a Pilot Unit
+                  Join the Waitlist
                 </h2>
                 <p className="text-muted-foreground">
-                  We&apos;ll get back to you within 2-3 hours with pricing and pilot details.
+                  Smell Monitor is in active development. Join the waitlist and
+                  we&apos;ll reach out when pilot units are ready.
                 </p>
               </div>
 
               {formSubmitted ? (
                 <div className="border border-border p-12 bg-background hex-box text-center">
                   <CheckCircle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Request received</h3>
+                  <h3 className="text-lg font-semibold mb-2">You&apos;re on the list</h3>
                   <p className="text-sm text-muted-foreground">
-                    Check your email for a confirmation. We&apos;ll be in touch within 2-3 hours.
+                    Thanks — we&apos;ll email you when pilot units are ready to ship.
                   </p>
                 </div>
               ) : (
@@ -504,7 +505,7 @@ export default function SmellMonitorPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">Estimated number of units</label>
+                    <label className="block text-xs text-muted-foreground font-mono uppercase tracking-wider mb-2">How many units are you considering?</label>
                     <input
                       name="units"
                       type="number"
@@ -538,7 +539,7 @@ export default function SmellMonitorPage() {
                     className="hex-btn hex-btn-primary w-full sm:w-auto disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
-                    {submitting ? "Submitting..." : "Request Quote & Pilot Details"}
+                    {submitting ? "Submitting..." : "Join the Waitlist"}
                   </button>
                 </form>
               )}

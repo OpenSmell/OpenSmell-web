@@ -405,7 +405,7 @@ export default function OsmographPage() {
                 <h3 className="text-2xl font-bold tracking-tight mb-4">Build on the SDK</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   Osmograph is built on a modular Python backend. You can extract the
-                  145-dimensional framework features and build custom pipelines with
+                  187-dimensional framework features and build custom pipelines with
                   <code className="text-foreground font-mono text-sm mx-1">pip install opensmell</code>.
                 </p>
                 <ul className="space-y-3 mb-8">
@@ -433,7 +433,7 @@ export default function OsmographPage() {
                   <span className="text-foreground">from</span> opensmell{" "}
                   <span className="text-foreground">import</span> extract_features{"\n\n"}
                   features = extract_features(<span className="text-foreground">"recordings/"</span>){"\n"}
-                  <span className="text-foreground">print</span>(features.shape){"  "}# (n_samples, 145)
+                  <span className="text-foreground">print</span>(features.shape){"  "}# (n_samples, 187)
                 </pre>
               </div>
             </div>

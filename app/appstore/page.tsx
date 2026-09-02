@@ -55,7 +55,7 @@ const builtinApps = [
   },
   {
     name: "Python SDK",
-    desc: "Extract 145-dimensional framework features and build custom pipelines with pip install opensmell.",
+    desc: "Extract 187-dimensional framework features and build custom pipelines with pip install opensmell.",
     author: "OpenSmell Core",
     rating: 4.9,
     reviews: 89,

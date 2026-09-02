@@ -132,7 +132,7 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="relative flex items-center justify-between bg-foreground text-background pl-5 pr-3.5 py-3">
             <div className="flex items-center gap-2.5">
               <span className="w-2.5 h-2.5 border border-background" />
-              <span className="text-[10px] font-mono uppercase tracking-[0.25em]">Pilot Unit // Req 001</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em]">Waitlist // Join</span>
             </div>
             <button
               onClick={onClose}
@@ -149,9 +149,9 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
               <div className="inline-flex items-center justify-center w-10 h-10 border border-foreground mb-3">
                 <CheckCircle className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold tracking-tight mb-1">Request received</h3>
+              <h3 className="text-base font-bold tracking-tight mb-1">You&apos;re on the list</h3>
               <p className="text-xs text-foreground/70 mb-5">
-                Check your email. We&apos;ll be in touch within 2–3 hours.
+                Thanks — we&apos;ll email you when pilot units are ready.
               </p>
               <button onClick={onClose} className="bg-foreground text-background px-4 py-2 text-xs font-medium hover:opacity-90">
                 Close
@@ -163,13 +163,14 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
               <div className="px-5 pt-5">
                 <div className="flex items-start justify-between gap-3 mb-4">
                   <div>
-                    <h3 className="text-base font-bold tracking-tight leading-none">Put a nose on your process.</h3>
+                    <h3 className="text-base font-bold tracking-tight leading-none">Get a nose on your process early.</h3>
                     <p className="text-[11px] text-foreground/70 mt-1.5">
-                      Deploy 1–25 units. Reply within 2–3 HRS.
+                      Sign up for early access to Smell Monitor pilot units. We&apos;ll
+                      email you when they&apos;re ready.
                     </p>
                   </div>
                   <span className="mt-0.5 text-[9px] font-mono tracking-widest border border-foreground/40 px-2 py-1 whitespace-nowrap">
-                    ETA &lt; 3 HRS
+                    PILOT ACCESS
                   </span>
                 </div>
 
@@ -249,7 +250,7 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
                     className="w-full bg-foreground text-background px-4 py-2.5 text-sm font-medium inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
-                    {submitting ? "Sending..." : "Request a pilot"}
+                    {submitting ? "Sending..." : "Join the Waitlist"}
                   </button>
                 </form>
               </div>
@@ -343,6 +344,80 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            <p className="text-center text-[11px] text-muted-foreground/70 font-mono mt-3">
+              Numbers from the OpenSmell framework paper — see{" "}
+              <a href="https://github.com/opensmell/interoperability" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
+                github.com/opensmell/interoperability
+              </a>{" "}
+              for the measured experiments, bounds, and honest limitations.
+            </p>
+          </div>
+        </section>
+
+        {/* GET STARTED — one right first step per persona */}
+        <section className="border-t border-border py-20 relative">
+          <span className="section-marginalia">Start Here</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-10">
+              <div className="coord-tag mb-3">Get Started</div>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                Start with the one step that fits you
+              </h2>
+              <p className="text-muted-foreground text-sm mt-2 max-w-xl mx-auto">
+                Four ways in — pick the one closest to what you want to do.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border">
+              {[
+                {
+                  eyebrow: "I want to learn",
+                  icon: BookOpen,
+                  title: "Understand the science",
+                  desc: "The Academy walks you from sensor fundamentals to ML pipelines — no prior knowledge needed.",
+                  cta: "Start with the primer",
+                  href: "/academy/digitising-smell",
+                },
+                {
+                  eyebrow: "I want to build",
+                  icon: Cpu,
+                  title: "Build an e-nose",
+                  desc: "A $30 weekend build guide. ESP32, a few MOX modules, and a working classifier by Monday.",
+                  cta: "Open the build guide",
+                  href: "/academy/building-your-first-e-nose",
+                },
+                {
+                  eyebrow: "I want to code",
+                  icon: Monitor,
+                  title: "Try Osmograph",
+                  desc: "Zero-code e-nose workflow — flash firmware, record traces, train detectors without typing a line.",
+                  cta: "Open Osmograph",
+                  href: "/osmograph",
+                },
+                {
+                  eyebrow: "I want to research",
+                  icon: FlaskConical,
+                  title: "Dive into the data",
+                  desc: "Open datasets, the framework paper, and explicit open questions the project wants the field to answer.",
+                  cta: "Read the research",
+                  href: "https://github.com/opensmell/interoperability",
+                },
+              ].map((g) => (
+                <Link
+                  key={g.title}
+                  href={g.href}
+                  className="bg-background p-8 hex-box group border-r border-b border-border last:border-r-0 sm:last:border-r lg:border-b-0 no-underline"
+                >
+                  <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">{g.eyebrow}</span>
+                  <g.icon className="w-6 h-6 mb-4 mt-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <h3 className="text-base font-semibold mb-1 group-hover:text-foreground transition-colors">{g.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-4 group-hover:text-foreground/80 transition-colors">{g.desc}</p>
+                  <span className="text-xs font-medium inline-flex items-center gap-1.5 text-foreground">
+                    {g.cta}
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -374,7 +449,7 @@ export default function Home() {
                   ))}
                 </div>
                 <button onClick={() => setPilotOpen(true)} className="hex-btn hex-btn-primary">
-                  Request a pilot
+                  Join the Waitlist
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>

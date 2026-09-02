@@ -66,8 +66,65 @@ export default function AcademyPage() {
           </div>
         </section>
 
+        <section className="border-t border-border py-16 bg-grid">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <span className="hex-icon text-muted-foreground" />
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Not sure where to begin?</h2>
+              <span className="hex-icon text-muted-foreground" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border max-w-5xl mx-auto">
+              {[
+                {
+                  step: "01",
+                  title: "Why digital smell matters",
+                  desc: "The primer — why smell lacks an engineering stack, and why openness is a methodological necessity.",
+                  href: "/academy/digitising-smell",
+                  cat: "Foundations",
+                },
+                {
+                  step: "02",
+                  title: "How the sensor works",
+                  desc: "From a SnO₂ film to a sample number — the full physics signal chain in plain language.",
+                  href: "/academy/the-signal-chain",
+                  cat: "Hardware",
+                },
+                {
+                  step: "03",
+                  title: "Build your first e-nose",
+                  desc: "A $30 weekend build with an ESP32 and MOX modules, ending in a working classifier.",
+                  href: "/academy/building-your-first-e-nose",
+                  cat: "Tutorial",
+                },
+              ].map((s) => (
+                <Link
+                  key={s.step}
+                  href={s.href}
+                  className="bg-background p-8 hex-box group border-r border-b border-border last:border-r-0 sm:last:border-r lg:border-b-0 no-underline"
+                >
+                  <span className="text-muted-foreground opacity-50 font-mono text-xs">{s.step}</span>
+                  <h3 className="text-base font-semibold mb-1 mt-4 group-hover:text-muted-foreground transition-colors">{s.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-4">{s.desc}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-muted-foreground border border-border px-2 py-0.5 uppercase tracking-wider">{s.cat}</span>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <p className="text-center text-xs text-muted-foreground mt-6 max-w-xl mx-auto">
+              Three guided steps cover the essentials — then pick any path below.
+              All 21 essays are written for newcomers; nothing assumes prior knowledge.
+            </p>
+          </div>
+        </section>
+
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center gap-3 mb-8">
+              <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">All essays</span>
+              <span className="h-px flex-1 bg-border" />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
               {visible.map((article) => (
                 <Link
