@@ -19,8 +19,8 @@ const curriculum: {
     step: "01",
     goal: "Understand why digital smell has no engineering stack yet — and the one OpenSmell is building.",
     essays: [
-      { slug: "the-opensmell-stack", why: "Map of the whole project and the order to read the code." },
       { slug: "digitising-smell", why: "The primer: why openness is a methodological necessity." },
+      { slug: "the-opensmell-stack", why: "Map of the whole project: every repo, how they connect, and where to contribute." },
     ],
   },
   {

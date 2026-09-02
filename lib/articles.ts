@@ -1941,80 +1941,108 @@ If you re-run an experiment and your numbers differ, that is a finding — repor
     slug: "the-opensmell-stack",
     title: "The OpenSmell Stack: An Orientation Map",
     excerpt:
-      "SDK, web platform, desktop app, hardware build guide, and a research layer — plus the 1:1 Python/TypeScript mirroring contract. If you are new to the project, start here: where everything lives, how the pieces mirror each other, and the order in which to read the code and this Academy.",
+      "The Python SDK, the Rust core, the web and desktop apps, the hardware build guide, and the research layer that validates them. Where every repo lives, how the pieces connect, what is ready for contribution, and the open research questions that need data.",
     category: "Foundations",
-    tags: ["orientation", "repository map", "mirroring", "getting started", "open source"],
-    readTime: "12 min",
+    tags: ["orientation", "repository map", "getting started", "open source", "contributing", "open research"],
+    readTime: "14 min",
     date: "2026-08-06",
     author: "OpenSmell Academy",
     thumbnail: "/thumbnails/the-opensmell-stack.svg",
     content: `
-OpenSmell is not one repository; it is a stack — a set of pieces that share a common vocabulary and a common contract. If you have just arrived, the most useful thing this Academy can give you is a map: what each piece is for, how they mirror each other, and the order in which to read them. That is this essay.
+OpenSmell is not one repository; it is a stack — a set of pieces that share a common vocabulary and a common contract. If you have just arrived, the most useful thing this Academy can give you is a map: what each repo is for, how the pieces connect, what is ready for you to contribute to, and — if you record data — the open research questions your rig can help answer. That is this essay.
 
-## The Layers
+Almost everything here is MIT-licensed and lives under the [OpenSmell GitHub organization](https://github.com/OpenSmell).
 
-| Layer | Repository | What it does |
+## The Core Stack
+
+These six repositories are the working product. Together they turn a ~$30 MOX array into a recording, a feature vector, a quality-scored session, a trained classifier, and a verdict about whether a substance is even detectable.
+
+| Repo | Remote | What it does |
 |---|---|---|
-| SDK | \`opensmell/\` | Python package: feature extraction, \`.osmell\` I/O, calibration, smellability, quality scoring |
-| Web | \`osmograph-web/\` | Next.js platform: import, compare, train, search; the RDKit-backed smellability engine |
-| Desktop | \`Osmograph/\` | Python desktop visualization of traces, windows, and fingerprints |
-| Hardware | \`electronic-nose/\` | Build guide and firmware for a ~$30 MOX array (ESP32 + modules) |
-| Science | \`research/\`, \`encoder/\`, \`Chemoprint/\`, \`interoperability/\` | The experiments, negative results, calibration studies, and representation learning |
+| \`opensmell/\` | [opensmell](https://github.com/OpenSmell/opensmell) | **Python SDK** — the full reference implementation. \`.osmell\` I/O, ingest, 187-dim feature extraction, quality scoring, calibration, the hardware-sufficiency gate, and the smellability feasibility chain. Everything public is reachable from the package root (see the [Python SDK docs](/docs/python)). |
+| \`opensmell-rs/\` | [opensmell-rs](https://github.com/OpenSmell/opensmell-rs) | **Rust compute core** — native-speed feature extraction, anomaly detection, health/fleet monitoring, classifier training, live classification, and the smellability chain, for embedded targets (ESP32 firmware) and real-time desktop streams. CSV/JSON in, numbers out; deliberately no ZIP or Python dependency. |
+| \`opensmell-web/\` | [opensmell-web](https://github.com/opensmell/opensmell-web) | **Docs, Academy, and search** — the site you are reading now. Also the smell-monitor API and the RDKit-backed smellability engine. |
+| \`osmograph-web/\` | [osmograph-web](https://github.com/opensmell/osmograph-web) | **Web analytics platform** at mox.opensmell.xyz — import loose CSVs, normalize against a baseline, score quality, train a classifier, and export \`.osmell\`. |
+| \`osmograph-desktop/\` | [osmograph-desktop](https://github.com/OpenSmell/osmograph-desktop) | **Desktop app (Tauri)** — real-time MOX monitoring, the measured-phenotype strip, the phase-recording protocol, train/compare/fleet, burn-in, plugins, and the data commons. |
+| \`electronic-nose/\` | [electronic-nose](https://github.com/OpenSmell/electronic-nose) | **Hardware build guide** — BOM, ESP32 firmware, wiring, and the signal-chain thinking behind a ~$30 MOX array. |
 
-The names are chosen to be boring. \`opensmell/\` is the single source of truth for the data model; everything else consumes it.
+**A note on the two SDKs.** The Python SDK is the full-stack reference: it retains the data model, container I/O, ingest, and the convenience pipeline. The Rust crate is the compute core, not a second full SDK — it skips \`.osmell\` and the typed descriptors to stay dependency-light and embeddable. They are complementary, not competing: Python for research and scripting, Rust for real-time and bare-metal paths. The canonical 187-dim framework and the smellability chain are implemented in both and kept equal by cross-language tests.
 
-## The 1:1 Mirroring Contract
+## The Research Layer
 
-The stack's most distinctive engineering decision: **core logic exists twice, in Python and in TypeScript, kept equal by tests.** The pairs are exact:
+The research repos are where claims are made and *falsified* before they ever reach the docs. They are deliberately small and data-driven — a claim in any of them is only as strong as the dataset that tests it.
 
-- \`io.py\` ↔ \`io.ts\` — \`.osmell\` read/write
-- \`normalize.py\` ↔ \`normalize.ts\` — the normalization menu
-- \`types.py\` ↔ \`types.ts\` — the shared data model (including the calibration descriptor)
-- \`groups.py\` ↔ \`groups.ts\` — functional-group inference from SMILES
+| Repo | Remote | What it does |
+|---|---|---|
+| \`interoperability/\` | [interoperability](https://github.com/OpenSmell/interoperability) | Cross-device transfer and the **measured-phenotype ontology** — the response-type clusters derived from the UCI Gas Drift set. This is where the open research questions live. |
+| \`e-nose-evals/\` | [e-nose-evals](https://github.com/opensmell/e-nose-evals) | The **U-suite evaluation harness** — one shared protocol runs six evaluations (gas-leak, food, indoor-air, chemoprint, taxonomy). The evidence this Academy points to. |
+| \`data-commons/\` | [data-commons](https://github.com/OpenSmell/data-commons) | The **shared dataset format and validator** — a Rust CLI that checks contributed recordings against the \`.osmell\`-compatible exchange spec before they enter any dataset. |
+| \`Smellability/\` | [Smellability](https://github.com/OpenSmell/Smellability) | The transport-physics feasibility chain (evaporative flux, diffusion, the MOX detection floor) as a standalone module. |
 
-Why run the same logic twice? Because the SDK serves Python researchers and the web platform serves browser users, and if the two implementations ever disagree — a feature off by one, a normalization subtly different — every downstream comparison across the stack inherits the bug. Mirroring by test turns "are these the same?" from a hope into a build-time fact. This is the same discipline that drives the \`.osmell\` format to be self-describing: the stack would rather fail loudly on a mismatch than silently produce two different answers.
+Some repositories in the org are finished research or early experiments and are not part of the current stack. If you land on one and are unsure whether it is current, ask on Discord — the map above is the maintained, working set.
 
-## Limitations
+## How the Pieces Reflect the Same Contract
 
-A few facts worth knowing before you quote a number from this Academy:
+What makes this a *stack* rather than a pile of repos is a shared contract:
 
-1. Affine calibration degrades cross-device (47% → 33%); the engine reports calibrated ppm only as a thermodynamic estimate.
-2. Six pure anchors cannot cover odorant space (≈0.1% of 4,565 odorants); the design ships a contribution loop, not a "calibrate to these bottles" flow.
-3. Session invariance comes from learning, not architecture: 81.78% on held-out sessions, for *trained* substances — not zero-shot generalization.
-4. Effective dimensionality ≪ sensor count — two same-family MOX ≈ 1 dimension; humidity is common-mode across SnO₂.
-5. Drift / batch ±20% / humidity set the capture rules — the protocol prescribes clean-air baseline → exposure → recovery.
-6. Normalization is a menu, kept open — z-scores beat R_s/R₀ for encoder input; paradigm features beat statistical features cross-device; \`.osmell\` preserves raw + baseline so any client picks its own.
+- **One data model.** \`.osmell\` is the portable, self-describing recording container, current format version 1.0.0. It preserves raw values and the baseline so any client picks its own normalization.
+- **One feature framework.** The 28c + c(c−1)/2 + 4 vector (187 at the canonical 6-channel rig) is defined sensor-count-agnostically and implemented identically in the Python SDK, the Rust crate, and the web stack — kept equal by cross-language tests.
+- **One honesty discipline.** A derived claim — a calibration, a cross-device transfer, a smellability verdict — is only as strong as the method that produced it, and is always reported with that method.
 
-A verdict is a physical feasibility estimate: it is not a calibrated concentration, a guarantee of mixture decomposition, a promise across unseen devices, or a replacement for capture discipline.
+## Where You Can Contribute
+
+Every repo is MIT-licensed and open to contribution. The most useful things, roughly in order:
+
+1. **Record protocol data (highest value).** The research questions below all resolve to the same ask: record \`baseline → exposure → recovery\` sessions, mark the phase boundaries, span ≥2 devices, and cover matched-concentration reducing gases, oxidizing targets if you have them, and chemically diverse pure compounds. A dataset does not need to be large — it needs to be protocol-complete and chemically targeted. This is the P0 ask across the research layer. Share recordings on Discord, or use the data-commons validator so they can enter a dataset.
+2. **Test the hardware guide.** Build the \`electronic-nose/\` array, report what breaks, and extend the troubleshooting table. Hardware is the most under-tested part of the stack.
+3. **Add compounds to the smellability catalogue.** The chain's curated catalogue (~46 chemicals, 24 composites) is a small fraction of odorant space; adding verified reference entries is valuable and safe.
+4. **Contribute docs and tests.** The \`opensmell\`, \`opensmell-rs\`, and \`opensmell-web\` repos all welcome tests that pin behaviour, and the Academy welcomes guest essays, tutorials, and research summaries.
+5. **Open research** (see below) — each question names the repo and the exact data it needs, so a contribution can be targeted rather than speculative.
+
+Start a conversation — or post a recording, a rig photo, or a proposed PR — on the [OpenSmell Discord](https://discord.gg/CGER3tHxbH) before you invest time, so it lands where it can be used.
+
+## Open Research Questions
+
+These are the questions the project actively wants data to resolve. Each is scoped by *available real data*; nothing below is hand-asserted. Full detail lives in \`interoperability/perception-layer/docs/OPEN_QUESTIONS.md\`.
+
+**Q1 — Is the 'strong vs weak reducing' split real?** Currently falsified: on the UCI drift set, reducing-strength is a continuous, overlapping gradient, not two classes. But the gradient may be an artefact of uncontrolled concentration. **Decides it:** matched-dose recordings of several reducing gases (CO, H₂, NH₃, ethanol), \`baseline→exposure→recovery\`, across ≥2 devices.
+
+**Q2 — Do oxidizing targets form distinguishable categories?** Untested — no NO₂/O₃/Cl₂ data exists in the corpus. n-type MOX theory predicts the opposite sign of resistance change, so oxidizing gases *should* split cleanly from reducing on polarity. **Decides it:** ≥2 oxidizing and ≥2 reducing targets on the same array, clean protocols, ≥2 devices.
+
+**Q3 — Does kinetics add a genuinely orthogonal axis?** Untested — no protocol-dynamics data. Adsorption/desorption rates should be load-independent and could discriminate classes the steady-state fingerprint cannot. **Decides it:** protocol recordings with marked phase boundaries, several gases, ≥2 devices. This is the single most valuable contribution.
+
+**Q4 — Would richer chemistry reveal more than 2 response-type clusters?** The measured array forms 2 clusters on 6 reducing targets — possibly an artefact of that specific chemical set. **Decides it:** more diverse pure compounds (polar, nonpolar, branched, heteroatomic) on the same array, across devices.
+
+**Q5 — What is device-invariance really robust to?** The 2-cluster structure is stable across one array's 10 device batches, but that is *response-type* invariance, not cross-device transfer of exact feature vectors (provably impossible — Rs/R₀ cancels electronics but not sensor constants). **Decides it:** the same compounds across genuinely different arrays (different models/manufacturers, MEMS vs thick-film).
+
+**In the SDK itself:** the firmware calibration mode and real labeled-concentration hardware validation are open; the calibrated-concentration path currently reports a thermodynamic estimate, and sensor families beyond MOX (electrochemical, MIRIS) have no feature extractor yet.
+
+The validation standard for all of it: k is chosen by the data (max silhouette), never fixed by hand; a claim is only "validated" if a dataset actually tests it, and any proposed new category must first survive its own falsification check.
 
 ## Where to Start Reading
 
-The project's own onboarding order, which doubles as an Academy reading order:
+The onboarding order — which doubles as an Academy reading order:
 
-1. **Orientation** — this essay; then the *digitising smell* primer for the "why."
-2. **Run the SDK** — \`extract_features\` on a SmellNet CSV; then the *187-dimension* essay explains what you just computed.
-3. **Sensor theory** — the *band bending* and *sensor count* essays (the physics and the limits).
-4. **Data formats** — the *.osmell* essay (the container everything flows through).
-5. **Decay model** — the multi-exponential fit that powers the advanced features.
-6. **Discipline** — the *interoperability* and *evaluating models* essays (the walls and the protocol).
-7. **Evidence** — the *U-suite* essay (what the stack actually does on real data).
-
-Each Academy essay carries a "Sources & Further Reading" section that points back to the master reference section it came from, so the code is never more than one click away.
-
-## Known Gaps
-
-Open items are tracked publicly: the training pipeline, the MINPACK decay-minima reproducibility caveat, and the unification of the canonical feature extractor. The calibration hooks and the hardware-insufficiency gate are done and shipped; the *firmware* calibration mode and any real labeled-concentration hardware validation are still open.
+1. **Primer** — the *digitising smell* essay for the "why."
+2. **Orientation** — this essay, for the "what and where."
+3. **Run the SDK** — \`extract_features\` on a CSV; then the *187-dimension* essay explains what you just computed.
+4. **Sensor theory** — the *band bending* and *sensor count* essays (the physics and the limits).
+5. **Data formats** — the *.osmell* essay (the container everything flows through).
+6. **Decay model** — the multi-exponential fit that powers the advanced features.
+7. **Discipline** — the *interoperability* and *evaluating models* essays (the walls and the protocol).
+8. **Evidence** — the *U-suite* essay (what the stack actually does on real data).
 
 ## The Point of the Map
 
-Every layer of this stack exists to make one sentence true: *a smell recording is a comparable, self-describing artifact, and every claim made from it is traceable to measured data.* The SDK makes the features; the format makes the artifact; the mirrors keep the logic consistent; the science layer keeps the claims verifiable; the Academy explains all of it. You can start anywhere — but the order above is the one that builds understanding fastest, and it is the order the rest of the series assumes.
+Every layer of this stack exists to make one sentence true: *a smell recording is a comparable, self-describing artifact, and every claim made from it is traceable to measured data.* The SDK makes the features; the format makes the artifact; the Rust core makes them fast; the science layer keeps the claims verifiable; the Academy explains all of it. And the open research questions are the parts where your data — not our prose — is the next step.
 
 ## Sources & Further Reading
 
-- OpenSmell master reference, §11.9 (the repo map) and §11.10 (the reading order), §7.11 (the honesty rules), §9 (changelog and reproducibility).
-- The OpenSmell GitHub organization — one monorepo per layer above, all MIT-licensed.
+- OpenSmell GitHub organization — all repos above, MIT-licensed.
+- \`interoperability/perception-layer/docs/OPEN_QUESTIONS.md\` — the living open-research-questions document quoted here.
 - The \`.osmell\` format essay — the container at the center of the stack.
-- The U-suite essay — the evidence the stack points to.
+- The U-suite essay — the evaluation harness this Academy points to.
+- The [OpenSmell Discord](https://discord.gg/CGER3tHxbH) — the starting point for any contribution, recording, or question.
 `,
   },
   {
