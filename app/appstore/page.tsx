@@ -19,7 +19,7 @@ const builtinApps = [
     tags: ["GUI", "Recording", "Classification"],
     rigs: ["v1 e-nose", "v2 e-nose"],
     icon: Monitor,
-    href: "https://github.com/opensmell/Osmograph",
+    href: "https://github.com/OpenSmell/osmograph-desktop",
     featured: true,
     type: "app" as SubmissionType,
   },

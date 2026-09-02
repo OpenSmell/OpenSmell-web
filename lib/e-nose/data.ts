@@ -628,6 +628,6 @@ export const TROUBLESHOOTING: [string, string, string][] = [
 
 export const REPO_LINKS = {
   repo: "https://github.com/opensmell/electronic-nose",
-  osmograph: "https://github.com/opensmell/Osmograph",
+  osmograph: "https://github.com/OpenSmell/osmograph-desktop",
   discord: "https://discord.gg/CGER3tHxbH",
 }

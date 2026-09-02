@@ -355,7 +355,7 @@ export default function SmellMonitorPage() {
                   ))}
                 </ul>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
+                  <a href="https://github.com/OpenSmell/opensmell" target="_blank" rel="noopener noreferrer"
                     className="hex-btn hex-btn-outline">
                     <GitBranch className="w-4 h-4" />
                     View the SDK

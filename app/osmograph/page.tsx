@@ -96,13 +96,13 @@ export default function OsmographPage() {
                 the desktop app that turns a metal-oxide array into an instrument you can trust.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
+                <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-primary">
                   <Download className="w-4 h-4" />
                   Download Osmograph
                   <ChevronRight className="w-4 h-4" />
                 </a>
-                <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
+                <a href="https://github.com/OpenSmell/osmograph-desktop" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-outline">
                   <GitBranch className="w-4 h-4" />
                   Source code
@@ -271,7 +271,7 @@ export default function OsmographPage() {
                   <Li>Export a session, a fingerprint, or submit labeled data to vetting</Li>
                 </ul>
                 <div className="flex flex-wrap gap-3">
-                  <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
+                  <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer"
                     className="hex-btn hex-btn-outline">
                     Get Osmograph <ChevronRight className="w-4 h-4" />
                   </a>
@@ -646,7 +646,7 @@ export default function OsmographPage() {
                 or start with the science and the build guide first.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-                <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
+                <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-primary">
                   <Download className="w-4 h-4" />
                   Download Osmograph
@@ -656,7 +656,7 @@ export default function OsmographPage() {
                   <Monitor className="w-4 h-4" />
                   See the Smell Monitor
                 </Link>
-                <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
+                <a href="https://github.com/OpenSmell/osmograph-desktop" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-outline">
                   <GitBranch className="w-4 h-4" />
                   Source code

@@ -31,7 +31,7 @@ export default function SiteFooter() {
               title: "Developers",
               links: [
                 { label: "Docs", href: "/docs" },
-                { label: "SDK", href: "https://github.com/opensmell/Osmograph" },
+                { label: "SDK", href: "https://github.com/OpenSmell/opensmell" },
                 { label: "Data Commons", href: "https://github.com/opensmell/data-commons" },
                 { label: "Academy", href: "/academy" },
               ],
