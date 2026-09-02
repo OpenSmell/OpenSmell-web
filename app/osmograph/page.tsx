@@ -1,44 +1,92 @@
 "use client"
 
 import Link from "next/link"
-import { Monitor, Download, GitBranch, BarChart3, Settings, Upload, ChevronRight, Cpu, Globe, Usb, Wifi, Bluetooth, Activity, Timer, Lock, Puzzle, HeartPulse, Database, Search } from "lucide-react"
+import type { ReactNode } from "react"
+import {
+  Monitor, Download, GitBranch, ChevronRight,
+  Cpu, Globe, Usb, Wifi, Bluetooth, Timer, Puzzle,
+  Database, Gauge, Ruler, Layers, FlaskConical, Radio, Crosshair,
+  ShieldAlert, GitCompareArrows, SlidersHorizontal,
+} from "lucide-react"
+
+const SCREENSHOT = "/osmograph"
+
+function Shot({
+  src, caption, tag, className = "",
+}: { src: string; caption: string; tag: string; className?: string }) {
+  return (
+    <figure className={`hex-box border border-border bg-background overflow-hidden ${className}`}>
+      <div className="relative border-b border-border">
+        <img src={src} alt={caption} className="w-full h-auto block bg-background" loading="lazy" />
+        <span className="absolute top-2 left-2 border border-border bg-background/80 backdrop-blur px-2 py-0.5 text-[9px] font-mono text-muted-foreground uppercase tracking-wider">
+          {tag}
+        </span>
+      </div>
+      <figcaption className="px-4 py-2 text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
+        {caption}
+      </figcaption>
+    </figure>
+  )
+}
+
+function Li({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-start gap-2 text-sm text-muted-foreground">
+      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
+      {children}
+    </div>
+  )
+}
 
 export default function OsmographPage() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <main>
-        {/* HERO */}
-        <section className="pt-32 pb-20 border-b border-border bg-grid relative">
+        {/* ===== HERO ===== */}
+        <section className="pt-28 pb-20 border-b border-border bg-grid relative">
           <span className="section-marginalia">Software</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="coord-tag mb-3">001 // Osmograph</div>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-[0.95]">
-                  Osmograph
-                </h1>
-                <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                  Zero-code GUI for electronic noses. Flash firmware, record sensor traces,
-                  train classifiers — all with button clicks.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
-                    className="hex-btn hex-btn-primary">
-                    <Globe className="w-4 h-4" />
-                    Try It
-                    <ChevronRight className="w-4 h-4" />
-                  </a>
-                  <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
-                    className="hex-btn hex-btn-outline">
-                    <Download className="w-4 h-4" />
-                    Download
-                  </a>
-                  <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
-                    className="hex-btn hex-btn-outline">
-                    <GitBranch className="w-4 h-4" />
-                    Source code
-                  </a>
-                </div>
+            <div className="max-w-3xl mb-14">
+              <div className="coord-tag mb-4">001 // Osmograph — e-nose GUI</div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-[0.95]">
+                An electronic nose that
+                <br className="hidden sm:block" />
+                <span className="text-muted-foreground"> tells you — honestly —</span>
+                <br />
+                what it&apos;s smelling.
+              </h1>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl">
+                Zero-code desktop app for metal-oxide e-noses. Flash firmware, record labeled
+                sensor traces, compare sessions across days, train a classifier with a scored
+                out-of-sample accuracy — and see exactly when it <em>can&apos;t</em> tell you the answer.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
+                  className="hex-btn hex-btn-primary">
+                  <Globe className="w-4 h-4" />
+                  Try the live e-nose
+                  <ChevronRight className="w-4 h-4" />
+                </a>
+                <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
+                  className="hex-btn hex-btn-outline">
+                  <Download className="w-4 h-4" />
+                  Download
+                </a>
+                <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
+                  className="hex-btn hex-btn-outline">
+                  <GitBranch className="w-4 h-4" />
+                  Source code
+                </a>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <Shot
+                  src={`${SCREENSHOT}/osmograph_dashboard.png`}
+                  tag="Dashboard"
+                  caption="live sensor traces · rig auto-detect · measured response-type strip"
+                />
               </div>
               <div className="hud-corners border border-border p-6 bg-background relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
@@ -47,9 +95,9 @@ export default function OsmographPage() {
                   {[
                     { step: "01", text: "Download Osmograph for your OS" },
                     { step: "02", text: "Plug in your e-nose via USB" },
-                    { step: "03", text: "Osmograph flashes the matching firmware" },
-                    { step: "04", text: "Record live sensor traces" },
-                    { step: "05", text: "Train a classifier with one click" },
+                    { step: "03", text: "One-click firmware flash — channels auto-detect" },
+                    { step: "04", text: "Record labeled baseline / exposure / recovery" },
+                    { step: "05", text: "Train a classifier — accuracy is scored honestly" },
                   ].map((s) => (
                     <div key={s.step} className="flex items-center gap-3">
                       <span className="text-muted-foreground opacity-50 font-mono text-xs">{s.step}</span>
@@ -63,221 +111,259 @@ export default function OsmographPage() {
           </div>
         </section>
 
-        {/* WORKS WITH SMELL MONITOR */}
-        <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Ecosystem</span>
+        {/* ===== STAT STRIP ===== */}
+        <section className="border-t border-border py-12 bg-hex relative">
+          <span className="section-marginalia">By the numbers</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="coord-tag mb-3">002 // Smell Monitor + Osmograph</div>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                  Built for the Smell Monitor.
-                </h2>
-                <p className="text-muted-foreground mb-5 leading-relaxed">
-                  Osmograph is the companion app for the Smell Monitor. Flash firmware over Bluetooth,
-                  stream live sensor data, and train anomaly classifiers — all from one interface.
-                </p>
-                <div className="space-y-2 mb-6">
-                  {[
-                    "Auto-detects boards over USB and mDNS — no manual pairing",
-                    "Bluetooth or USB connection — choose your workflow",
-                    "Live chemical signature traces on your desktop",
-                    "One-click classifier training on recorded sessions",
-                    "Fleet management for multiple Smell Monitors",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-                <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
-                  See the Smell Monitor
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
-              <div className="hud-corners border border-border p-6 bg-background relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">Signal Flow</div>
-                <div className="space-y-3 data-readout">
-                  {[
-                    { step: "SM", text: "Smell Monitor reads MOX sensors at 10 Hz" },
-                    { step: "BLE", text: "Streams CSV over Bluetooth Low Energy" },
-                    { step: "OSG", text: "Osmograph receives and validates samples" },
-                    { step: "VIS", text: "Live trace visualization in real time" },
-                    { step: "ML", text: "Train classifier on recorded sessions" },
-                    { step: "ALT", text: "Anomaly thresholds adapt to your process" },
-                  ].map((s) => (
-                    <div key={s.step} className="flex items-center gap-3">
-                      <span className="text-muted-foreground opacity-50 font-mono text-xs w-8">{s.step}</span>
-                      <span className="h-px flex-1 bg-border" />
-                      <span className="text-sm text-muted-foreground">{s.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* REAL-TIME IDENTIFICATION */}
-        <section className="border-t border-border py-24 bg-hex relative">
-          <span className="section-marginalia">Identify</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="coord-tag mb-3">003 // Real-Time Identification</div>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                  Know what it is.
-                  <br />
-                  And what it isn&apos;t.
-                </h2>
-                <p className="text-muted-foreground mb-5 leading-relaxed">
-                  Every recorded frame is scored against your trained classes. The grid animates live, locks on
-                  sustained high confidence, and — when nothing matches — says so instead of guessing.
-                </p>
-                <div className="space-y-2 mb-6">
-                  {[
-                    "Class probabilities for every trained substance, per frame",
-                    "Locks on sustained high confidence — no flickering between guesses",
-                    "Out-of-distribution samples flagged instead of forced into a class",
-                    "Confidence threshold adjustable per process",
-                    "Substance library does nearest-neighbour matching with distance-based rejection",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="hud-corners border border-border p-6 bg-background relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">Competition Grid</div>
-                <div className="space-y-3">
-                  {[
-                    { label: "Roasted coffee", prob: 0.94, locked: true },
-                    { label: "Garlic", prob: 0.03, locked: false },
-                    { label: "Alcohol", prob: 0.02, locked: false },
-                    { label: "Undefined", prob: 0.01, locked: false },
-                  ].map((c) => (
-                    <div key={c.label}>
-                      <div className="flex items-center justify-between text-[11px] font-mono mb-1">
-                        <span className={c.locked ? "text-foreground" : "text-muted-foreground"}>{c.label}</span>
-                        <span className="text-muted-foreground">{Math.round(c.prob * 100)}%</span>
-                      </div>
-                      <div className="h-2 bg-border">
-                        <div
-                          className={`h-full ${c.locked ? "bg-foreground" : "bg-muted-foreground/40"}`}
-                          style={{ width: `${Math.max(c.prob * 100, 3)}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-5 pt-3 border-t border-border flex items-center justify-between text-[10px] font-mono text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5 text-foreground">
-                    <Lock className="w-3 h-3" />
-                    LOCKED — 3.2 s sustained
-                  </span>
-                  <span>threshold 0.80</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* DEMO */}
-        <section className="border-t border-border py-20 bg-hex relative">
-          <span className="section-marginalia">Demo</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-              <div>
-                <div className="coord-tag mb-3">004 // Live Demo</div>
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">See it in action</h2>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Live sensor recording, classification, and trace visualisation — no code required.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {[
-                    "Real-time sensor traces as smells pass the array",
-                    "One-click classifier training on recorded samples",
-                    "Automatic signal quality validation before export",
-                  ].map((item) => (
-                    <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
-                  className="hex-btn hex-btn-primary">
-                  Try it yourself
-                  <ChevronRight className="w-4 h-4" />
-                </a>
-              </div>
-              <div className="border border-border overflow-hidden bg-background hex-box">
-                <video
-                  src="/osmograph.webm"
-                  controls
-                  playsInline
-                  preload="metadata"
-                  className="w-full max-h-72 h-auto object-contain bg-background"
-                  poster="/opensmell_logo.png"
-                >
-                  Your browser does not support the video tag.
-                </video>
-                <div className="border-t border-border px-4 py-2 flex items-center justify-between text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
-                  <span>osmograph_demo.webm</span>
-                  <span>~20s · 1.3 MB</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURES */}
-        <section className="border-t border-border py-24 bg-grid relative">
-          <span className="section-marginalia">Features</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Features</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-px bg-border">
               {[
-                { icon: Upload, title: "One-click firmware", desc: "Auto-detects the ESP32 and flashes a pre-compiled binary via esptool. No PlatformIO, no VSCode, no setup." },
-                { icon: BarChart3, title: "Live sensor traces", desc: "Real-time traces with automatic signal quality validation as samples arrive." },
-                { icon: Settings, title: "Button-click training", desc: "RandomForest or LogisticRegression from recorded sessions — saved as reusable models." },
-                { icon: Activity, title: "Real-time identification", desc: "Class probabilities animate live and lock on sustained high confidence." },
-                { icon: Timer, title: "Burn-in tracker", desc: "New MQ sensors need 24 hours to stabilise — Osmograph counts down, and the timer survives restarts." },
-                { icon: Download, title: "Cross-platform", desc: "Works on Windows, macOS, and Linux. One download, everything included." },
-              ].map((f) => (
-                <div key={f.title} className="bg-background p-8 hex-box">
-                  <f.icon className="w-8 h-8 mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+                { v: "0", l: "lines of code required" },
+                { v: "auto", l: "channel count · named per rig" },
+                { v: "LOOCV", l: "out-of-sample model scoring" },
+                { v: "24 h", l: "burn-in timer, survives restarts" },
+                { v: "1 click", l: "ESP32 firmware flash" },
+              ].map((s) => (
+                <div key={s.l} className="bg-background p-6">
+                  <div className="text-2xl font-bold tracking-tight mb-1">{s.v}</div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider">{s.l}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* STREAMING MODES */}
+        {/* ===== WORKFLOW ===== */}
         <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">Workflow</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <div className="hex-icon text-muted-foreground mx-auto mb-4" />
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">One loop, from sensor to classifier</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-3">
+                Osmograph follows the honest e-nose workflow: record reliably, compare fairly,
+                then train a model whose accuracy you can actually trust.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-px bg-border">
+              {[
+                { icon: Radio, t: "Capture", d: "Phase-guided recordings — baseline, exposure, recovery — with per-channel quality as samples arrive." },
+                { icon: Layers, t: "Library", d: "Every session auto-saves to a searchable library with a response fingerprint you can replay offline." },
+                { icon: GitCompareArrows, t: "Compare", d: "Normalize to per-channel R₀ and align sessions on relative time, so days and devices line up." },
+                { icon: SlidersHorizontal, t: "Train", d: "Pick recordings, set labels and quality filters, train — scored with leave-one-recording-out CV." },
+                { icon: Crosshair, t: "Deploy", d: "Load the model and classify the live stream, with sustained-confidence lock and honest 'no match'." },
+              ].map((s) => (
+                <div key={s.t} className="bg-background p-6">
+                  <s.icon className="w-6 h-6 mb-3 text-muted-foreground" />
+                  <div className="font-mono text-[10px] text-muted-foreground mb-1">{s.t.toUpperCase()}</div>
+                  <div className="text-sm leading-relaxed text-muted-foreground">{s.d}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== CAPTURE / LIBRARY ===== */}
+        <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">Record</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+              <div>
+                <div className="coord-tag mb-3">002 // Capture &amp; Library</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                  Record it once. <br className="hidden sm:block" />Reuse it forever.
+                </h2>
+                <p className="text-muted-foreground mb-5 leading-relaxed">
+                  Guided phase recordings label each sample as it&apos;s captured — baseline, exposure,
+                  recovery — and quality is validated live against per-channel R₀. Sessions land in a
+                  searchable library with a fingerprint you can rename, analyze, export, or replay offline.
+                </p>
+                <ul className="space-y-2 mb-6">
+                  <Li>CSV and <span className="font-mono">.osmell</span> formats, drag-and-drop import</Li>
+                  <Li>Per-session quality score shown right in the list</Li>
+                  <Li>Offline replay with a scrubber and 0.5×–8× speed — inspection only, does not feed the live detector</Li>
+                  <Li>Export a session, a fingerprint, or submit labeled data to vetting</Li>
+                </ul>
+                <div className="flex flex-wrap gap-3">
+                  <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
+                    className="hex-btn hex-btn-outline">
+                    Get Osmograph <ChevronRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <Shot src={`${SCREENSHOT}/osmograph_library_quality.png`} tag="Library"
+                  caption="session list · per-session quality · inspector fingerprint" />
+                <Shot src={`${SCREENSHOT}/osmograph_library_replay.png`} tag="Library · Replay"
+                  caption="offline session replay — scrubber + speed controls" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== COMPARE ===== */}
+        <section className="border-t border-border py-24 bg-hex relative">
+          <span className="section-marginalia">Compare</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <div className="coord-tag mb-3">003 // Fair comparison</div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                Same smell, different day. <br className="hidden sm:block" />
+                Still the same shape.
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-3">
+                Sessions are normalized to their own per-channel R₀ (baseline when present, else the
+                first samples) and aligned on relative time — so responses stay comparable across
+                devices and days. Pick any channel subset, by name, not position.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+              <Shot src={`${SCREENSHOT}/osmograph_compare_overlay.png`} tag="Compare · Overlay"
+                caption="one lane per channel, sessions overlaid" />
+              <Shot src={`${SCREENSHOT}/osmograph_compare_ref.png`} tag="Compare · Δ vs ref"
+                caption="each session minus a chosen reference" />
+              <Shot src={`${SCREENSHOT}/osmograph_compare_similarity.png`} tag="Compare · Similarity"
+                caption="Pearson correlation over the shared overlap" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border max-w-3xl mx-auto">
+              {[
+                { t: "Overlay", d: "Compare responses lane-by-lane across any number of sessions." },
+                { t: "Δ vs ref", d: "See how each recording deviates from a reference session." },
+                { t: "Similarity", d: "A correlation tear-sheet over the selected channels." },
+              ].map((m) => (
+                <div key={m.t} className="bg-background p-5">
+                  <div className="font-mono text-[10px] text-muted-foreground mb-1">{m.t.toUpperCase()}</div>
+                  <div className="text-sm text-muted-foreground">{m.d}</div>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground text-center mt-6 max-w-2xl mx-auto">
+              Channel selection is label-based — you pick channels by name, so a 3-sensor rig and a
+              16-sensor rig compare without reconfiguring anything.
+            </p>
+          </div>
+        </section>
+
+        {/* ===== TRAIN ===== */}
+        <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">Train</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="order-2 lg:order-1">
+                <Shot src={`${SCREENSHOT}/osmograph_train.png`} tag="Train"
+                  caption="recording selection · window &amp; quality filters · model card" />
+              </div>
+              <div className="order-1 lg:order-2">
+                <div className="coord-tag mb-3">004 // Train a smell model</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                  The accuracy you see is the accuracy you get.
+                </h2>
+                <p className="text-muted-foreground mb-5 leading-relaxed">
+                  Teach the e-nose to tell one smell from another. Record each substance several times,
+                  assign a label, set a window and quality filter, then train. Every model is scored
+                  <span className="text-foreground font-medium"> out-of-sample</span> with
+                  leave-one-recording-out cross-validation — so the number Osmograph reports isn&apos;t
+                  inflated by testing on the data it learned from.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <Li>Tick ≥&nbsp;2 recordings per smell — enough to be meaningful, not just memorized</Li>
+                  <Li>Override labels per recording; set classification window and a minimum quality cut</Li>
+                  <Li>Model card summarizes what was trained; then load it on the Dashboard for live classification</Li>
+                  <Li>Confidence thresholds adapt to your process — and a low-confidence sample is flagged instead of forced into a class</Li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== FLEET ===== */}
+        <section className="border-t border-border py-24 bg-hex relative">
+          <span className="section-marginalia">Fleet</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="coord-tag mb-3">005 // Fleet management</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                  More than one nose? <br className="hidden sm:block" />Manage them all.
+                </h2>
+                <p className="text-muted-foreground mb-5 leading-relaxed">
+                  Scan the network, add devices, and watch the whole fleet from one window.
+                  Each device streams with its own channel count and identity.
+                </p>
+                <ul className="space-y-2 mb-6">
+                  <Li>Auto-discovers boards over USB and mDNS — no manual pairing</Li>
+                  <Li>Fleet grid shows every device&apos;s live state at a glance</Li>
+                  <Li>One-click firmware flash stays per-device, matching each rig</Li>
+                </ul>
+                <Link href="/smell-monitor" className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
+                  Pair with the Smell Monitor <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="space-y-4">
+                <Shot src={`${SCREENSHOT}/osmograph_fleet.png`} tag="Fleet"
+                  caption="scan network · add device · fleet grid" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== SYSTEM ===== */}
+        <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">System</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <div className="coord-tag mb-3">006 // The boring parts, automated</div>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                Sensors drift. Sessions pile up. <br className="hidden sm:block" />Osmograph handles it.
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              <Shot src={`${SCREENSHOT}/osmograph_calibration.png`} tag="System · Calibration"
+                caption="per-channel R₀ / a / b constants → ppm estimate · sensor library" />
+              <Shot src={`${SCREENSHOT}/osmograph_buzzer.png`} tag="System · Buzzer"
+                caption="warning / critical / emergency patterns · volume · preview" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { icon: FlaskConical, t: "Calibration", tag: "System · Calibration", d: "Enter each sensor's R₀ and power-law constants (a, b) so raw resistance becomes a defensible ppm estimate and a fair quality score. Values apply live to the trace, features, and analysis. Stored locally." },
+                { icon: Gauge, t: "Hardware profile", d: "Describe your rig — ADC bits, load resistor, supply, divider wiring. Export a sensor_profile.json so the device travels between OpenSmell tools." },
+                { icon: ShieldAlert, t: "Buzzer alerts", d: "Set distinct warning, critical, and emergency patterns (including SOS), with volume and frequency control and a live pattern preview." },
+                { icon: Timer, t: "Burn-in tracker", d: "New MOX sensors need 24 hours to stabilise. The countdown runs in real time and survives app restarts — no lost progress." },
+                { icon: Puzzle, t: "Plugins", d: "Drop .py scripts or .head models into the plugins folder — they run on the live sensor stream." },
+                { icon: Database, t: "Data & commons", d: "Export labeled CSV, run automated quality checks into a Data Hub review queue, and pull or push anonymised sessions via the OpenSmell Hugging Face dataset." },
+              ].map((f) => (
+                <div key={f.t} className="bg-background p-6 hex-box">
+                  <f.icon className="w-6 h-6 mb-3 text-muted-foreground" />
+                  <div className="font-mono text-[10px] text-muted-foreground mb-1">{f.tag ?? "SYSTEM"}</div>
+                  <div className="font-semibold mb-1">{f.t}</div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{f.d}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* hardware profile card continuation */}
+            <div className="bg-background p-6 hex-box mt-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <Ruler className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-medium">Channel-agnostic by design</span>
+                <span className="text-[11px] text-muted-foreground">
+                  Presets from 3 to 8 sensors — or your own rig. Channel count and names are auto-detected
+                  from the stream; nothing is hardcoded to six.
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== STREAMING MODES ===== */}
+        <section className="border-t border-border py-24 bg-grid relative">
           <span className="section-marginalia">Connectivity</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Streaming modes</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Same sensor, three ways to get the data off the board. The one-click firmware runs USB Serial and WiFi at once — no modes to select.
+            <div className="text-center mb-14">
+              <div className="hex-icon text-muted-foreground mx-auto mb-4" />
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Streaming modes</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-3">
+                Same sensor, three ways off the board. The one-click firmware runs USB Serial and
+                WiFi at once — no modes to select.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
@@ -333,8 +419,8 @@ export default function OsmographPage() {
               ))}
             </div>
             <p className="text-sm text-muted-foreground mt-8 max-w-3xl mx-auto text-center">
-              The one-click binary is compiled for the classic ESP32. ESP32-S3, C3, Uno, and Pico share the same
-              CSV stream contract but need their own toolchain —{" "}
+              The one-click binary is compiled for the classic ESP32. ESP32-S3, C3, Uno, and Pico share the
+              same CSV stream contract but need their own toolchain —{" "}
               <Link href="/enose" className="text-foreground font-medium hover:underline">
                 compare boards in the e-nose builder
               </Link>
@@ -343,83 +429,28 @@ export default function OsmographPage() {
           </div>
         </section>
 
-        {/* SYSTEM */}
-        <section className="border-t border-border py-24 relative">
-          <span className="section-marginalia">System</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="coord-tag mb-3">005 // System</div>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                  The boring parts, automated.
-                </h2>
-                <p className="text-muted-foreground mb-5 leading-relaxed">
-                  Sensors drift while they stabilise, sessions pile up, and custom models need a place to run.
-                  Osmograph handles all three without you noticing.
-                </p>
-                <div className="space-y-2 mb-6">
-                  {[
-                    "Burn-in tracker — 24-hour stabilisation countdown for new MQ sensors, resumes across restarts",
-                    "Sensor health strip — per-channel status for all six inputs at a glance",
-                    "Labeled CSV sessions auto-save; export a session or a smell fingerprint anytime (Ctrl+E)",
-                    "Plugin folder — drop .py scripts or .head models, each runs on the live sensor stream",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="hud-corners border border-border p-6 bg-background relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">System Readout</div>
-                <div className="space-y-3 data-readout">
-                  {[
-                    { icon: Timer, label: "Burn-in", value: "13:52:11 remaining", note: "24 h stabilisation, resumes after restart" },
-                    { icon: HeartPulse, label: "Sensor health", value: "CH1–CH6", note: "per-channel status strip" },
-                    { icon: Database, label: "Sessions", value: "CSV auto-save", note: "export session or fingerprint (Ctrl+E)" },
-                    { icon: Puzzle, label: "Plugins", value: ".py / .head", note: "drop into the plugins folder — runs on the live sensor stream" },
-                  ].map((row) => (
-                    <div key={row.label} className="border border-border p-3">
-                      <div className="flex items-center gap-2 mb-1">
-                        <row.icon className="w-4 h-4 text-foreground" />
-                        <span className="text-xs font-medium">{row.label}</span>
-                      </div>
-                      <div className="text-[10px] text-muted-foreground">{row.value} · {row.note}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FOR DEVELOPERS */}
+        {/* ===== FOR DEVELOPERS ===== */}
         <section className="border-t border-border py-24 bg-hex relative">
           <span className="section-marginalia">SDK</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
-                <div className="coord-tag mb-3">006 // For Developers</div>
+                <div className="coord-tag mb-3">007 // For Developers</div>
                 <h3 className="text-2xl font-bold tracking-tight mb-4">Build on the SDK</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Osmograph is built on a modular Python backend. You can extract the
-                  187-dimensional framework features and build custom pipelines with
+                  Osmograph is built on a modular Python backend. Extract the framework features
+                  (28 per channel, plus cross-channel selectivity and global features) for your own
+                  pipelines with
                   <code className="text-foreground font-mono text-sm mx-1">pip install opensmell</code>.
+                  The 6-channel reference rig yields
+                  <span className="text-foreground font-mono text-sm mx-1">187</span>
+                  features; the count scales with your channel count.
                 </p>
                 <ul className="space-y-3 mb-8">
-                  {[
-                    "Extract framework features for custom ML pipelines",
-                    "Pin-mapping dialog exports a custom firmware sketch for non-standard wiring",
-                    "Contribute to the open-source codebase on GitHub",
-                    "Integrate with the OpenSmell Data Commons",
-                  ].map((item) => (
-                    <li key={item} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="mt-1.5 w-1 h-1 bg-muted-foreground flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
+                  <Li>Extract framework features for custom ML pipelines</Li>
+                  <Li>Rs/R₀ normalization cancels Vcc and load-resistor effects — your data travels</Li>
+                  <Li>Pin-mapping dialog exports a custom firmware sketch for non-standard wiring</Li>
+                  <Li>Contribute to the open-source codebase, or integrate with the OpenSmell Data Commons</Li>
                 </ul>
                 <a href="https://github.com/opensmell/opensmell" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
@@ -432,28 +463,28 @@ export default function OsmographPage() {
                 <pre className="text-sm leading-relaxed font-mono text-muted-foreground overflow-x-auto">
                   <span className="text-foreground">from</span> opensmell{" "}
                   <span className="text-foreground">import</span> extract_features{"\n\n"}
-                  features = extract_features(<span className="text-foreground">"recordings/"</span>){"\n"}
-                  <span className="text-foreground">print</span>(features.shape){"  "}# (n_samples, 187)
+                  features, names = extract_features(<span className="text-foreground">"recording.csv"</span>){"\n"}
+                  <span className="text-foreground">print</span>(features.shape){"  "}# (N_windows, 187) on 6 channels
                 </pre>
               </div>
             </div>
           </div>
         </section>
 
-        {/* SMELLABILITY LOOKUP */}
+        {/* ===== SMELLABILITY ===== */}
         <section className="border-t border-border py-24 relative">
           <span className="section-marginalia">Feasibility</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-10">
               <div>
-                <div className="coord-tag mb-3">007 // Smellability Lookup</div>
+                <div className="coord-tag mb-3">008 // Smellability Lookup</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                   Before you build — can a MOX sensor even smell it?
                 </h2>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   Type a compound, hit <span className="font-mono text-foreground">Ctrl+L</span>, and Osmograph
-                  walks it through a four-step chain from molecule to signal. The chain ends in one verdict:
-                  pass or fail.
+                  walks it through a thermodynamic feasibility chain from molecule to signal. The chain ends in
+                  one verdict: pass or fail.
                 </p>
                 <div className="space-y-3">
                   {[
@@ -486,7 +517,7 @@ export default function OsmographPage() {
                   ].map((row) => (
                     <div key={row.step} className="flex items-center justify-between border border-border px-3 py-2">
                       <div className="flex items-center gap-2">
-                        <span className="w-1 h-1 bg-foreground" />
+                        <span className={`w-1 h-1 ${row.state === "pass" ? "bg-foreground" : "bg-red-500"}`} />
                         <span className="text-xs">{row.step}</span>
                       </div>
                       <span className="font-mono text-[10px] text-muted-foreground">{row.detail}</span>
@@ -500,14 +531,14 @@ export default function OsmographPage() {
               </div>
             </div>
             <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto">
-              A smellability verdict is a feasibility range, not a calibrated concentration —
-              it tells you whether to buy the parts, not how strong the smell is.
+              A smellability verdict is a feasibility range, not a calibrated concentration — it tells you
+              whether to buy the parts, not how strong the smell is.
             </p>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="border-t border-border py-20 relative">
+        {/* ===== CTA ===== */}
+        <section className="border-t border-border py-20 bg-hex relative">
           <span className="section-marginalia">Start</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-2xl mx-auto text-center">
