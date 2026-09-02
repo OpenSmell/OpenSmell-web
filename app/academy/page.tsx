@@ -63,6 +63,7 @@ const curriculum: {
 
 export default function AcademyPage() {
   const [activeFilter, setActiveFilter] = useState("All")
+  const [orderOpen, setOrderOpen] = useState(true)
 
   const visible = useMemo(
     () => (activeFilter === "All" ? articles : articles.filter((a) => a.category === activeFilter)),
@@ -126,10 +127,24 @@ export default function AcademyPage() {
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Read the Academy in order</h2>
               <span className="hex-icon text-muted-foreground" />
             </div>
-            <p className="text-center text-sm text-muted-foreground mb-10 max-w-2xl mx-auto">
+            <p className="text-center text-sm text-muted-foreground mb-4 max-w-2xl mx-auto">
               A modular path that builds from first principles. Each module lists its
               essays in reading order — follow a module, or jump to any essay below.
             </p>
+            <div className="flex flex-col items-center gap-3 mb-8">
+              <button
+                onClick={() => setOrderOpen((v) => !v)}
+                aria-expanded={orderOpen}
+                className="inline-flex items-center justify-center gap-2 border px-4 py-2 text-sm transition-all border-foreground text-foreground hover:bg-foreground hover:text-background"
+              >
+                <ChevronRight className={`w-4 h-4 transition-transform ${orderOpen ? "rotate-90" : ""}`} />
+                {orderOpen ? "Hide the reading path" : "Show the reading path"}
+              </button>
+              <span className="text-xs text-muted-foreground">
+                Want the full list? Jump straight to <a href="#all-essays" className="underline underline-offset-4 hover:text-foreground transition-colors">all essays</a>.
+              </span>
+            </div>
+            {orderOpen && (
             <div className="grid grid-cols-1 gap-px bg-border">
               {curriculum.map((m) => (
                 <div key={m.module} className="bg-background p-6 sm:p-8">
@@ -174,6 +189,7 @@ export default function AcademyPage() {
                 </div>
               ))}
             </div>
+            )}
             <p className="text-center text-xs text-muted-foreground mt-6 max-w-xl mx-auto">
               This sequence mirrors the project's own onboarding order. All 21 essays are
               written for newcomers; nothing assumes prior knowledge.
@@ -181,7 +197,7 @@ export default function AcademyPage() {
           </div>
         </section>
 
-        <section className="py-20">
+        <section id="all-essays" className="py-20 scroll-mt-24">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex items-center gap-3 mb-8">
               <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">All essays</span>
