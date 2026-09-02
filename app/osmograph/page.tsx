@@ -1,27 +1,36 @@
 "use client"
 
 import Link from "next/link"
+import { useState, useCallback } from "react"
 import type { ReactNode } from "react"
 import {
   Monitor, Download, GitBranch, ChevronRight,
-  Cpu, Globe, Usb, Wifi, Bluetooth, Timer, Puzzle,
+  Globe, Usb, Wifi, Bluetooth, Timer, Puzzle,
   Database, Gauge, Ruler, Layers, FlaskConical, Radio, Crosshair,
-  ShieldAlert, GitCompareArrows, SlidersHorizontal,
+  ShieldAlert, GitCompareArrows, SlidersHorizontal, X, ZoomIn,
 } from "lucide-react"
 
 const SCREENSHOT = "/osmograph"
 
 function Shot({
-  src, caption, tag, className = "",
-}: { src: string; caption: string; tag: string; className?: string }) {
+  src, caption, tag, className = "", onOpen = undefined,
+}: { src: string; caption: string; tag: string; className?: string; onOpen?: () => void }) {
   return (
     <figure className={`hex-box border border-border bg-background overflow-hidden ${className}`}>
-      <div className="relative border-b border-border">
+      <button
+        type="button"
+        onClick={onOpen}
+        className="group relative block w-full cursor-zoom-in text-left border-b border-border"
+        aria-label={`Enlarge screenshot: ${caption}`}
+      >
         <img src={src} alt={caption} className="w-full h-auto block bg-background" loading="lazy" />
         <span className="absolute top-2 left-2 border border-border bg-background/80 backdrop-blur px-2 py-0.5 text-[9px] font-mono text-muted-foreground uppercase tracking-wider">
           {tag}
         </span>
-      </div>
+        <span className="absolute bottom-2 right-2 inline-flex items-center gap-1.5 border border-border bg-background/80 backdrop-blur px-2 py-1 text-[9px] font-mono text-muted-foreground uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+          <ZoomIn className="w-3 h-3" /> enlarge
+        </span>
+      </button>
       <figcaption className="px-4 py-2 text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
         {caption}
       </figcaption>
@@ -39,43 +48,69 @@ function Li({ children }: { children: ReactNode }) {
 }
 
 export default function OsmographPage() {
+  const [zoom, setZoom] = useState<{ src: string; caption: string } | null>(null)
+  const openShot = useCallback((src: string, caption: string) => setZoom({ src, caption }), [])
+  const closeShot = useCallback(() => setZoom(null), [])
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
+      {zoom && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8 cursor-zoom-out"
+          onClick={closeShot}
+          role="dialog"
+          aria-modal="true"
+          aria-label={zoom.caption}
+        >
+          <button
+            type="button"
+            onClick={closeShot}
+            aria-label="Close"
+            className="absolute top-4 right-4 border border-border bg-background/20 text-foreground p-2"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <figure className="max-w-5xl w-full">
+            <img src={zoom.src} alt={zoom.caption} className="w-full h-auto bg-background border border-border" />
+            <figcaption className="mt-3 text-center text-xs font-mono text-muted-foreground uppercase tracking-wider">
+              {zoom.caption}
+            </figcaption>
+          </figure>
+        </div>
+      )}
       <main>
         {/* ===== HERO ===== */}
         <section className="pt-28 pb-20 border-b border-border bg-grid relative">
           <span className="section-marginalia">Software</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mb-14">
-              <div className="coord-tag mb-4">001 // Osmograph — e-nose GUI</div>
+              <div className="coord-tag mb-4">001 // Osmograph — the e-nose workbench</div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-[0.95]">
-                An electronic nose that
+                Zero-code software
                 <br className="hidden sm:block" />
-                <span className="text-muted-foreground"> tells you — honestly —</span>
-                <br />
-                what it&apos;s smelling.
+                <span className="text-muted-foreground">for your electronic nose.</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl">
-                Zero-code desktop app for metal-oxide e-noses. Flash firmware, record labeled
-                sensor traces, compare sessions across days, train a classifier with a scored
-                out-of-sample accuracy — and see exactly when it <em>can&apos;t</em> tell you the answer.
+                Flash firmware, record labeled sensor traces, compare sessions across days, and
+                train a classifier — all with button clicks, and all scored honestly. Osmograph is
+                the desktop app that turns a metal-oxide array into an instrument you can trust.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
-                  className="hex-btn hex-btn-primary">
-                  <Globe className="w-4 h-4" />
-                  Try the live e-nose
-                  <ChevronRight className="w-4 h-4" />
-                </a>
                 <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
-                  className="hex-btn hex-btn-outline">
+                  className="hex-btn hex-btn-primary">
                   <Download className="w-4 h-4" />
-                  Download
+                  Download Osmograph
+                  <ChevronRight className="w-4 h-4" />
                 </a>
                 <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-outline">
                   <GitBranch className="w-4 h-4" />
                   Source code
+                </a>
+                <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
+                  className="hex-btn hex-btn-outline">
+                  <Globe className="w-4 h-4" />
+                  Try a live e-nose online
                 </a>
               </div>
             </div>
@@ -86,6 +121,7 @@ export default function OsmographPage() {
                   src={`${SCREENSHOT}/osmograph_dashboard.png`}
                   tag="Dashboard"
                   caption="live sensor traces · rig auto-detect · measured response-type strip"
+                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_dashboard.png`, "Dashboard — live sensor traces, auto-detected channels, measured response-type strip")}
                 />
               </div>
               <div className="hud-corners border border-border p-6 bg-background relative">
@@ -115,13 +151,14 @@ export default function OsmographPage() {
         <section className="border-t border-border py-12 bg-hex relative">
           <span className="section-marginalia">By the numbers</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 lg:grid-cols-5 gap-px bg-border">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-border">
               {[
                 { v: "0", l: "lines of code required" },
                 { v: "auto", l: "channel count · named per rig" },
                 { v: "LOOCV", l: "out-of-sample model scoring" },
                 { v: "24 h", l: "burn-in timer, survives restarts" },
                 { v: "1 click", l: "ESP32 firmware flash" },
+                { v: "3", l: "streaming modes — USB · WiFi · BLE" },
               ].map((s) => (
                 <div key={s.l} className="bg-background p-6">
                   <div className="text-2xl font-bold tracking-tight mb-1">{s.v}</div>
@@ -162,13 +199,63 @@ export default function OsmographPage() {
           </div>
         </section>
 
+        {/* ===== BUILT FOR THE SMELL MONITOR ===== */}
+        <section className="border-t border-border py-20 relative">
+          <span className="section-marginalia">Ecosystem</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="coord-tag mb-3">002 // Smell Monitor + Osmograph</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+                  Built for the Smell Monitor.
+                </h2>
+                <p className="text-muted-foreground mb-5 leading-relaxed">
+                  Osmograph is the companion app for the Smell Monitor. Flash firmware over Bluetooth,
+                  stream live sensor data, and train anomaly classifiers — all from one interface.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <Li>Auto-detects boards over USB and mDNS — no manual pairing</Li>
+                  <Li>Bluetooth or USB connection — choose your workflow</Li>
+                  <Li>Live chemical signature traces on your desktop</Li>
+                  <Li>One-click classifier training on recorded sessions</Li>
+                  <Li>Fleet management for multiple Smell Monitors</Li>
+                </div>
+                <Link href="/smell-monitor" className="hex-btn hex-btn-primary">
+                  See the Smell Monitor
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="hud-corners border border-border p-6 bg-background relative">
+                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
+                <div className="coord-tag mb-3">Signal Flow</div>
+                <div className="space-y-3 data-readout">
+                  {[
+                    { step: "SM", text: "Smell Monitor reads MOX sensors at 10 Hz" },
+                    { step: "BLE", text: "Streams CSV over Bluetooth Low Energy" },
+                    { step: "OSG", text: "Osmograph receives and validates samples" },
+                    { step: "VIS", text: "Live trace visualization in real time" },
+                    { step: "ML", text: "Train classifier on recorded sessions" },
+                    { step: "ALT", text: "Anomaly thresholds adapt to your process" },
+                  ].map((s) => (
+                    <div key={s.step} className="flex items-center gap-3">
+                      <span className="text-muted-foreground opacity-50 font-mono text-xs w-8">{s.step}</span>
+                      <span className="h-px flex-1 bg-border" />
+                      <span className="text-sm text-muted-foreground">{s.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ===== CAPTURE / LIBRARY ===== */}
         <section className="border-t border-border py-24 relative">
           <span className="section-marginalia">Record</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
               <div>
-                <div className="coord-tag mb-3">002 // Capture &amp; Library</div>
+                <div className="coord-tag mb-3">003 // Capture &amp; Library</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                   Record it once. <br className="hidden sm:block" />Reuse it forever.
                 </h2>
@@ -192,9 +279,11 @@ export default function OsmographPage() {
               </div>
               <div className="space-y-4">
                 <Shot src={`${SCREENSHOT}/osmograph_library_quality.png`} tag="Library"
-                  caption="session list · per-session quality · inspector fingerprint" />
+                  caption="session list · per-session quality · inspector fingerprint"
+                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_library_quality.png`, "Library — session list with per-session quality and inspector fingerprint")} />
                 <Shot src={`${SCREENSHOT}/osmograph_library_replay.png`} tag="Library · Replay"
-                  caption="offline session replay — scrubber + speed controls" />
+                  caption="offline session replay — scrubber + speed controls"
+                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_library_replay.png`, "Library — offline session replay with scrubber and speed controls")} />
               </div>
             </div>
           </div>
@@ -205,7 +294,7 @@ export default function OsmographPage() {
           <span className="section-marginalia">Compare</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-14">
-              <div className="coord-tag mb-3">003 // Fair comparison</div>
+              <div className="coord-tag mb-3">004 // Fair comparison</div>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Same smell, different day. <br className="hidden sm:block" />
                 Still the same shape.
@@ -218,11 +307,14 @@ export default function OsmographPage() {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
               <Shot src={`${SCREENSHOT}/osmograph_compare_overlay.png`} tag="Compare · Overlay"
-                caption="one lane per channel, sessions overlaid" />
+                caption="one lane per channel, sessions overlaid"
+                onOpen={() => openShot(`${SCREENSHOT}/osmograph_compare_overlay.png`, "Compare — overlay: one lane per channel, sessions overlaid")} />
               <Shot src={`${SCREENSHOT}/osmograph_compare_ref.png`} tag="Compare · Δ vs ref"
-                caption="each session minus a chosen reference" />
+                caption="each session minus a chosen reference"
+                onOpen={() => openShot(`${SCREENSHOT}/osmograph_compare_ref.png`, "Compare — delta vs reference: each session minus a chosen reference")} />
               <Shot src={`${SCREENSHOT}/osmograph_compare_similarity.png`} tag="Compare · Similarity"
-                caption="Pearson correlation over the shared overlap" />
+                caption="Pearson correlation over the shared overlap"
+                onOpen={() => openShot(`${SCREENSHOT}/osmograph_compare_similarity.png`, "Compare — similarity: Pearson correlation over the shared overlap")} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border max-w-3xl mx-auto">
               {[
@@ -250,10 +342,11 @@ export default function OsmographPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1">
                 <Shot src={`${SCREENSHOT}/osmograph_train.png`} tag="Train"
-                  caption="recording selection · window &amp; quality filters · model card" />
+                  caption="recording selection · window &amp; quality filters · model card"
+                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_train.png`, "Train — recording selection, window and quality filters, model card")} />
               </div>
               <div className="order-1 lg:order-2">
-                <div className="coord-tag mb-3">004 // Train a smell model</div>
+                <div className="coord-tag mb-3">005 // Train a smell model</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                   The accuracy you see is the accuracy you get.
                 </h2>
@@ -281,7 +374,7 @@ export default function OsmographPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="coord-tag mb-3">005 // Fleet management</div>
+                <div className="coord-tag mb-3">006 // Fleet management</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                   More than one nose? <br className="hidden sm:block" />Manage them all.
                 </h2>
@@ -300,7 +393,8 @@ export default function OsmographPage() {
               </div>
               <div className="space-y-4">
                 <Shot src={`${SCREENSHOT}/osmograph_fleet.png`} tag="Fleet"
-                  caption="scan network · add device · fleet grid" />
+                  caption="scan network · add device · fleet grid"
+                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_fleet.png`, "Fleet — scan network, add device, fleet grid")} />
               </div>
             </div>
           </div>
@@ -311,16 +405,18 @@ export default function OsmographPage() {
           <span className="section-marginalia">System</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-14">
-              <div className="coord-tag mb-3">006 // The boring parts, automated</div>
+              <div className="coord-tag mb-3">007 // The boring parts, automated</div>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Sensors drift. Sessions pile up. <br className="hidden sm:block" />Osmograph handles it.
               </h2>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
               <Shot src={`${SCREENSHOT}/osmograph_calibration.png`} tag="System · Calibration"
-                caption="per-channel R₀ / a / b constants → ppm estimate · sensor library" />
+                caption="per-channel R₀ / a / b constants → ppm estimate · sensor library"
+                onOpen={() => openShot(`${SCREENSHOT}/osmograph_calibration.png`, "System — calibration and sensor library: per-channel R₀/a/b constants to ppm estimate")} />
               <Shot src={`${SCREENSHOT}/osmograph_buzzer.png`} tag="System · Buzzer"
-                caption="warning / critical / emergency patterns · volume · preview" />
+                caption="warning / critical / emergency patterns · volume · preview"
+                onOpen={() => openShot(`${SCREENSHOT}/osmograph_buzzer.png`, "System — buzzer alerts: warning/critical/emergency patterns with volume control and preview")} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
@@ -435,7 +531,7 @@ export default function OsmographPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <div>
-                <div className="coord-tag mb-3">007 // For Developers</div>
+                <div className="coord-tag mb-3">008 // For Developers</div>
                 <h3 className="text-2xl font-bold tracking-tight mb-4">Build on the SDK</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   Osmograph is built on a modular Python backend. Extract the framework features
@@ -477,14 +573,14 @@ export default function OsmographPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-10">
               <div>
-                <div className="coord-tag mb-3">008 // Smellability Lookup</div>
+                <div className="coord-tag mb-3">009 // Smellability Lookup</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                   Before you build — can a MOX sensor even smell it?
                 </h2>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Type a compound, hit <span className="font-mono text-foreground">Ctrl+L</span>, and Osmograph
-                  walks it through a thermodynamic feasibility chain from molecule to signal. The chain ends in
-                  one verdict: pass or fail.
+                  Osmograph sits on the OpenSmell SDK. Before you spend on a rig, the SDK&apos;s MOX
+                  feasibility chain takes a compound <em>(SMILES in, verdict out)</em> and walks it
+                  through the physics from molecule to signal. The chain ends in one verdict: pass or fail.
                 </p>
                 <div className="space-y-3">
                   {[
@@ -503,7 +599,7 @@ export default function OsmographPage() {
               </div>
               <div className="hud-corners border border-border p-6 bg-background relative">
                 <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-4">Smellability Check // Ctrl+L</div>
+                <div className="coord-tag mb-4">Smellability Check // SDK</div>
                 <div className="flex items-center justify-between border border-border p-3 mb-4">
                   <span className="text-xs text-muted-foreground">Compound</span>
                   <span className="font-mono text-sm">ethanol</span>
@@ -542,24 +638,44 @@ export default function OsmographPage() {
           <span className="section-marginalia">Start</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-2xl font-bold tracking-tight mb-4">Ready to build?</h2>
+              <h2 className="text-2xl font-bold tracking-tight mb-4">
+                Get the e-nose software that doesn&apos;t pretend.
+              </h2>
               <p className="text-muted-foreground mb-8">
-                Order the parts, assemble your e-nose, and Osmograph handles the rest.
+                Download it, connect a board, and record your first labeled session in minutes —
+                or start with the science and the build guide first.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link href="/enose" className="hex-btn hex-btn-primary">
-                  <Cpu className="w-4 h-4" />
-                  Build an e-nose
-                </Link>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+                <a href="https://github.com/opensmell/Osmograph/releases" target="_blank" rel="noopener noreferrer"
+                  className="hex-btn hex-btn-primary">
+                  <Download className="w-4 h-4" />
+                  Download Osmograph
+                  <ChevronRight className="w-4 h-4" />
+                </a>
                 <Link href="/smell-monitor" className="hex-btn hex-btn-outline">
                   <Monitor className="w-4 h-4" />
-                  Smell Monitor
+                  See the Smell Monitor
                 </Link>
                 <a href="https://github.com/opensmell/Osmograph" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-outline">
                   <GitBranch className="w-4 h-4" />
-                  GitHub
+                  Source code
                 </a>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border text-left">
+                {[
+                  { t: "New to e-noses?", d: "Start with the Academy primer and the $30 build guide.", href: "/academy/digitising-smell", cta: "Open the Academy" },
+                  { t: "Have hardware?", d: "Flash firmware and record your first session tonight.", href: "/enose", cta: "E-nose builder" },
+                  { t: "Buying systems?", d: "See how Osmograph runs a fleet of Smell Monitors.", href: "/smell-monitor", cta: "Smell Monitor" },
+                ].map((c) => (
+                  <Link key={c.t} href={c.href} className="bg-background p-6 hex-box group no-underline">
+                    <div className="text-sm font-semibold mb-1 group-hover:text-foreground">{c.t}</div>
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-4">{c.d}</p>
+                    <span className="text-xs font-medium inline-flex items-center gap-1.5 text-foreground">
+                      {c.cta} <ChevronRight className="w-3.5 h-3.5" />
+                    </span>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Search, Monitor, BarChart3, Cpu, BookOpen, ExternalLink, Github } from "lucide-react"
+import { Search, Monitor, BarChart3, Cpu, BookOpen, FileText, ExternalLink, Github } from "lucide-react"
 import MobileNav from "@/components/mobile-nav"
 
 export default function SiteHeader({ active }: { active?: string }) {
@@ -55,6 +55,7 @@ export default function SiteHeader({ active }: { active?: string }) {
           {link("/osmograph", <BarChart3 className="w-3.5 h-3.5" />, "Osmograph", "osmograph")}
           {link("/enose", <Cpu className="w-3.5 h-3.5" />, "E-Nose", "enose")}
           {link("/academy", <BookOpen className="w-3.5 h-3.5" />, "Academy", "academy")}
+          {link("/docs", <FileText className="w-3.5 h-3.5" />, "Docs", "docs")}
           <a
             href="https://discord.gg/CGER3tHxbH"
             target="_blank"

@@ -4,9 +4,62 @@ import { useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, GraduationCap, ChevronRight } from "lucide-react"
-import { articles } from "@/lib/articles"
+import { getArticle, articles } from "@/lib/articles"
 
 const filters = ["All", "Foundations", "Hardware", "Tutorial", "Research"]
+
+const curriculum: {
+  module: string
+  step: string
+  goal: string
+  essays: { slug: string; why: string }[]
+}[] = [
+  {
+    module: "Start here",
+    step: "01",
+    goal: "Understand why digital smell has no engineering stack yet — and the one OpenSmell is building.",
+    essays: [
+      { slug: "the-opensmell-stack", why: "Map of the whole project and the order to read the code." },
+      { slug: "digitising-smell", why: "The primer: why openness is a methodological necessity." },
+    ],
+  },
+  {
+    module: "Sensor physics",
+    step: "02",
+    goal: "Learn how a metal-oxide sensor turns a smell into a number, and what it can and cannot measure.",
+    essays: [
+      { slug: "how-mox-sensors-work", why: "The full physics chain from a SnO₂ film to a sample." },
+      { slug: "band-bending-and-power-law", why: "The chemistry behind a single MOX reading." },
+      { slug: "sensor-count-and-dimensionality", why: "How many sensors actually make a nose." },
+    ],
+  },
+  {
+    module: "Data & features",
+    step: "03",
+    goal: "See the container every recording flows through, then the auditable feature framework the SDK extracts.",
+    essays: [
+      { slug: "the-osmell-format", why: "The portable smell-recording container." },
+      { slug: "the-187-dimension-framework", why: "187 explained dimensions, one by one." },
+    ],
+  },
+  {
+    module: "Discipline",
+    step: "04",
+    goal: "Learn the walls: what a normalized reading does and does not mean, and how to evaluate a model honestly.",
+    essays: [
+      { slug: "interoperability-normalization-theorem", why: "What normalization can and cannot prove." },
+      { slug: "evaluating-e-nose-models", why: "Score a model the way it will actually be used." },
+    ],
+  },
+  {
+    module: "Evidence",
+    step: "05",
+    goal: "See what the stack actually does on real data, through one shared evaluation protocol.",
+    essays: [
+      { slug: "the-u-suite-use-cases", why: "Six evaluations, one shared protocol." },
+    ],
+  },
+]
 
 export default function AcademyPage() {
   const [activeFilter, setActiveFilter] = useState("All")
@@ -67,54 +120,63 @@ export default function AcademyPage() {
         </section>
 
         <section className="border-t border-border py-16 bg-grid">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="flex items-center justify-center gap-3 mb-3">
               <span className="hex-icon text-muted-foreground" />
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Not sure where to begin?</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Read the Academy in order</h2>
               <span className="hex-icon text-muted-foreground" />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border max-w-5xl mx-auto">
-              {[
-                {
-                  step: "01",
-                  title: "Why digital smell matters",
-                  desc: "The primer — why smell lacks an engineering stack, and why openness is a methodological necessity.",
-                  href: "/academy/digitising-smell",
-                  cat: "Foundations",
-                },
-                {
-                  step: "02",
-                  title: "How the sensor works",
-                  desc: "From a SnO₂ film to a sample number — the full physics signal chain in plain language.",
-                  href: "/academy/the-signal-chain",
-                  cat: "Hardware",
-                },
-                {
-                  step: "03",
-                  title: "Build your first e-nose",
-                  desc: "A $30 weekend build with an ESP32 and MOX modules, ending in a working classifier.",
-                  href: "/academy/building-your-first-e-nose",
-                  cat: "Tutorial",
-                },
-              ].map((s) => (
-                <Link
-                  key={s.step}
-                  href={s.href}
-                  className="bg-background p-8 hex-box group border-r border-b border-border last:border-r-0 sm:last:border-r lg:border-b-0 no-underline"
-                >
-                  <span className="text-muted-foreground opacity-50 font-mono text-xs">{s.step}</span>
-                  <h3 className="text-base font-semibold mb-1 mt-4 group-hover:text-muted-foreground transition-colors">{s.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed mb-4">{s.desc}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-muted-foreground border border-border px-2 py-0.5 uppercase tracking-wider">{s.cat}</span>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+            <p className="text-center text-sm text-muted-foreground mb-10 max-w-2xl mx-auto">
+              A modular path that builds from first principles. Each module lists its
+              essays in reading order — follow a module, or jump to any essay below.
+            </p>
+            <div className="grid grid-cols-1 gap-px bg-border">
+              {curriculum.map((m) => (
+                <div key={m.module} className="bg-background p-6 sm:p-8">
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8">
+                    <div className="shrink-0">
+                      <span className="text-muted-foreground opacity-50 font-mono text-xs">{m.step}</span>
+                      <h3 className="text-lg font-semibold mt-1">{m.module}</h3>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-muted-foreground leading-relaxed mb-4">{m.goal}</p>
+                      <ol className="flex flex-col gap-1">
+                        {m.essays.map((e, i) => {
+                          const art = getArticle(e.slug)
+                          if (!art) return null
+                          return (
+                            <li key={e.slug}>
+                              <Link
+                                href={`/academy/${e.slug}`}
+                                className="group flex items-baseline gap-3 px-3 py-2 hover:bg-foreground hover:text-background transition-colors no-underline"
+                              >
+                                <span className="font-mono text-[10px] text-muted-foreground group-hover:text-background/60 shrink-0">
+                                  {m.step}.{i + 1}
+                                </span>
+                                <span className="min-w-0">
+                                  <span className="block text-sm font-medium truncate">
+                                    {art.title}
+                                    <span className="ml-2 text-[10px] uppercase tracking-wider text-muted-foreground group-hover:text-background/60">
+                                      {art.readTime}
+                                    </span>
+                                  </span>
+                                  <span className="block text-xs text-muted-foreground group-hover:text-background/70 leading-relaxed">
+                                    {e.why}
+                                  </span>
+                                </span>
+                              </Link>
+                            </li>
+                          )
+                        })}
+                      </ol>
+                    </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
             <p className="text-center text-xs text-muted-foreground mt-6 max-w-xl mx-auto">
-              Three guided steps cover the essentials — then pick any path below.
-              All 21 essays are written for newcomers; nothing assumes prior knowledge.
+              This sequence mirrors the project's own onboarding order. All 21 essays are
+              written for newcomers; nothing assumes prior knowledge.
             </p>
           </div>
         </section>

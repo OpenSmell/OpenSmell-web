@@ -206,7 +206,7 @@ Log temperature and humidity from the BME680 alongside every reading. MOX sensor
 
 ## From Raw Traces to Features
 
-The raw time-series is high-dimensional and noisy. The OpenSmell Python SDK extracts a **145-dimensional feature framework** from each exposure: per-sensor baseline-normalised response, rise and fall slopes, peak, \`t90\` (time to 90% of max response), area under the curve, integral ratios, and cross-sensor ratios. You can start with a tiny subset yourself:
+The raw time-series is high-dimensional and noisy. The OpenSmell Python SDK extracts a **187-dimensional feature framework** from each exposure: per-sensor baseline-normalised response, rise and fall slopes, peak, \`t90\` (time to 90% of max response), area under the curve, integral ratios, and cross-sensor ratios. You can start with a tiny subset yourself:
 
 - **Peak ΔG/G₀** per sensor
 - **Rise slope** (max \`dG/dt\` during exposure)
@@ -248,7 +248,7 @@ The UCI Gas Sensor Array Drift dataset is the field's cautionary tale: 13,910 me
 ## Where to Go Next
 
 - Flash the **Osmograph** firmware to get a zero-code GUI: flash, record, train, done.
-- Use the **OpenSmell Python SDK** (\`pip install opensmell\`) for the full 145-feature framework and pretrained classifiers.
+- Use the **OpenSmell Python SDK** (\`pip install opensmell\`) for the full 187-feature framework and pretrained classifiers.
 - Contribute your recordings to the OpenSmell data commons—every labeled, timestamped trace makes the open stack better for everyone.
 
 ## Safety Notes
@@ -866,7 +866,7 @@ The cardinal sin is evaluating a representation on molecules that resemble your 
 
 ## Where the Chemoprint Fits
 
-The chemoprint is the *molecule* half of the representation stack. The *sensor* half is the feature framework the OpenSmell SDK extracts from raw traces (145 dimensions of temporal response features). Together they cover both ends: what's in the air, and what the instrument measured. Two representations, one open stack, zero lock-in.
+The chemoprint is the *molecule* half of the representation stack. The *sensor* half is the feature framework the OpenSmell SDK extracts from raw traces (28 per channel + one selectivity ratio per channel pair + 4 global metrics — 187 dimensions at the canonical six channels). Together they cover both ends: what's in the air, and what the instrument measured. Two representations, one open stack, zero lock-in.
 
 ## Sources & Further Reading
 

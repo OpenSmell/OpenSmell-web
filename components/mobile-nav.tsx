@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Search, Monitor, BarChart3, Cpu, BookOpen, MessageSquare, Github } from "lucide-react"
+import { Menu, X, Search, Monitor, BarChart3, Cpu, BookOpen, FileText, MessageSquare, Github } from "lucide-react"
 
 const links = [
   { label: "Search", href: "/search", icon: Search },
@@ -10,6 +10,7 @@ const links = [
   { label: "Osmograph", href: "/osmograph", icon: BarChart3 },
   { label: "E-Nose", href: "/enose", icon: Cpu },
   { label: "Academy", href: "/academy", icon: BookOpen },
+  { label: "Docs", href: "/docs", icon: FileText },
 ]
 
 export default function MobileNav() {

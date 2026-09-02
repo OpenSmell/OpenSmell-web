@@ -70,7 +70,7 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <div className="max-w-5xl mx-auto px-6 pt-28 pb-8">
         <div className="border border-border p-4 mb-8">
           <div className="flex gap-3">
@@ -78,7 +78,7 @@ export default function SearchPage() {
               <div className="text-xs text-muted-foreground mb-2 font-mono">
                 {type === "odor" ? "SEARCH BY ODOR" : "SEARCH BY CHEMICAL"}
               </div>
-              <div className="flex items-center border border-border">
+              <div className="flex flex-wrap sm:flex-nowrap items-center border border-border">
                 <div className="px-3 text-muted-foreground">
                   <Search className="w-4 h-4" />
                 </div>
@@ -96,16 +96,16 @@ export default function SearchPage() {
                     }
                   }}
                 />
-                <div className="flex border-l border-border">
+                <div className="flex border-l border-border sm:border-l w-full sm:w-auto mt-px sm:mt-0">
                   <Link
                     href={`/search?type=odor&q=${encodeURIComponent(q)}`}
-                    className={`px-3 py-2.5 text-xs transition-colors ${type === "odor" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
+                    className={`flex-1 sm:flex-none px-3 py-2.5 text-xs text-center whitespace-nowrap transition-colors ${type === "odor" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
                   >
                     Odor
                   </Link>
                   <Link
                     href={`/search?type=chemical&q=${encodeURIComponent(q)}`}
-                    className={`px-3 py-2.5 text-xs transition-colors ${type === "chemical" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
+                    className={`flex-1 sm:flex-none px-3 py-2.5 text-xs text-center whitespace-nowrap transition-colors ${type === "chemical" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
                   >
                     Chemical
                   </Link>
@@ -158,7 +158,7 @@ export default function SearchPage() {
               <div className="text-4xl mb-4 text-muted-foreground">⌕</div>
               <h3 className="text-lg font-semibold mb-2">No results found</h3>
               <p className="text-sm text-muted-foreground mb-6">
-                Try different search terms or browse by odor descriptors.
+                Try a full chemical name, CAS number, or an odor descriptor.
               </p>
               <div className="flex flex-wrap gap-2 justify-center">
                 {["sweet", "fruity", "floral", "woody"].map((term) => (
@@ -171,6 +171,17 @@ export default function SearchPage() {
                   </Link>
                 ))}
               </div>
+              <p className="text-xs text-muted-foreground mt-6">
+                Curious how this database is built? See the{" "}
+                <Link href="/docs/data-model" className="underline underline-offset-4 hover:text-foreground">
+                  data model
+                </Link>{" "}
+                and the{" "}
+                <Link href="/docs" className="underline underline-offset-4 hover:text-foreground">
+                  SDK docs
+                </Link>
+                .
+              </p>
             </div>
           </div>
         ) : (

@@ -333,10 +333,10 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { label: "Benchmark samples", value: "838K" },
-                { label: "Accuracy, corrected", value: "93.3%" },
-                { label: "Raw baseline", value: "71.4%" },
-                { label: "MOX sensor types", value: "10" },
+                { label: "Open benchmark samples", value: "838K" },
+                { label: "Accuracy, scored out-of-sample", value: "93.3%" },
+                { label: "Everything open source", value: "MIT" },
+                { label: "SDKs for Python & Rust", value: "2" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 font-mono">{stat.value}</div>
@@ -345,11 +345,12 @@ export default function Home() {
               ))}
             </div>
             <p className="text-center text-[11px] text-muted-foreground/70 font-mono mt-3">
-              Numbers from the OpenSmell framework paper — see{" "}
+              Accuracy and benchmark measured on open data — see how we score it
+              honestly in{" "}
               <a href="https://github.com/opensmell/interoperability" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
                 github.com/opensmell/interoperability
-              </a>{" "}
-              for the measured experiments, bounds, and honest limitations.
+              </a>
+              .
             </p>
           </div>
         </section>
@@ -361,14 +362,22 @@ export default function Home() {
             <div className="text-center mb-10">
               <div className="coord-tag mb-3">Get Started</div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                Start with the one step that fits you
+                Find your starting point
               </h2>
               <p className="text-muted-foreground text-sm mt-2 max-w-xl mx-auto">
-                Four ways in — pick the one closest to what you want to do.
+                Whether you&apos;re buying, learning, building, coding, or researching — pick the path closest to you.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-border">
               {[
+                {
+                  eyebrow: "I want to deploy",
+                  icon: Factory,
+                  title: "Monitor my process",
+                  desc: "Continuous chemical monitoring for businesses — a ready Smell Monitor array, not a DIY project.",
+                  cta: "See the Smell Monitor",
+                  href: "/smell-monitor",
+                },
                 {
                   eyebrow: "I want to learn",
                   icon: BookOpen,
@@ -379,7 +388,7 @@ export default function Home() {
                 },
                 {
                   eyebrow: "I want to build",
-                  icon: Cpu,
+                  icon: Wrench,
                   title: "Build an e-nose",
                   desc: "A $30 weekend build guide. ESP32, a few MOX modules, and a working classifier by Monday.",
                   cta: "Open the build guide",
@@ -397,7 +406,7 @@ export default function Home() {
                   eyebrow: "I want to research",
                   icon: FlaskConical,
                   title: "Dive into the data",
-                  desc: "Open datasets, the framework paper, and explicit open questions the project wants the field to answer.",
+                  desc: "Open datasets, the framework paper, and explicit open questions the project wants answered.",
                   cta: "Read the research",
                   href: "https://github.com/opensmell/interoperability",
                 },
@@ -405,7 +414,7 @@ export default function Home() {
                 <Link
                   key={g.title}
                   href={g.href}
-                  className="bg-background p-8 hex-box group border-r border-b border-border last:border-r-0 sm:last:border-r lg:border-b-0 no-underline"
+                  className="bg-background p-6 hex-box group border-r border-b border-border last:border-r-0 sm:last:border-r lg:border-b-0 no-underline"
                 >
                   <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">{g.eyebrow}</span>
                   <g.icon className="w-6 h-6 mb-4 mt-5 text-muted-foreground group-hover:text-foreground transition-colors" />
