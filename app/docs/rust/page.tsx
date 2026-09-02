@@ -21,7 +21,7 @@ export default function RustDocsPage() {
     <DocsShell
       title="Rust SDK"
       active="/docs/rust"
-      subtitle="Reference for the opensmell Rust crate — MOX e-nose feature extraction, anomaly detection, calibration, health/fleet monitoring, the OSM serial protocol, classifier training, and live classification. Core logic mirrors the Python SDK and web stack, kept equal by tests."
+      subtitle="Reference for the opensmell Rust crate — MOX e-nose feature extraction, anomaly detection, calibration, health/fleet monitoring, the OSM serial protocol, classifier training, and live classification. The crate is the compute core: native-speed numeric pipelines for embedded and real-time use, with minimal I/O by design."
     >
       <H2>Overview</H2>
       <P>
@@ -227,9 +227,13 @@ let feats = extract_features(&reading, &baseline, groups)?;`}
         chrono, and log.
       </P>
       <Callout kind="note">
-        The Rust crate operates on CSV and JSON (serde). The portable .osmell ZIP container
-        is implemented in the Python SDK, web platform, and the desktop app&apos;s Rust backend
-        — the crate itself keeps I/O minimal by design.
+        The Rust crate is the compute core, not a full-stack SDK. It operates on CSV and JSON
+        (serde) because the numeric pipeline — feature extraction, classification, anomaly
+        detection — is the hot path, and the crate is designed to run on embedded targets
+        (ESP32 firmware) and real-time desktop streams without a Python runtime or ZIP
+        dependency. The portable <Code>.osmell</Code> container, typed descriptors, and the
+        ingest chain live in the Python SDK, web platform, and the desktop app&apos;s Tauri
+        backend, which handle the container I/O the crate deliberately skips.
       </Callout>
     </DocsShell>
   )

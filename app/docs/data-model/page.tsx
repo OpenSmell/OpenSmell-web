@@ -12,7 +12,7 @@ import {
 export const metadata = {
   title: "Data model & .osmell — OpenSmell Docs",
   description:
-    "The .osmell portable recording container, the OpenSmell data model, and the honesty rules governing what derived claims are allowed to assert.",
+    "The .osmell portable recording container, the OpenSmell data model, and the limitations governing what derived claims can assert.",
 }
 
 export default function DataModelDocsPage() {
@@ -20,7 +20,7 @@ export default function DataModelDocsPage() {
     <DocsShell
       title="Data model & .osmell"
       active="/docs/data-model"
-      subtitle="The contract every piece of the stack shares: the portable .osmell recording container, the typed data model, the 187-dimension feature framework, and the honesty rules that govern derived claims."
+      subtitle="The contract every piece of the stack shares: the portable .osmell recording container, the typed data model, the 187-dimension feature framework, and the limitations that govern derived claims."
     >
       <H2>The .osmell container</H2>
       <P>
@@ -103,35 +103,21 @@ export default function DataModelDocsPage() {
         trained with six channels is never silently run on five by padding a dead channel with
         a mean.
       </P>
-      <Callout kind="honest">
-        187 dimensions is not a number to be impressed by. It is a number to be{" "}
-        <em>explained</em>: every feature has a name, a category, a transfer class, and a
-        failure mode. The vector may be high-dimensional, but the model never treats two
-        same-family MOX channels as independent — effective dimensionality is far below the
-        raw channel count.
-      </Callout>
-
-      <H2>Honesty rules</H2>
       <P>
-        Every piece of public content in the stack obeys a written honesty contract. Its
-        substance, grounded in verified results:
+        Every feature has a name, a category, a transfer class, and a failure mode — the
+        vector is high-dimensional, but the model does not treat two same-family MOX channels
+        as independent: effective dimensionality is well below the raw (187) channel count.
       </P>
+
+      <H2>Known limitations</H2>
       <Ul
         items={[
-          <span key="1"><strong>Affine calibration failed</strong> on real cross-device data (47% → 33%); the engine never claims calibrated ppm — headspace ppm is a thermodynamic estimate.</span>,
-          <span key="2"><strong>Six pure anchors cannot cover odorant space</strong> (≈0.1% of 4,565 odorants); the design ships a contribution loop, not a "calibrate to these bottles" flow.</span>,
-          <span key="3"><strong>Session invariance comes from learning, not magic</strong> — 81.78% on held-out sessions, for <em>trained</em> substances; not zero-shot generalizable.</span>,
-          <span key="4"><strong>Effective dimensionality ≪ sensor count</strong> — two same-family MOX ≈ 1 dimension; humidity is common-mode across SnO₂.</span>,
-          <span key="5"><strong>Drift / batch ±20% / humidity set the capture rules</strong> — the protocol always prescribes clean-air baseline → exposure → recovery.</span>,
-          <span key="6"><strong>Normalization is a menu, kept open</strong> — z-scores beat R_s/R₀ for encoder input; paradigm features beat statistical features cross-device; .osmell preserves raw + baseline so any client picks its own.</span>,
+          <span key="1">Affine calibration degrades cross-device (47% → 33%); the engine reports calibrated ppm only as a thermodynamic estimate.</span>,
+          <span key="2">Session invariance comes from learning, not architecture: 81.78% on held-out sessions, for <em>trained</em> substances — not zero-shot generalization.</span>,
+          <span key="3">Two same-family MOX channels are ≈1 effective dimension; humidity is common-mode across SnO₂.</span>,
+          <span key="4">A verdict is a physical feasibility estimate, not a promise across unseen devices or a substitute for capture discipline.</span>,
         ]}
       />
-      <Callout kind="honest">
-        The distilled rule: a verdict is a <em>physical feasibility estimate</em>; it is not a
-        calibrated concentration, a guarantee of mixture decomposition, a promise across
-        unseen devices, or a replacement for capture discipline. Quantified claims are
-        reported together with the method that produced them.
-      </Callout>
 
       <H2>Representation stack</H2>
       <P>

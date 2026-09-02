@@ -219,13 +219,11 @@ export default function DesktopDocsPage() {
         desktop and SDK agree.
       </P>
 
-      <H2>Honesty & limits</H2>
-      <Callout kind="honest">
-        This app is engineered to not overclaim. It will say "measured phenotype", not
-        "identified smell"; it will say a model was evaluated by LORO, not that it generalizes
-        to unseen devices; it will report quality flags rather than hiding them; and it holds
-        your HF write token in memory only. Anything presented as validated is backed by a
-        test-evaluated pipeline; anything not validated is labelled as such.
+      <H2>Scope of claims</H2>
+      <Callout kind="note">
+        The app reports a <em>measured phenotype</em>, not an identified smell, and presents
+        model quality as LORO-evaluated rather than proof of generalization to unseen devices.
+        Quality flags are always shown, never hidden.
       </Callout>
     </DocsShell>
   )

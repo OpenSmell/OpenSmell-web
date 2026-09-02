@@ -1586,7 +1586,7 @@ A structured taxonomy changes how you work with a model in three practical ways:
 
 ## The Bottom Line
 
-187 dimensions is not a number to be impressed by — it is a number to be *explained*. The framework's entire point is that the feature space is auditable: every one of the 187 has a name, a category, a transfer class, and a failure mode. That is the difference between a feature extractor and a *feature framework*, and it is why the same taxonomy appears, 1:1, in the Python SDK and the TypeScript web stack, kept equal by tests.
+Every one of the 187 features has a name, a category, a transfer class, and a failure mode — the feature space is auditable. That is what separates a feature extractor from a *feature framework*, and it is why the same taxonomy appears, 1:1, in the Python SDK and the TypeScript web stack, kept equal by tests.
 
 ## Sources & Further Reading
 
@@ -1974,18 +1974,18 @@ The stack's most distinctive engineering decision: **core logic exists twice, in
 
 Why run the same logic twice? Because the SDK serves Python researchers and the web platform serves browser users, and if the two implementations ever disagree — a feature off by one, a normalization subtly different — every downstream comparison across the stack inherits the bug. Mirroring by test turns "are these the same?" from a hope into a build-time fact. This is the same discipline that drives the \`.osmell\` format to be self-describing: the stack would rather fail loudly on a mismatch than silently produce two different answers.
 
-## The Honesty Rules
+## Limitations
 
-The stack carries a document of *honesty rules* that every piece of public content must obey. Their substance:
+A few facts worth knowing before you quote a number from this Academy:
 
-1. **Affine calibration failed** on real cross-device data (47% → 33%); the engine never claims calibrated ppm — headspace ppm is a thermodynamic estimate.
-2. **Six pure anchors cannot cover odorant space** (≈0.1% of 4,565 odorants); the design ships a contribution loop, not a "calibrate to these bottles" flow.
-3. **Session invariance comes from learning, not magic** — 81.78% on held-out sessions, for *trained* substances; not zero-shot generalizable.
-4. **Effective dimensionality ≪ sensor count** — two same-family MOX ≈ 1 dimension; humidity is common-mode across SnO₂.
-5. **Drift / batch ±20% / humidity set the capture rules** — the protocol always prescribes clean-air baseline → exposure → recovery.
-6. **Normalization is a menu, kept open** — z-scores beat R_s/R₀ for encoder input; paradigm features beat statistical features cross-device; \`.osmell\` preserves raw + baseline so any client picks its own.
+1. Affine calibration degrades cross-device (47% → 33%); the engine reports calibrated ppm only as a thermodynamic estimate.
+2. Six pure anchors cannot cover odorant space (≈0.1% of 4,565 odorants); the design ships a contribution loop, not a "calibrate to these bottles" flow.
+3. Session invariance comes from learning, not architecture: 81.78% on held-out sessions, for *trained* substances — not zero-shot generalization.
+4. Effective dimensionality ≪ sensor count — two same-family MOX ≈ 1 dimension; humidity is common-mode across SnO₂.
+5. Drift / batch ±20% / humidity set the capture rules — the protocol prescribes clean-air baseline → exposure → recovery.
+6. Normalization is a menu, kept open — z-scores beat R_s/R₀ for encoder input; paradigm features beat statistical features cross-device; \`.osmell\` preserves raw + baseline so any client picks its own.
 
-Every essay in this Academy that quotes a number is quoting a result that passed through these rules. The "is / is-not" table is the distilled form: a verdict *is* a physical feasibility estimate; it *is not* a calibrated concentration, a guarantee of mixture decomposition, a promise across unseen devices, or a replacement for capture discipline.
+A verdict is a physical feasibility estimate: it is not a calibrated concentration, a guarantee of mixture decomposition, a promise across unseen devices, or a replacement for capture discipline.
 
 ## Where to Start Reading
 
@@ -2001,9 +2001,9 @@ The project's own onboarding order, which doubles as an Academy reading order:
 
 Each Academy essay carries a "Sources & Further Reading" section that points back to the master reference section it came from, so the code is never more than one click away.
 
-## Known Gaps, Published Alongside Everything Else
+## Known Gaps
 
-The same honesty rules apply to the project's own open items, which are tracked publicly: the training pipeline, the MINPACK decay-minima reproducibility caveat, and the unification of the canonical feature extractor. The calibration hooks and the hardware-insufficiency gate are done and shipped; the *firmware* calibration mode and any real labeled-concentration hardware validation are still open. They are listed as open because the stack's contract is that gaps are named, not hidden.
+Open items are tracked publicly: the training pipeline, the MINPACK decay-minima reproducibility caveat, and the unification of the canonical feature extractor. The calibration hooks and the hardware-insufficiency gate are done and shipped; the *firmware* calibration mode and any real labeled-concentration hardware validation are still open.
 
 ## The Point of the Map
 
@@ -2105,7 +2105,7 @@ Most real targets are not a single curated molecule. A ripe banana is dozens of 
 
 If you know the material's constituents — as SMILES strings or formulas and rough weight fractions — the engine runs the full four-step chain **per constituent** and produces a weighted composite verdict. A banana's profile, for example, is dominated by isoamyl acetate (an ester — green reactivity, moderate volatility), backed by ethyl butyrate and 2-methyl-1-butanol; each contributes a verdict proportional to its share of the headspace.
 
-This keeps the honesty rules intact: the engine is not hallucinating a compound it cannot identify. If you supply \`O=C=O\` it tells you it is carbon dioxide — an inert oxide with no reducing chemistry — and grades it red for MOX reactivity, regardless of how strongly you might associate "CO₂" with a smell. The verdict always traces back to the chemistry you actually handed it.
+The engine does not hallucinate a compound it cannot identify. If you supply \`O=C=O\` it tells you it is carbon dioxide — an inert oxide with no reducing chemistry — and grades it red for MOX reactivity, regardless of how strongly you might associate "CO₂" with a smell. The verdict always traces back to the chemistry you actually handed it.
 
 ## Making It Falsifiable
 

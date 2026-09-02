@@ -54,7 +54,7 @@ export function Callout({
     warn: "border-amber-500/60",
     honest: "border-emerald-600/50",
   }[kind]
-  const label = { note: "Note", warn: "Caution", honest: "Honesty rule" }[kind]
+  const label = { note: "Note", warn: "Caution", honest: "Caveat" }[kind]
   return (
     <div className={`border-l-2 ${styles} pl-4 py-1 my-4`}>
       <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">

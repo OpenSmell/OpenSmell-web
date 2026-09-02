@@ -30,14 +30,14 @@ const foundations = [
   {
     title: "Data model & the .osmell format",
     href: "/docs/data-model",
-    desc: "The portable ZIP container every recording flows through: manifest, CSV member, events, and the honesty rules that govern derived claims.",
+    desc: "The portable ZIP container every recording flows through: manifest, CSV member, events, and the limitations that govern derived claims.",
   },
 ]
 
 export const metadata = {
   title: "OpenSmell Docs — Reference & guides",
   description:
-    "Reference for the OpenSmell Python SDK, Rust SDK, and Osmograph Desktop app, plus the .osmell data contract and honesty model.",
+    "Reference for the OpenSmell Python SDK, Rust SDK, and Osmograph Desktop app, plus the .osmell data contract and its limitations.",
 }
 
 export default function DocsPage() {
