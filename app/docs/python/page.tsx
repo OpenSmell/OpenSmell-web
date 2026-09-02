@@ -22,7 +22,7 @@ export default function PythonDocsPage() {
     <DocsShell
       title="Python SDK"
       active="/docs/python"
-      subtitle="Reference for the opensmell Python package (v3.0.0). Covers .osmell I/O, ingest, feature extraction, quality scoring, calibration, the hardware-insufficiency gate, and the MOX thermodynamic feasibility chain."
+      subtitle="Reference for the opensmell Python package. Covers .osmell I/O, ingest, feature extraction, quality scoring, calibration, the hardware-insufficiency gate, and the MOX thermodynamic feasibility chain."
     >
       <H2>Install</H2>
       <P>
@@ -54,49 +54,45 @@ opensmell.feature_names()
 from opensmell import smellability
 verdict = smellability.resolve_and_run("ethanol", "chemical")</CodeBlock>
 
-      <H2>API vintage</H2>
+      <H2>API surface</H2>
       <P>
-        The package carries two public generations. The <strong>v3 sensor-agnostic</strong>{" "}
-        API operates on <Code>.osmell</Code> files and typed descriptors; the{" "}
-        <strong>legacy v2</strong> API operates directly on CSVs and is kept for backwards
-        compatibility. Both are exposed at the package root. The smoke detector: v3 functions
-        take an <Code>OsmellFile</Code> or a path and return typed dataclasses; legacy
-        functions take a CSV path and return numpy/{"Pipeline"} results.
+        The package exposes a <strong>single coherent API</strong> at the root — there are no
+        separate public generations. One flat namespace mirrors one framework: typed
+        descriptors and <Code>.osmell</Code> containers for I/O, plus the same internal
+        machinery surfaced through both the low-level functions and the convenience wrappers{" "}
+        (<Code>load_recording</Code>, <Code>extract_features</Code>, <Code>train</Code>,{" "}
+        <Code>process</Code>, <Code>predict</Code> are thin wrappers over the same
+        framework, not a separate legacy stack). The groups below are organizational
+        categories, not API tiers.
       </P>
       <Table
         head={["Category", "API"]}
         rows={[
           [
-            "Legacy v2",
-            <span key="l">
-              <Code>process</Code>, <Code>train</Code>, <Code>predict</Code>,{" "}
-              <Code>load_recording</Code>, <Code>extract_features</Code>,{" "}
-              <Code>feature_names</Code>, <Code>SmellResult</Code>
-            </span>,
-          ],
-          [
-            "v3 I/O",
-            <span key="v3">
+            "Container I/O",
+            <span key="io">
               <Code>parse_osmell</Code>, <Code>parse_osmell_file</Code>,{" "}
               <Code>build_osmell</Code>, <Code>write_osmell</Code>, <Code>csv_from_file</Code>,{" "}
               <Code>default_file_name</Code>
             </span>,
           ],
           [
-            "v3 ingest",
+            "Ingest",
             <span key="i">
               <Code>parse_csv</Code>, <Code>guess_sensor_type</Code>, <Code>ingest_file</Code>,{" "}
               <Code>ingest_folder</Code>, <Code>build_osmell_file</Code>
             </span>,
           ],
           [
-            "v3 processing",
+            "Processing & features",
             <span key="p">
-              <Code>run_processor</Code>, <Code>process_mox</Code>, <Code>compute_quality</Code>
+              <Code>run_processor</Code>, <Code>process_mox</Code>,{" "}
+              <Code>extract_features</Code>, <Code>feature_names</Code>,{" "}
+              <Code>compute_quality</Code>
             </span>,
           ],
           [
-            "v3 calibration",
+            "Calibration",
             <span key="c">
               <Code>two_point_calibration</Code>, <Code>fit_power_law</Code>,{" "}
               <Code>loocv_power_law</Code>, <Code>invert_concentration</Code>,{" "}
@@ -105,14 +101,14 @@ verdict = smellability.resolve_and_run("ethanol", "chemical")</CodeBlock>
             </span>,
           ],
           [
-            "v3 hardware gate",
+            "Hardware gate",
             <span key="h">
               <Code>check_rig_sufficiency</Code>, <Code>effective_dims</Code>,{" "}
               <Code>min_effective_dimensions</Code>, <Code>implied_channels</Code>
             </span>,
           ],
           [
-            "v3 smellability",
+            "Smellability",
             <span key="s">
               <Code>smellability</Code> (subpackage) — <Code>resolve_and_run</Code>,{" "}
               <Code>chemical_from_smiles</Code>, verdict types
@@ -229,7 +225,7 @@ verdict = smellability.resolve_and_run("ethanol", "chemical")</CodeBlock>
         rows={[
           [<Code key="a">run_processor</Code>, <Code>run_processor(file: OsmellFile) → dict</Code>, "Dispatch by sensor_type: MOX → process_mox; miris/electrochemical → raw data (no extractor yet); other → marker dict."],
           [<Code key="b">process_mox</Code>, <Code>process_mox(file) → dict</Code>, "Per-channel kinetic features mirroring the web processMox; returns features + normalized series."],
-          [<Code key="c">extract_features</Code>, <Code>extract_features(filepath) → tuple</Code>, "Legacy: full framework vector (array, names)."],
+          [<Code key="c">extract_features</Code>, <Code>extract_features(filepath) → tuple</Code>, "Full framework vector (array, names) from a CSV."],
           [<Code key="d">feature_names</Code>, <Code>feature_names() → list</Code>, "Ordered feature names (187 at the fixed 6-channel extractor)."],
         ]}
       />
@@ -358,14 +354,16 @@ verdict = smellability.resolve_and_run("ethanol", "chemical")</CodeBlock>
         24→10000).
       </P>
 
-      <H2>Legacy v2 API</H2>
+      <H2>Convenience pipeline API</H2>
       <P>
-        The CSV-based v2 API is preserved for backwards compatibility.{" "}
-        <Code>load_recording</Code> loads+normalizes a CSV; <Code>extract_features</Code>{" "}
-        segments and extracts the framework; <Code>train</Code> builds a standard-scaler +
-        random-forest pipeline (attaching the dimensional floor); <Code>process</Code> /
-        <Code>predict</Code> run the full pipeline and return a <Code>SmellResult</Code> with a{" "}
-        <Code>chemoprint</Code> property (a fixed-length 29-element slice).
+        The low-level machinery is also surfaced through a convenience pipeline for the
+        common CSV flow. <Code>load_recording</Code> loads and normalizes a CSV;{" "}
+        <Code>extract_features</Code> segments and extracts the framework; <Code>train</Code>{" "}
+        builds a standard-scaler + random-forest <Code>Pipeline</Code> (attaching the
+        dimensional floor); <Code>process</Code> / <Code>predict</Code> run the full pipeline
+        and return a <Code>SmellResult</Code> with a <Code>chemoprint</Code> property (a
+        fixed-length 29-element slice). These are thin wrappers over the same framework as the
+        rest of the package — a convenience entry point, not a separate API tier.
       </P>
 
       <H2>Constants table</H2>
