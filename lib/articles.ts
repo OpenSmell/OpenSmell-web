@@ -656,6 +656,12 @@ On the data side, **Pyrfume** (led by the Monell Chemical Senses Center) began a
 
 In 2023, **Osmo** (a Google Research spinout) published the **Principal Odor Map** in *Science*: a graph neural network trained on 5,000 molecules that predicts human odor descriptors from molecular structure, generalises to never-before-smelled molecules, and beats single-panelist consensus prediction. It was the strongest demonstration yet that *olfaction is learnable from structure*. [We review it in depth here.](/academy/review-osmo-machine-olfaction)
 
+## 2025–2026: Open Data Meets Commodity MOX
+
+Where the deep-learning landmark worked from **structure**, the open-data era began working from **sensors**. In 2025, the **MIT Media Lab's** Machine Intelligence group released **SmellNet** — a benchmark built from **portable, low-cost MOX gas sensors** rather than lab instruments. It is exactly the "open primitive" this timeline keeps circling: **828K sensor timesteps**, **50 base substances** across nuts, spices, herbs, fruits, and vegetables, **43 controlled mixtures**, and **68 hours** of recordings, organised into a 50-way classification task (SmellNet-Base) and a mixture-ratio prediction task. It also introduced **ScentFormer**, a temporal model that learns from multichannel sensor time series with optional training-time GC-MS supervision — showing that the *temporal dynamics* of a metal-oxide array carry signal that a static feature vector leaves on the table.
+
+SmellNet matters to this history for two reasons. First, it is the field's clearest sign that **commodity MOX sensors are now good enough to anchor a serious open benchmark** — the same sensor class at the bottom of this stack, at scale, in public. Second, its honest results are a reality check: its authors report that **generalization to unseen mixtures remains a core challenge**. The open datasets exist; the open *standard* is still being built. That is precisely the gap OpenSmell is trying to close.
+
 ## 2026: The Open-Stack Moment
 
 Here is the thesis, stated plainly:
@@ -676,6 +682,7 @@ The technology to digitise smell has existed, in pieces, since 1962. What has be
 - Nobel Prize in Physiology or Medicine 2004: <https://www.nobelprize.org>
 - Vergara, A. et al. UCI gas sensor drift dataset (2012).
 - Lee, B. K. et al. *Science* 381, 999–1006 (2023).
+- Feng, D. et al. *SmellNet: A Large-Scale Dataset for Real-World Smell Recognition*, ICLR 2026. <https://arxiv.org/abs/2506.00239>
 `,
   },
   {
