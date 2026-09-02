@@ -110,7 +110,7 @@ export default function OsmographPage() {
                 <a href="https://mox.opensmell.xyz" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-outline">
                   <Globe className="w-4 h-4" />
-                  Try a live e-nose online
+                  Try it live
                 </a>
               </div>
             </div>
