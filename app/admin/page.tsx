@@ -11,6 +11,7 @@ const AUTH_KEY = "opensmell-admin-auth"
 const STORAGE_KEY = "opensmell-admin-articles"
 const HASH_KEY = "opensmell-admin-hash"
 const categories: ArticleCategory[] = ["Foundations", "Hardware", "Tutorial", "Research"]
+const UMAMI_SHARE_URL = process.env.NEXT_PUBLIC_UMAMI_SHARE_URL
 
 async function sha256(text: string): Promise<string> {
   const data = new TextEncoder().encode(text)
@@ -105,6 +106,7 @@ export default function AdminPage() {
   const [toast, setToast] = useState("")
   const [subs, setSubs] = useState<AppStoreSubmission[]>([])
   const [subTab, setSubTab] = useState<"pending" | "approved" | "rejected">("pending")
+  const [view, setView] = useState<"articles" | "analytics">("articles")
 
   useEffect(() => {
     if (sessionStorage.getItem(AUTH_KEY) === "1") {
@@ -293,6 +295,25 @@ export default function AdminPage() {
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-px bg-border min-h-[70vh]">
           <aside className="bg-background p-4 flex flex-col gap-1">
+            <div className="flex gap-1 mb-3">
+              <button
+                onClick={() => setView("articles")}
+                className={`flex-1 px-3 py-2 text-sm transition-all ${
+                  view === "articles" ? "bg-foreground text-background" : "border border-border text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Articles
+              </button>
+              <button
+                onClick={() => setView("analytics")}
+                className={`flex-1 px-3 py-2 text-sm transition-all ${
+                  view === "analytics" ? "bg-foreground text-background" : "border border-border text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Analytics
+              </button>
+            </div>
+            {view === "articles" ? (<>
             <button
               onClick={newArticle}
               className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-3 py-2 text-sm font-medium hover:opacity-90 transition-all mb-3"
@@ -318,10 +339,42 @@ export default function AdminPage() {
                 </button>
               ))}
             </div>
+            </>) : null}
           </aside>
 
           <section className="bg-background p-6">
-            {!draft ? (
+            {view === "analytics" ? (
+              <div className="flex flex-col gap-4">
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">Site analytics</h3>
+                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                    Visitors, pageviews, article reads, downloads, and referrers, recorded by
+                    the self-hosted Umami instance and shown directly from its dashboard.
+                  </p>
+                </div>
+                {UMAMI_SHARE_URL ? (
+                  <iframe
+                    src={UMAMI_SHARE_URL}
+                    title="Umami site analytics"
+                    className="w-full border border-border bg-background"
+                    style={{ height: "78vh" }}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="border border-border p-8 text-center">
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Analytics is not configured yet.
+                    </p>
+                    <p className="text-xs text-muted-foreground leading-relaxed max-w-xl mx-auto">
+                      Set <code className="font-mono">NEXT_PUBLIC_UMAMI_URL</code> and{" "}
+                      <code className="font-mono">NEXT_PUBLIC_UMAMI_WEBSITE_ID</code> for tracking,
+                      and <code className="font-mono">NEXT_PUBLIC_UMAMI_SHARE_URL</code> to embed the
+                      dashboard here. See the setup note below the editor.
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : !draft ? (
               <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
                 Select an article to edit, or create a new one.
               </div>

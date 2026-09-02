@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import SiteHeader from "@/components/site-header"
 import SiteFooter from "@/components/site-footer"
+import AnalyticsInit from "@/components/analytics-init"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -51,6 +52,7 @@ export default function RootLayout({
           <SiteFooter />
         </ThemeProvider>
         <Analytics />
+        <AnalyticsInit />
       </body>
     </html>
   )

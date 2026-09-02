@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, Clock, GraduationCap } from "lucide-react"
 import { articles, getArticle, getRelated } from "@/lib/articles"
 import Markdown from "@/components/markdown"
+import ArticleViewTrack from "@/components/article-view-track"
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }))
@@ -115,6 +116,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               </figure>
 
               <Markdown content={article.content} />
+              <ArticleViewTrack slug={article.slug} />
             </div>
           </section>
         </article>
