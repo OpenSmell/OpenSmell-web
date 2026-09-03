@@ -139,12 +139,6 @@ export default function OsmographPage() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-5 border-t border-border pt-4 flex items-center gap-3">
-                  <span className="text-xl font-bold tracking-tight leading-none">≈ 7 MB</span>
-                  <span className="text-[11px] text-muted-foreground uppercase tracking-wider leading-snug">
-                    native Tauri app — no browser, no Electron bloat. On your machine in seconds.
-                  </span>
-                </div>
               </div>
             </div>
           </div>
@@ -159,7 +153,7 @@ export default function OsmographPage() {
                 { v: "0", l: "lines of code required" },
                 { v: "auto", l: "channel count · named per rig" },
                 { v: "LOOCV", l: "out-of-sample model scoring" },
-                { v: "≈7 MB", l: "desktop app, all platforms" },
+                { v: "≈7 MB", l: "installer download size" },
                 { v: "24 h", l: "burn-in timer, survives restarts" },
                 { v: "1 click", l: "ESP32 firmware flash" },
                 { v: "3", l: "streaming modes — USB · WiFi · BLE" },
