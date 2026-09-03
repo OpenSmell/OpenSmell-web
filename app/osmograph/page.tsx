@@ -4,12 +4,13 @@ import Link from "next/link"
 import { useState, useCallback } from "react"
 import type { ReactNode } from "react"
 import {
-  Monitor, Download, GitBranch, ChevronRight,
+  Monitor, GitBranch, ChevronRight,
   Globe, Usb, Wifi, Bluetooth, Timer, Puzzle,
   Database, Gauge, Ruler, Layers, FlaskConical, Radio, Crosshair,
   ShieldAlert, GitCompareArrows, SlidersHorizontal, X, ZoomIn,
 } from "lucide-react"
 import { track } from "@/lib/analytics"
+import DownloadOsmograph from "@/components/download-osmograph"
 
 const SCREENSHOT = "/osmograph"
 
@@ -85,17 +86,10 @@ export default function OsmographPage() {
           <span className="section-marginalia">Software</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mb-14">
-              <div className="flex items-center gap-4 mb-5">
-                <img
-                  src="/osmograph-badge.png"
-                  alt="Osmograph badge"
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
-                />
-                <div className="coord-tag mb-0">001 // Osmograph — the e-nose workbench</div>
-              </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-[0.95]">
+              <div className="coord-tag mb-4">001 // Osmograph — the e-nose workbench</div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-[1.05]">
                 Zero-code software
-                <br className="hidden sm:block" />
+                <br />
                 <span className="text-muted-foreground">for your electronic nose.</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl">
@@ -104,13 +98,7 @@ export default function OsmographPage() {
                 the desktop app that turns a metal-oxide array into an instrument you can trust.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer"
-                  onClick={() => track("download", { target: "osmograph-desktop", source: "hero" })}
-                  className="hex-btn hex-btn-primary">
-                  <Download className="w-4 h-4" />
-                  Download Osmograph
-                  <ChevronRight className="w-4 h-4" />
-                </a>
+                <DownloadOsmograph />
                 <a href="https://github.com/OpenSmell/osmograph-desktop" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-outline">
                   <GitBranch className="w-4 h-4" />
@@ -121,15 +109,6 @@ export default function OsmographPage() {
                   <Globe className="w-4 h-4" />
                   Try it live
                 </a>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground font-mono uppercase tracking-wider">
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="text-foreground font-semibold">≈ 7 MB</span> installer
-                </span>
-                <span aria-hidden="true" className="opacity-40">·</span>
-                <span>native Tauri app — no browser, no Electron bloat</span>
-                <span aria-hidden="true" className="opacity-40">·</span>
-                <span>on your machine in seconds</span>
               </div>
             </div>
 
@@ -159,6 +138,12 @@ export default function OsmographPage() {
                       <span className="text-sm text-muted-foreground">{s.text}</span>
                     </div>
                   ))}
+                </div>
+                <div className="mt-5 border-t border-border pt-4 flex items-center gap-3">
+                  <span className="text-xl font-bold tracking-tight leading-none">≈ 7 MB</span>
+                  <span className="text-[11px] text-muted-foreground uppercase tracking-wider leading-snug">
+                    native Tauri app — no browser, no Electron bloat. On your machine in seconds.
+                  </span>
                 </div>
               </div>
             </div>
@@ -666,13 +651,7 @@ export default function OsmographPage() {
                 or start with the science and the build guide first.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-                <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer"
-                  onClick={() => track("download", { target: "osmograph-desktop", source: "bottom" })}
-                  className="hex-btn hex-btn-primary">
-                  <Download className="w-4 h-4" />
-                  Download Osmograph
-                  <ChevronRight className="w-4 h-4" />
-                </a>
+                <DownloadOsmograph />
                 <Link href="/smell-monitor" className="hex-btn hex-btn-outline">
                   <Monitor className="w-4 h-4" />
                   See the Smell Monitor
