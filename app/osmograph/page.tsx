@@ -144,26 +144,40 @@ export default function OsmographPage() {
           </div>
         </section>
 
-        {/* ===== STAT STRIP ===== */}
-        <section className="border-t border-border py-12 bg-hex relative">
-          <span className="section-marginalia">By the numbers</span>
+        {/* ===== LIGHTWEIGHT ===== */}
+        <section className="border-t border-border py-20 bg-hex relative">
+          <span className="section-marginalia">Lightweight</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-px bg-border">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight leading-[1.05]">
+                Small download. <br className="hidden sm:block" />
+                Native install. <span className="text-muted-foreground">Nothing to spare.</span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-4 leading-relaxed">
+                Osmograph is a Tauri app on a Rust core. No bundled browser, no Electron runtime
+                to drag along — just a small native installer that&apos;s on your machine and
+                running in seconds.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border">
               {[
-                { v: "0", l: "lines of code required" },
-                { v: "auto", l: "channel count · named per rig" },
-                { v: "LOOCV", l: "out-of-sample model scoring" },
-                { v: "≈7 MB", l: "installer download size" },
-                { v: "24 h", l: "burn-in timer, survives restarts" },
-                { v: "1 click", l: "ESP32 firmware flash" },
-                { v: "3", l: "streaming modes — USB · WiFi · BLE" },
+                { v: "≈7 MB", t: "installer download", d: "a tiny download for what it is — most desktop apps ship several times that size." },
+                { v: "no browser", t: "no Electron runtime", d: "native Tauri + Rust core. Nothing heavy bundled, nothing extra to install." },
+                { v: "seconds", t: "to install & launch", d: "download it and it's running — no bloat layers, no waiting." },
               ].map((s) => (
-                <div key={s.l} className="bg-background p-6">
+                <div key={s.t} className="bg-background p-7">
                   <div className="text-2xl font-bold tracking-tight mb-1">{s.v}</div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider">{s.l}</div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-3">{s.t}</div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
                 </div>
               ))}
             </div>
+            <p className="text-xs text-muted-foreground text-center mt-6 font-mono uppercase tracking-wider leading-relaxed max-w-3xl mx-auto">
+              download sizes — <span className="text-foreground">Windows&nbsp;.exe</span>&nbsp;≈4&nbsp;MB&nbsp;·
+              <span className="text-foreground">&nbsp;macOS&nbsp;.dmg</span>&nbsp;≈6&nbsp;MB&nbsp;·
+              <span className="text-foreground">&nbsp;Linux&nbsp;.deb&nbsp;/.rpm</span>&nbsp;≈7&nbsp;MB.&nbsp;
+              That&apos;s the size of the download, not the space the app uses once installed.
+            </p>
           </div>
         </section>
 
