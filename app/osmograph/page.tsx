@@ -85,7 +85,14 @@ export default function OsmographPage() {
           <span className="section-marginalia">Software</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mb-14">
-              <div className="coord-tag mb-4">001 // Osmograph — the e-nose workbench</div>
+              <div className="flex items-center gap-4 mb-5">
+                <img
+                  src="/osmograph-badge.png"
+                  alt="Osmograph badge"
+                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                />
+                <div className="coord-tag mb-0">001 // Osmograph — the e-nose workbench</div>
+              </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-5 leading-[0.95]">
                 Zero-code software
                 <br className="hidden sm:block" />
@@ -114,6 +121,15 @@ export default function OsmographPage() {
                   <Globe className="w-4 h-4" />
                   Try it live
                 </a>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground font-mono uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="text-foreground font-semibold">≈ 7 MB</span> installer
+                </span>
+                <span aria-hidden="true" className="opacity-40">·</span>
+                <span>native Tauri app — no browser, no Electron bloat</span>
+                <span aria-hidden="true" className="opacity-40">·</span>
+                <span>on your machine in seconds</span>
               </div>
             </div>
 
@@ -153,11 +169,12 @@ export default function OsmographPage() {
         <section className="border-t border-border py-12 bg-hex relative">
           <span className="section-marginalia">By the numbers</span>
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-border">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-px bg-border">
               {[
                 { v: "0", l: "lines of code required" },
                 { v: "auto", l: "channel count · named per rig" },
                 { v: "LOOCV", l: "out-of-sample model scoring" },
+                { v: "≈7 MB", l: "desktop app, all platforms" },
                 { v: "24 h", l: "burn-in timer, survives restarts" },
                 { v: "1 click", l: "ESP32 firmware flash" },
                 { v: "3", l: "streaming modes — USB · WiFi · BLE" },
