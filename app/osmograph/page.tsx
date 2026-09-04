@@ -181,6 +181,30 @@ export default function OsmographPage() {
           </div>
         </section>
 
+        {/* ===== WINDOWS INSTALL NOTE (SmartScreen) ===== */}
+        <section className="border-t border-border py-12 relative">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="hud-corners border border-border p-5 bg-background max-w-3xl mx-auto">
+              <div className="coord-tag mb-2">Windows first-run // honest note</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                The installer isn&rsquo;t code-signed yet, so Windows may show a blue
+                &ldquo;Windows protected your PC&rdquo; dialog on first run. That&rsquo;s SmartScreen
+                flagging an unsigned download — it doesn&rsquo;t mean the build is unsafe. To install:
+              </p>
+              <ol className="mt-3 space-y-1 text-sm text-muted-foreground list-decimal list-inside">
+                <li>Click <span className="text-foreground font-mono text-xs">More info</span> in the dialog.</li>
+                <li>Click <span className="text-foreground font-mono text-xs">Run anyway</span>.</li>
+                <li>Install, then launch Osmograph as normal.</li>
+              </ol>
+              <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                We plan to sign the installer with a paid code-signing certificate to remove this step —
+                a free/self-signed certificate wouldn&rsquo;t clear SmartScreen, so we&rsquo;re not putting one in
+                front of you as if it would.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ===== WORKFLOW ===== */}
         <section className="border-t border-border py-24 relative">
           <span className="section-marginalia">Workflow</span>
