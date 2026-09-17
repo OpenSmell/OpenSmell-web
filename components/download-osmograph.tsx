@@ -15,8 +15,8 @@ interface PlatformOption {
   icon: ReactNode
 }
 
-const RELEASE_TAG = "v0.1.0"
-const BASE = `https://github.com/OpenSmell/osmograph-desktop/releases/download/${RELEASE_TAG}`
+const RELEASE_TAG = "latest"
+const BASE = `https://github.com/OpenSmell/osmograph-desktop/releases/latest/download`
 
 const WINDOWS_ICON = (
   <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
