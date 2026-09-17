@@ -31,6 +31,7 @@ const curriculum: {
       { slug: "how-mox-sensors-work", why: "The full physics chain from a SnO₂ film to a sample." },
       { slug: "band-bending-and-power-law", why: "The chemistry behind a single MOX reading." },
       { slug: "sensor-count-and-dimensionality", why: "How many sensors actually make a nose." },
+      { slug: "what-a-sensor-remembers", why: "Why MOX sensors exhibit bi-exponential memory and how to measure it." },
     ],
   },
   {
@@ -40,6 +41,7 @@ const curriculum: {
     essays: [
       { slug: "the-osmell-format", why: "The portable smell-recording container." },
       { slug: "the-187-dimension-framework", why: "187 explained dimensions, one by one." },
+      { slug: "the-shareable-feature-core", why: "Which 98 of 272 features actually transfer across devices and protocols." },
     ],
   },
   {
@@ -49,6 +51,7 @@ const curriculum: {
     essays: [
       { slug: "interoperability-normalization-theorem", why: "What normalization can and cannot prove." },
       { slug: "evaluating-e-nose-models", why: "Score a model the way it will actually be used." },
+      { slug: "what-session-invariance-means", why: "Reconciling 88.5% / 81.78% / 37.5% / 63.3% accuracy claims." },
     ],
   },
   {
@@ -57,6 +60,7 @@ const curriculum: {
     goal: "See what the stack actually does on real data, through one shared evaluation protocol.",
     essays: [
       { slug: "the-u-suite-use-cases", why: "Six evaluations, one shared protocol." },
+      { slug: "anomaly-first-deployments", why: "Event detection ships now; substance ID waits for the memory-safe contract." },
     ],
   },
 ]
@@ -191,7 +195,7 @@ export default function AcademyPage() {
             </div>
             )}
             <p className="text-center text-xs text-muted-foreground mt-6 max-w-xl mx-auto">
-              This sequence mirrors the project's own onboarding order. All 21 essays are
+              This sequence mirrors the project's own onboarding order. All 25 essays are
               written for newcomers; nothing assumes prior knowledge.
             </p>
           </div>

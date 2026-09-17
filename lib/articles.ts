@@ -2228,6 +2228,252 @@ The chain never fabricates missing data and never upgrades an estimate into a me
 - The *evaluating-models* essay — the calibration honesty rules (47% → 33% affine failure) that forbid calibrated-ppm claims.
 `,
   },
+  {
+    slug: "what-a-sensor-remembers",
+    title: "What a Sensor Remembers: Memory, Baselines, and the 300-Second Rule",
+    excerpt:
+      "A MOX array does not return to baseline cleanly. Its recovery is bi-exponential, its next reading depends on the last clean gap, and 62% of anomaly-detector false positives turn out to be memory — not algorithm noise. This essay is the measured basis for the 300-second safe-gap rule.",
+    category: "Research",
+    tags: ["memory", "baseline", "recovery", "anomaly", "false positives"],
+    readTime: "14 min",
+    date: "2026-09-16",
+    author: "OpenSmell Academy",
+    thumbnail: "/thumbnails/sensor-memory.svg",
+    content: `
+Electronic-nose lore treats the sensor as a transducer with one number per sample. The measured reality is messier: after an exposure ends, a metal-oxide array does not simply snap back. It *remembers* — on two timescales — and what it remembers changes the next reading. If you do not understand that memory, your baselines drift, your features lie, and your anomaly detector cries wolf on clean air.
+
+This essay is the public record of a controlled memory audit on the dynamic-mixtures ground-truth schedule (two 12-hour files, per-second ppm labels, four TGS families). Every number below is reproducible via the open benchmark suite.
+
+## Recovery Is Bi-Exponential, Not Exponential
+
+Given an exposure tail, which model describes the return to baseline — one exponential decay, or two? We fitted both to every air tail and selected by AIC (Gaussian-noise criterion). The result was stark: **97% of fitted tails require the two-exponential model.** A single-exponential memory model is wrong for this array, by measurement.
+
+| Family | Fraction needing bi-exponential | τ_fast (median) | τ_slow (median) |
+|---|---|---|---|
+| TGS2600 | 1.00 / 1.00 | 15–25 s | 60 s |
+| TGS2602 | 0.889 / 0.897 | 25 s | 60 s |
+| TGS2610 | 0.994 / 1.00 | 8 s | 45 s |
+| TGS2620 | 1.00 / 1.00 | 15 s | 45 s |
+
+Two families of timescales, consistently across files: a fast component (τ ≈ 8–25 s) that dominates the first half-minute, and a slow component (τ ≈ 45–60 s) that controls anything past a minute. This is not a curve-fitting curiosity — the slow component is exactly what sits underneath the false positives below.
+
+## A Shorter Clean Gap Lowers the Next Response
+
+The dataset's schedule lets us hold the chemistry fixed — identical (gas, ppm), repeated — and vary only one thing: how long the clean air gap before the exposure lasted. Across configs, the response-vs-gap correlation is negative:
+
+- ethylene/CO file: median correlation −0.361 (75% of configs negative).
+- ethylene/methane file: median correlation −0.414 (62% of configs negative).
+
+Meaning: **the shorter the clean gap, the lower the next response, in most device families.** A recorded amplitude is therefore not just "how much gas was present"; it is "how much gas, given what came before." Any feature that ignores the gap inherits that confound.
+
+## Priming Is Real but Not a Single Number
+
+Does an exposure that follows *the same* exposure (A→A→A) respond differently from one that follows *a different* exposure (A→B→A)? Yes — the self-priming delta is **+0.152** on average, and self > cross in 27 of 32 config-channel groups. One honest caveat: in the remaining groups the direction flips, so priming is **gas- and device-specific**. A memory-aware system must learn priming per channel; it cannot assume one global sign.
+
+## The Consequence: Most Detector False Positives Are Memory
+
+If memory is real, then a detector that scores "how far is this from baseline" will trip on residual memory as if it were an event. We ran the production residual axes (Kalman innovation, latent-Δ, EWMA level, fused max-|z|) over the ground-truth schedule and binned every clean-air alarm by the time since the previous exposure ended.
+
+| Clean-air floor | FP rate (median) |
+|---|---|
+| After ≥60 s of air (the "deep-clean" floor) | **0.36** |
+| After ≥300 s of air (truly recovered) | **0.054** |
+
+Fused-detector memory excess: **+0.216 median**. In words: **62% of the residual false-positive rate is physical memory residue, not algorithm noise.** And the FP-vs-gap curve peaks at 30–60 s post-exposure — exactly on the slow recovery component — before collapsing by 300 s.
+
+## The 300-Second Rule
+
+The measured implication is a deployment rule, not a recommendation:
+
+- **Any residual-axis detector needs a minimum inter-event spacing of 300 s of clean air**, or it must down-weight alerts inside that window with a memory-confidence flag.
+- Improving the Kalman/EWMA filter further is near-payoff-less; the false positives the users actually see are physical.
+- Baselines must be recomputed **per session** against ≥300 s of clean air. A naive R/R₀ against a memory-corrupted R0 is the one normalization mistake that *injects* session noise (the topic of the session-invariance essay) — this memory audit is the root cause of that pathology.
+
+The good news: memory is measured, bounded, and correctable. It is not a black box — it is a bi-exponential state with known τ's, a known 300 s horizon, and a known fallback (the safe-gap rule). The bad news: none of it is optional. Every deployed baseline that ignores it is quietly counting memory as signal.
+
+## Sources & Further Reading
+
+- \`benchmarks/bench_dynamic_memory.py\` + \`reports/bench_dynamic_memory.json\` — the W1 memory audit (gap correlation, priming, bi-exponential selection).
+- \`benchmarks/bench_detector_memory_fp.py\` + \`reports/bench_detector_memory_fp.json\` — the W2 false-positive decomposition and the two-floor measurement.
+- The *interoperability-normalization-theorem* essay — why naive R/R₀ fails (measured 37.5%), and what real normalization requires.
+- The *evaluating-e-nose-models* essay — how honesty rules keep baseline claims testable.
+`,
+  },
+  {
+    slug: "what-session-invariance-means",
+    title: "What Session-Invariance Actually Means (and the 37.5% That Explains It)",
+    excerpt:
+      "88.5% held-out-session accuracy, vs 81.78% for a contrastive CNN, vs 53% for a transformer — and 37.5% for naive R/R₀ normalization. The numbers are not contradictory. This essay reconciles them: session-invariance is memory-safe anchoring, not free normalization, and learned encoders buy you nothing on the transfer axis.",
+    category: "Foundations",
+    tags: ["session invariance", "encoders", "normalization", "transfer", "memory"],
+    readTime: "15 min",
+    date: "2026-09-16",
+    author: "OpenSmell Academy",
+    thumbnail: "/thumbnails/session-invariance.svg",
+    content: `
+> "Session-invariance" is the property that a substance classifier keeps working when it meets a *new recording of data from the same rig on a different day*. It is the weakest meaningful claim in interoperability — and it is astonishingly easy to get wrong.
+
+We measured session-invariance on SmellNet (50 substances, 6 MOX sensors, multiple sessions) several ways. The headline table is usually read as contradictory, so this essay walks through what each row means and why they cohere.
+
+| Method | Held-out-session accuracy | Read correctly |
+|---|---|---|
+| Framework features (145-dim) + RandomForest | **88.5%** (t≈60.8, chance 2%) | The physics-derived feature stack is session-invariant |
+| Contrastive 1D-CNN (learned, ours) | **81.78%** | A learned encoder is *good within its training rig* |
+| Raw voltages + RandomForest | **63.3%** | Raw signals carry session-specific junk |
+| ScentFormer (Transformer, published) | **53.0%** | A generic sequence model underperforms domain features |
+| **Naive R/R₀ + RandomForest** | **37.5%** | The cautionary row: naive normalization *destroys* invariance |
+
+Five numbers, one argument. The framework wins because it was *built* to be gauge-invariant: it computes ratios, directions, and selectivity fingerprints rather than absolute values. The learned CNN does respectably because it can memorize the training rig's structure — but that is precisely its limitation: a representation learned from raw windows is **device-bound**; nothing about it transfers to a second unit. The transformer, trained from scratch on the same problem without domain structure, lands near the bottom. And naive R/R₀ — the one "normalization" everyone reaches for first — is *catastrophically* worse than raw.
+
+## Why Naive R/R₀ Is Worse Than Raw
+
+This was the surprising result, and it has a root cause. Naive R/R₀ divides raw resistance by R0 measured at the start of the recording — a baseline that, per the memory audit, still carries ~11% of the previous exposure's deflection and a slow exponential tail (τ 45–60 s). Dividing by a memory-corrupted R0 **injects session noise into every normalized feature**. The normalization removes the electronics, yes — but it adds back session forgetfulness, and the net effect is negative.
+
+The lesson generalizes beyond this result: **normalization is only as good as the baseline it divides by.** Session invariance is not "normalize and it works." It is *per-session, memory-safe R0* + ratios on top. Compute R0 from ≥300 s of clean air, recompute per session, apply the bi-exponential memory correction — and the naive-37.5% pathology disappears.
+
+## What the 88.5% Does and Does Not Claim
+
+- **It claims:** a rig that computes the framework features can tell *substances it was trained on* apart, across sessions, at 88.5%. That is real and reproducible.
+- **It does not claim:** anything about novel substances (leave-substance-out R² = −14.62 — no extrapolation), or about a second device (zero-shot cross-device transfer is at ~10–18% vs 25% chance, consistently falsified across every alignment family tried).
+
+So the honest single sentence is: **representation invariance is solved; deployment invariance is not, and it is not a free property — it is a calibration contract.** This is the position the anomaly-first strategy builds on: ship what is measured-deployable now, and let shared data improve the rest.
+
+## The Encoder Question
+
+Why bother with learned encoders at all, if features already win? Two honest answers. First, on a *within-device* fine-tune of a pre-trained encoder, we measured real session gains on one rig (garlic within-subject accuracy 0.84, 3/3 session pairs above threshold) — but on shorter recordings the same encoder still fails (ginger 0.43), and the 1-anchor cross-substance transfer worked for exactly one (calibration, test) pairing out of five. Second, none of that transfers to new hardware. Encoders are a within-device tool, not an interoperability strategy. Use features for sharing; use encoders for single-device polish.
+
+## Sources & Further Reading
+
+- \`interoperability/canonical_experiments/\` — Experiments 1, 4, 6 (session-invariance, normalization comparison, baseline comparison), 07 cross-device sanity.
+- \`publishable/SESSION_INVARIANCE_RESULTS.md\` — the encoder fine-tune + 1-anchor Procrustes numbers.
+- The *what-a-sensor-remembers* essay — the memory audit that explains the 37.5% row.
+- The *interoperability-normalization-theorem* essay — the exact math of what R_s/R_0 can and cannot cancel.
+`,
+  },
+  {
+    slug: "anomaly-first-deployments",
+    title: "Anomaly First: Why Utility Does Not Wait for Interoperability",
+    excerpt:
+      "Event detection is measured-deployable today on one device; substance identification is not (LOO ≈ 0.52). That asymmetry is the deployment strategy: ship anomaly detection now, with memory-safe baselines and a 300-second safe-gap, and let interoperability raise the value of recordings already being made.",
+    category: "Research",
+    tags: ["anomaly", "deployment", "event detection", "baseline", "strategy"],
+    readTime: "13 min",
+    date: "2026-09-16",
+    author: "OpenSmell Academy",
+    thumbnail: "/thumbnails/anomaly-first.svg",
+    content: `
+> The single most common mistake in e-nose product planning is demanding interoperability before delivering any utility. The measured asymmetry is the fix: **anomaly/event detection is deployable now on one device; substance identification is not.** Ship the first, then let shared data grow the second.
+
+## What Is Measured-Deployable Right Now
+
+Running the production residual axes on real corpora, the results are clean where they matter:
+
+| Capability | Measured result | Verdict |
+|---|---|---|
+| Event detection (Kalman innovation) | AUC ≈ 0.87 | **Shippable** |
+| Latent-Δ / EWMA-level | 0.87 / 0.78 | Shippable as fusion inputs |
+| SmellNet leave-one-substance ID | LOO AUC ≈ **0.52** | Not shippable |
+| Event/clean margin (archived Wörner alarms) | median +0.78σ, 0.2% clean FPR, 95% of files positive | Shippable with adaptive baseline |
+| Long-term drift absorption (Wörner 40 days) | 682/700 detected, FPR flat 0.002–0.004 | Shippable with EWMA/DualKalman |
+
+And the drift problem that kills static baselines is absorbed by the adaptive baseline: a static baseline dies within ~2 days on a real 62-channel array; the tracked baseline holds events at +0.78σ with 0.2% clean false-positive rate across 40 days.
+
+## The Memory-Safe Baseline the Deployable Device Needs
+
+Wave-3 measured that event detection works with an adaptive baseline. Wave-4 added the missing piece: the baseline must also be *memory-safe*. Three rules, all from the audit:
+
+1. **300-second safe-gap.** Any residual-axis alarm inside 300 s of a previous exposure is memory-flagged and down-weighted — 62% of clean-air false positives are memory residue, not real events.
+2. **Per-session R0.** Recompute the baseline each session from ≥300 s of clean air; never trust a stale R0 across gap boundaries.
+3. **Per-channel priming awareness.** The response depends on the previous chemistry, with sign that changes per gas and device — track it per channel, don't assume.
+
+## Why Identification Is Not Shipped
+
+Honesty forces the asymmetry. Identifiability is *bounded where it matters*: matched-dose cross-gas pairs resolve in 0.5 s on clean windows (great for *screening*), but same-gas dose discrimination has a hard ceiling (the hardest pair is 0.779 — impossible at any window), and novel-substance extrapolation is at chance. So the deployed product says "something changed, here is how much, here is the family it best matches" — and never "this is molecule X with 95% confidence." Screening and event detection are the value; identification is the future calibration step.
+
+## The Strategy, in One Diagram
+
+    today              →      as data accumulates
+    ─────────────────────────────────────────────────
+    one device                many devices
+    event detection           event detection everywhere
+    88.5% session-invariant   + the 98-feature core shared
+    screening                  + per-device calibration → ID
+    memory-safe baseline       + reference-point calibration
+    ─────────────────────────────────────────────────
+      base value: NOW               value: COMPOUNDS
+
+Interoperability is not the precondition for utility; it is the amplifier of it. Every deployed device records into the same 98-feature core (the shareable feature whitelist), so the moment two devices share data, the per-device calibration path converts raw screening into comparable readings. Anomaly-first means you do not wait for perfect interoperability to start — and the data you naturally collect is the data the commons needs.
+
+## Sources & Further Reading
+
+- \`benchmarks/bench_anomaly_v2.json\`, \`bench_separability_margin.json\`, \`bench_sensor_memory.json\` — the measured anomalies, margins, and drift absorption.
+- \`benchmarks/bench_detector_memory_fp.json\` — the false-positive decomposition behind the 300-second rule.
+- \`benchmarks/bench_identifiability.json\` — the identifiability ceilings and screening windows.
+- The *what-a-sensor-remembers* essay — the technical detail behind memory-safe baselines.
+- The *what-session-invariance-means* essay — why the 88.5% is representation-only, and why that is fine.
+`,
+  },
+  {
+    slug: "the-shareable-feature-core",
+    title: "The Shareable Core: 98 Features That Actually Transfer",
+    excerpt:
+      "Of 272 features in the OpenSmell SDK, 98 (36%) are both transferable and fully-defined on real windows. Everything kinetic, decay, calibration-bound, or absolute is protocol- or device-confounded. This essay defines the whitelist that makes shared data honest.",
+    category: "Tutorial",
+    tags: ["features", "whitelist", "interoperability", "data commons", "protocol"],
+    readTime: "14 min",
+    date: "2026-09-16",
+    author: "OpenSmell Academy",
+    thumbnail: "/thumbnails/shareable-core.svg",
+    content: `
+When a community corpus accepts a feature, it implicitly vouches that the feature means the same thing across sessions, devices, and protocols. We audited every feature in the SDK — the 187-dimension framework and the 85-dimension physical-primitive vector — against three gates: invariance census, protocol confounds, and compute-robustness on real windows. **98 of 272 features (36%) pass all three.** This essay is that whitelist and the reasoning behind it.
+
+## The Three Gates
+
+1. **Invariance census** — what the feature cancels (gain, scale) versus what it carries (device constants, calibration need). From the framework's labels: 93 DEV_BOUND, 46 INV_GAIN, 6 INV_SCALE, 36 NONE, 6 CALIBRATED, inside a 187-dim vector.
+2. **Protocol confound** — does the feature's *meaning* depend on flow rate, dead volume, purge protocol, or baseline→exposure→recovery discipline? Everything kinetic does.
+3. **Compute robustness** — is the feature actually defined on real windows (nan_rate = 0)? We checked on 24 live SmellNet windows.
+
+## The Counts
+
+| Vector | Transferable | Device-bound | Needs calibration | Protocol-confounded | Total |
+|---|---|---|---|---|---|
+| Framework (187-dim) | 34 | 39 | 42 | **72** | 187 |
+| Primitives (85-dim) | 67 | 6 | 0 | **12** | 85 |
+| **Total** | **101** | 45 | 42 | **84** | 272 |
+
+Intersect with "fully-defined on real windows" and the deployable whitelist is **98 features**:
+
+| Survivor category | Framework | Primitives | Why it survives |
+|---|---|---|---|
+| Dose & amplitude (\`_da_\` ratio family) | 22 | 12 | Ratios cancel gain; only sensitivity constant survives |
+| Direction & selectivity (incl. log-ratio, covariance) | 21 | 55 | Fingerprint-like; robust to absolute offsets |
+| Saturation / nonlinearity | 6 | 0 | Shape feature, gauge-cancelling |
+| **Survivors total** | 49 | 67 | — |
+
+## What Must Never Be Shared Raw
+
+- **The 84 protocol-confounded features** — every rise/decay/recovery/kinetic feature (54 framework + 12 primitives) plus dynamics features. Their value depends on the exact flow profile of the rig that recorded them. Sharing them raw is sharing a flow-rate, not a smell.
+- **The 45 device-bound features** — health/hardware probes that mean "this specific unit," not the environment.
+- **The 42 calibration-bound features** — absolute resistance, voltage, circuit/thermal/ADC probes, calibrated ppm. Meaningful only with per-device calibration metadata alongside.
+
+## What This Means for the Data Commons
+
+The commons schema should do two things automatically:
+
+1. **Allow the 98** — the \`_da_\` amplitude/dose family, selectivity ratios, saturation index, and the \`phys_\` normalized/direction/covariance primitives. These are the honest, comparable subspace of the SDK.
+2. **Reject or require-tags on the rest** — kinetic features may be uploaded, but only with protocol metadata (flow, dead volume, purge) attached, and never into the interoperable comparison pool.
+
+This is the difference between a data dump and a data commons: not *more* columns, but *honest* columns. A corpus that accepts all 272 features raw would be training models on device identity and flow rates while believing it is learning chemistry. The 98-feature core fixes that at the schema boundary, where it is cheapest.
+
+## Sources & Further Reading
+
+- \`benchmarks/bench_features_audit.py\` + \`reports/bench_features_audit.json\` — the full audit, category rollups, and compute-robustness census.
+- \`features/existing_mapping.py\` — the invariance labels (\`INV_GAIN\` / \`INV_SCALE\` / \`DEV_BOUND\` / \`NONE\` / \`CALIBRATED\`).
+- \`features/physical_features.py\` — the 85-dim \`phys_\` primitive vector.
+- The *187-dimensions* essay — what every framework dimension is and where it lives.
+- The *anomaly-first* essay — why deploying this core now is the strategy, with interoperability as the compounding step.
+`,
+  },
 ]
 
 export function getArticle(slug: string): Article | undefined {

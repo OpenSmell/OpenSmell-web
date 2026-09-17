@@ -1,0 +1,116 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#111111" stroke-width="2.5"/>
+  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#111111" stroke-width="1"/>
+
+  <g stroke="#111111" stroke-width="1" fill="none">
+    <line x1="32" y1="66" x2="80" y2="66"/><line x1="32" y1="564" x2="80" y2="564"/>
+    <line x1="1120" y1="66" x2="1168" y2="66"/><line x1="1120" y1="564" x2="1168" y2="564"/>
+    <line x1="40" y1="40" x2="40" y2="88"/><line x1="1160" y1="40" x2="1160" y2="88"/>
+    <line x1="40" y1="542" x2="40" y2="590"/><line x1="1160" y1="542" x2="1160" y2="590"/>
+  </g>
+
+  <g fill="#e5e5e5" stroke="#111111" stroke-width="1">
+    <polygon points="60,70 77,61 94,70 94,88 77,97 60,88"/>
+    <polygon points="1140,70 1157,61 1174,70 1174,88 1157,97 1140,88"/>
+  </g>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#111111" letter-spacing="1">OPEN SMELL · ACADEMY</text>
+  <text x="852" y="56" font-family="ui-monospace, monospace" font-size="14" fill="#555555" letter-spacing="1">FEATURE COMMONS</text>
+  <text x="600" y="130" text-anchor="middle" font-family="ui-monospace, monospace" font-size="34" font-weight="bold" fill="#111111" letter-spacing="1">THE SHAREABLE FEATURE CORE</text>
+  <text x="600" y="156" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" fill="#555555" letter-spacing="1">98 OF 272 FEATURES TRANSFER · 36% · THREE GATES</text>
+
+  <line x1="120" y1="200" x2="1040" y2="200" stroke="#111111" stroke-width="1"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="80" y="240" font-size="13" font-weight="bold">THE THREE GATES</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <rect x="120" y="268" width="330" height="116" stroke-width="1.5"/>
+    <rect x="470" y="284" width="330" height="100" stroke-width="1.5"/>
+    <rect x="820" y="300" width="330" height="84" stroke-width="1.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="136" y="292" font-size="13" font-weight="bold">1 · INVARIANCE CENSUS</text>
+    <text x="136" y="312" font-size="11" fill="#555555">what the feature cancels vs carries</text>
+    <text x="136" y="330" font-size="11" fill="#555555">DEV_BOUND 93 · INV_GAIN 46</text>
+    <text x="136" y="348" font-size="11" fill="#555555">INV_SCALE 6 · NONE 36 · CAL 6</text>
+    <text x="136" y="366" font-size="11" fill="#555555">labels from the framework census</text>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="486" y="308" font-size="13" font-weight="bold">2 · PROTOCOL CONFOUND</text>
+    <text x="486" y="328" font-size="11" fill="#555555">does the meaning depend on flow rate,</text>
+    <text x="486" y="344" font-size="11" fill="#555555">dead volume, purge, discipline?</text>
+    <text x="486" y="360" font-size="11" fill="#555555">everything kinetic fails here</text>
+  </g>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="836" y="324" font-size="13" font-weight="bold">3 · COMPUTE-ROBUST</text>
+    <text x="836" y="344" font-size="11" fill="#555555">defined on real windows</text>
+    <text x="836" y="360" font-size="11" fill="#555555">checked on 24 live SmellNet</text>
+    <text x="836" y="376" font-size="11" fill="#555555">windows (nan_rate = 0)</text>
+  </g>
+
+  <g stroke="#111111" fill="none">
+    <path d="M 450 326 L 464 326 L 464 334 L 470 334" stroke-width="1.5"/>
+    <path d="M 800 334 L 812 334 L 812 342 L 820 342" stroke-width="1.5"/>
+  </g>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="120" y="424" font-size="13" font-weight="bold">THE AUDIT COUNTS</text>
+  </g>
+
+  <table>
+  </table>
+
+  <g stroke="#111111" fill="none">
+    <line x1="120" y1="440" x2="620" y2="440" stroke-width="1.5"/>
+    <line x1="120" y1="468" x2="620" y2="468" stroke-width="1.5"/>
+    <line x1="120" y1="496" x2="620" y2="496" stroke-width="1.5"/>
+    <line x1="620" y1="440" x2="620" y2="496" stroke-width="1.5"/>
+    <line x1="300" y1="440" x2="300" y2="496" stroke-width="1.5"/>
+    <line x1="430" y1="440" x2="430" y2="496" stroke-width="1.5"/>
+    <line x1="120" y1="440" x2="120" y2="496" stroke-width="1.5"/>
+  </g>
+  <text x="130" y="456" font-family="ui-monospace, monospace" font-size="12" font-weight="bold" fill="#111111">VECTOR</text>
+  <text x="308" y="456" font-family="ui-monospace, monospace" font-size="12" font-weight="bold" fill="#111111">TRANSFER</text>
+  <text x="438" y="456" font-family="ui-monospace, monospace" font-size="12" font-weight="bold" fill="#111111">PROTOCOL-CONF</text>
+  <text x="130" y="486" font-family="ui-monospace, monospace" font-size="12" fill="#111111">framework 187</text>
+  <text x="308" y="486" font-family="ui-monospace, monospace" font-size="12" fill="#111111" font-weight="bold">34</text>
+  <text x="438" y="486" font-family="ui-monospace, monospace" font-size="12" fill="#111111" font-weight="bold">72</text>
+  <text x="130" y="516" font-family="ui-monospace, monospace" font-size="12" fill="#111111">primitives 85</text>
+  <text x="308" y="516" font-family="ui-monospace, monospace" font-size="12" fill="#111111" font-weight="bold">67</text>
+  <text x="438" y="516" font-family="ui-monospace, monospace" font-size="12" fill="#111111" font-weight="bold">12</text>
+  <text x="660" y="462" font-family="ui-monospace, monospace" font-size="11" fill="#555555">framework leftover: DEV_BOUND 39</text>
+  <text x="660" y="478" font-family="ui-monospace, monospace" font-size="11" fill="#555555">NEEDS_CALIBRATION 42 + 6</text>
+
+  <line x1="700" y1="240" x2="700" y2="520" stroke="#111111" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="740" y="268" font-size="13" font-weight="bold">THE WHITELIST, IN ONE NUMBER</text>
+  </g>
+
+  <g fill="#111111">
+    <rect x="740" y="300" width="300" height="120"/>
+  </g>
+  <text x="890" y="350" text-anchor="middle" font-family="ui-monospace, monospace" font-size="64" font-weight="bold" fill="#ffffff">98</text>
+  <text x="890" y="388" text-anchor="middle" font-family="ui-monospace, monospace" font-size="16" fill="#ffffff">OF 272 · 36%</text>
+  <text x="890" y="408" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#e5e5e5">TRANSFERABLE + FULLY-DEFINED</text>
+
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="740" y="452" font-size="13" font-weight="bold">WHAT SURVIVES</text>
+    <text x="740" y="476" font-size="12" fill="#555555">• _da_ amplitude/dose, selectivity ratios</text>
+    <text x="740" y="494" font-size="12" fill="#555555">• saturation index, phys_ primitives</text>
+    <text x="740" y="512" font-size="12" fill="#555555">• all kinetic/decay/recovery: excluded</text>
+  </g>
+
+  <rect x="840" y="522" width="328" height="76" fill="none" stroke="#111111" stroke-width="1.5"/>
+  <line x1="840" y1="560" x2="1168" y2="560" stroke="#111111" stroke-width="1"/>
+  <line x1="1020" y1="522" x2="1020" y2="598" stroke="#111111" stroke-width="1"/>
+  <g font-family="ui-monospace, monospace" fill="#111111">
+    <text x="852" y="546" font-size="12" font-weight="bold">OPEN SMELL ACADEMY</text>
+    <text x="852" y="584" font-size="12">REV A · 2026</text>
+    <text x="1032" y="546" font-size="12">FIG. 025</text>
+    <text x="1032" y="584" font-size="12">SCALE NTS</text>
+  </g>
+</svg>
