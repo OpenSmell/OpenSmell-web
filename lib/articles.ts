@@ -558,9 +558,13 @@ Previous smell datasets were either **perceptual** (human panel ratings, like Dr
 
 - **828,000 timesteps** across **50 base substances** and **43 controlled mixtures**, spanning multiple days and environmental conditions.
 - **12 channels** per recording: gas concentrations plus environmental factors (temperature, humidity, and the like).
-- **Two benchmarks**: **SmellNet-Base** (recognise which of 50 substances) and **SmellNet-Mixture** (predict the ingredient *ratios* of a mixture over 12 base odorants, with seen and unseen splits).
+- **Two evaluation tasks**: **SmellNet-Base** (recognise which of 50 substances) and **SmellNet-Mixture** (predict the ingredient *ratios* of a mixture over 12 base odorants, with seen and unseen splits).
 
 Because it is a *sensor* dataset, it tests exactly the hard part of the open-stack vision: can models learn from the noisy, drifting, overlapping signals of commodity hardware, rather than from pristine lab measurements?
+
+## SmellNet: Large Dataset, Not a Single Benchmark
+
+SmellNet is a **large open dataset** — 828,000 sensor timesteps, 50 substance classes, 40+ controlled mixtures, 68+ hours of recordings — organised into two separate evaluation tasks: **SmellNet-Base** (recognise which of 50 substances) and **SmellNet-Mixture** (predict the ingredient *ratios* of a mixture over 12 base odorants, with seen and unseen splits). Calling the dataset itself "a benchmark" confuses the corpus with its tasks; the honest phrasing is: one large dataset, two benchmark tasks.
 
 ## ScentFormer: Why Temporal Modeling
 
@@ -584,12 +588,12 @@ On **SmellNet-Base**, ScentFormer reaches **63.3% Top-1 accuracy** with GC-MS su
 
 SmellNet's own authors frame generalization to unseen mixtures and environmental drift as a core open challenge—temperature, airflow, sensor location, and aging all shift the readings. Publishing the full set of results, including the harder cases, is what makes a benchmark useful.
 
-## Why This Matters for Open Smell
+## Why This Matters for OpenSmell
 
 SmellNet is external validation of the open-stack thesis this Academy has been building:
 
 - It proves that **commodity MOX arrays**, the same sensors OpenSmell targets, can feed serious machine-learning research—no proprietary silicon required.
-- It provides the **sensor-side benchmark** the field lacked, complementing perceptual datasets (Dravnieks, Pyrfume) and the UCI gas-sensor drift benchmark.
+- It provides the **sensor-side large dataset** the field lacked, complementing perceptual datasets (Dravnieks, Pyrfume) and the UCI gas-sensor drift benchmark.
 - It is **open**: code, data, and models released on GitHub, so anyone can build on it. That is exactly the "raise the tide" move the field needs.
 
 The remaining gaps—mixture generalization, environmental robustness, and the gap between sensor readings and human perception—are the same problems OpenSmell works on. Benchmark culture is how a field compounds, and SmellNet is a step in that direction.
@@ -658,7 +662,7 @@ In 2023, **Osmo** (a Google Research spinout) published the **Principal Odor Map
 
 ## 2025–2026: Open Data Meets Commodity MOX
 
-Where the deep-learning landmark worked from **structure**, the open-data era began working from **sensors**. In 2025, the **MIT Media Lab's** Machine Intelligence group released **SmellNet** — a benchmark built from **portable, low-cost MOX gas sensors** rather than lab instruments. It is exactly the "open primitive" this timeline keeps circling: **828K sensor timesteps**, **50 base substances** across nuts, spices, herbs, fruits, and vegetables, **43 controlled mixtures**, and **68 hours** of recordings, organised into a 50-way classification task (SmellNet-Base) and a mixture-ratio prediction task. It also introduced **ScentFormer**, a temporal model that learns from multichannel sensor time series with optional training-time GC-MS supervision — showing that the *temporal dynamics* of a metal-oxide array carry signal that a static feature vector leaves on the table.
+Where the deep-learning landmark worked from **structure**, the open-data era began working from **sensors**. In 2025, the **MIT Media Lab's** Machine Intelligence group released **SmellNet** — a large dataset built from **portable, low-cost MOX gas sensors** rather than lab instruments. It is exactly the "open primitive" this timeline keeps circling: **828K sensor timesteps**, **50 base substances** across nuts, spices, herbs, fruits, and vegetables, **43 controlled mixtures**, and **68 hours** of recordings, organised into a 50-way classification task (SmellNet-Base) and a mixture-ratio prediction task. It also introduced **ScentFormer**, a temporal model that learns from multichannel sensor time series with optional training-time GC-MS supervision — showing that the *temporal dynamics* of a metal-oxide array carry signal that a static feature vector leaves on the table.
 
 SmellNet matters to this history for two reasons. First, it is the field's clearest sign that **commodity MOX sensors are now good enough to anchor a serious open benchmark** — the same sensor class at the bottom of this stack, at scale, in public. Second, its honest results are a reality check: its authors report that **generalization to unseen mixtures remains a core challenge**. The open datasets exist; the open *standard* is still being built. That is precisely the gap OpenSmell is trying to close.
 
