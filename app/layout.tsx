@@ -14,11 +14,18 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "OpenSmell — Open Infrastructure for Digital Olfaction",
   description: "Building the tools, standards, and community to make smell as programmable as light and sound. Open-source chemoprint, e-nose hardware, and data commons.",
-  metadataBase: new URL("https://opensmell.org"),
+  metadataBase: new URL("https://www.opensmell.xyz"),
   openGraph: {
     title: "OpenSmell — Open Infrastructure for Digital Olfaction",
     description: "Building the tools, standards, and community to make smell as programmable as light and sound.",
+    url: "https://www.opensmell.xyz",
+    siteName: "OpenSmell",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OpenSmell — Open Infrastructure for Digital Olfaction",
+    description: "Building the tools, standards, and community to make smell as programmable as light and sound.",
   },
   icons: {
     icon: "/opensmell_logo.png",

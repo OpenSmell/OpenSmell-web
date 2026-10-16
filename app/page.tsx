@@ -375,9 +375,17 @@ export default function Home() {
                   eyebrow: "I want to deploy",
                   icon: Factory,
                   title: "Monitor my process",
-                  desc: "Continuous chemical monitoring for businesses — a ready Smell Monitor array, not a DIY project.",
+                  desc: "Continuous chemical monitoring for businesses, on a modular Smell Monitor array.",
                   cta: "See the Smell Monitor",
                   href: "/smell-monitor",
+                },
+                {
+                  eyebrow: "I want to code",
+                  icon: Monitor,
+                  title: "Try Osmograph",
+                  desc: "Zero-code e-nose workflow — flash firmware, record traces, train detectors without typing a line.",
+                  cta: "Open Osmograph",
+                  href: "/osmograph",
                 },
                 {
                   eyebrow: "I want to learn",
@@ -394,14 +402,6 @@ export default function Home() {
                   desc: "A $30 weekend build guide. ESP32, a few MOX modules, and a working classifier by Monday.",
                   cta: "Open the build guide",
                   href: "/academy/building-your-first-e-nose",
-                },
-                {
-                  eyebrow: "I want to code",
-                  icon: Monitor,
-                  title: "Try Osmograph",
-                  desc: "Zero-code e-nose workflow — flash firmware, record traces, train detectors without typing a line.",
-                  cta: "Open Osmograph",
-                  href: "/osmograph",
                 },
                 {
                   eyebrow: "I want to research",
