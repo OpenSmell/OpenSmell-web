@@ -21,11 +21,13 @@ export const metadata: Metadata = {
     url: "https://www.opensmell.xyz",
     siteName: "OpenSmell",
     type: "website",
+    images: [{ url: "/opensmell_logo.png", alt: "OpenSmell logo" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "OpenSmell — Open Infrastructure for Digital Olfaction",
     description: "Building the tools, standards, and community to make smell as programmable as light and sound.",
+    images: ["/opensmell_logo.png"],
   },
   icons: {
     icon: "/opensmell_logo.png",
