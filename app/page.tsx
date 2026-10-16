@@ -11,7 +11,6 @@ import {
 } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import AnimatedHero from "@/components/animated-hero"
-import Roadmap from "@/components/roadmap"
 
 const products = [
   {
@@ -802,8 +801,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <Roadmap />
 
         {/* DONATE */}
         <section className="border-t border-border py-20 relative">
