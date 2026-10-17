@@ -66,7 +66,7 @@ const products = [
 // Each card is a capability, not a claim: research results by others are labelled as
 // external, and measured results carry their source. No bare numbers (see WEBSITE_PLAN.md).
 const useCases = [
-  { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "benchmark¹", desc: "838K samples, 59 food types, 10 MOX sensors — benchmarked on open data, source linked." },
+  { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "benchmark¹", desc: "838K samples, 59 food types, 10 MOX sensors — benchmarked on open data; licence and source in the data commons below." },
   { icon: Factory, title: "Industrial VOC", stat: "24/7", statLabel: "monitoring", desc: "Continuous VOC monitoring with configurable sensitivity for your process." },
   { icon: Wrench, title: "Custom Detection", stat: "Open", statLabel: "SDK", desc: "Train your own classifiers for your own smells — the SDK and protocol are open." },
   { icon: AlertTriangle, title: "Gas excursions", stat: "Rapid", statLabel: "alerts", desc: "Sudden excursions flagged against the baseline with adjustable sensitivity." },
@@ -335,7 +335,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6 py-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { label: "Open benchmark samples", value: "838K" },
+                { label: "Food-freshness samples (Zenodo)", value: "838K" },
                 { label: "Drift-corrected accuracy¹", value: "93.3%" },
                 { label: "Everything open source", value: "MIT" },
                 { label: "SDKs for Python & Rust", value: "2" },

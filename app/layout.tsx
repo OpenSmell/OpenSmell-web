@@ -22,13 +22,13 @@ export const metadata: Metadata = {
     url: "https://www.opensmell.xyz",
     siteName: "OpenSmell",
     type: "website",
-    images: [{ url: "/opensmell_logo.png", alt: "OpenSmell logo" }],
+    // Image comes from the file convention at app/opengraph-image.tsx (see that file).
   },
   twitter: {
     card: "summary_large_image",
     title: "OpenSmell — Open Infrastructure for Digital Olfaction",
     description: "Building the tools, standards, and community to make smell as programmable as light and sound.",
-    images: ["/opensmell_logo.png"],
+    // Twitter image inherits the generated opengraph image.
   },
   icons: {
     icon: "/opensmell_logo.png",
