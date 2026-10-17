@@ -63,13 +63,15 @@ const products = [
   },
 ]
 
+// Each card is a capability, not a claim: research results by others are labelled as
+// external, and measured results carry their source. No bare numbers (see WEBSITE_PLAN.md).
 const useCases = [
-  { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "drift-corrected", desc: "838K samples, 59 food types, 10 MOX sensors — benchmarked on open data." },
+  { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "benchmark¹", desc: "838K samples, 59 food types, 10 MOX sensors — benchmarked on open data, source linked." },
   { icon: Factory, title: "Industrial VOC", stat: "24/7", statLabel: "monitoring", desc: "Continuous VOC monitoring with configurable sensitivity for your process." },
   { icon: Wrench, title: "Custom Detection", stat: "Open", statLabel: "SDK", desc: "Train your own classifiers for your own smells — the SDK and protocol are open." },
   { icon: AlertTriangle, title: "Gas excursions", stat: "Rapid", statLabel: "alerts", desc: "Sudden excursions flagged against the baseline with adjustable sensitivity." },
-  { icon: Thermometer, title: "Cold Chain", stat: "Early", statLabel: "warning", desc: "Chemical changes in sealed storage appear before a temperature logger registers." },
-  { icon: FlaskConical, title: "Breath Research", stat: "97.1%", statLabel: "COPD", desc: "8 MOX sensors on exhaled-VOC data (Acevedo et al. 2021)." },
+  { icon: Thermometer, title: "Cold Chain", stat: "Early", statLabel: "warning", desc: "Designed to surface chemical change early — validate on your own process." },
+  { icon: FlaskConical, title: "Breath Research", stat: "External", statLabel: "study", desc: "8 MOX sensors studied on exhaled-VOC data (Acevedo et al. 2021) — an external result, not ours." },
   { icon: Leaf, title: "Multi-sensor profiles", stat: "6", statLabel: "MOX channels", desc: "Up to six hot-swappable MOX channels — one box, several chemistries." },
   { icon: Cpu, title: "Live data streaming", stat: "10 Hz", statLabel: "raw readings", desc: "Continuous raw MOX readings over USB, Wi-Fi, or BLE — feed your own software." },
 ]
@@ -334,7 +336,7 @@ export default function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { label: "Open benchmark samples", value: "838K" },
-                { label: "Accuracy, scored out-of-sample", value: "93.3%" },
+                { label: "Drift-corrected accuracy¹", value: "93.3%" },
                 { label: "Everything open source", value: "MIT" },
                 { label: "SDKs for Python & Rust", value: "2" },
               ].map((stat) => (
@@ -345,8 +347,9 @@ export default function Home() {
               ))}
             </div>
             <p className="text-center text-[11px] text-muted-foreground/70 font-mono mt-3">
-              Accuracy and benchmark measured on open data — see how we score it
-              honestly in{" "}
+              ¹ Classification accuracy on the UCI Gas Sensor Array Drift benchmark
+              (Vergara et al., 2012), drift-corrected — dataset-specific, not a general
+              accuracy claim. See how we score it in{" "}
               <a href="https://github.com/opensmell/interoperability" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
                 github.com/opensmell/interoperability
               </a>
@@ -398,7 +401,7 @@ export default function Home() {
                   eyebrow: "I want to build",
                   icon: Wrench,
                   title: "Build an e-nose",
-                  desc: "A $30 weekend build guide. ESP32, a few MOX modules, and a working classifier by Monday.",
+                  desc: "A low-cost weekend build guide. ESP32, a few MOX modules, and a first classifier — no prior ML needed.",
                   cta: "Open the build guide",
                   href: "/academy/building-your-first-e-nose",
                 },
@@ -483,8 +486,10 @@ export default function Home() {
                 </div>
                 <div className="mt-4 pt-3 border-t border-border">
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Drift correction lifts accuracy from 71.4% to 93.3% on the same benchmark.
-                    Different processes need different parameters — fermentation is slow-changing.
+                    On the UCI Gas Sensor Array Drift benchmark (Vergara et al., 2012), drift
+                    correction lifts classification accuracy from 71.4% to 93.3% on the same
+                    data. It is dataset-specific — different processes need different
+                    parameters, and fermentation is slow-changing.
                   </p>
                 </div>
               </div>
@@ -502,7 +507,7 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Every claim below is measured — experiments on real MOX sensor data.
+                Where we can, we link the measurement — and studies by others are labelled as theirs.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -522,6 +527,66 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* CLAIM LADDER — what we do and don't claim. Cheap sensors have narrow,
+            real limits; stating them is the rigour differentiator (see RESEARCH_REQUIREMENTS.md). */}
+        <section className="border-t border-border py-20 relative">
+          <span className="section-marginalia">Honesty</span>
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="text-center mb-10">
+              <div className="coord-tag mb-3">Claims</div>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                What we claim — and what we don&apos;t
+              </h2>
+              <p className="text-muted-foreground text-sm mt-2 max-w-xl mx-auto">
+                Cheap gas sensors have real, narrow limits. We&apos;d rather state ours than oversell.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
+              <div className="bg-background p-6">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-green-400 mb-3">We do — with evidence</div>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  {[
+                    "Detect chemical change against your own baseline",
+                    "Track and correct sensor drift over time",
+                    "Dedicated-sensor alarms for a known target",
+                    "Closed-set classification on a fixed panel",
+                    "Transfer a model across matched devices",
+                    "Molecule → odour descriptors (Pyrfume / Chemoprint)",
+                  ].map((t) => (
+                    <li key={t} className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-green-400 mt-2 flex-shrink-0" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="bg-background p-6">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-red-400 mb-3">We don&apos;t — and won&apos;t pretend to</div>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  {[
+                    "Identify arbitrary unknown mixtures from a cheap array",
+                    "Report absolute VOC concentrations from index sensors",
+                    "Claim one accuracy that generalises everywhere",
+                    "Replace lab-grade GC-MS for regulated results",
+                  ].map((t) => (
+                    <li key={t} className="flex items-start gap-2">
+                      <span className="w-1 h-1 bg-red-400 mt-2 flex-shrink-0" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <p className="text-center text-[11px] text-muted-foreground/70 font-mono mt-4">
+              Scored out-of-sample on open data — the harness is public at{" "}
+              <a href="https://github.com/opensmell/interoperability" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
+                github.com/opensmell/interoperability
+              </a>
+              .
+            </p>
           </div>
         </section>
 
@@ -597,16 +662,17 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Real data — 1M+ samples across 5 independent datasets, every number traceable to a source.
+                Real data — 5 independent datasets, each linked to its source and licence. We
+                link, we don&apos;t silently rehost.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {[
-                { name: "Food Freshness", samples: "838K", sensors: "10 MOX", fdr: "321M", source: "Zenodo", url: "https://zenodo.org/records/17285312" },
-                { name: "SmellNet", samples: "150K", sensors: "6 gas", fdr: "8.1E+18", source: "HuggingFace", url: "https://huggingface.co/datasets/DeweiFeng/SmellNet" },
-                { name: "Beef Spoilage", samples: "26K", sensors: "12 MOX", fdr: "3.85", source: "Harvard Dataverse", url: "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XNFVTS" },
-                { name: "UCI Gas Drift", samples: "14K", sensors: "128", fdr: "1.05", source: "UCI ML Repository", url: "https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset" },
-                { name: "WineSmell", samples: "565", sensors: "13 ch", fdr: "0.10", source: "MIT · alexnkorovin", url: "https://github.com/alexnkorovin/wine_dataset" },
+                { name: "Food Freshness", samples: "838K", sensors: "10 MOX", source: "Zenodo", url: "https://zenodo.org/records/17285312" },
+                { name: "SmellNet", samples: "828K steps", sensors: "MOX + MEMS", source: "MIT · GitHub", url: "https://github.com/MIT-MI/SmellNet" },
+                { name: "Beef Spoilage", samples: "26K", sensors: "12 MOX", source: "Harvard Dataverse", url: "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XNFVTS" },
+                { name: "UCI Gas Drift", samples: "14K", sensors: "128", source: "UCI ⚠ link only", url: "https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset" },
+                { name: "WineSmell", samples: "565", sensors: "13 ch", source: "MIT · alexnkorovin", url: "https://github.com/alexnkorovin/wine_dataset" },
               ].map((ds) => (
                 <a
                   key={ds.name}
@@ -629,10 +695,6 @@ export default function Home() {
                       <span className="text-muted-foreground group-hover:text-background/70">Sensors</span>
                       <span className="font-mono">{ds.sensors}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground group-hover:text-background/70">Best FDR</span>
-                      <span className="font-mono">{ds.fdr}</span>
-                    </div>
                     <div className="flex justify-between border-t border-border pt-1 mt-1">
                       <span className="text-muted-foreground group-hover:text-background/70">Source</span>
                       <span className="font-mono text-[10px]">{ds.source}</span>
@@ -641,6 +703,11 @@ export default function Home() {
                 </a>
               ))}
             </div>
+            <p className="text-center text-[11px] text-muted-foreground/70 font-mono mt-4">
+              UCI gas datasets carry conflicting licence text — structured field says CC BY 4.0,
+              donor notes say research-only — so they are linked, not rehosted. Every dataset
+              keeps its own licence; see our NOTICE for the full attribution record.
+            </p>
           </div>
         </section>
 
@@ -734,7 +801,8 @@ export default function Home() {
                 4,800+ chemical-odour relationships from{" "}
                 <a href="https://pyrfume.org" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:opacity-70">
                   Pyrfume
-                </a>.
+                </a>
+                {" "}— each archive keeps its own licence (some non-commercial), passed through unchanged.
               </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl mx-auto">
