@@ -29,13 +29,24 @@ export function injectUmami(): void {
 }
 
 /**
- * Track a custom event, e.g. a download or an article read. No-op when the
- * tracker is unconfigured or the script has not loaded yet.
+ * Track a custom event, e.g. a download or an outbound click.
+ *
+ * Events are forwarded to Vercel (works with zero setup) and to Umami when it
+ * is configured. Never throws into navigation.
  */
 export function track(
   eventName: string,
   data?: Record<string, unknown>,
 ): void {
+  if (typeof window !== "undefined") {
+    import("@vercel/analytics")
+      .then(({ track: vercelTrack }) =>
+        vercelTrack(eventName, data as Parameters<typeof vercelTrack>[1]),
+      )
+      .catch(() => {
+        /* Vercel Analytics is best-effort */
+      })
+  }
   if (!SCRIPT) return
   try {
     const umami = window.umami
