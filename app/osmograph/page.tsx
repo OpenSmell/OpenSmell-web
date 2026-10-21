@@ -9,7 +9,6 @@ import {
   Database, Gauge, Ruler, Layers, FlaskConical, Radio, Crosshair,
   ShieldAlert, GitCompareArrows, SlidersHorizontal, X, ZoomIn,
 } from "lucide-react"
-import { track } from "@/lib/analytics"
 import DownloadOsmograph from "@/components/download-osmograph"
 
 const SCREENSHOT = "/osmograph"
@@ -308,7 +307,6 @@ export default function OsmographPage() {
                 </ul>
                 <div className="flex flex-wrap gap-3">
                   <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer"
-                    onClick={() => track("download", { target: "osmograph-desktop", source: "overview" })}
                     className="hex-btn hex-btn-outline">
                     Get Osmograph <ChevronRight className="w-4 h-4" />
                   </a>

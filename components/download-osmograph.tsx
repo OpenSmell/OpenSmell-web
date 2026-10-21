@@ -1,9 +1,8 @@
 "use client"
 
-import { useState, useRef, useEffect, useCallback } from "react"
+import { useState, useRef, useEffect } from "react"
 import type { ReactNode } from "react"
 import { ChevronDown, ArrowRight } from "lucide-react"
-import { track } from "@/lib/analytics"
 
 type PlatformId = "windows" | "macos" | "linux-deb" | "linux-rpm"
 
@@ -108,15 +107,10 @@ export default function DownloadOsmograph() {
 
   const current = OPTIONS.find((o) => o.id === selected) ?? OPTIONS[0]
 
-  const fire = useCallback((platform: string, source: string) => {
-    track("download", { target: "osmograph-desktop", platform, source })
-  }, [])
-
   return (
     <div ref={rootRef} className="relative inline-flex">
       <a
         href={current.href}
-        onClick={() => fire(current.spec, "hero")}
         className="hex-btn hex-btn-primary"
       >
         <DownloadGlyph />
@@ -142,10 +136,7 @@ export default function DownloadOsmograph() {
             <li key={o.id}>
               <a
                 href={o.href}
-                onClick={() => {
-                  fire(o.spec, "dropdown")
-                  setOpen(false)
-                }}
+                onClick={() => setOpen(false)}
                 className="flex items-center gap-3 px-4 py-3 border-b border-border last:border-b-0 text-foreground hover:bg-hex transition-colors"
               >
                 <span className="w-5 text-foreground flex-shrink-0">{o.icon}</span>
@@ -164,7 +155,6 @@ export default function DownloadOsmograph() {
               href="https://github.com/OpenSmell/osmograph-desktop/releases"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => fire("all-platforms", "dropdown")}
               className="flex items-center gap-2 px-4 py-2.5 text-[11px] font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground"
             >
               All downloads on GitHub <ArrowRight className="w-3.5 h-3.5" />

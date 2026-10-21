@@ -1,12 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import SiteHeader from "@/components/site-header"
 import SiteFooter from "@/components/site-footer"
-import AnalyticsInit from "@/components/analytics-init"
-import LinkTrack from "@/components/link-track"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -61,9 +58,6 @@ export default function RootLayout({
           {children}
           <SiteFooter />
         </ThemeProvider>
-        <Analytics />
-        <AnalyticsInit />
-        <LinkTrack />
       </body>
     </html>
   )
