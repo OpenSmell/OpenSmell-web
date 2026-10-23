@@ -13,10 +13,10 @@
       "tagline": "Track the roast, not just the aroma.",
       "summary": "A reference manifest for testing URL install and the local policy gate. It is a template for authors, not a validated roasting controller or a real product.",
       "hasUi": false,
-      "manifestUrl": "https://raw.githubusercontent.com/OpenSmell/osmograph-desktop/master/examples/community-workspace.vial.json",
+      "manifestUrl": "https://raw.githubusercontent.com/OpenSmell/osmograph-desktop/master/examples/example-coffee-roast.vial.json",
       "sourceUrl": "https://github.com/OpenSmell/osmograph-desktop/blob/master/examples/community-workspace.vial.json",
-      "hash": "e8a7d1cdb79fbb2cb71a92eeb5282be5b122ac10f60dde27f5bbfbb11bd4a212",
-      "install": "Paste the manifest URL into Osmograph → Vials → Aromatory → Install from URL."
+      "hash": "90fc6e80b0a4dcff1acf5f335e19af2a557f5dd5496b9f0cff9654617f91b6c0",
+      "install": "Paste the manifest URL into Osmograph \u2192 Vials \u2192 Aromatory \u2192 Install from URL."
     },
     {
       "id": "praisejamesx.fermentation",
@@ -25,14 +25,14 @@
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "fermentation",
-      "tagline": "A batch log with a sensor column — the roast is the evidence, the array is a prompt.",
+      "tagline": "A batch log with a sensor column \u2014 the roast is the evidence, the array is a prompt.",
       "summary": "Home-fermentation workspace: batch protocol, readings log, stop rules, and a sandboxed Home view. It is not a food-safety instrument; the stop rules point at the primary measurement.",
       "hasUi": true,
       "evidence": "B",
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/fermentation-lab/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/fermentation-lab",
       "hash": "4bbc0461527fe4e641db9c137307f8fc0435edc2a2d53909b45f1f21ae138296",
-      "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory."
+      "install": "Install from source above, or paste the manifest URL in Osmograph \u2192 Vials \u2192 Aromatory."
     },
     {
       "id": "praisejamesx.plant-respiration",
@@ -48,7 +48,7 @@
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/plant-respiration/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/plant-respiration",
       "hash": "b978bdc5bdb44a9347ee3f10703701c2b4dc198daa5514fd4c754c893572a187",
-      "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory."
+      "install": "Install from source above, or paste the manifest URL in Osmograph \u2192 Vials \u2192 Aromatory."
     }
   ]
 }
