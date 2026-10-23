@@ -11,13 +11,10 @@ import {
   FlaskConical,
   Github,
   ShieldAlert,
-  ShieldCheck,
   Terminal,
 } from "lucide-react"
 
 import registry from "../../public/vials/registry.json"
-
-type Risk = "low" | "medium" | "high" | "critical"
 
 interface RegistryVial {
   id: string
@@ -25,22 +22,17 @@ interface RegistryVial {
   version: string
   author: string
   license: string
-  risk: Risk
   domain: string
   tagline: string
   summary: string
-  tier: "official" | "community"
-  bundled: boolean
+  hasUi?: boolean
+  evidence?: "A" | "B" | "C" | "D"
+  atlasRefs?: string[]
+  /** sha256 hex of the manifest file at manifestUrl — the app refuses a mismatch. */
+  hash?: string
   manifestUrl: string | null
   sourceUrl: string | null
   install: string
-}
-
-const RISK_STYLE: Record<Risk, string> = {
-  low: "border-border text-muted-foreground",
-  medium: "border-border text-foreground",
-  high: "border-foreground text-foreground",
-  critical: "border-foreground bg-foreground text-background",
 }
 
 function CopyUrl({ url }: { url: string }) {
@@ -75,14 +67,19 @@ function VialCard({ vial }: { vial: RegistryVial }) {
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-2">
             <span className="text-[10px] uppercase tracking-wider font-mono text-muted-foreground border border-border px-2 py-0.5">
-              {vial.tier}
-            </span>
-            <span className={`text-[10px] uppercase tracking-wider font-mono border px-2 py-0.5 ${RISK_STYLE[vial.risk]}`}>
-              {vial.risk} risk
+              {vial.hasUi ? "sandboxed UI" : "manifest"}
             </span>
             <span className="text-[10px] uppercase tracking-wider font-mono text-muted-foreground">
               v{vial.version}
             </span>
+            {vial.evidence ? (
+              <span
+                className="text-[10px] uppercase tracking-wider font-mono border border-foreground px-2 py-0.5"
+                title={`Underlying evidence grade ${vial.evidence}`}
+              >
+                evidence {vial.evidence}
+              </span>
+            ) : null}
           </div>
           <h3 className="text-lg font-semibold leading-tight">{vial.name}</h3>
           <p className="text-xs text-muted-foreground mt-1 font-mono">
@@ -96,12 +93,7 @@ function VialCard({ vial }: { vial: RegistryVial }) {
       <p className="text-sm text-muted-foreground leading-relaxed">{vial.summary}</p>
 
       <div className="mt-auto pt-3 border-t border-border flex flex-wrap items-center gap-2">
-        {vial.bundled ? (
-          <span className="inline-flex items-center gap-2 text-xs text-muted-foreground">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            {vial.install}
-          </span>
-        ) : vial.manifestUrl ? (
+        {vial.manifestUrl ? (
           <>
             <CopyUrl url={vial.manifestUrl} />
             <span className="text-xs text-muted-foreground">{vial.install}</span>
@@ -109,6 +101,22 @@ function VialCard({ vial }: { vial: RegistryVial }) {
         ) : (
           <span className="text-xs text-muted-foreground">{vial.install}</span>
         )}
+        {vial.hash ? (
+          <span
+            className="text-xs font-mono text-muted-foreground"
+            title="sha256 of the manifest — the desktop app refuses an install whose manifest does not match this hash"
+          >
+            sha256 {vial.hash.slice(0, 12)}…
+          </span>
+        ) : null}
+        {vial.atlasRefs?.length ? (
+          <Link
+            href={`/atlas#${vial.atlasRefs[0]}`}
+            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Evidence <ArrowRight className="w-3 h-3" />
+          </Link>
+        ) : null}
         {vial.sourceUrl ? (
           <a
             href={vial.sourceUrl}
@@ -126,8 +134,7 @@ function VialCard({ vial }: { vial: RegistryVial }) {
 
 export default function VialsPage() {
   const vials = registry.vials as RegistryVial[]
-  const official = useMemo(() => vials.filter((v) => v.tier === "official"), [vials])
-  const community = useMemo(() => vials.filter((v) => v.tier === "community"), [vials])
+  const withUi = useMemo(() => vials.filter((v) => v.hasUi), [vials])
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
@@ -147,32 +154,32 @@ export default function VialsPage() {
             <span className="text-muted-foreground">Osmograph.</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mb-6 leading-relaxed">
-            A Vial is a small, inspectable workspace: a protocol, a log, stop rules, field notes, and
-            the claim it refuses to make. It is a declarative <code className="font-mono text-sm">.vial.json</code>{" "}
-            manifest, not executable code.
+            A Vial is a small, inspectable workspace: a protocol, a log, stop rules, field notes, a
+            Home contribution, and the claim it refuses to make. Every Vial is an author-hosted
+            project. It may stay declarative, or ship a sandboxed UI with no network, storage, or
+            Tauri access.
           </p>
           <div className="flex flex-wrap gap-3">
             <a href="#install" className="hex-btn hex-btn-primary no-underline">
               Install from a URL
               <ArrowRight className="w-4 h-4" />
             </a>
-            <a
-              href="https://github.com/OpenSmell/osmograph-desktop/blob/master/AUTHORING.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hex-btn hex-btn-outline no-underline"
-            >
+            <Link href="/docs/vials" className="hex-btn hex-btn-outline no-underline">
               Authoring guide
-              <ExternalLink className="w-4 h-4" />
-            </a>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link href="/atlas" className="hex-btn hex-btn-outline no-underline">
+              Browse the evidence
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border mb-14">
           {[
-            { label: "Official", value: String(official.length), note: "bundled with Osmograph" },
-            { label: "Community", value: String(community.length), note: "hosted by its author" },
-            { label: "Executable code", value: "0", note: "host-rendered only" },
+            { label: "Listed", value: String(vials.length), note: "author-hosted projects" },
+            { label: "Sandboxed UI", value: String(withUi.length), note: "runs in an iframe" },
+            { label: "Registry", value: "index", note: "it does not host the Vial" },
           ].map((stat) => (
             <div key={stat.label} className="bg-background p-5">
               <div className="text-[10px] uppercase tracking-wider font-mono text-muted-foreground mb-2">
@@ -193,39 +200,20 @@ export default function VialsPage() {
           </p>
         </div>
 
-        <section className="mb-14">
-          <div className="flex items-end justify-between gap-4 mb-4">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight">Official</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                First-party packs shipped in the app. Open <span className="font-mono">Vials → Aromatory</span>.
-              </p>
-            </div>
-            <span className="text-[10px] uppercase tracking-wider font-mono text-muted-foreground">
-              {official.length} packs
-            </span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {official.map((vial) => (
-              <VialCard key={vial.id} vial={vial} />
-            ))}
-          </div>
-        </section>
-
         <section className="mb-14" id="install">
           <div className="flex items-end justify-between gap-4 mb-4">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight">Community</h2>
+              <h2 className="text-2xl font-bold tracking-tight">Listed Vials</h2>
               <p className="text-sm text-muted-foreground mt-1">
-                Hosted in the author&apos;s own repository. Install from the raw manifest URL.
+                Every entry points at the author&apos;s own repository. Install from the raw manifest URL.
               </p>
             </div>
             <span className="text-[10px] uppercase tracking-wider font-mono text-muted-foreground">
-              {community.length} listed
+              {vials.length} listed
             </span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-6">
-            {community.map((vial) => (
+            {vials.map((vial) => (
               <VialCard key={vial.id} vial={vial} />
             ))}
             <article className="bg-background border border-dashed border-border p-5 sm:p-6 flex flex-col gap-3">
@@ -234,16 +222,16 @@ export default function VialsPage() {
                 <h3 className="text-lg font-semibold">Your Vial here</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Put a <code className="font-mono text-xs">.vial.json</code> in your personal GitHub repo. You do
+                Put a <code className="font-mono text-xs">vial.json</code> and, if you need them, a{" "}
+                <code className="font-mono text-xs">ui.html</code> and{" "}
+                <code className="font-mono text-xs">home.html</code> in your personal GitHub repo. You do
                 not need a new registry repo, an npm package, or a build step.
               </p>
               <a
-                href="https://github.com/OpenSmell/osmograph-desktop/blob/master/AUTHORING.md"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/docs/vials"
                 className="inline-flex items-center gap-2 text-xs font-medium border border-foreground px-3 py-2 hover:bg-foreground hover:text-background transition-colors mt-auto w-fit"
               >
-                Start from the template <ArrowRight className="w-3.5 h-3.5" />
+                Start from the scaffold <ArrowRight className="w-3.5 h-3.5" />
               </a>
             </article>
           </div>
@@ -264,8 +252,10 @@ export default function VialsPage() {
                   choose <span className="font-mono text-xs text-foreground">Install from URL</span>.
                 </li>
                 <li>
-                  Paste the HTTPS URL. The app fetches the manifest, runs the local gate, and shows the policy
-                  result before opening the workspace.
+                  Paste the HTTPS URL. The app fetches the manifest, runs the local gate, fetches the
+                  sandboxed <code className="font-mono text-xs">ui.html</code> and{" "}
+                  <code className="font-mono text-xs">home.html</code> beside it when declared, and
+                  shows the policy result before opening the workspace.
                 </li>
               </ol>
               <div className="mt-4 border border-border bg-muted/30 p-3 font-mono text-xs break-all">
@@ -279,8 +269,10 @@ export default function VialsPage() {
               </h3>
               <ol className="space-y-3 text-sm text-muted-foreground leading-relaxed list-decimal pl-5">
                 <li>
-                  Write the manifest in your own repo. Keep the author, licence, citations, and{" "}
-                  <code className="font-mono text-xs">whatItIsNot</code> honest.
+                  Write <code className="font-mono text-xs">vial.json</code> and, if used,{" "}
+                  <code className="font-mono text-xs">ui.html</code> and{" "}
+                  <code className="font-mono text-xs">home.html</code> in your own repo. Keep the author,
+                  licence, citations, and <code className="font-mono text-xs">whatItIsNot</code> honest.
                 </li>
                 <li>
                   Validate it locally with{" "}
@@ -296,7 +288,8 @@ export default function VialsPage() {
                   >
                     public/vials/registry.json
                   </a>
-                  . The manifest stays in your repo.
+                  . Include the source URL and the manifest hash. The registry only indexes the
+                  project; it does not host the files.
                 </li>
               </ol>
             </div>
@@ -309,13 +302,31 @@ export default function VialsPage() {
             {[
               ["Not a marketplace", "There is no hosted upload, account, payment, or automatic update. A listing points at a file you control."],
               ["Not a safety review", "The gate checks manifest shape and known overclaim language. It does not validate your domain, your rig, or your evidence."],
-              ["Not executable code", "A Vial is data. The host renders a fixed widget vocabulary. No third-party JavaScript, HTML, or remote UI runs in Osmograph."],
+              ["Not a trust seal", "A listing points at a file you control. The local gate checks manifest shape and known overclaim language; it does not review your domain, your rig, your evidence, or your UI code."],
             ].map(([title, body]) => (
               <div key={title} className="bg-background p-5">
                 <h3 className="font-semibold mb-1">{title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
               </div>
             ))}
+          </div>
+          <div className="border border-foreground p-5 mt-4 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="min-w-0">
+              <h3 className="font-semibold">Request a listing</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+                Host the manifest yourself, then open a submission with the raw URL, source repo, licence,
+                claim, refusal, and evidence. The registry is reviewed by hand. A listing is discovery,
+                not endorsement.
+              </p>
+            </div>
+            <a
+              href="https://github.com/OpenSmell/opensmell-web/issues/new?template=vial-submission.yml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hex-btn hex-btn-primary no-underline sm:ml-auto shrink-0"
+            >
+              Submit a Vial <Github className="w-4 h-4" />
+            </a>
           </div>
           <p className="text-sm text-muted-foreground mt-6">
             The manifest schema, widget vocabulary, policy gate, and URL-install limits are documented in{" "}

@@ -5,6 +5,9 @@ const nextConfig = {
     unoptimized: true,
   },
   turbopack: {},
+  async redirects() {
+    return [{ source: "/appstore", destination: "/vials", permanent: true }]
+  },
 }
 
 export default nextConfig

@@ -6,10 +6,10 @@ const ROUTES = [
   "/",
   "/osmograph",
   "/vials",
+  "/atlas",
   "/docs",
   "/enose",
   "/academy",
-  "/appstore",
   "/search",
   "/smell-monitor",
 ]

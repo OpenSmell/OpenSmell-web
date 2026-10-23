@@ -28,6 +28,11 @@ const products = [
 
 const foundations = [
   {
+    title: "Authoring a Vial",
+    href: "/docs/vials",
+    desc: "The Vial manifest, the typed host snapshot, the Home contribution, the local policy gate, evidence rules, and publishing from your own GitHub.",
+  },
+  {
     title: "Data model & the .osmell format",
     href: "/docs/data-model",
     desc: "The portable ZIP container every recording flows through: manifest, CSV member, events, and the limitations that govern derived claims.",

@@ -1,0 +1,115 @@
+name: Vial submission
+description: Request a listing in the Aromatory for a Vial you host.
+title: "[Vial] "
+labels: ["vial-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A listing is discovery, not endorsement. The manifest stays in your repository; the registry only points at it.
+
+        Before you submit, run the validator on the manifest and read the authoring guide:
+        https://www.opensmell.xyz/docs/vials
+
+  - type: input
+    id: manifest-url
+    attributes:
+      label: Raw manifest URL
+      description: A direct HTTPS URL to the `.vial.json` file. GitHub raw URLs are fine.
+      placeholder: https://raw.githubusercontent.com/<you>/<repo>/main/vial.json
+    validations:
+      required: true
+
+  - type: input
+    id: source-url
+    attributes:
+      label: Source repository or project page
+      description: Where the manifest, evidence, and issue tracker live.
+      placeholder: https://github.com/<you>/<repo>
+    validations:
+      required: true
+
+  - type: input
+    id: author
+    attributes:
+      label: Public author handle
+      description: The name or handle you want shown in the Aromatory.
+      placeholder: "@your-handle"
+    validations:
+      required: true
+
+  - type: input
+    id: license
+    attributes:
+      label: Licence
+      description: The licence for the manifest. The underlying dataset or paper may have a different licence.
+      placeholder: CC-BY-4.0
+    validations:
+      required: true
+
+  - type: input
+    id: domain
+    attributes:
+      label: Domain
+      description: The process or field this Vial supports.
+      placeholder: fermentation, coffee, indoor air, general
+    validations:
+      required: true
+
+  - type: textarea
+    id: claim
+    attributes:
+      label: What it claims
+      description: One narrow, testable claim. Include the sampling mode and the scope.
+      placeholder: A same-array sustained-change signal on 1 Hz MOX data, with no identity or concentration output.
+    validations:
+      required: true
+
+  - type: textarea
+    id: refusal
+    attributes:
+      label: What it refuses to claim
+      description: Name the identity, concentration, cross-rig, safety, or universal-smell claim this Vial does not make.
+      placeholder: It does not identify a compound, measure concentration, transfer a baseline to another array, or certify safety.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and Atlas references
+      description: Link the data, paper, protocol, or held-out result. Add Olfaction Atlas IDs when they exist.
+      placeholder: |
+        Evidence: TADI-2019, leave-one-board-out evaluation.
+        Atlas: dataset.tadi-2019
+        Limits: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: testing
+    attributes:
+      label: What you tested
+      description: Validator result, Osmograph version, install path, platforms, and any widget or Home failures.
+      placeholder: |
+        Validator: 32/32 checks.
+        Installed from raw URL on Osmograph 0.1.1.
+        Home card passes idle, warming, and attention fixtures.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: The manifest passes `npm run validate:vial -- <project>`.
+          required: true
+        - label: The Vial has an explicit refusal and does not claim identity, concentration, cross-rig transfer, safety, or a universal smell result.
+          required: true
+        - label: I control the manifest URL and can update or revoke it.
+          required: true
+        - label: The evidence links are public, or the record says there is no evidence yet.
+          required: true
+        - label: I understand that a listing is discovery, not a security review or an endorsement.
+          required: true
