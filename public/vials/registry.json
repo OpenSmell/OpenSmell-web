@@ -37,17 +37,17 @@
     {
       "id": "praisejamesx.plant-respiration",
       "name": "Plant Respiration",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "plants",
-      "tagline": "Plant-health context: record what the array saw alongside what you observed.",
-      "summary": "Declarative plant-health workspace: protocol, context journal, stop rules against ethylene/diagnosis claims. It does not detect pathogens or pests.",
-      "hasUi": false,
+      "tagline": "The plant is the evidence; the array is one change detector.",
+      "summary": "Plant-health workspace: weekly readings with leaf, soil, water, and action context, plus a measurement-first Home. Declares host-enforced \u0394R/R\u2080 transforms, a single-unit watch limit derived from measured channel noise, and a persisted trajectory. It does not detect ethylene, pests, or pathogens.",
+      "hasUi": true,
       "evidence": "B",
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/plant-respiration/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/plant-respiration",
-      "hash": "b978bdc5bdb44a9347ee3f10703701c2b4dc198daa5514fd4c754c893572a187",
+      "hash": "2ffdaeb375a11a2291030ee99afab5b35922ac42d79e378d79d7f10a88b58f63",
       "install": "Install from source above, or paste the manifest URL in Osmograph \u2192 Vials \u2192 Aromatory."
     }
   ]
