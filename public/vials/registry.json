@@ -4,7 +4,7 @@
   "note": "Discovery only. Every Vial is an author-hosted project. There is no official tier. Osmograph fetches the manifest from its raw URL, runs the same local policy gate as a file import, and runs any sandboxed UI beside it. A listing is not a security review, a safety certification, or an endorsement.",
   "vials": [
     {
-      "id": "community.example-coffee-roast",
+      "id": "example.coffee-roast",
       "name": "Coffee Roast Log",
       "version": "0.1.0",
       "author": "@example-author",
@@ -14,7 +14,7 @@
       "summary": "A reference manifest for testing URL install and the local policy gate. It is a template for authors, not a validated roasting controller or a real product.",
       "hasUi": false,
       "manifestUrl": "https://raw.githubusercontent.com/OpenSmell/osmograph-desktop/master/examples/example-coffee-roast.vial.json",
-      "sourceUrl": "https://github.com/OpenSmell/osmograph-desktop/blob/master/examples/community-workspace.vial.json",
+      "sourceUrl": "https://github.com/OpenSmell/osmograph-desktop/blob/master/examples/example-coffee-roast.vial.json",
       "hash": "90fc6e80b0a4dcff1acf5f335e19af2a557f5dd5496b9f0cff9654617f91b6c0",
       "install": "Paste the manifest URL into Osmograph \u2192 Vials \u2192 Aromatory \u2192 Install from URL."
     },
