@@ -17,6 +17,38 @@
       "sourceUrl": "https://github.com/OpenSmell/osmograph-desktop/blob/master/examples/community-workspace.vial.json",
       "hash": "e8a7d1cdb79fbb2cb71a92eeb5282be5b122ac10f60dde27f5bbfbb11bd4a212",
       "install": "Paste the manifest URL into Osmograph → Vials → Aromatory → Install from URL."
+    },
+    {
+      "id": "praisejamesx.fermentation",
+      "name": "Fermentation Lab",
+      "version": "0.4.0",
+      "author": "@praisejamesx",
+      "license": "CC-BY-4.0",
+      "domain": "fermentation",
+      "tagline": "A batch log with a sensor column — the roast is the evidence, the array is a prompt.",
+      "summary": "Home-fermentation workspace: batch protocol, readings log, stop rules, and a sandboxed Home view. It is not a food-safety instrument; the stop rules point at the primary measurement.",
+      "hasUi": true,
+      "evidence": "B",
+      "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/fermentation-lab/main/vial.json",
+      "sourceUrl": "https://github.com/praisejamesx/fermentation-lab",
+      "hash": "4bbc0461527fe4e641db9c137307f8fc0435edc2a2d53909b45f1f21ae138296",
+      "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory."
+    },
+    {
+      "id": "praisejamesx.plant-respiration",
+      "name": "Plant Respiration",
+      "version": "0.3.0",
+      "author": "@praisejamesx",
+      "license": "CC-BY-4.0",
+      "domain": "plants",
+      "tagline": "Plant-health context: record what the array saw alongside what you observed.",
+      "summary": "Declarative plant-health workspace: protocol, context journal, stop rules against ethylene/diagnosis claims. It does not detect pathogens or pests.",
+      "hasUi": false,
+      "evidence": "B",
+      "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/plant-respiration/main/vial.json",
+      "sourceUrl": "https://github.com/praisejamesx/plant-respiration",
+      "hash": "b978bdc5bdb44a9347ee3f10703701c2b4dc198daa5514fd4c754c893572a187",
+      "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory."
     }
   ]
 }
