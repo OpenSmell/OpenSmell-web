@@ -21,17 +21,17 @@
     {
       "id": "praisejamesx.fermentation",
       "name": "Fermentation Lab",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "fermentation",
-      "tagline": "A batch log with a sensor column \u2014 the roast is the evidence, the array is a prompt.",
-      "summary": "Home-fermentation workspace: batch protocol, readings log, stop rules, and a sandboxed Home view. It is not a food-safety instrument; the stop rules point at the primary measurement.",
+      "tagline": "The batch is the record; the array is one change detector inside it.",
+      "summary": "Home-fermentation workspace: batch protocol, readings log, stop rules, and a sandboxed Home view. Declares host-enforced \u0394R/R\u2080 transforms, a single-unit watch limit derived from measured channel noise, and a persisted trajectory. It is not a food-safety instrument; the stop rules point at the primary measurement.",
       "hasUi": true,
       "evidence": "B",
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/fermentation-lab/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/fermentation-lab",
-      "hash": "4bbc0461527fe4e641db9c137307f8fc0435edc2a2d53909b45f1f21ae138296",
+      "hash": "078777daf14fbed990f84c7b98c3da6d032279d35129e105b98ad8a3e102d694",
       "install": "Install from source above, or paste the manifest URL in Osmograph \u2192 Vials \u2192 Aromatory."
     },
     {
