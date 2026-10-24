@@ -97,7 +97,20 @@ export default function OsmographPage() {
                 the desktop app that turns a metal-oxide array into an instrument you can trust.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <DownloadOsmograph />
+                <div className="flex flex-col items-start gap-2">
+                  <DownloadOsmograph />
+                  <div className="text-xs text-muted-foreground">
+                    <a
+                      href="https://github.com/OpenSmell/osmograph-desktop/releases/tag/v0.1.2-beta.1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-foreground underline underline-offset-4 hover:text-primary"
+                    >
+                      Try the 0.1.2 beta
+                    </a>
+                    <span> · Pre-release; installing may replace your stable app.</span>
+                  </div>
+                </div>
                 <a href="https://github.com/OpenSmell/osmograph-desktop" target="_blank" rel="noopener noreferrer"
                   className="hex-btn hex-btn-outline">
                   <GitBranch className="w-4 h-4" />
