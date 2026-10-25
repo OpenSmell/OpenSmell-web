@@ -6,7 +6,7 @@ const nextConfig = {
   },
   turbopack: {},
   async redirects() {
-    return [{ source: "/appstore", destination: "/vials", permanent: true }]
+    return [{ source: "/vials", destination: "/appstore", permanent: false }]
   },
 }
 

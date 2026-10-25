@@ -1,4 +1,4 @@
-export type SubmissionType = "dataset" | "plugin" | "app"
+export type SubmissionType = "vial" | "dataset" | "plugin" | "app"
 export type SubmissionStatus = "pending" | "approved" | "rejected"
 
 export interface AppStoreSubmission {

@@ -23,8 +23,7 @@ export default function SiteFooter() {
               links: [
                 { label: "Smell Monitor", href: "/smell-monitor" },
                 { label: "Osmograph", href: "/osmograph" },
-                { label: "Vials", href: "/vials" },
-                { label: "Olfaction Atlas", href: "/atlas" },
+                { label: "Aromatory", href: "/appstore" },
                 { label: "E-Nose Builder", href: "/enose" },
                 { label: "Scent Search", href: "/search" },
               ],

@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Search, Monitor, BarChart3, Cpu, BookOpen, FileText, ExternalLink, Github, FlaskConical, Globe2 } from "lucide-react"
+import { Search, Monitor, BarChart3, Cpu, BookOpen, FileText, ExternalLink, Github, FlaskConical } from "lucide-react"
 import MobileNav from "@/components/mobile-nav"
 
 export default function SiteHeader({ active }: { active?: string }) {
@@ -53,8 +53,7 @@ export default function SiteHeader({ active }: { active?: string }) {
           {link("/search", <Search className="w-3.5 h-3.5" />, "Search", "search")}
           {link("/smell-monitor", <Monitor className="w-3.5 h-3.5" />, "Smell Monitor", "smell-monitor")}
           {link("/osmograph", <BarChart3 className="w-3.5 h-3.5" />, "Osmograph", "osmograph")}
-          {link("/vials", <FlaskConical className="w-3.5 h-3.5" />, "Vials", "vials")}
-          {link("/atlas", <Globe2 className="w-3.5 h-3.5" />, "Atlas", "atlas")}
+          {link("/appstore", <FlaskConical className="w-3.5 h-3.5" />, "Aromatory", "appstore")}
           {link("/enose", <Cpu className="w-3.5 h-3.5" />, "E-Nose", "enose")}
           {link("/academy", <BookOpen className="w-3.5 h-3.5" />, "Academy", "academy")}
           {link("/docs", <FileText className="w-3.5 h-3.5" />, "Docs", "docs")}

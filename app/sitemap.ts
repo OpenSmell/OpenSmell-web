@@ -5,8 +5,7 @@ const BASE = "https://www.opensmell.xyz"
 const ROUTES = [
   "/",
   "/osmograph",
-  "/vials",
-  "/atlas",
+  "/appstore",
   "/docs",
   "/enose",
   "/academy",

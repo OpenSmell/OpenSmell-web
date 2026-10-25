@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, FlaskConical, Globe2, Terminal } from "lucide-react"
+import { ArrowRight, FlaskConical, Terminal } from "lucide-react"
 
 import { Callout, Code, CodeBlock, H2, H3, P, Table, Ul } from "@/components/docs/DocBlocks"
 
@@ -31,16 +31,16 @@ export default function VialDocsPage() {
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mb-6 leading-relaxed">
           A Vial is a small, inspectable workspace: one process, one protocol, a local log, stop
-          rules, a Home contribution, and the claim it refuses to make. Stage 1 is host-rendered
-          data. No third-party JavaScript runs in Osmograph.
+          rules, a Home contribution, and the evidence behind it. Stage 1 is host-rendered data.
+          No third-party JavaScript runs in Osmograph.
         </p>
 
         <div className="flex flex-wrap gap-3 mb-10">
-          <Link href="/atlas" className="hex-btn hex-btn-outline no-underline">
-            Browse the evidence <Globe2 className="w-4 h-4" />
+          <Link href="/appstore" className="hex-btn hex-btn-primary no-underline">
+            Open the Aromatory <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link href="/vials" className="hex-btn hex-btn-primary no-underline">
-            See the Aromatory <ArrowRight className="w-4 h-4" />
+          <Link href="/appstore" className="hex-btn hex-btn-outline no-underline">
+            Submit a Vial <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
@@ -181,12 +181,6 @@ npm run validate:vial -- ./my-vial`}</CodeBlock>
             ["Keep the Home limits short and visible.", "Hide the limits in a collapsed footnote."],
           ]}
         />
-        <P>
-          The <Link href="/atlas" className="underline hover:text-foreground">Olfaction Atlas</Link>{" "}
-          records evidence grades, coverage, and known gaps. A Vial can point at an Atlas record,
-          but the Atlas does not certify the Vial.
-        </P>
-
         <H2 id="publish">Publish without a new registry</H2>
         <P>
           Put <Code>vial.json</Code> and, if you need them, <Code>ui.html</Code> and{" "}

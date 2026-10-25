@@ -7,7 +7,7 @@ import {
   Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen,
   Cpu, Monitor, BarChart3, AlertTriangle,
   FlaskConical, Wrench, Leaf, Factory, Thermometer, UtensilsCrossed,
-  Send, CheckCircle, X, Globe2
+  Send, CheckCircle, X
 } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import AnimatedHero from "@/components/animated-hero"
@@ -56,18 +56,10 @@ const products = [
   {
     eyebrow: "ECOSYSTEM",
     icon: FlaskConical,
-    title: "Vials",
-    desc: "Install a complete workspace for your process — protocol, local log, stop rules, and a Home contribution — from the Aromatory.",
+    title: "Aromatory",
+    desc: "Install a complete workspace for your process — protocol, local log, stop rules, and a Home contribution.",
     cta: "Browse the Aromatory",
-    href: "/vials",
-  },
-  {
-    eyebrow: "EVIDENCE",
-    icon: Globe2,
-    title: "Olfaction Atlas",
-    desc: "A curated evidence map of e-nose datasets, papers, hardware, and claims, with explicit grades and limits.",
-    cta: "Explore the Atlas",
-    href: "/atlas",
+    href: "/appstore",
   },
 ]
 
@@ -730,7 +722,7 @@ export default function Home() {
                 <span className="hex-icon text-muted-foreground" />
               </div>
               <p className="text-muted-foreground text-sm mt-1">
-                Search, hardware, software, e-nose builder, Vials, Atlas, Academy.
+                Search, hardware, software, e-nose builder, Vials, Academy.
               </p>
             </div>
             <div className="flex items-center gap-2 md:gap-3 flex-wrap mb-10 justify-center">
