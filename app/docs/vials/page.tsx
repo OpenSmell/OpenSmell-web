@@ -1,15 +1,55 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, FlaskConical, Terminal } from "lucide-react"
+import { ArrowRight, Boxes, Code2, FileCheck2, FlaskConical, Gauge, Play, ShieldCheck } from "lucide-react"
 
 import { Callout, Code, CodeBlock, H2, H3, P, Table, Ul } from "@/components/docs/DocBlocks"
+import { VialNav } from "@/components/docs/VialNav"
 
 export const metadata: Metadata = {
-  title: "Author a Vial — OpenSmell",
+  title: "Vials — programmable anomaly apps — OpenSmell",
   description:
-    "Scaffold, validate, install, and publish an Osmograph Vial: the manifest contract, the host snapshot, the Home contribution, the policy gate, and the evidence rules.",
+    "A Vial is a programmable anomaly app: a declared profile program, a sandboxed domain UI, and held-out evidence. Learn the contract, build one, test it, and operate it.",
   alternates: { canonical: "/docs/vials" },
 }
+
+const tutorials = [
+  {
+    icon: Play,
+    title: "Quickstart",
+    href: "/docs/vials/quickstart",
+    desc: "Scaffold, fill the profile, write a fixture, run the gate, publish, and install.",
+  },
+  {
+    icon: Gauge,
+    title: "The profile program",
+    href: "/docs/vials/profile",
+    desc: "Baseline, transforms, persistence, hysteresis, escalation, admissibility, and the false-alarm budget.",
+  },
+  {
+    icon: Code2,
+    title: "The domain UI",
+    href: "/docs/vials/ui",
+    desc: "The sandboxed iframe, the typed host snapshot, the action set, and the presentation laws.",
+  },
+  {
+    icon: FileCheck2,
+    title: "Evidence and fixtures",
+    href: "/docs/vials/evidence",
+    desc: "Held-out reports, fixture format, what `noses test` proves, and what review actually checks.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Install and operate",
+    href: "/docs/vials/operate",
+    desc: "Hash-verified install, updates, per-Vial bug reports, offline behavior, and rollback.",
+  },
+  {
+    icon: Boxes,
+    title: "Reference",
+    href: "/docs/vials/reference",
+    desc: "Every schema field, bridge method, snapshot field, status, and command in one place.",
+  },
+]
 
 export default function VialDocsPage() {
   return (
@@ -20,239 +60,217 @@ export default function VialDocsPage() {
             <FlaskConical className="w-3.5 h-3.5" />
             Vials
           </span>
-          <span className="font-mono">osmograph.domain-pack/1</span>
+          <span className="font-mono">osmograph.domain-pack/2</span>
           <span className="font-mono">osmograph.vial-host/1</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 leading-[0.95]">
-          Author a
-          <br />
-          <span className="text-muted-foreground">Vial.</span>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+          A Vial is a programmable anomaly app.
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mb-6 leading-relaxed">
-          A Vial is a small, inspectable workspace: one process, one protocol, a local log, stop
-          rules, a Home contribution, and the evidence behind it. Stage 1 is host-rendered data.
-          No third-party JavaScript runs in Osmograph.
+        <p className="text-base text-muted-foreground leading-relaxed max-w-3xl">
+          It has three parts that ship together: a <b className="text-foreground">profile program</b>{" "}
+          that declares what counts as a relevant change on one array and one process, a{" "}
+          <b className="text-foreground">domain UI</b> that turns that change into a decision surface,
+          and <b className="text-foreground">evidence</b> that shows the program works on held-out
+          data. The host runs the detector and owns every safety refusal. The Vial programs the
+          interpretation, the presentation, and the limits.
         </p>
 
-        <div className="flex flex-wrap gap-3 mb-10">
-          <Link href="/appstore" className="hex-btn hex-btn-primary no-underline">
-            Open the Aromatory <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link href="/appstore" className="hex-btn hex-btn-outline no-underline">
-            Submit a Vial <ArrowRight className="w-4 h-4" />
-          </Link>
+        <VialNav />
+
+        <div className="border border-border p-5 my-8 bg-muted/20">
+          <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-2">
+            The definition in one sentence
+          </div>
+          <p className="text-sm leading-relaxed">
+            A Vial is a versioned, hash-pinned program for one repeated decision: its manifest
+            declares the baseline, transforms, detection thresholds, persistence, hysteresis,
+            escalation, admissibility, and evidence; its sandboxed UI renders the host snapshot; its
+            fixtures and held-out report show the declared behaviour is real.
+          </p>
         </div>
 
-        <Callout kind="note">
-          The policy gate is a local, heuristic check. A pass is necessary, not sufficient. It is
-          not a security audit, a domain review, or a safety certification.
-        </Callout>
-
-        <H2 id="quickstart">Quick start</H2>
+        <H2 id="why">Why this is programmable</H2>
         <P>
-          Scaffold a project from the desktop repository. The generator writes a complete manifest,
-          an empty host-snapshot fixture, and a README that states the claim and the refusal.
-        </P>
-        <CodeBlock title="terminal">{`cd osmograph-desktop
-npm run scaffold:vial -- ./my-vial "Coffee Roast Log" "@your-handle"
-npm run validate:vial -- ./my-vial`}</CodeBlock>
-        <P>
-          Edit <Code>vial.json</Code>, run the validator again, then import the file in{" "}
-          <strong className="text-foreground">Vials → Aromatory → Import .vial.json</strong>. The
-          same manifest can be hosted from your own GitHub and installed by raw HTTPS URL.
-        </P>
-
-        <H2 id="contract">What the host gives a Vial</H2>
-        <P>
-          The host owns sampling, baseline health, the anomaly detector, the classifier, and every
-          safety gate. A Vial receives a small typed snapshot and returns a bounded Home card. It
-          never receives raw buffers, never owns the detector, and cannot override a host refusal.
+          The program is the part that changes what the instrument does. When a Vial is open, the host
+          compiles its profile into a detector owned by that Vial. Two Vials can watch the same array
+          at the same time with different warm-up windows, persistence, hysteresis, and escalation.
+          Neither can change the other, and neither can raise the base app&apos;s alert level. A folder
+          of text and a screen can describe a workflow; the profile is what makes the workflow run.
         </P>
         <Table
-          head={["Field", "What it means", "What a Vial may do with it"]}
+          head={["Layer", "Owned by", "What it decides"]}
           rows={[
             [
-              <Code key="source">source</Code>,
-              "live, replay, dataset, or none",
-              "Choose the right copy and empty state. Do not pretend a replay is live.",
+              "Profile program",
+              "The Vial manifest",
+              <>
+                Baseline protocol and warm-up, response transform, per-channel limits, minimum
+                channel corroboration, level budget, persistence, hysteresis, escalation, reset, and
+                the false-alarm target.
+              </>,
             ],
             [
-              <Code key="baseline">baseline</Code>,
-              "none, warming, ready, or stale, plus progress",
-              "Explain warm-up. Never alarm before the host says the baseline is ready.",
+              "Domain UI",
+              "The Vial's sandboxed <Code>ui.html</Code>",
+              <>
+                What the user sees and can do: context fields, checks, logs, diagrams, stop rules,
+                and a Home contribution. It receives typed host state and returns bounded actions.
+              </>,
             ],
             [
-              <Code key="anomaly">anomaly</Code>,
-              "unknown, normal, warning, or critical, with score and triggered channels",
-              "Render the host state and the next human action. Do not re-identify the gas.",
+              "Runtime",
+              "Osmograph",
+              <>
+                Sampling, baseline health, Kalman detection, sensor faults, the sandbox, hashing,
+                schema validation, and every safety refusal.
+              </>,
             ],
             [
-              <Code key="health">channels[].health</Code>,
-              "ok, stuck, saturated, noisy, or unknown",
-              "Refuse a comparison or prompt service only when the host agrees.",
-            ],
-            [
-              <Code key="classifier">classifier</Code>,
-              "none or loaded, with a closed-set label and confidence",
-              "Show the closed-set result. Do not turn it into an open-set identity.",
-            ],
-            [
-              <Code key="environment">environment</Code>,
-              "temperature and humidity, or null",
-              "Use it as context. Do not silently attribute a change to the smell.",
+              "Evidence",
+              "The author, checked at review",
+              <>
+                Held-out report, dataset provenance, measured FAR/latency/MDE, and fixture cases
+                that <Code>noses test</Code> replays against the profile state machine.
+              </>,
             ],
           ]}
         />
-        <P>
-          The current snapshot contract lives in{" "}
-          <Code>osmograph-desktop/src/vialHost.ts</Code>. It is deliberately smaller than the raw
-          feature vector. A Vial must not depend on a column index or on all 187 SDK features being
-          present.
-        </P>
 
-        <H2 id="home">The Home contribution</H2>
-        <P>
-          A Vial can add one compact card to Home. The author declares the headline, the detail,
-          at most four metrics, one to three actions, at least one limit, and at least one source.
-          The host merges that with live state.
-        </P>
-        <CodeBlock title="vial.json — home">{`"home": {
-  "headline": "Arm one clean baseline. Watch for one sustained change.",
-  "detail": "The host anomaly engine runs here, on this array. This Vial adds the protocol and the refusal.",
-  "metrics": [
-    { "label": "Scope", "value": "same device" },
-    { "label": "Evidence", "value": "TADI-2019" }
-  ],
-  "actions": [
-    { "id": "workspace", "label": "Open change watch", "kind": "open-workspace" },
-    { "id": "datasets", "label": "Get a real corpus", "kind": "open-datasets" }
-  ],
-  "limits": [
-    "A change signal is not an identity, a concentration, or a safety verdict."
-  ],
-  "sources": [
-    "TADI-2019, doi:10.5281/zenodo.8399829"
-  ]
-}`}</CodeBlock>
+        <H2 id="lifecycle">The lifecycle, end to end</H2>
+        <CodeBlock title="author → list → install → operate">{`author writes vial.json + ui.html + fixtures/
+        │
+        ├─ noses lint     schema, profile, evidence, sandbox, placeholders
+        ├─ noses test     runs fixtures against the declared profile
+        └─ noses publish  manifest sha256 + every UI asset sha256 + registry entry
+        │
+        ▼
+POST /api/vials/submit  →  GitHub issue with pinned hashes
+        │
+        ▼
+/admin review  →  re-fetch, re-validate, refuse changed bytes  →  commit registry.json
+        │
+        ▼
+Aromatory open  →  fetch manifest + assets  →  verify hashes  →  run the same host gate
+        │
+        ▼
+install  →  per-Vial detector  →  domain UI  →  report a problem with id/version/hash
+        │
+        ▼
+new version  →  registry pins it  →  “Update to vX” in the Aromatory  →  hash-verified replace`}</CodeBlock>
+
+        <H2 id="tutorials">Tutorials</H2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5">
+          {tutorials.map((tutorial) => (
+            <Link
+              key={tutorial.href}
+              href={tutorial.href}
+              className="border border-border p-4 hover:border-foreground transition-colors no-underline group"
+            >
+              <div className="flex items-center gap-2 text-sm font-semibold mb-1">
+                <tutorial.icon className="w-4 h-4" />
+                {tutorial.title}
+                <ArrowRight className="w-3.5 h-3.5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">{tutorial.desc}</p>
+            </Link>
+          ))}
+        </div>
+
+        <H2 id="status">What a status means</H2>
+        <Table
+          head={["Status", "Where it comes from", "What it claims"]}
+          rows={[
+            [
+              "Draft",
+              "Local edit",
+              "Not installed. The author is still writing the profile, UI, or evidence.",
+            ],
+            [
+              "Ungated",
+              <>
+                Local gate failed (<Code>open</Code> in the registry)
+              </>,
+              "Installable for development. At least one critical check failed; the host says so and does not present it as validated.",
+            ],
+            [
+              "Gated",
+              "Local gate passed",
+              "The manifest, profile, UI sandbox, citations, and evidence block satisfy the local contract; external review is a separate step.",
+            ],
+            [
+              "Reviewed / listed",
+              "Registry review",
+              "A person reviewed the claim and evidence, and the registry pins the manifest, UI, and fixture hashes. The host still re-runs the gate and verifies the manifest and UI bytes on install.",
+            ],
+            [
+              "Signed",
+              "External signature",
+              "An external signature, recorded separately. Signing is outside the local gate.",
+            ],
+          ]}
+        />
+        <Callout kind="honest">
+          A listing records a human review of a claim. The host never lets a Vial override a sensor
+          fault, a baseline refusal, or the base alert level. Every install re-verifies the bytes;
+          nothing is trusted because it appeared in a catalog.
+        </Callout>
+
+        <H2 id="invariants">The invariants that make the system antifragile</H2>
         <Ul
           items={[
             <>
-              Actions are host verbs: <Code>open-workspace</Code>, <Code>open-check</Code>,{" "}
-              <Code>open-datasets</Code>, <Code>open-gallery</Code>, or <Code>external</Code>.
+              <b className="text-foreground">One gate, two implementations, one fixture corpus.</b>{" "}
+              The desktop and <Code>noses</Code> both gate manifests. A disagreement becomes a
+              conformance fixture.
             </>,
-            "External actions require an https URL. The declarative Home card has no scripts; for a custom view, declare homeUi below.",
-            "The host validates the Home shape at import and refuses a malformed contribution instead of rendering half of it.",
-            "If a Vial has no Home contribution, it remains workspace-only. That is valid.",
+            <>
+              <b className="text-foreground">Every failure becomes a fixture.</b> A bug report that
+              names a Vial id, version, and hash can be replayed. The fix adds a fixture; the fixture
+              runs in <Code>noses test</Code> and in the release check.
+            </>,
+            <>
+              <b className="text-foreground">No fake numbers.</b> The registry and UI refuse to
+              invent a measurement. A Vial without a held-out report is Ungated, and a profile
+              without a false-alarm target says so.
+            </>,
+            <>
+              <b className="text-foreground">The program is pinned.</b> The registry pins the
+              manifest sha256 and every UI asset sha256. An upstream edit cannot silently replace a
+              reviewed Vial; the install refuses and the update path reports the mismatch.
+            </>,
+            <>
+              <b className="text-foreground">The host owns the brakes.</b> A Vial can tighten its own
+              profile; it cannot loosen the host&apos;s refusal, hide a sensor fault, or turn a
+              warming baseline into an alarm.
+            </>,
           ]}
         />
 
+        <H2 id="start">Start here</H2>
         <P>
-          A Vial can replace the declarative card with a sandboxed Home view. The view gets the same
-          typed payload as the workspace, with <Code>view: &quot;home&quot;</Code>, and the same small action
-          allowlist. It is a status surface, not a second source of truth: protocol fields, logs,
-          baselines, and decisions still belong to the host.
+          If you have never built one, read the{" "}
+          <Link href="/docs/vials/quickstart" className="underline">
+            quickstart
+          </Link>
+          . If you already have a protocol, read the{" "}
+          <Link href="/docs/vials/profile" className="underline">
+            profile
+          </Link>{" "}
+          and{" "}
+          <Link href="/docs/vials/evidence" className="underline">
+            evidence
+          </Link>{" "}
+          chapters before you write a UI. The profile is the product; the UI is how a person uses it.
         </P>
-        <CodeBlock title="vial.json — homeUi">{`"homeUi": {
-  "runtime": "sandbox/1",
-  "entry": "home.html",
-  "height": 420
-}`}</CodeBlock>
-        <Ul
-          items={[
-            "The Home fragment uses the same CSP and sandbox as ui.html: no network, storage, forms, frames, workers, or Tauri.",
-            "Home height is 320–620 px; the workspace height is 420–2000 px. The view can request a different height with resize.",
-            "The open-workspace action leaves Home and opens this Vial's full workspace.",
-            "The host caches the workspace and Home assets separately, by Vial id and version.",
-          ]}
-        />
-
-        <H2 id="evidence">Evidence and claims</H2>
-        <P>
-          A Vial is not a paper and a citation is not a validation. Link the evidence you actually
-          rely on, state its grade, and keep the refusal in the manifest.
-        </P>
-        <Table
-          head={["Do", "Do not"]}
-          rows={[
-            ["Link a dataset, paper, protocol, or your own held-out result.", "Cite a press release as if it were a held-out validation."],
-            ["Say “closed-set, same array” when that is the scope.", "Say “identifies” or “detects” without a scope and a refusal."],
-            ["State the primary measurement that decides the real action.", "Let a change signal become a safety verdict."],
-            ["Keep the Home limits short and visible.", "Hide the limits in a collapsed footnote."],
-          ]}
-        />
-        <H2 id="publish">Publish without a new registry</H2>
-        <P>
-          Put <Code>vial.json</Code> and, if you need them, <Code>ui.html</Code> and{" "}
-          <Code>home.html</Code> in any repository you control and use the raw manifest URL.
-          Osmograph fetches the manifest over HTTPS, runs the same local gate as a file import, and
-          fetches the declared UI assets beside it.
-        </P>
-        <CodeBlock title="raw manifest URL">{`https://raw.githubusercontent.com/<you>/<repo>/main/vial.json`}</CodeBlock>
-        <P>
-          To request a public listing, open the{" "}
-          <a
-            href="https://github.com/OpenSmell/opensmell-web/issues/new?template=vial-submission.yml"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-foreground"
-          >
-            Vial submission form
-          </a>
-          . It asks for the raw manifest URL, source repo, licence, claim, refusal, evidence, and test
-          notes. A listing is discovery, not endorsement. The registry is an index: it does not host
-          the project, and there is no official namespace or reserved author handle.
-        </P>
-
-        <H2 id="ui">Any Vial can ship a sandboxed UI</H2>
-        <P>
-          A Vial may stay declarative, or add a <Code>ui.html</Code> and an optional{" "}
-          <Code>home.html</Code> beside the manifest. Each UI is a body fragment in an iframe with{" "}
-          <Code>sandbox=&quot;allow-scripts&quot;</Code> and a fixed CSP. It gets a typed payload, not raw
-          buffers, and can only request a small action allowlist. It cannot reach the network,
-          storage, forms, frames, workers, or Tauri.
-        </P>
-        <CodeBlock title="manifest ui descriptor">{`"ui": {
-  "runtime": "sandbox/1",
-  "entry": "ui.html",
-  "height": 900
-}`}</CodeBlock>
-        <P>
-          The host caches the workspace UI by Vial id and the Home UI as <Code>&lt;id&gt;::home</Code>.
-          If a UI fetch fails, it renders the declarative widgets or the <Code>home</Code> card. A
-          manifest with a <Code>ui</Code> or <Code>homeUi</Code> block must be installed from its
-          manifest URL; a local file import is refused because it cannot carry the assets. Signed
-          bundles, revocation, and per-Vial permissions are the next trust layer; they are not
-          implemented yet.
-        </P>
-
-        <H2 id="limits">What Stage 1 does not do</H2>
-        <Ul
-          items={[
-            "The sandbox is the execution boundary, not a review. A sandboxed UI is not security-audited or endorsed.",
-            "No signatures, revocation, automatic updates, or hosted account service yet.",
-            "No local filesystem Vials directory; installed manifests and logs live in local storage.",
-            "No automatic transfer of a baseline, calibration, or evidence across rigs.",
-          ]}
-        />
-        <Callout kind="warn">
-          Do not describe a sandboxed UI as a general-purpose plugin. It is a body fragment with no
-          host access: no network, storage, forms, frames, workers, or Tauri, and only a small action
-          allowlist. Signed bundles and per-Vial permissions are a separate, reviewed contract.
-        </Callout>
-
-        <div className="border border-border p-6 mt-10 flex flex-col sm:flex-row sm:items-center gap-4">
-          <Terminal className="w-5 h-5 text-muted-foreground shrink-0" />
-          <div className="min-w-0">
-            <h2 className="font-semibold">Start from an author-hosted project</h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              Fermentation Lab is the reference for a real domain protocol, a sandboxed Home
-              view, and a documented evidence path. It lives in its author's repo, not this
-              site. Use this guide to build yours, then publish it from your own repository.
-            </p>
-          </div>
-          <Link href="/vials" className="hex-btn hex-btn-primary no-underline sm:ml-auto shrink-0">
-            Open Aromatory <ArrowRight className="w-4 h-4" />
+        <div className="flex flex-wrap gap-3 mt-8">
+          <Link href="/docs/vials/quickstart" className="hex-btn hex-btn-primary no-underline">
+            Build your first Vial
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link href="/appstore" className="hex-btn hex-btn-outline no-underline">
+            Browse the Aromatory
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>

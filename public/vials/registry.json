@@ -1,7 +1,7 @@
 {
   "schema": "osmograph.vial-registry/1",
-  "updated": "2026-10-23",
-  "note": "Discovery only. Every Vial is an author-hosted project. There is no official tier. Osmograph fetches the manifest from its raw URL, runs the same local policy gate as a file import, and runs any sandboxed UI beside it. A listing is not a security review, a safety certification, or an endorsement.",
+  "updated": "2026-10-25",
+  "note": "Every Vial is an author-hosted project. Osmograph fetches the manifest from its raw URL, verifies the pinned manifest and UI hashes, and runs the same local policy gate as a file import. The review route also verifies every declared fixture hash before it pins the entry. A listing records a human review of the claim and its evidence; the host still verifies the bytes and owns every safety refusal on install. Legacy /1 entries are labeled and install as Ungated; new submissions must use /2.",
   "vials": [
     {
       "id": "example.coffee-roast",
@@ -11,12 +11,14 @@
       "license": "CC-BY-4.0",
       "domain": "coffee",
       "tagline": "Track the roast, not just the aroma.",
-      "summary": "A reference manifest for testing URL install and the local policy gate. It is a template for authors, not a validated roasting controller or a real product.",
+      "summary": "A reference manifest for testing URL install and the local policy gate. It is a template for authors building their own roasting workspace.",
       "hasUi": false,
       "manifestUrl": "https://raw.githubusercontent.com/OpenSmell/osmograph-desktop/master/examples/example-coffee-roast.vial.json",
       "sourceUrl": "https://github.com/OpenSmell/osmograph-desktop/blob/master/examples/example-coffee-roast.vial.json",
       "hash": "90fc6e80b0a4dcff1acf5f335e19af2a557f5dd5496b9f0cff9654617f91b6c0",
-      "install": "Paste the manifest URL into Osmograph \u2192 Vials \u2192 Aromatory \u2192 Install from URL."
+      "install": "Paste the manifest URL into Osmograph → Vials → Aromatory → Install from URL.",
+      "fixtures": {},
+      "schema": "osmograph.domain-pack/1"
     },
     {
       "id": "praisejamesx.fermentation",
@@ -26,13 +28,19 @@
       "license": "CC-BY-4.0",
       "domain": "fermentation",
       "tagline": "The batch is the record; the array is one change detector inside it.",
-      "summary": "Home-fermentation workspace: batch protocol, readings log, stop rules, and a sandboxed Home view. Declares host-enforced \u0394R/R\u2080 transforms, a single-unit watch limit derived from measured channel noise, and a persisted trajectory. It is not a food-safety instrument; the stop rules point at the primary measurement.",
+      "summary": "Home-fermentation workspace: batch protocol, readings log, stop rules, and a sandboxed Home view. Declares host-enforced ΔR/R₀ transforms, a single-unit watch limit derived from measured channel noise, and a persisted trajectory. The stop rules point at the primary measurement for any food-safety decision.",
       "hasUi": true,
       "evidence": "B",
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/fermentation-lab/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/fermentation-lab",
       "hash": "078777daf14fbed990f84c7b98c3da6d032279d35129e105b98ad8a3e102d694",
-      "install": "Install from source above, or paste the manifest URL in Osmograph \u2192 Vials \u2192 Aromatory."
+      "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
+      "fixtures": {},
+      "schema": "osmograph.domain-pack/1",
+      "assets": {
+        "ui.html": "0dba43ddc5d2289ca98052fc2db36cdf909247e6a1aa3320b3b030e5604eab4f",
+        "home.html": "e7b5e6ee0387f64ab0d67ae02d3dbd4ac8f19b75ad1dd6b2b971d7d34334bb10"
+      }
     },
     {
       "id": "praisejamesx.plant-respiration",
@@ -42,13 +50,18 @@
       "license": "CC-BY-4.0",
       "domain": "plants",
       "tagline": "The plant is the evidence; the array is one change detector.",
-      "summary": "Plant-health workspace: weekly readings with leaf, soil, water, and action context, plus a measurement-first Home. Declares host-enforced \u0394R/R\u2080 transforms, a single-unit watch limit derived from measured channel noise, and a persisted trajectory. It does not detect ethylene, pests, or pathogens.",
+      "summary": "Plant-health workspace: weekly readings with leaf, soil, water, and action context, plus a measurement-first Home. Declares host-enforced ΔR/R₀ transforms, a single-unit watch limit derived from measured channel noise, and a persisted trajectory. Ethylene, pests, and pathogens each need their own primary measurement.",
       "hasUi": true,
       "evidence": "B",
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/plant-respiration/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/plant-respiration",
       "hash": "2ffdaeb375a11a2291030ee99afab5b35922ac42d79e378d79d7f10a88b58f63",
-      "install": "Install from source above, or paste the manifest URL in Osmograph \u2192 Vials \u2192 Aromatory."
+      "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
+      "fixtures": {},
+      "schema": "osmograph.domain-pack/1",
+      "assets": {
+        "home.html": "6710ce683a2ab48318e2db2168b373e05c159ca236a03558bc84ec2b4beff399"
+      }
     }
   ]
 }

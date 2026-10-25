@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, type FormEvent, type ReactNode } from "react"
-import { Lock, LogOut, Plus, Save, Trash2, Download, Copy, Check, Eye, EyeOff, CheckCircle, XCircle, Mail } from "lucide-react"
+import { Lock, LogOut, Plus, Save, Trash2, Download, Copy, Check, Eye, EyeOff, CheckCircle, XCircle, Mail, RefreshCw, ExternalLink, FlaskConical } from "lucide-react"
 import { articles as builtInArticles, type Article, type ArticleCategory } from "@/lib/articles"
 import { loadSubmissions, reviewSubmission, type AppStoreSubmission } from "@/lib/appstore-submissions"
 import Markdown from "@/components/markdown"
@@ -10,6 +10,27 @@ const DEFAULT_HASH = "f650f775de4d874c9d82d5b74bc9f81f5196c485e2c208cf49fb2aec15
 const AUTH_KEY = "opensmell-admin-auth"
 const STORAGE_KEY = "opensmell-admin-articles"
 const HASH_KEY = "opensmell-admin-hash"
+const VIAL_TOKEN_KEY = "opensmell-vial-admin-token"
+
+interface VialQueueItem {
+  number: number
+  title: string
+  url: string
+  createdAt: string
+  author: string
+  state: string
+  submission: {
+    manifestUrl: string
+    sourceUrl?: string
+    evidenceUrl?: string
+    name?: string
+    author?: string
+    email?: string
+    notes?: string
+    submittedHash?: string
+    assets?: Record<string, string>
+  }
+}
 const categories: ArticleCategory[] = ["Foundations", "Hardware", "Tutorial", "Research"]
 const UMAMI_SHARE_URL = process.env.NEXT_PUBLIC_UMAMI_SHARE_URL
 
@@ -107,11 +128,16 @@ export default function AdminPage() {
   const [subs, setSubs] = useState<AppStoreSubmission[]>([])
   const [subTab, setSubTab] = useState<"pending" | "approved" | "rejected">("pending")
   const [view, setView] = useState<"articles" | "analytics">("articles")
+  const [vialToken, setVialToken] = useState("")
+  const [vialQueue, setVialQueue] = useState<VialQueueItem[]>([])
+  const [vialBusy, setVialBusy] = useState(false)
+  const [vialMessage, setVialMessage] = useState("")
 
   useEffect(() => {
     if (sessionStorage.getItem(AUTH_KEY) === "1") {
       setAuthed(true)
       setSubs(loadSubmissions())
+      setVialToken(sessionStorage.getItem(VIAL_TOKEN_KEY) || "")
     }
     setList(mergeArticles())
   }, [])
@@ -133,6 +159,62 @@ export default function AdminPage() {
     const updated = reviewSubmission(id, status)
     setSubs(updated)
     setToast(`Submission ${status}`)
+  }
+
+  function rememberVialToken(value: string) {
+    setVialToken(value)
+    if (value) sessionStorage.setItem(VIAL_TOKEN_KEY, value)
+    else sessionStorage.removeItem(VIAL_TOKEN_KEY)
+  }
+
+  async function loadVialQueue() {
+    if (!vialToken.trim()) {
+      setVialMessage("Enter the VIAL_ADMIN_TOKEN from the deployment environment.")
+      return
+    }
+    setVialBusy(true)
+    setVialMessage("")
+    try {
+      const response = await fetch("/api/vials/queue", {
+        headers: { Authorization: `Bearer ${vialToken.trim()}` },
+        cache: "no-store",
+      })
+      const data = await response.json().catch(() => null) as { ok?: boolean; items?: VialQueueItem[]; error?: string } | null
+      if (!response.ok || !data?.ok) throw new Error(data?.error || `Queue returned HTTP ${response.status}.`)
+      setVialQueue(data.items || [])
+      setVialMessage(data.items?.length ? "" : "No open Vial submissions.")
+    } catch (error) {
+      setVialMessage(error instanceof Error ? error.message : "The Vial queue could not be read.")
+    } finally {
+      setVialBusy(false)
+    }
+  }
+
+  async function reviewVial(issueNumber: number, decision: "approve" | "reject") {
+    if (!vialToken.trim()) {
+      setVialMessage("Enter the VIAL_ADMIN_TOKEN from the deployment environment.")
+      return
+    }
+    setVialBusy(true)
+    setVialMessage(decision === "approve" ? `Verifying #${issueNumber} and writing the registry…` : `Rejecting #${issueNumber}…`)
+    try {
+      const response = await fetch("/api/vials/review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${vialToken.trim()}`,
+        },
+        body: JSON.stringify({ issueNumber, decision }),
+      })
+      const data = await response.json().catch(() => null) as { ok?: boolean; message?: string; error?: string; commitUrl?: string } | null
+      if (!response.ok || !data?.ok) throw new Error(data?.error || `Review returned HTTP ${response.status}.`)
+      setVialMessage(`${data.message || "Reviewed."}${data.commitUrl ? ` Commit: ${data.commitUrl}` : ""}`)
+      await loadVialQueue()
+    } catch (error) {
+      setVialMessage(error instanceof Error ? error.message : "The review failed.")
+    } finally {
+      setVialBusy(false)
+    }
   }
 
   async function attemptLogin(e: FormEvent) {
@@ -558,6 +640,101 @@ export default function AdminPage() {
                         {sub.status}
                       </span>
                     )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className="border border-border mt-px p-6 mt-4">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h3 className="font-semibold flex items-center gap-2">
+                <FlaskConical className="w-4 h-4" />
+                Vial registry
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1 leading-relaxed max-w-3xl">
+                A submission opens a GitHub issue with a pinned manifest hash and UI asset hashes.
+                Approval re-fetches the manifest, re-runs the listing gate, refuses changed bytes,
+                and commits the exact entry the Aromatory reads. Every install still runs the
+                desktop gate and verifies those hashes locally.
+              </p>
+            </div>
+            <span className="text-[10px] uppercase tracking-widest border border-border px-2 py-1 text-muted-foreground">
+              manual approval
+            </span>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-2 mt-4">
+            <input
+              type="password"
+              value={vialToken}
+              onChange={(event) => rememberVialToken(event.target.value)}
+              placeholder="VIAL_ADMIN_TOKEN"
+              autoComplete="off"
+              className="flex-1 bg-background border border-border px-3 py-2 text-sm outline-none focus:border-foreground transition-colors font-mono"
+            />
+            <button
+              onClick={() => { void loadVialQueue() }}
+              disabled={vialBusy}
+              className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-all disabled:opacity-50"
+            >
+              <RefreshCw className={`w-4 h-4 ${vialBusy ? "animate-spin" : ""}`} />
+              Load queue
+            </button>
+          </div>
+
+          {vialMessage && (
+            <p className="text-xs text-muted-foreground mt-3 leading-relaxed break-words">{vialMessage}</p>
+          )}
+
+          {vialQueue.length > 0 && (
+            <div className="space-y-3 mt-4">
+              {vialQueue.map((item) => (
+                <div key={item.number} className="border border-border p-4 bg-background">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-[10px] uppercase tracking-wider text-muted-foreground border border-border px-1.5 py-0.5">
+                          #{item.number}
+                        </span>
+                        <span className="font-semibold text-sm">{item.submission.name || item.title}</span>
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+                        >
+                          Issue <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <div className="mt-2 grid gap-1 text-xs text-muted-foreground">
+                        <span className="break-all"><b className="text-foreground">Manifest:</b> {item.submission.manifestUrl}</span>
+                        {item.submission.sourceUrl && <span className="break-all"><b className="text-foreground">Source:</b> {item.submission.sourceUrl}</span>}
+                        {item.submission.evidenceUrl && <span className="break-all"><b className="text-foreground">Evidence:</b> {item.submission.evidenceUrl}</span>}
+                        {item.submission.submittedHash && (
+                          <span className="break-all font-mono"><b className="text-foreground">sha256:</b> {item.submission.submittedHash}</span>
+                        )}
+                        {item.submission.notes && <span><b className="text-foreground">Notes:</b> {item.submission.notes}</span>}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 flex-shrink-0">
+                      <button
+                        onClick={() => { void reviewVial(item.number, "approve") }}
+                        disabled={vialBusy}
+                        className="inline-flex items-center gap-1 bg-green-600 text-white px-3 py-1.5 text-xs font-medium hover:opacity-90 transition-all disabled:opacity-50"
+                      >
+                        <CheckCircle className="w-3.5 h-3.5" /> Approve &amp; list
+                      </button>
+                      <button
+                        onClick={() => { void reviewVial(item.number, "reject") }}
+                        disabled={vialBusy}
+                        className="inline-flex items-center gap-1 bg-red-600 text-white px-3 py-1.5 text-xs font-medium hover:opacity-90 transition-all disabled:opacity-50"
+                      >
+                        <XCircle className="w-3.5 h-3.5" /> Reject
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

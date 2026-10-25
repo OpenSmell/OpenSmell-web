@@ -28,9 +28,9 @@ const products = [
 
 const foundations = [
   {
-    title: "Authoring a Vial",
+    title: "Vials: programmable anomaly apps",
     href: "/docs/vials",
-    desc: "The Vial manifest, the typed host snapshot, the Home contribution, the local policy gate, evidence rules, and publishing from your own GitHub.",
+    desc: "The profile program, the sandboxed domain UI, the typed host snapshot, fixtures and held-out evidence, the local gate, hash-pinned install, updates, and per-Vial reports.",
   },
   {
     title: "Data model & the .osmell format",
@@ -115,6 +115,23 @@ export default function DocsPage() {
                   {f.title}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
+              </Link>
+            ))}
+          </div>
+
+          <H2 id="vial-tutorials">Vial tutorials</H2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border">
+            {[
+              ["Quickstart", "/docs/vials/quickstart", "Scaffold, profile, fixture, gate, publish, install."],
+              ["Profile", "/docs/vials/profile", "Baseline, persistence, hysteresis, escalation, FAR."],
+              ["Domain UI", "/docs/vials/ui", "Sandbox, snapshot, actions, Home, presentation laws."],
+              ["Evidence", "/docs/vials/evidence", "Held-out reports, fixtures, grades, hashes."],
+              ["Operate", "/docs/vials/operate", "Install, update, report, offline, rollback."],
+              ["Reference", "/docs/vials/reference", "Every field, method, status, and command."],
+            ].map(([title, href, desc]) => (
+              <Link key={href} href={href} className="bg-background p-5 group no-underline">
+                <h3 className="font-semibold mb-1 group-hover:text-muted-foreground transition-colors">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
               </Link>
             ))}
           </div>

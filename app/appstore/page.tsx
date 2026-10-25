@@ -26,6 +26,7 @@ interface RegistryVial {
   tagline: string
   summary: string
   hasUi?: boolean
+  schema?: "osmograph.domain-pack/1" | "osmograph.domain-pack/2"
   evidence?: "A" | "B" | "C" | "D"
   hash?: string
   manifestUrl: string | null
@@ -68,6 +69,9 @@ function VialCard({ vial }: { vial: RegistryVial }) {
             </span>
             <span className="text-[10px] uppercase tracking-wider font-mono text-muted-foreground">
               v{vial.version}
+            </span>
+            <span className="text-[10px] uppercase tracking-wider font-mono border border-border px-2 py-0.5">
+              {vial.schema === "osmograph.domain-pack/2" ? "v2 · profile" : "legacy · Ungated"}
             </span>
             {vial.evidence ? (
               <span className="text-[10px] uppercase tracking-wider font-mono border border-foreground px-2 py-0.5">
@@ -116,6 +120,8 @@ export default function AromatoryPage() {
   const [submitted, setSubmitted] = useState(false)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState("")
+  const [issueUrl, setIssueUrl] = useState("")
+  const [queued, setQueued] = useState(false)
   const [honey, setHoney] = useState("")
   const [form, setForm] = useState({
     name: "",
@@ -154,20 +160,53 @@ export default function AromatoryPage() {
       tags: [form.sourceUrl].filter(Boolean),
     }
     setSending(true)
-    const res = await submitToServer(payload)
-    setSending(false)
-    if (!res.ok) {
-      setError(res.error || "Something went wrong. Please try again.")
-      return
+    setQueued(false)
+    let queuedNow = false
+    try {
+      const response = await fetch("/api/vials/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, honey }),
+      })
+      const data = await response.json().catch(() => null) as {
+        ok?: boolean
+        configured?: boolean
+        error?: string
+        issue?: { number?: number; url?: string }
+      } | null
+      if (response.ok && data?.ok && data.configured) {
+        queuedNow = true
+        setQueued(true)
+        setIssueUrl(data.issue?.url || "")
+      } else if (response.status !== 503 || data?.configured !== false) {
+        setError(data?.error || "The manifest did not pass the listing gate. Fix it and resubmit.")
+        setSending(false)
+        return
+      }
+    } catch {
+      // A network failure falls through to the email route; the manifest is not
+      // silently recorded.
     }
+
+    if (!queuedNow) {
+      const res = await submitToServer(payload)
+      if (!res.ok) {
+        setSending(false)
+        setError(res.error || "Something went wrong. Please try again.")
+        return
+      }
+    }
+    setSending(false)
     addSubmission(payload)
     setSubmitted(true)
     window.setTimeout(() => {
       setSubmitted(false)
       setShowForm(false)
       setError("")
+      setIssueUrl("")
+      setQueued(false)
       setForm({ name: "", author: "", email: "", manifestUrl: "", sourceUrl: "", evidenceUrl: "", notes: "" })
-    }, 4000)
+    }, 7000)
   }
 
   return (
@@ -232,16 +271,28 @@ export default function AromatoryPage() {
                   </button>
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">
-                  A person reviews every submission before it is listed. Nothing is published
-                  automatically.
+                  A person reviews and approves every submission before it is listed; approval
+                  commits the registry entry.
                 </p>
                 {submitted ? (
                   <div className="text-center py-12">
                     <Check className="w-12 h-12 mx-auto mb-4 text-green-500" />
                     <h3 className="text-lg font-semibold mb-2">Submitted for review</h3>
                     <p className="text-sm text-muted-foreground">
-                      We will check the manifest, the gate result, and the evidence before listing it.
+                      {queued
+                        ? "We will re-fetch the manifest, re-run the listing gate, and verify the pinned hashes before listing it."
+                        : "A maintainer will review the manifest URL by email. This deployment is not running the registry queue, so nothing has been listed automatically."}
                     </p>
+                    {issueUrl ? (
+                      <a
+                        href={issueUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium border border-foreground px-3 py-2 mt-5 hover:bg-foreground hover:text-background transition-colors no-underline"
+                      >
+                        Track the submission issue <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    ) : null}
                   </div>
                 ) : (
                   <div className="space-y-5">
@@ -345,7 +396,8 @@ export default function AromatoryPage() {
               <div>
                 <h2 className="text-2xl font-bold tracking-tight">Listed Vials</h2>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Install from the manifest URL. Osmograph checks the hash before it runs.
+                  Install from the manifest URL. Osmograph checks the hash before it runs. Legacy /1
+                  entries are labeled Ungated; new listings require /2.
                 </p>
               </div>
               <span className="text-[10px] uppercase tracking-wider font-mono text-muted-foreground">
