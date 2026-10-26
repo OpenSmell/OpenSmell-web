@@ -71,7 +71,7 @@ export default function VialEvidencePage() {
                 <Code>nSamples</Code>, <Code>nAlarms</Code>. Use the numbers from the report.
               </>,
             ],
-            [<Code key="f">fixtures</Code>, "at least one for a listing", "Deterministic cases that `noses test` replays against the declared profile."],
+            [<Code key="f">fixtures</Code>, "at least one for Gated", "Deterministic cases that `noses test` replays against the declared profile. A v2 without one is Ungated."],
           ]}
         />
 

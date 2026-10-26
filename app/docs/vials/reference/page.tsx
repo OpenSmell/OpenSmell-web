@@ -162,7 +162,7 @@ export default function VialReferencePage() {
           rows={[
             ["draft", "Local", "Not installed."],
             ["open", "Local gate failed", "Shown as **Ungated**; installable for development."],
-            ["gated", "Local gate passed", "Satisfies the local contract; external review is a separate step."],
+            ["gated", "Local gate passed with at least one fixture", "Satisfies the local contract; external review is a separate step."],
             ["reviewed / listed", "Registry approval", "A person reviewed the claim and evidence; hashes pinned."],
             ["signed", "External signature", "Recorded separately; signing is outside the local gate."],
           ]}

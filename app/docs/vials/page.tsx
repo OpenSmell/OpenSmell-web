@@ -191,12 +191,12 @@ new version  →  registry pins it  →  “Update to vX” in the Aromatory  �
               <>
                 Local gate failed (<Code>open</Code> in the registry)
               </>,
-              "Installable for development. At least one critical check failed; the host says so and does not present it as validated.",
+              "Installable for development. A critical check failed or the v2 profile has no fixture; the host says so and does not present it as validated.",
             ],
             [
               "Gated",
-              "Local gate passed",
-              "The manifest, profile, UI sandbox, citations, and evidence block satisfy the local contract; external review is a separate step.",
+              "Local gate passed with at least one fixture",
+              "The manifest, profile, UI sandbox, citations, evidence block, and at least one declarative fixture satisfy the local contract; external review is a separate step.",
             ],
             [
               "Reviewed / listed",
@@ -231,8 +231,8 @@ new version  →  registry pins it  →  “Update to vX” in the Aromatory  �
             </>,
             <>
               <b className="text-foreground">No fake numbers.</b> The registry and UI refuse to
-              invent a measurement. A Vial without a held-out report is Ungated, and a profile
-              without a false-alarm target says so.
+              invent a measurement. A Vial without a held-out report or a fixture is Ungated, and a
+              profile without a false-alarm target says so.
             </>,
             <>
               <b className="text-foreground">The program is pinned.</b> The registry pins the
