@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import SiteHeader from "@/components/site-header"
 import SiteFooter from "@/components/site-footer"
+import UmamiAnalytics from "@/components/umami-analytics"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -57,6 +58,7 @@ export default function RootLayout({
           <SiteHeader />
           {children}
           <SiteFooter />
+          <UmamiAnalytics />
         </ThemeProvider>
       </body>
     </html>

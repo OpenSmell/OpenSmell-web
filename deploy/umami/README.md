@@ -45,7 +45,8 @@ Docker/Railway options above are simpler for a full app with a DB.
 ## 3. Wire opensmell-web to it
 
 Umami is completely **inert unless configured**. On the host where opensmell-web
-is built (Vercel), set these three env vars, then redeploy/rebuild:
+is built (Vercel), set the URL and website ID to enable tracking. Set the share
+URL as well if you want to embed the dashboard at `/admin`, then redeploy/rebuild:
 
 | Env var | Value |
 | --- | --- |
@@ -58,9 +59,13 @@ is built (Vercel), set these three env vars, then redeploy/rebuild:
 
 ## What gets tracked once configured
 
-- Page views (auto via `data-auto-track`).
-- Article reads → custom `article_view` events.
-- Desktop download clicks on the Osmograph page → custom `download` events.
+- Page views (auto via Umami).
+- Homepage hero CTA clicks and the visitor's selected start path.
+- Scent Search submissions, recording the search type but not the query.
+- Waitlist CTA, first form focus, and submit-button clicks, plus successful and
+  failed submissions with their placement (homepage or Smell Monitor page).
+- No names, email addresses, company names, monitoring details, unit counts, or
+  search queries are sent as analytics event data.
 - All of it shows up on the dashboard embed at `/admin`.
 
 ## Files

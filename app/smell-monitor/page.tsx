@@ -8,10 +8,14 @@ import {
   FlaskConical, Warehouse, Wrench,
   Send, CheckCircle, UtensilsCrossed, GitBranch, Globe
 } from "lucide-react"
+import { trackEvent } from "@/lib/analytics"
+import { submitSmellMonitorRequest } from "@/lib/smell-monitor-form"
 
 export default function SmellMonitorPage() {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [formStarted, setFormStarted] = useState(false)
   const [unitCount, setUnitCount] = useState("")
   const contactRef = useRef<HTMLDivElement>(null)
 
@@ -22,26 +26,30 @@ export default function SmellMonitorPage() {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmitting(true)
+    setSubmitError(null)
     const form = e.currentTarget
     const data = new FormData(form)
 
     try {
-      await fetch("/api/smell-monitor", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      await submitSmellMonitorRequest(
+        {
           name: data.get("name"),
           company: data.get("company"),
           email: data.get("email"),
           process: data.get("process"),
           units: unitCount,
-        }),
-      })
-    } catch {
-      // no-op — still confirm the request
+        },
+        "smell_monitor_page"
+      )
+      setFormSubmitted(true)
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "We couldn't submit your request. Please try again or email praise@opensmell.xyz."
+      )
     } finally {
       setSubmitting(false)
-      setFormSubmitted(true)
     }
   }
 
@@ -68,6 +76,8 @@ export default function SmellMonitorPage() {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={scrollToContact}
+                    data-umami-event="waitlist_open"
+                    data-umami-event-placement="smell_monitor_page"
                     className="hex-btn hex-btn-primary"
                   >
                     Join the Waitlist
@@ -464,6 +474,12 @@ export default function SmellMonitorPage() {
               ) : (
                 <form
                   onSubmit={handleFormSubmit}
+                  onFocusCapture={() => {
+                    if (!formStarted) {
+                      setFormStarted(true)
+                      trackEvent("waitlist_form_start", { placement: "smell_monitor_page" })
+                    }
+                  }}
                   className="border border-border p-8 bg-background hex-box space-y-6"
                 >
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -533,8 +549,15 @@ export default function SmellMonitorPage() {
                       ))}
                     </div>
                   </div>
+                  {submitError && (
+                    <p role="alert" className="text-sm text-destructive">
+                      {submitError}
+                    </p>
+                  )}
                   <button
                     type="submit"
+                    data-umami-event="waitlist_submit_click"
+                    data-umami-event-placement="smell_monitor_page"
                     disabled={submitting}
                     className="hex-btn hex-btn-primary w-full sm:w-auto disabled:opacity-50"
                   >

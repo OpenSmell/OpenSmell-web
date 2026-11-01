@@ -430,8 +430,9 @@ export default function AdminPage() {
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Site analytics</h3>
                   <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                    Visitors, pageviews, article reads, downloads, and referrers, recorded by
-                    the self-hosted Umami instance and shown directly from its dashboard.
+                    Pageviews, homepage calls to action, search submissions, and waitlist
+                    funnel events from the self-hosted Umami instance. Search terms and waitlist
+                    form values are not sent as analytics event data.
                   </p>
                 </div>
                 {UMAMI_SHARE_URL ? (

@@ -11,6 +11,8 @@ import {
 } from "lucide-react"
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
 import AnimatedHero from "@/components/animated-hero"
+import { trackEvent } from "@/lib/analytics"
+import { submitSmellMonitorRequest } from "@/lib/smell-monitor-form"
 
 const products = [
   {
@@ -79,30 +81,36 @@ const useCases = [
 function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [submitting, setSubmitting] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [formStarted, setFormStarted] = useState(false)
   const [unitCount, setUnitCount] = useState("1")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmitting(true)
+    setSubmitError(null)
     const data = new FormData(e.currentTarget)
 
     try {
-      await fetch("/api/smell-monitor", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      await submitSmellMonitorRequest(
+        {
           name: data.get("name"),
           company: data.get("company"),
           email: data.get("email"),
           process: data.get("process"),
           units: data.get("units"),
-        }),
-      })
-    } catch {
-      // no-op — still confirm the request
+        },
+        "homepage"
+      )
+      setFormSubmitted(true)
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "We couldn't submit your request. Please try again or email praise@opensmell.xyz."
+      )
     } finally {
       setSubmitting(false)
-      setFormSubmitted(true)
     }
   }
 
@@ -176,7 +184,16 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
                   </span>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-3.5">
+                <form
+                  onSubmit={handleSubmit}
+                  onFocusCapture={() => {
+                    if (!formStarted) {
+                      setFormStarted(true)
+                      trackEvent("waitlist_form_start", { placement: "homepage" })
+                    }
+                  }}
+                  className="space-y-3.5"
+                >
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                       <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Name</label>
@@ -246,8 +263,15 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
                       </div>
                     </div>
                   </div>
+                  {submitError && (
+                    <p role="alert" className="text-sm text-destructive">
+                      {submitError}
+                    </p>
+                  )}
                   <button
                     type="submit"
+                    data-umami-event="waitlist_submit_click"
+                    data-umami-event-placement="homepage"
                     disabled={submitting}
                     className="w-full bg-foreground text-background px-4 py-2.5 text-sm font-medium inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
@@ -292,6 +316,7 @@ export default function Home() {
 
   const handleSearchSubmit = (query: string, type: "odor" | "chemical") => {
     if (!query.trim()) return
+    trackEvent("scent_search_submit", { search_type: type })
     router.push(`/search?type=${type}&q=${encodeURIComponent(query.trim())}`)
   }
 
@@ -318,11 +343,11 @@ export default function Home() {
                 Hardware, data, and software for digital olfaction. Open-source, reproducible, built for research and industry.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link href="/smell-monitor" className="hex-btn hex-btn-primary w-full sm:w-auto">
+                <Link href="/smell-monitor" data-umami-event="hero_smell_monitor_click" className="hex-btn hex-btn-primary w-full sm:w-auto">
                   Smell Monitor
                   <ChevronRight className="w-4 h-4" />
                 </Link>
-                <Link href="/osmograph" className="hex-btn hex-btn-outline w-full sm:w-auto">
+                <Link href="/osmograph" data-umami-event="hero_osmograph_click" className="hex-btn hex-btn-outline w-full sm:w-auto">
                   Open Osmograph
                 </Link>
               </div>
@@ -417,6 +442,8 @@ export default function Home() {
                 <Link
                   key={g.title}
                   href={g.href}
+                  data-umami-event="start_path_click"
+                  data-umami-event-path={g.title}
                   className="bg-background p-6 hex-box group border-r border-b border-border last:border-r-0 sm:last:border-r lg:border-b-0 no-underline"
                 >
                   <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">{g.eyebrow}</span>
@@ -460,7 +487,12 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <button onClick={() => setPilotOpen(true)} className="hex-btn hex-btn-primary">
+                <button
+                  onClick={() => setPilotOpen(true)}
+                  data-umami-event="waitlist_open"
+                  data-umami-event-placement="homepage"
+                  className="hex-btn hex-btn-primary"
+                >
                   Join the Waitlist
                   <ChevronRight className="w-4 h-4" />
                 </button>
