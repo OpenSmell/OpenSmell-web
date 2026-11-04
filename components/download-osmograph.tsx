@@ -14,8 +14,10 @@ interface PlatformOption {
   icon: ReactNode
 }
 
-const RELEASE_TAG = "latest"
-const BASE = `https://github.com/OpenSmell/osmograph-desktop/releases/latest/download`
+const RELEASES_PAGE =
+  "https://github.com/OpenSmell/osmograph-desktop/releases"
+const LATEST_RELEASE =
+  "https://github.com/OpenSmell/osmograph-desktop/releases/latest"
 
 const WINDOWS_ICON = (
   <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
@@ -39,29 +41,29 @@ const OPTIONS: PlatformOption[] = [
   {
     id: "windows",
     name: "Windows",
-    spec: "64-bit · .exe",
-    href: `${BASE}/Osmograph_0.1.0_x64-setup.exe`,
+    spec: "64-bit · .exe · silent install",
+    href: RELEASES_PAGE,
     icon: WINDOWS_ICON,
   },
   {
     id: "macos",
     name: "macOS",
-    spec: "Apple silicon · .dmg",
-    href: `${BASE}/Osmograph_0.1.0_aarch64.dmg`,
+    spec: "Apple silicon · .dmg · silent install",
+    href: RELEASES_PAGE,
     icon: APPLE_ICON,
   },
   {
     id: "linux-deb",
     name: "Linux",
-    spec: "Ubuntu · Debian · .deb",
-    href: `${BASE}/Osmograph_0.1.0_amd64.deb`,
+    spec: "Ubuntu · Debian · .deb · silent install",
+    href: RELEASES_PAGE,
     icon: LINUX_ICON,
   },
   {
     id: "linux-rpm",
     name: "Linux",
-    spec: "Fedora · openSUSE · .rpm",
-    href: `${BASE}/Osmograph-0.1.0-1.x86_64.rpm`,
+    spec: "Fedora · openSUSE · .rpm · silent install",
+    href: RELEASES_PAGE,
     icon: LINUX_ICON,
   },
 ]

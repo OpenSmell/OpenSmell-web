@@ -99,9 +99,15 @@ export default function OsmographPage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="flex flex-col items-start gap-2">
                   <DownloadOsmograph />
+                  <div className="inline-flex items-center gap-2 text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-green/30 bg-green/5 text-green">
+                      <span className="text-[10px] font-bold">auto updates</span>
+                    </span>
+                    <span>Installs new releases in place — no wizard, no re-download.</span>
+                  </div>
                   <div className="text-xs text-muted-foreground">
                     <a
-                      href="https://github.com/OpenSmell/osmograph-desktop/releases/tag/v0.1.2-beta.1"
+                      href="https://github.com/OpenSmell/osmograph-desktop/releases/tag/v0.1.2-beta.2"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-foreground underline underline-offset-4 hover:text-primary"
@@ -153,6 +159,38 @@ export default function OsmographPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ===== SEE IT MOVE ===== */}
+        <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">Demo</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+                See Osmograph in motion
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Live traces drawing as samples arrive, sessions landing in the
+                library, and a classifier training in real time — all from one
+                click. The app updates itself in the background, so you're always
+                on the current build.
+              </p>
+            </div>
+            <div className="hud-corners border border-border p-1 bg-background max-w-4xl mx-auto shadow-xl">
+              <video
+                src="/osmograph.webm"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto block bg-background"
+                poster=""
+              />
+            </div>
+            <p className="text-xs text-muted-foreground text-center mt-4 font-mono uppercase tracking-wider max-w-2xl mx-auto">
+              looping demo — live trace capture → library → classifier training
+            </p>
           </div>
         </section>
 
@@ -573,6 +611,109 @@ export default function OsmographPage() {
           </div>
         </section>
 
+        {/* ===== FEATURE CLOSE-UPS ===== */}
+        <section className="border-t border-border py-24 relative">
+          <span className="section-marginalia">Close-ups</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+                What you can do with it
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Click any shot to enlarge. These are real Osmograph screens — live traces,
+                the session library, fair comparison, and model training.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Shot
+                src={`${SCREENSHOT}/osmograph_dashboard.png`}
+                tag="Dashboard"
+                caption="live traces · rig auto-detect · response strip"
+                onOpen={() =>
+                  openShot(
+                    `${SCREENSHOT}/osmograph_dashboard.png`,
+                    "Dashboard — live sensor traces with auto-detected channels"
+                  )
+                }
+              />
+              <Shot
+                src={`${SCREENSHOT}/osmograph_library_quality.png`}
+                tag="Library"
+                caption="session list · per-session quality"
+                onOpen={() =>
+                  openShot(
+                    `${SCREENSHOT}/osmograph_library_quality.png`,
+                    "Library — searchable sessions with per-session quality score"
+                  )
+                }
+              />
+              <Shot
+                src={`${SCREENSHOT}/osmograph_compare_overlay.png`}
+                tag="Compare"
+                caption="sessions overlaid, one lane per channel"
+                onOpen={() =>
+                  openShot(
+                    `${SCREENSHOT}/osmograph_compare_overlay.png`,
+                    "Compare — overlay: one lane per channel, sessions overlaid"
+                  )
+                }
+              />
+              <Shot
+                src={`${SCREENSHOT}/osmograph_train.png`}
+                tag="Train"
+                caption="recording selection · quality filters · model card"
+                onOpen={() =>
+                  openShot(
+                    `${SCREENSHOT}/osmograph_train.png`,
+                    "Train — recording selection, quality filters, model card"
+                  )
+                }
+              />
+              <Shot
+                src={`${SCREENSHOT}/osmograph_calibration.png`}
+                tag="Calibration"
+                caption="R₀ / a / b constants → ppm estimate"
+                onOpen={() =>
+                  openShot(
+                    `${SCREENSHOT}/osmograph_calibration.png`,
+                    "Calibration — per-channel constants to defensible ppm"
+                  )
+                }
+              />
+              <Shot
+                src={`${SCREENSHOT}/osmograph_fleet.png`}
+                tag="Fleet"
+                caption="scan network · add device · fleet grid"
+                onOpen={() =>
+                  openShot(
+                    `${SCREENSHOT}/osmograph_fleet.png`,
+                    "Fleet — scan network, add device, fleet grid"
+                  )
+                }
+              />
+            </div>
+            <p className="text-sm text-muted-foreground text-center mt-8 max-w-2xl mx-auto">
+              Want more angles?{' '}
+              <a
+                href="https://github.com/OpenSmell/osmograph-desktop"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground font-medium hover:underline"
+              >
+                browse the repo
+              </a>
+              , or{' '}
+              <a
+                href="/smell-monitor"
+                className="text-foreground font-medium hover:underline"
+              >
+                see the Smell Monitor hardware
+              </a>
+              Osmograph pairs with.
+            </p>
+          </div>
+        </section>
+
         {/* ===== FOR DEVELOPERS ===== */}
         <section className="border-t border-border py-24 bg-hex relative">
           <span className="section-marginalia">SDK</span>
@@ -677,6 +818,74 @@ export default function OsmographPage() {
             <p className="text-sm text-muted-foreground text-center max-w-2xl mx-auto">
               A smellability verdict is a feasibility range, not a calibrated concentration — it tells you
               whether to buy the parts, not how strong the smell is.
+            </p>
+          </div>
+        </section>
+
+        {/* ===== IDEAS ===== */}
+        <section className="border-t border-border py-24 bg-grid relative">
+          <span className="section-marginalia">Ideas</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-14">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+                What will you smell?
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Osmograph is a platform, not a single experiment. Use it as a starting point
+                and make it your own — there's room for creativity here.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                {
+                  t: "Food freshness",
+                  d: "Track spoilage curves for fruit, meat, or dairy across days.",
+                },
+                {
+                  t: "Indoor air quality",
+                  d: "Log VOC patterns in a room, kitchen, or workshop over time.",
+                },
+                {
+                  t: "Scent branding",
+                  d: "Compare fragrance blends and train a nose for your product line.",
+                },
+                {
+                  t: "Process control",
+                  d: "Detect when a fermentation or roast drifts off its reference.",
+                },
+                {
+                  t: "Accessibility tools",
+                  d: "Turn smells into alerts for people who can't smell them.",
+                },
+                {
+                  t: "Classroom science",
+                  d: "A rig + Osmograph = a chemistry sensor lab for students.",
+                },
+                {
+                  t: "Custom plugins",
+                  d: "Drop .py scripts or .head models into the plugins folder.",
+                },
+                {
+                  t: "Open datasets",
+                  d: "Publish labeled sessions to the OpenSmell Data Commons.",
+                },
+              ].map((idea) => (
+                <div
+                  key={idea.t}
+                  className="bg-background p-5 hex-box border border-border"
+                >
+                  <div className="font-mono text-[10px] text-muted-foreground mb-2">
+                    {idea.t.toUpperCase()}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {idea.d}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground text-center mt-10 max-w-2xl mx-auto leading-relaxed">
+              Start with a $30 build, a board, and one smell you care about. The rest
+              is up to you.
             </p>
           </div>
         </section>
