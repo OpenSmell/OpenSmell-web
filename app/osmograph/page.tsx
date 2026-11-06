@@ -133,10 +133,10 @@ export default function OsmographPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
                 <Shot
-                  src={`${SCREENSHOT}/osmograph_dashboard.png`}
-                  tag="Dashboard"
-                  caption="live sensor traces · rig auto-detect · measured response-type strip"
-                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_dashboard.png`, "Dashboard — live sensor traces, auto-detected channels, measured response-type strip")}
+                  src={`${SCREENSHOT}/osmograph_gallery.png`}
+                  tag="Explore"
+                  caption="64 smells · six-channel fingerprints · 380 recordings"
+                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_gallery.png`, "Explore — the smell gallery with six-channel fingerprints from real sessions")}
                 />
               </div>
               <div className="hud-corners border border-border p-6 bg-background relative">
@@ -191,6 +191,37 @@ export default function OsmographPage() {
             <p className="text-xs text-muted-foreground text-center mt-4 font-mono uppercase tracking-wider max-w-2xl mx-auto">
               looping demo — live trace capture → library → classifier training
             </p>
+          </div>
+        </section>
+
+        {/* ===== UPDATES ===== */}
+        <section className="border-t border-border py-20 relative">
+          <span className="section-marginalia">Updates</span>
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="coord-tag mb-3">Auto-update</div>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                  It updates itself. <br className="hidden sm:block" />No reinstall, no hunting.
+                </h2>
+                <p className="text-muted-foreground mb-5 leading-relaxed">
+                  Osmograph checks GitHub on launch and once a day, then tells you what changed.
+                  Install the update in place, verify the signature, and restart — or stay on
+                  Stable and never see a beta.
+                </p>
+                <ul className="space-y-2 mb-6">
+                  <Li>Automatic, manual, or never — your choice, with Stable and Beta channels</Li>
+                  <Li>Release notes split into what&apos;s new and what&apos;s fixed</Li>
+                  <Li>Signed installers are verified before anything runs</Li>
+                </ul>
+                <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer" className="hex-btn hex-btn-outline">
+                  See the latest release <ChevronRight className="w-4 h-4" />
+                </a>
+              </div>
+              <Shot src={`${SCREENSHOT}/osmograph_updates.png`} tag="Settings · Updates"
+                caption="automatic checks · Stable / Beta · signed in-place install"
+                onOpen={() => openShot(`${SCREENSHOT}/osmograph_updates.png`, "Updates — automatic checks, Stable/Beta channels, signed in-place install")} />
+            </div>
           </div>
         </section>
 
@@ -460,27 +491,31 @@ export default function OsmographPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="coord-tag mb-3">006 // Fleet management</div>
+                <div className="coord-tag mb-3">006 // Domain Vials</div>
                 <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                  More than one nose? <br className="hidden sm:block" />Manage them all.
+                  One app. <br className="hidden sm:block" />A workspace for every question.
                 </h2>
                 <p className="text-muted-foreground mb-5 leading-relaxed">
-                  Scan the network, add devices, and watch the whole fleet from one window.
-                  Each device streams with its own channel count and identity.
+                  Plant Respiration and Fermentation Lab ship as Vials: a protocol, a log,
+                  scope limits, and stop rules written for the domain. Install them from the
+                  Aromatory, then keep the journal next to the data.
                 </p>
                 <ul className="space-y-2 mb-6">
-                  <Li>Auto-discovers boards over USB and mDNS — no manual pairing</Li>
-                  <Li>Fleet grid shows every device&apos;s live state at a glance</Li>
-                  <Li>One-click firmware flash stays per-device, matching each rig</Li>
+                  <Li>Every call is judged against the array&apos;s own noise, not a generic threshold</Li>
+                  <Li>Each workspace states what the array cannot tell you before it makes a call</Li>
+                  <Li>Sandboxed UI, local-only logs, and a journal you can export</Li>
                 </ul>
-                <Link href="/smell-monitor" className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
-                  Pair with the Smell Monitor <ChevronRight className="w-4 h-4" />
-                </Link>
+                <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
+                  Get Osmograph and open the Aromatory <ChevronRight className="w-4 h-4" />
+                </a>
               </div>
               <div className="space-y-4">
-                <Shot src={`${SCREENSHOT}/osmograph_fleet.png`} tag="Fleet"
-                  caption="scan network · add device · fleet grid"
-                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_fleet.png`, "Fleet — scan network, add device, fleet grid")} />
+                <Shot src={`${SCREENSHOT}/osmograph_plant.png`} tag="Vial · Plant Respiration"
+                  caption="one plant · care context · scope limits · stop rules"
+                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_plant.png`, "Plant Respiration Vial — a domain workspace with scope limits and stop rules")} />
+                <Shot src={`${SCREENSHOT}/osmograph_vials.png`} tag="Vial · Workspaces"
+                  caption="installed workspaces with gate results and source"
+                  onOpen={() => openShot(`${SCREENSHOT}/osmograph_vials.png`, "Vials — installed domain workspaces with policy gate results and source")} />
               </div>
             </div>
           </div>
@@ -496,13 +531,10 @@ export default function OsmographPage() {
                 Sensors drift. Sessions pile up. <br className="hidden sm:block" />Osmograph handles it.
               </h2>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div className="max-w-4xl mx-auto mb-6">
               <Shot src={`${SCREENSHOT}/osmograph_calibration.png`} tag="System · Calibration"
                 caption="per-channel R₀ / a / b constants → ppm estimate · sensor library"
                 onOpen={() => openShot(`${SCREENSHOT}/osmograph_calibration.png`, "System — calibration and sensor library: per-channel R₀/a/b constants to ppm estimate")} />
-              <Shot src={`${SCREENSHOT}/osmograph_buzzer.png`} tag="System · Buzzer"
-                caption="warning / critical / emergency patterns · volume · preview"
-                onOpen={() => openShot(`${SCREENSHOT}/osmograph_buzzer.png`, "System — buzzer alerts: warning/critical/emergency patterns with volume control and preview")} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
@@ -620,19 +652,19 @@ export default function OsmographPage() {
                 What you can do with it
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Click any shot to enlarge. These are real Osmograph screens — live traces,
-                the session library, fair comparison, and model training.
+                Click any shot to enlarge. These are real Osmograph screens — the smell gallery,
+                the session library, fair comparison, model training, and domain Vials.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <Shot
-                src={`${SCREENSHOT}/osmograph_dashboard.png`}
-                tag="Dashboard"
-                caption="live traces · rig auto-detect · response strip"
+                src={`${SCREENSHOT}/osmograph_gallery.png`}
+                tag="Explore"
+                caption="64 smells · six-channel fingerprints"
                 onOpen={() =>
                   openShot(
-                    `${SCREENSHOT}/osmograph_dashboard.png`,
-                    "Dashboard — live sensor traces with auto-detected channels"
+                    `${SCREENSHOT}/osmograph_gallery.png`,
+                    "Explore — smell gallery with six-channel fingerprints"
                   )
                 }
               />
@@ -681,13 +713,13 @@ export default function OsmographPage() {
                 }
               />
               <Shot
-                src={`${SCREENSHOT}/osmograph_fleet.png`}
-                tag="Fleet"
-                caption="scan network · add device · fleet grid"
+                src={`${SCREENSHOT}/osmograph_plant.png`}
+                tag="Vials"
+                caption="domain workspaces · scope limits · stop rules"
                 onOpen={() =>
                   openShot(
-                    `${SCREENSHOT}/osmograph_fleet.png`,
-                    "Fleet — scan network, add device, fleet grid"
+                    `${SCREENSHOT}/osmograph_plant.png`,
+                    "Vials — domain workspaces with scope limits and stop rules"
                   )
                 }
               />
