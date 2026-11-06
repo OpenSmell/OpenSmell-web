@@ -718,74 +718,6 @@ export default function OsmographPage() {
           </div>
         </section>
 
-        {/* ===== IDEAS ===== */}
-        <section className="border-t border-border py-24 bg-grid relative">
-          <span className="section-marginalia">Ideas</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                What will you smell?
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Osmograph is a platform, not a single experiment. Use it as a starting point
-                and make it your own — there's room for creativity here.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                {
-                  t: "Food freshness",
-                  d: "Track spoilage curves for fruit, meat, or dairy across days.",
-                },
-                {
-                  t: "Indoor air quality",
-                  d: "Log VOC patterns in a room, kitchen, or workshop over time.",
-                },
-                {
-                  t: "Scent branding",
-                  d: "Compare fragrance blends and train a nose for your product line.",
-                },
-                {
-                  t: "Process control",
-                  d: "Detect when a fermentation or roast drifts off its reference.",
-                },
-                {
-                  t: "Accessibility tools",
-                  d: "Turn smells into alerts for people who can't smell them.",
-                },
-                {
-                  t: "Classroom science",
-                  d: "A rig + Osmograph = a chemistry sensor lab for students.",
-                },
-                {
-                  t: "Custom plugins",
-                  d: "Drop .py scripts or .head models into the plugins folder.",
-                },
-                {
-                  t: "Open datasets",
-                  d: "Publish labeled sessions to the OpenSmell Data Commons.",
-                },
-              ].map((idea) => (
-                <div
-                  key={idea.t}
-                  className="bg-background p-5 hex-box border border-border"
-                >
-                  <div className="font-mono text-[10px] text-muted-foreground mb-2">
-                    {idea.t.toUpperCase()}
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {idea.d}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <p className="text-sm text-muted-foreground text-center mt-10 max-w-2xl mx-auto leading-relaxed">
-              Start with a $30 build, a board, and one smell you care about. The rest
-              is up to you.
-            </p>
-          </div>
-        </section>
-
         {/* ===== CTA ===== */}
         <section className="border-t border-border py-20 bg-hex relative">
           <span className="section-marginalia">Start</span>
@@ -799,7 +731,7 @@ export default function OsmographPage() {
                 or start with the science and the build guide first.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-                <DownloadOsmograph />
+                <DownloadOsmograph fullWidth />
                 <Link href="/smell-monitor" className="hex-btn hex-btn-outline">
                   <Monitor className="w-4 h-4" />
                   See the Smell Monitor
@@ -812,7 +744,7 @@ export default function OsmographPage() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border text-left">
                 {[
-                  { t: "New to e-noses?", d: "Start with the Academy primer and the $30 build guide.", href: "/academy/digitising-smell", cta: "Open the Academy" },
+                  { t: "New to e-noses?", d: "Start with the Academy primer and the low-cost build guide.", href: "/academy/digitising-smell", cta: "Open the Academy" },
                   { t: "Have hardware?", d: "Flash firmware and record your first session tonight.", href: "/enose", cta: "E-nose builder" },
                   { t: "Buying systems?", d: "See how Osmograph runs a fleet of Smell Monitors.", href: "/smell-monitor", cta: "Smell Monitor" },
                 ].map((c) => (
