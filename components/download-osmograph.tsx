@@ -82,13 +82,17 @@ const SHORT_NAME: Record<PlatformId, string> = {
   "linux-rpm": "Linux",
 }
 
-export default function DownloadOsmograph() {
+export default function DownloadOsmograph({ fullWidth = false }: { fullWidth?: boolean }) {
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState<PlatformId>("windows")
+  const [isMobile, setIsMobile] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (typeof navigator !== "undefined") setSelected(detectPlatform())
+    if (typeof navigator !== "undefined") {
+      setSelected(detectPlatform())
+      setIsMobile(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))
+    }
   }, [])
 
   useEffect(() => {
@@ -110,20 +114,22 @@ export default function DownloadOsmograph() {
   const current = OPTIONS.find((o) => o.id === selected) ?? OPTIONS[0]
 
   return (
-    <div ref={rootRef} className="relative inline-flex">
+    <div ref={rootRef} className={`relative inline-flex ${fullWidth ? "w-full sm:w-auto" : ""}`}>
       <a
         href={current.href}
-        className="hex-btn hex-btn-primary"
+        data-umami-event="osmograph_download_click"
+        data-umami-event-platform={isMobile ? "mobile" : SHORT_NAME[selected]}
+        className={`hex-btn hex-btn-primary ${fullWidth ? "flex-1 sm:flex-none" : ""}`}
       >
         <DownloadGlyph />
-        Download for {SHORT_NAME[selected]}
+        Download for {isMobile ? "desktop" : SHORT_NAME[selected]}
       </a>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="hex-btn hex-btn-primary px-3 border-l border-background/20"
+        className="hex-btn hex-btn-primary flex-shrink-0 border-l border-background/20 px-3"
       >
         <ChevronDown className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
@@ -132,14 +138,16 @@ export default function DownloadOsmograph() {
         <ul
           role="menu"
           aria-label="Download for your operating system"
-          className="absolute top-full left-0 mt-2 z-50 w-72 border border-border bg-background shadow-lg"
+          className="absolute top-full left-0 z-50 mt-2 w-72 border border-foreground bg-background"
         >
           {OPTIONS.map((o) => (
             <li key={o.id}>
               <a
                 href={o.href}
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 border-b border-border last:border-b-0 text-foreground hover:bg-hex transition-colors"
+                data-umami-event="osmograph_download_platform_click"
+                data-umami-event-platform={o.name}
+                className="flex items-center gap-3 border-b border-border px-4 py-3 text-foreground transition-colors last:border-b-0 hover:bg-muted"
               >
                 <span className="w-5 text-foreground flex-shrink-0">{o.icon}</span>
                 <span className="flex flex-col gap-0.5 min-w-0">

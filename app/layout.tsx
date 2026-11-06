@@ -7,16 +7,16 @@ import SiteFooter from "@/components/site-footer"
 import UmamiAnalytics from "@/components/umami-analytics"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans", display: "swap" })
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" })
 
 export const metadata: Metadata = {
-  title: "OpenSmell — Open Infrastructure for Digital Olfaction",
-  description: "Building the tools, standards, and community to make smell as programmable as light and sound. Open-source chemoprint, e-nose hardware, and data commons.",
+  title: "OpenSmell — Digital smell on open hardware",
+  description: "Detect chemical change in your process with open gas-sensor hardware and software. Open data, open firmware, every number linked to its source.",
   metadataBase: new URL("https://www.opensmell.xyz"),
   openGraph: {
-    title: "OpenSmell — Open Infrastructure for Digital Olfaction",
-    description: "Building the tools, standards, and community to make smell as programmable as light and sound.",
+    title: "OpenSmell — Digital smell on open hardware",
+    description: "Detect chemical change in your process with open gas-sensor hardware and software. Open data, open firmware, every number linked to its source.",
     url: "https://www.opensmell.xyz",
     siteName: "OpenSmell",
     type: "website",
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OpenSmell — Open Infrastructure for Digital Olfaction",
-    description: "Building the tools, standards, and community to make smell as programmable as light and sound.",
+    title: "OpenSmell — Digital smell on open hardware",
+    description: "Detect chemical change in your process with open gas-sensor hardware and software. Open data, open firmware, every number linked to its source.",
     // Twitter image inherits the generated opengraph image.
   },
   icons: {
@@ -40,7 +40,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="light">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`light ${geist.variable} ${geistMono.variable}`}
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{

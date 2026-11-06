@@ -99,9 +99,9 @@ export default function OsmographPage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="flex flex-col items-start gap-2">
                   <DownloadOsmograph />
-                  <div className="inline-flex items-center gap-2 text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full border border-green/30 bg-green/5 text-green">
-                      <span className="text-[10px] font-bold">auto updates</span>
+                  <div className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                    <span className="border border-border px-1.5 py-0.5 text-[10px] text-foreground">
+                      Auto-updates
                     </span>
                     <span>Installs new releases in place — no wizard, no re-download.</span>
                   </div>
@@ -159,38 +159,6 @@ export default function OsmographPage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ===== SEE IT MOVE ===== */}
-        <section className="border-t border-border py-24 relative">
-          <span className="section-marginalia">Demo</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                See Osmograph in motion
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Live traces drawing as samples arrive, sessions landing in the
-                library, and a classifier training in real time — all from one
-                click. The app updates itself in the background, so you're always
-                on the current build.
-              </p>
-            </div>
-            <div className="hud-corners border border-border p-1 bg-background max-w-4xl mx-auto shadow-xl">
-              <video
-                src="/osmograph.webm"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-auto block bg-background"
-                poster=""
-              />
-            </div>
-            <p className="text-xs text-muted-foreground text-center mt-4 font-mono uppercase tracking-wider max-w-2xl mx-auto">
-              looping demo — live trace capture → library → classifier training
-            </p>
           </div>
         </section>
 
@@ -485,7 +453,7 @@ export default function OsmographPage() {
           </div>
         </section>
 
-        {/* ===== FLEET ===== */}
+        {/* ===== DOMAIN VIALS ===== */}
         <section className="border-t border-border py-24 bg-hex relative">
           <span className="section-marginalia">Fleet</span>
           <div className="max-w-7xl mx-auto px-6">
@@ -573,7 +541,6 @@ export default function OsmographPage() {
           <span className="section-marginalia">Connectivity</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-14">
-              <div className="hex-icon text-muted-foreground mx-auto mb-4" />
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Streaming modes</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto mt-3">
                 Same sensor, three ways off the board. The one-click firmware runs USB Serial and
@@ -639,109 +606,6 @@ export default function OsmographPage() {
                 compare boards in the e-nose builder
               </Link>
               .
-            </p>
-          </div>
-        </section>
-
-        {/* ===== FEATURE CLOSE-UPS ===== */}
-        <section className="border-t border-border py-24 relative">
-          <span className="section-marginalia">Close-ups</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                What you can do with it
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Click any shot to enlarge. These are real Osmograph screens — the smell gallery,
-                the session library, fair comparison, model training, and domain Vials.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Shot
-                src={`${SCREENSHOT}/osmograph_gallery.png`}
-                tag="Explore"
-                caption="64 smells · six-channel fingerprints"
-                onOpen={() =>
-                  openShot(
-                    `${SCREENSHOT}/osmograph_gallery.png`,
-                    "Explore — smell gallery with six-channel fingerprints"
-                  )
-                }
-              />
-              <Shot
-                src={`${SCREENSHOT}/osmograph_library_quality.png`}
-                tag="Library"
-                caption="session list · per-session quality"
-                onOpen={() =>
-                  openShot(
-                    `${SCREENSHOT}/osmograph_library_quality.png`,
-                    "Library — searchable sessions with per-session quality score"
-                  )
-                }
-              />
-              <Shot
-                src={`${SCREENSHOT}/osmograph_compare_overlay.png`}
-                tag="Compare"
-                caption="sessions overlaid, one lane per channel"
-                onOpen={() =>
-                  openShot(
-                    `${SCREENSHOT}/osmograph_compare_overlay.png`,
-                    "Compare — overlay: one lane per channel, sessions overlaid"
-                  )
-                }
-              />
-              <Shot
-                src={`${SCREENSHOT}/osmograph_train.png`}
-                tag="Train"
-                caption="recording selection · quality filters · model card"
-                onOpen={() =>
-                  openShot(
-                    `${SCREENSHOT}/osmograph_train.png`,
-                    "Train — recording selection, quality filters, model card"
-                  )
-                }
-              />
-              <Shot
-                src={`${SCREENSHOT}/osmograph_calibration.png`}
-                tag="Calibration"
-                caption="R₀ / a / b constants → ppm estimate"
-                onOpen={() =>
-                  openShot(
-                    `${SCREENSHOT}/osmograph_calibration.png`,
-                    "Calibration — per-channel constants to defensible ppm"
-                  )
-                }
-              />
-              <Shot
-                src={`${SCREENSHOT}/osmograph_plant.png`}
-                tag="Vials"
-                caption="domain workspaces · scope limits · stop rules"
-                onOpen={() =>
-                  openShot(
-                    `${SCREENSHOT}/osmograph_plant.png`,
-                    "Vials — domain workspaces with scope limits and stop rules"
-                  )
-                }
-              />
-            </div>
-            <p className="text-sm text-muted-foreground text-center mt-8 max-w-2xl mx-auto">
-              Want more angles?{' '}
-              <a
-                href="https://github.com/OpenSmell/osmograph-desktop"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground font-medium hover:underline"
-              >
-                browse the repo
-              </a>
-              , or{' '}
-              <a
-                href="/smell-monitor"
-                className="text-foreground font-medium hover:underline"
-              >
-                see the Smell Monitor hardware
-              </a>
-              Osmograph pairs with.
             </p>
           </div>
         </section>
@@ -834,7 +698,7 @@ export default function OsmographPage() {
                   ].map((row) => (
                     <div key={row.step} className="flex items-center justify-between border border-border px-3 py-2">
                       <div className="flex items-center gap-2">
-                        <span className={`w-1 h-1 ${row.state === "pass" ? "bg-foreground" : "bg-red-500"}`} />
+                        <span className={`w-1 h-1 ${row.state === "pass" ? "bg-foreground" : "bg-alarm"}`} />
                         <span className="text-xs">{row.step}</span>
                       </div>
                       <span className="font-mono text-[10px] text-muted-foreground">{row.detail}</span>

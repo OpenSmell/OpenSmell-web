@@ -1,91 +1,175 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useState, type FormEvent, type ReactNode } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import Image from "next/image"
 import {
-  Search, Github, MessageSquare, ChevronRight, ExternalLink, BookOpen,
-  Cpu, Monitor, BarChart3, AlertTriangle,
-  FlaskConical, Wrench, Leaf, Factory, Thermometer, UtensilsCrossed,
-  Send, CheckCircle, X
+  ArrowRight,
+  CheckCircle,
+  ExternalLink,
+  Github,
+  MessageSquare,
+  Send,
+  X,
 } from "lucide-react"
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, type CarouselApi } from "@/components/ui/carousel"
-import AnimatedHero from "@/components/animated-hero"
+import DownloadOsmograph from "@/components/download-osmograph"
 import { trackEvent } from "@/lib/analytics"
 import { submitSmellMonitorRequest } from "@/lib/smell-monitor-form"
 
-const products = [
+const RELEASE_NOTES =
+  "https://github.com/OpenSmell/osmograph-desktop/releases/tag/v0.1.2-beta.2"
+const INTEROP = "https://github.com/OpenSmell/interoperability"
+
+const facts = [
   {
-    eyebrow: "SEARCH",
-    icon: Search,
-    title: "Scent Search",
-    desc: "Explore 4,800+ chemical-odour relationships. Search by smell or by molecule, then dive into PubChem data.",
-    cta: "Start searching",
-    href: "/search",
+    value: "MIT",
+    label: "code + firmware",
+    href: "https://github.com/OpenSmell/osmograph-desktop",
+    external: true,
   },
   {
-    eyebrow: "HARDWARE",
-    icon: Monitor,
-    title: "Smell Monitor",
-    desc: "Continuous chemical monitoring for industrial processes. Modular sensor arrays, Bluetooth, open-source firmware.",
-    cta: "See the hardware",
-    href: "/smell-monitor",
+    value: "Python + Rust",
+    label: "SDKs",
+    href: "https://github.com/OpenSmell",
+    external: true,
   },
+  { value: "6 MOX", label: "channels", href: "/smell-monitor", external: false },
+  { value: "10 Hz", label: "raw readings", href: "/osmograph", external: false },
   {
-    eyebrow: "SOFTWARE",
-    icon: BarChart3,
-    title: "Osmograph",
-    desc: "Zero-code e-nose workflow. Flash firmware, record live traces, train classifiers — no coding required.",
-    cta: "Open Osmograph",
-    href: "/osmograph",
-  },
-  {
-    eyebrow: "E-NOSE",
-    icon: FlaskConical,
-    title: "Build Your Own",
-    desc: "Open reference hardware with a live configurator. Pick sensors, preview your rig, download a build plan.",
-    cta: "Build your rig",
-    href: "/enose",
-  },
-  {
-    eyebrow: "LEARNING",
-    icon: BookOpen,
-    title: "Academy",
-    desc: "Essays on the science, data, and engineering behind digitising smell.",
-    cta: "Read the essays",
-    href: "/academy",
-  },
-  {
-    eyebrow: "ECOSYSTEM",
-    icon: FlaskConical,
-    title: "Aromatory",
-    desc: "Install a complete workspace for your process — protocol, local log, stop rules, and a Home contribution.",
-    cta: "Browse the Aromatory",
-    href: "/appstore",
+    value: "Open",
+    label: "firmware + protocol",
+    href: "https://github.com/OpenSmell/smell-monitor",
+    external: true,
   },
 ]
 
-// Each card is a capability, not a claim: research results by others are labelled as
-// external, and measured results carry their source. No bare numbers (see WEBSITE_PLAN.md).
-const useCases = [
-  { icon: UtensilsCrossed, title: "Food Safety", stat: "93.3%", statLabel: "benchmark¹", desc: "838K samples, 59 food types, 10 MOX sensors — benchmarked on open data; licence and source in the data commons below." },
-  { icon: Factory, title: "Industrial VOC", stat: "24/7", statLabel: "monitoring", desc: "Continuous VOC monitoring with configurable sensitivity for your process." },
-  { icon: Wrench, title: "Custom Detection", stat: "Open", statLabel: "SDK", desc: "Train your own classifiers for your own smells — the SDK and protocol are open." },
-  { icon: AlertTriangle, title: "Gas excursions", stat: "Rapid", statLabel: "alerts", desc: "Sudden excursions flagged against the baseline with adjustable sensitivity." },
-  { icon: Thermometer, title: "Cold Chain", stat: "Early", statLabel: "warning", desc: "Designed to surface chemical change early — validate on your own process." },
-  { icon: FlaskConical, title: "Breath Research", stat: "External", statLabel: "study", desc: "8 MOX sensors studied on exhaled-VOC data (Acevedo et al. 2021) — an external result, not ours." },
-  { icon: Leaf, title: "Multi-sensor profiles", stat: "6", statLabel: "MOX channels", desc: "Up to six hot-swappable MOX channels — one box, several chemistries." },
-  { icon: Cpu, title: "Live data streaming", stat: "10 Hz", statLabel: "raw readings", desc: "Continuous raw MOX readings over USB, Wi-Fi, or BLE — feed your own software." },
+const detectPoints = [
+  "Drift-corrected against your own baseline",
+  "Alerts you can tune to your process",
+  "The evidence stays visible: traces, features, quality",
 ]
 
-function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+const claimsDo = [
+  "Detect chemical change against your own baseline",
+  "Track and correct sensor drift over time",
+  "Dedicated-sensor alarms for a known target",
+  "Closed-set classification on a fixed panel",
+  "Transfer a model across matched devices",
+  "Molecule → odour descriptors (Pyrfume / Chemoprint)",
+]
+
+const claimsDont = [
+  "Identify arbitrary unknown mixtures from a cheap array",
+  "Report absolute VOC concentrations from index sensors",
+  "Claim one accuracy that generalises everywhere",
+  "Replace lab-grade GC-MS for regulated results",
+]
+
+const evidence = [
+  {
+    value: "93.3%",
+    label: "Classification on the UCI Gas Sensor Array Drift benchmark",
+    note: "Drift-corrected, scored out-of-sample. Dataset-specific — not a general accuracy claim.",
+    source: "Vergara et al. 2012 · interoperability",
+    href: INTEROP,
+  },
+  {
+    value: "838K",
+    label: "Food-freshness samples",
+    note: "Electronic-nose recordings released under CC BY 4.0.",
+    source: "Zenodo · 10.5281/zenodo.17285312",
+    href: "https://zenodo.org/records/17285312",
+  },
+  {
+    value: "828K",
+    label: "SmellNet acquisition steps",
+    note: "50 food substances, six MOX sensors, MIT-licensed.",
+    source: "MIT-MI · SmellNet",
+    href: "https://github.com/MIT-MI/SmellNet",
+  },
+]
+
+const datasets = [
+  {
+    name: "Food Freshness",
+    meta: "838K samples · MQ array",
+    licence: "CC BY 4.0",
+    note: "Licence at the source.",
+    source: "Zenodo",
+    href: "https://zenodo.org/records/17285312",
+    warn: false,
+  },
+  {
+    name: "SmellNet",
+    meta: "828K steps · 50 substances",
+    licence: "MIT",
+    note: "Commercial use permitted.",
+    source: "MIT-MI · GitHub",
+    href: "https://github.com/MIT-MI/SmellNet",
+    warn: false,
+  },
+  {
+    name: "Beef Spoilage",
+    meta: "12 cuts · 11 MQ",
+    licence: "CC0 1.0",
+    note: "Public-domain dedication.",
+    source: "Harvard Dataverse",
+    href: "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XNFVTS",
+    warn: false,
+  },
+  {
+    name: "UCI Gas Drift",
+    meta: "13,910 × 128 · 16 MOX",
+    licence: "CC BY 4.0 field",
+    note: "Donor text says research-only. Link only, not rehosted.",
+    source: "UCI 224",
+    href: "https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset",
+    warn: true,
+  },
+]
+
+function Eyebrow({ children, warn = false }: { children: ReactNode; warn?: boolean }) {
+  return (
+    <p
+      className={`font-mono text-[10px] uppercase tracking-[0.18em] ${
+        warn ? "text-warn" : "text-muted-foreground"
+      }`}
+    >
+      {children}
+    </p>
+  )
+}
+
+function PilotModal({
+  open,
+  onClose,
+  defaultEmail,
+}: {
+  open: boolean
+  onClose: () => void
+  defaultEmail?: string
+}) {
   const [submitting, setSubmitting] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [formStarted, setFormStarted] = useState(false)
   const [unitCount, setUnitCount] = useState("1")
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    window.addEventListener("keydown", onKey)
+    const previous = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      window.removeEventListener("keydown", onKey)
+      document.body.style.overflow = previous
+    }
+  }, [open, onClose])
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setSubmitting(true)
     setSubmitError(null)
@@ -114,841 +198,860 @@ function PilotModal({ open, onClose }: { open: boolean; onClose: () => void }) {
     }
   }
 
-  useEffect(() => {
-    if (!open) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
-    }
-    window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
-  }, [open, onClose])
-
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" onClick={onClose} />
-      <div aria-hidden className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2" />
-      <div aria-hidden className="absolute top-1/2 left-0 right-0 h-px bg-white/10" />
-      <div aria-hidden className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white/25 font-mono text-xs leading-none">
-        +
-      </div>
-
-      <div className="relative w-full max-w-md">
-        <div aria-hidden className="absolute inset-0 border border-foreground translate-x-2 translate-y-2 pointer-events-none" />
-        <div aria-hidden className="absolute -right-1 -bottom-1 w-2 h-2 bg-foreground" />
-
-        <div className="relative bg-background border border-foreground">
-          <div className="relative flex items-center justify-between bg-foreground text-background pl-5 pr-3.5 py-3">
-            <div className="flex items-center gap-2.5">
-              <span className="w-2.5 h-2.5 border border-background" />
-              <span className="text-[10px] font-mono uppercase tracking-[0.25em]">Waitlist // Join</span>
-            </div>
-            <button
-              onClick={onClose}
-              aria-label="Close"
-              className="w-7 h-7 flex items-center justify-center border border-background hover:bg-background hover:text-foreground transition-colors"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-            <div aria-hidden className="absolute -top-px -right-px bg-background" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }} />
-          </div>
-
-          {formSubmitted ? (
-            <div className="relative px-5 py-8 text-center">
-              <div className="inline-flex items-center justify-center w-10 h-10 border border-foreground mb-3">
-                <CheckCircle className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold tracking-tight mb-1">You&apos;re on the list</h3>
-              <p className="text-xs text-foreground/70 mb-5">
-                Thanks — we&apos;ll email you when pilot units are ready.
-              </p>
-              <button onClick={onClose} className="bg-foreground text-background px-4 py-2 text-xs font-medium hover:opacity-90">
-                Close
-              </button>
-            </div>
-          ) : (
-            <div className="relative bg-background">
-              <div aria-hidden className="absolute top-0 right-0 h-0 w-0 border-t-[7px] border-b-[7px] border-l-[10px] border-t-transparent border-b-transparent border-l-foreground" />
-              <div className="px-5 pt-5">
-                <div className="flex items-start justify-between gap-3 mb-4">
-                  <div>
-                    <h3 className="text-base font-bold tracking-tight leading-none">Get a nose on your process early.</h3>
-                    <p className="text-[11px] text-foreground/70 mt-1.5">
-                      Sign up for early access to Smell Monitor pilot units. We&apos;ll
-                      email you when they&apos;re ready.
-                    </p>
-                  </div>
-                  <span className="mt-0.5 text-[9px] font-mono tracking-widest border border-foreground/40 px-2 py-1 whitespace-nowrap">
-                    PILOT ACCESS
-                  </span>
-                </div>
-
-                <form
-                  onSubmit={handleSubmit}
-                  onFocusCapture={() => {
-                    if (!formStarted) {
-                      setFormStarted(true)
-                      trackEvent("waitlist_form_start", { placement: "homepage" })
-                    }
-                  }}
-                  className="space-y-3.5"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                    <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Name</label>
-                      <input
-                        name="name"
-                        type="text"
-                        required
-                        className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Company <span className="normal-case">(optional)</span></label>
-                      <input
-                        name="company"
-                        type="text"
-                        className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Email</label>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Monitoring</label>
-                    <input
-                      name="process"
-                      type="text"
-                      required
-                      placeholder="fermentation, cold storage, VOC, breath research"
-                      className="w-full bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-[0.18em] mb-1.5">Units</label>
-                    <div className="flex items-center gap-2">
-                      <input
-                        name="units"
-                        type="number"
-                        min="1"
-                        required
-                        value={unitCount}
-                        onChange={(e) => setUnitCount(e.target.value)}
-                        placeholder="any"
-                        className="w-20 bg-transparent border border-foreground px-3 py-2 text-sm focus:outline-none focus:bg-foreground/[0.04] transition-colors placeholder:text-foreground/40"
-                      />
-                      <div className="flex gap-1.5">
-                        {["1", "5", "10", "25"].map((n) => (
-                          <button
-                            key={n}
-                            type="button"
-                            onClick={() => setUnitCount(n)}
-                            className={`text-[11px] border px-2.5 py-1 transition-colors ${
-                              unitCount === n
-                                ? "border-foreground bg-foreground text-background"
-                                : "border-foreground/40 text-foreground/70 hover:border-foreground hover:text-foreground"
-                            }`}
-                          >
-                            {n}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  {submitError && (
-                    <p role="alert" className="text-sm text-destructive">
-                      {submitError}
-                    </p>
-                  )}
-                  <button
-                    type="submit"
-                    data-umami-event="waitlist_submit_click"
-                    data-umami-event-placement="homepage"
-                    disabled={submitting}
-                    className="w-full bg-foreground text-background px-4 py-2.5 text-sm font-medium inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50"
-                  >
-                    <Send className="w-4 h-4" />
-                    {submitting ? "Sending..." : "Join the Waitlist"}
-                  </button>
-                </form>
-              </div>
-            </div>
-          )}
+    <div
+      className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pilot-title"
+    >
+      <div className="absolute inset-0 bg-foreground/40" onClick={onClose} />
+      <div className="relative max-h-[90vh] w-full max-w-md overflow-y-auto border border-foreground bg-background">
+        <div className="flex items-center justify-between border-b border-border px-5 py-4">
+          <span className="font-mono text-[10px] uppercase tracking-[0.16em]">
+            Smell Monitor · pilot access
+          </span>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="border border-border p-1.5 transition-colors hover:bg-muted"
+          >
+            <X className="h-4 w-4" />
+          </button>
         </div>
+
+        {formSubmitted ? (
+          <div className="px-5 py-10 text-center">
+            <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center border border-border">
+              <CheckCircle className="h-5 w-5" />
+            </div>
+            <h3 id="pilot-title" className="text-lg font-semibold tracking-tight">
+              Request received.
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              We&apos;ll email you within 2–3 business days with scope, price, and lead time.
+            </p>
+            <button type="button" onClick={onClose} className="btn-primary mt-6">
+              Close
+            </button>
+          </div>
+        ) : (
+          <div className="px-5 py-6">
+            <h3 id="pilot-title" className="text-xl font-semibold tracking-tight">
+              Put a nose on your process.
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Tell us what you want to watch. We&apos;ll reply with scope, price, and lead time.
+            </p>
+
+            <form
+              onSubmit={handleSubmit}
+              onFocusCapture={() => {
+                if (!formStarted) {
+                  setFormStarted(true)
+                  trackEvent("waitlist_form_start", { placement: "homepage" })
+                }
+              }}
+              className="mt-5 space-y-4"
+            >
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="pilot-name"
+                    className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.14em]"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="pilot-name"
+                    name="name"
+                    type="text"
+                    required
+                    className="w-full border border-border bg-card px-3 py-2 text-sm outline-none transition-colors focus:border-foreground"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="pilot-company"
+                    className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.14em]"
+                  >
+                    Company <span className="normal-case">(optional)</span>
+                  </label>
+                  <input
+                    id="pilot-company"
+                    name="company"
+                    type="text"
+                    className="w-full border border-border bg-card px-3 py-2 text-sm outline-none transition-colors focus:border-foreground"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="pilot-email"
+                  className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.14em]"
+                >
+                  Email
+                </label>
+                <input
+                  id="pilot-email"
+                  name="email"
+                  type="email"
+                  required
+                  defaultValue={defaultEmail}
+                  className="w-full border border-border bg-card px-3 py-2 text-sm outline-none transition-colors focus:border-foreground"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="pilot-process"
+                  className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.14em]"
+                >
+                  What do you want to watch?
+                </label>
+                <input
+                  id="pilot-process"
+                  name="process"
+                  type="text"
+                  required
+                  placeholder="fermentation, cold storage, VOC, breath research"
+                  className="w-full border border-border bg-card px-3 py-2 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-foreground"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="pilot-units"
+                  className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.14em]"
+                >
+                  Units
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="pilot-units"
+                    name="units"
+                    type="number"
+                    min="1"
+                    required
+                    value={unitCount}
+                    onChange={(e) => setUnitCount(e.target.value)}
+                    className="w-20 border border-border bg-card px-3 py-2 text-sm outline-none transition-colors focus:border-foreground"
+                  />
+                  <div className="flex gap-1.5">
+                    {["1", "5", "10", "25"].map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => setUnitCount(n)}
+                        className={`border px-2.5 py-1 text-[11px] transition-colors ${
+                          unitCount === n
+                            ? "border-foreground bg-foreground text-background"
+                            : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
+                        }`}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {submitError && (
+                <p role="alert" className="text-sm text-destructive">
+                  {submitError}
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={submitting}
+                data-umami-event="waitlist_submit_click"
+                data-umami-event-placement="homepage"
+                className="btn-primary w-full disabled:opacity-50"
+              >
+                <Send className="h-4 w-4" />
+                {submitting ? "Sending..." : "Request pilot access"}
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
 export default function Home() {
-  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null)
-  const [activeProduct, setActiveProduct] = useState(0)
   const [pilotOpen, setPilotOpen] = useState(false)
-  const searchRef = useRef<HTMLDivElement>(null)
-  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [leadState, setLeadState] = useState<"idle" | "loading" | "done" | "error">("idle")
+  const [leadError, setLeadError] = useState("")
+  const [copied, setCopied] = useState(false)
 
-  useEffect(() => {
-    if (!carouselApi) return
-    const onSelect = () => setActiveProduct(carouselApi.selectedScrollSnap())
-    onSelect()
-    carouselApi.on("select", onSelect)
-    return () => { carouselApi.off("select", onSelect) }
-  }, [carouselApi])
+  async function submitLead(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    if (!email.trim()) return
+    setLeadState("loading")
+    setLeadError("")
+    trackEvent("hero_waitlist_submit", { placement: "homepage_hero" })
 
-  useEffect(() => {
-    if (!pilotOpen) return
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setPilotOpen(false) }
-    document.addEventListener("keydown", onKey)
-    document.body.style.overflow = "hidden"
-    return () => {
-      document.removeEventListener("keydown", onKey)
-      document.body.style.overflow = ""
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), source: "homepage_hero" }),
+      })
+      const data = await res.json().catch(() => null)
+      if (!res.ok || !data?.ok) {
+        throw new Error(
+          typeof data?.error === "string"
+            ? data.error
+            : "Could not add you to the list. Please try again."
+        )
+      }
+      setLeadState("done")
+      trackEvent("hero_waitlist_success", { placement: "homepage_hero" })
+    } catch (error) {
+      setLeadState("error")
+      setLeadError(
+        error instanceof Error
+          ? error.message
+          : "Could not add you to the list. Please try again."
+      )
+      trackEvent("hero_waitlist_error", { placement: "homepage_hero" })
     }
-  }, [pilotOpen])
+  }
 
-  const handleSearchSubmit = (query: string, type: "odor" | "chemical") => {
-    if (!query.trim()) return
-    trackEvent("scent_search_submit", { search_type: type })
-    router.push(`/search?type=${type}&q=${encodeURIComponent(query.trim())}`)
+  async function copyDonationAddress() {
+    try {
+      await navigator.clipboard.writeText("0x699d0178f16484509f57d4d77f310b6b617621ce")
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2000)
+    } catch {
+      setCopied(false)
+    }
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
+    <div className="min-h-screen bg-background text-foreground">
       <main>
         {/* HERO */}
-        <section className="relative h-screen flex items-center overflow-hidden">
-          <AnimatedHero />
-          <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-            <div className="max-w-2xl">
-              <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground mb-8">
-                Σ Open infrastructure
-              </p>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-4 leading-[0.95]">
-                Digital smell
-                <br />
-                <span className="text-muted-foreground">for everyone.</span>
-              </h1>
-              <p className="text-xs font-mono uppercase tracking-[0.18em] text-foreground mb-3">
-                Breweries, food plants, factories, research labs, developer desks — and the kitchen counter.
-              </p>
-              <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
-                Hardware, data, and software for digital olfaction. Open-source, reproducible, built for research and industry.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link href="/smell-monitor" data-umami-event="hero_smell_monitor_click" className="hex-btn hex-btn-primary w-full sm:w-auto">
-                  Smell Monitor
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-                <Link href="/osmograph" data-umami-event="hero_osmograph_click" className="hex-btn hex-btn-outline w-full sm:w-auto">
-                  Open Osmograph
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* STATS BAR */}
-        <section className="border-t border-b border-border bg-grid">
-          <div className="max-w-7xl mx-auto px-6 py-10">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { label: "Food-freshness samples (Zenodo)", value: "838K" },
-                { label: "Drift-corrected accuracy¹", value: "93.3%" },
-                { label: "Everything open source", value: "MIT" },
-                { label: "SDKs for Python & Rust", value: "2" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold tracking-tight mb-1 font-mono">{stat.value}</div>
-                  <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-[0.15em]">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-            <p className="text-center text-[11px] text-muted-foreground/70 font-mono mt-3">
-              ¹ Classification accuracy on the UCI Gas Sensor Array Drift benchmark
-              (Vergara et al., 2012), drift-corrected — dataset-specific, not a general
-              accuracy claim. See how we score it in{" "}
-              <a href="https://github.com/opensmell/interoperability" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
-                github.com/opensmell/interoperability
-              </a>
-              .
-            </p>
-          </div>
-        </section>
-
-        {/* GET STARTED — one right first step per persona */}
-        <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Start Here</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-10">
-              <div className="coord-tag mb-3">Get Started</div>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                Find your starting point
-              </h2>
-              <p className="text-muted-foreground text-sm mt-2 max-w-xl mx-auto">
-                Whether you&apos;re buying, learning, building, coding, or researching — pick the path closest to you.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-border">
-              {[
-                {
-                  eyebrow: "I want to deploy",
-                  icon: Factory,
-                  title: "Monitor my process",
-                  desc: "Continuous chemical monitoring for businesses, on a modular Smell Monitor array.",
-                  cta: "See the Smell Monitor",
-                  href: "/smell-monitor",
-                },
-                {
-                  eyebrow: "I want to code",
-                  icon: Monitor,
-                  title: "Try Osmograph",
-                  desc: "Zero-code e-nose workflow — flash firmware, record traces, train detectors without typing a line.",
-                  cta: "Open Osmograph",
-                  href: "/osmograph",
-                },
-                {
-                  eyebrow: "I want to learn",
-                  icon: BookOpen,
-                  title: "Understand the science",
-                  desc: "The Academy walks you from sensor fundamentals to ML pipelines — no prior knowledge needed.",
-                  cta: "Start with the primer",
-                  href: "/academy/digitising-smell",
-                },
-                {
-                  eyebrow: "I want to build",
-                  icon: Wrench,
-                  title: "Build an e-nose",
-                  desc: "A low-cost weekend build guide. ESP32, a few MOX modules, and a first classifier — no prior ML needed.",
-                  cta: "Open the build guide",
-                  href: "/academy/building-your-first-e-nose",
-                },
-                {
-                  eyebrow: "I want to research",
-                  icon: FlaskConical,
-                  title: "Dive into the data",
-                  desc: "Open datasets, the framework paper, and explicit open questions the project wants answered.",
-                  cta: "Read the research",
-                  href: "https://github.com/opensmell/interoperability",
-                },
-              ].map((g) => (
-                <Link
-                  key={g.title}
-                  href={g.href}
-                  data-umami-event="start_path_click"
-                  data-umami-event-path={g.title}
-                  className="bg-background p-6 hex-box group border-r border-b border-border last:border-r-0 sm:last:border-r lg:border-b-0 no-underline"
-                >
-                  <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">{g.eyebrow}</span>
-                  <g.icon className="w-6 h-6 mb-4 mt-5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                  <h3 className="text-base font-semibold mb-1 group-hover:text-foreground transition-colors">{g.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed mb-4 group-hover:text-foreground/80 transition-colors">{g.desc}</p>
-                  <span className="text-xs font-medium inline-flex items-center gap-1.5 text-foreground">
-                    {g.cta}
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* SMELL MONITOR + DETECTION PIPELINE (merged) */}
-        <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Detection Pipeline</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <section className="border-b border-border">
+          <div className="mx-auto max-w-7xl px-6 pb-16 pt-28 sm:pb-24 sm:pt-32">
+            <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
               <div>
-                <div className="coord-tag mb-3">001 // Smell Monitor</div>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-                  Continuous chemical anomaly monitoring.
-                </h2>
-                <p className="text-muted-foreground mb-5 leading-relaxed">
-                  Modular gas-sensor arrays with automatic drift correction. Detect chemical changes in fermentation, food storage, industrial processes, or any environment where air composition matters.
+                <Eyebrow>Open infrastructure for digital olfaction</Eyebrow>
+                <h1 className="mt-5 max-w-xl text-5xl font-semibold leading-[0.98] tracking-tight sm:text-6xl">
+                  Digital smell,
+                  <br />
+                  <span className="text-muted-foreground">on open hardware.</span>
+                </h1>
+                <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                  A modular gas-sensor platform that detects chemical change in your process —
+                  open data, open firmware, and every number linked to its source.
                 </p>
-                <div className="space-y-2 mb-6">
-                  {[
-                    "Up to 6 MOX sensor channels — configure for your chemistry",
-                    "Temperature and humidity compensation",
-                    "OLED status display and programmable buzzer",
-                    "IMU for motion compensation — no false alarms from vibration",
-                    "Manage many devices from one view",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <DownloadOsmograph fullWidth />
+                  <button
+                    type="button"
+                    onClick={() => setPilotOpen(true)}
+                    data-umami-event="hero_pilot_click"
+                    className="btn-outline w-full sm:w-auto"
+                  >
+                    Get the hardware
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setPilotOpen(true)}
-                  data-umami-event="waitlist_open"
-                  data-umami-event-placement="homepage"
-                  className="hex-btn hex-btn-primary"
-                >
-                  Join the Waitlist
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="hud-corners border border-border p-6 bg-background relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">Pipeline</div>
-                <div className="space-y-3 data-readout">
-                  {[
-                    { step: "01", text: "Raw MOX readings at 10 Hz" },
-                    { step: "02", text: "Automatic drift correction" },
-                    { step: "03", text: "Anomaly detection against your baseline" },
-                    { step: "04", text: "Adjustable alert sensitivity" },
-                    { step: "05", text: "Sensor health flagged automatically" },
-                    { step: "06", text: "Label events — detectors learn" },
-                  ].map((s) => (
-                    <div key={s.step} className="flex items-center gap-3">
-                      <span className="text-muted-foreground opacity-50 font-mono text-xs">{s.step}</span>
-                      <span className="h-px flex-1 bg-border" />
-                      <span className="text-sm text-muted-foreground">{s.text}</span>
-                    </div>
-                  ))}
+
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                  <span>Open beta</span>
+                  <span>macOS · Windows · Linux</span>
+                  <a
+                    href={RELEASE_NOTES}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 hover:text-foreground"
+                  >
+                    Release notes <ArrowRight className="h-3 w-3" />
+                  </a>
                 </div>
-                <div className="mt-4 pt-3 border-t border-border">
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    On the UCI Gas Sensor Array Drift benchmark (Vergara et al., 2012), drift
-                    correction lifts classification accuracy from 71.4% to 93.3% on the same
-                    data. It is dataset-specific — different processes need different
-                    parameters, and fermentation is slow-changing.
+
+                <div className="mt-8 max-w-lg border-t border-border pt-5">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <label
+                      htmlFor="hero-email"
+                      className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground"
+                    >
+                      Get pilot access
+                    </label>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+                      Email only
+                    </span>
+                  </div>
+
+                  {leadState === "done" ? (
+                    <div
+                      role="status"
+                      className="mt-3 flex items-start gap-2 border border-border bg-card p-3 text-sm"
+                    >
+                      <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                      <span>
+                        You&apos;re on the list. We&apos;ll email you when pilot units are ready.
+                      </span>
+                    </div>
+                  ) : (
+                    <form onSubmit={submitLead} className="mt-2 flex flex-col gap-2 sm:flex-row">
+                      <input
+                        id="hero-email"
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="you@company.com"
+                        className="min-w-0 flex-1 border border-border bg-background px-3 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-foreground"
+                      />
+                      <button
+                        type="submit"
+                        disabled={leadState === "loading"}
+                        data-umami-event="hero_waitlist_submit"
+                        className="btn-primary w-full disabled:opacity-50 sm:w-auto"
+                      >
+                        <Send className="h-3.5 w-3.5" />
+                        {leadState === "loading" ? "Joining..." : "Join"}
+                      </button>
+                    </form>
+                  )}
+
+                  {leadState === "error" && (
+                    <p role="alert" className="mt-2 text-xs text-destructive">
+                      {leadError} Or email{" "}
+                      <a href="mailto:praise@opensmell.xyz" className="underline underline-offset-2">
+                        praise@opensmell.xyz
+                      </a>
+                      .
+                    </p>
+                  )}
+
+                  <p className="mt-2 text-[11px] text-muted-foreground">
+                    No sensor data. We&apos;ll only email you about pilot units.
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* USE CASES — single grid, no duplication */}
-        <section className="border-t border-border py-20 bg-hex">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Applications</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Where we can, we link the measurement — and studies by others are labelled as theirs.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {useCases.map((uc) => (
-                <div key={uc.title} className="hud-corners border border-border p-5 bg-background hover:bg-foreground hover:text-background transition-all duration-300 group relative">
-                  <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                  <div className="flex items-start justify-between mb-2">
-                    <uc.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                    <div className="text-right">
-                      <div className="text-lg font-bold tracking-tight font-mono">{uc.stat}</div>
-                      <div className="text-[9px] text-muted-foreground group-hover:text-background/70 font-mono uppercase tracking-wider">{uc.statLabel}</div>
-                    </div>
+              <div>
+                <figure className="border border-border bg-card p-2">
+                  <div className="flex items-center justify-between border-b border-border px-2 pb-2">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">
+                      Osmograph · Explore
+                    </span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">
+                      real session data
+                    </span>
                   </div>
-                  <div className="h-px bg-border my-2" />
-                  <h3 className="text-sm font-semibold mb-1">{uc.title}</h3>
-                  <p className="text-xs text-muted-foreground group-hover:text-background/70 leading-relaxed transition-colors">{uc.desc}</p>
-                </div>
-              ))}
+                  <Image
+                    src="/osmograph/osmograph_gallery.png"
+                    alt="Osmograph Explore screen showing six-channel fingerprints for 64 smells from 380 real recordings"
+                    width={1318}
+                    height={672}
+                    priority
+                    sizes="(min-width: 1024px) 46vw, 100vw"
+                    className="mt-2 w-full border border-border"
+                  />
+                  <figcaption className="flex items-center justify-between px-2 pt-2 font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+                    <span>64 smells · 6 channels</span>
+                    <span>380 recordings</span>
+                  </figcaption>
+                </figure>
+                <p className="mt-3 text-right font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+                  Playground · no rig required
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* CLAIM LADDER — what we do and don't claim. Cheap sensors have narrow,
-            real limits; stating them is the rigour differentiator (see RESEARCH_REQUIREMENTS.md). */}
-        <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Honesty</span>
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="text-center mb-10">
-              <div className="coord-tag mb-3">Claims</div>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                What we claim — and what we don&apos;t
+        {/* PRODUCT FACTS */}
+        <section className="border-b border-border bg-card">
+          <div className="mx-auto max-w-7xl px-6 py-5">
+            <div className="grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-3 lg:grid-cols-5">
+              {facts.map((fact) => {
+                const body = (
+                  <>
+                    <span className="block font-mono text-lg tracking-tight">{fact.value}</span>
+                    <span className="mt-0.5 block font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                      {fact.label}
+                    </span>
+                  </>
+                )
+                return fact.external ? (
+                  <a
+                    key={fact.label}
+                    href={fact.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-background px-4 py-3 transition-colors hover:bg-muted"
+                  >
+                    {body}
+                  </a>
+                ) : (
+                  <Link
+                    key={fact.label}
+                    href={fact.href}
+                    className="bg-background px-4 py-3 transition-colors hover:bg-muted"
+                  >
+                    {body}
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* PILLAR 1 — DETECT */}
+        <section className="border-b border-border py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              <div>
+                <Eyebrow>01 — Detect</Eyebrow>
+                <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+                  Detect change. Don&apos;t guess smells.
+                </h2>
+                <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">
+                  A cheap MOX array is good at noticing that chemistry moved. Osmograph compares
+                  a live fingerprint with your own baseline, corrects drift, and flags the change
+                  — instead of pretending to name an arbitrary mixture.
+                </p>
+                <ul className="mt-6 divide-y divide-border border-y border-border">
+                  {detectPoints.map((point) => (
+                    <li key={point} className="flex items-start gap-3 py-3 text-sm">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 bg-foreground" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/osmograph"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline"
+                >
+                  See detection in Osmograph <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+              <figure className="border border-border bg-card p-2">
+                <Image
+                  src="/osmograph/osmograph_compare_overlay.png"
+                  alt="Osmograph Compare view overlaying two real recordings across six sensor channels"
+                  width={1318}
+                  height={672}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="w-full border border-border"
+                />
+                <figcaption className="px-2 pt-2 font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+                  Compare · two real recordings · one lane per channel
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        {/* PILLAR 2 — OPEN */}
+        <section className="border-b border-border bg-card py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="grid gap-12 lg:grid-cols-2">
+              <div>
+                <Eyebrow>02 — Open</Eyebrow>
+                <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+                  Open by construction.
+                </h2>
+                <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">
+                  MIT software, open firmware, open datasets with their licences attached. We
+                  link to the source and never silently rehost a restricted corpus.
+                </p>
+                <a
+                  href="https://github.com/OpenSmell/data-commons"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline"
+                >
+                  Read the data policy <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+              <div className="grid grid-cols-2 gap-px border border-border bg-border">
+                {[
+                  {
+                    value: "MIT",
+                    label: "Osmograph code + firmware",
+                    href: "https://github.com/OpenSmell/osmograph-desktop",
+                  },
+                  {
+                    value: "Python + Rust",
+                    label: "SDKs and protocol",
+                    href: "https://github.com/OpenSmell",
+                  },
+                  {
+                    value: "CC BY / CC0 / MIT",
+                    label: "dataset licences, at the source",
+                    href: "#data",
+                  },
+                  {
+                    value: "Link, don't rehost",
+                    label: "restricted corpora stay at the source",
+                    href: "https://github.com/OpenSmell/data-commons",
+                  },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="bg-background p-5 transition-colors hover:bg-muted"
+                  >
+                    <span className="block font-mono text-sm tracking-tight">{item.value}</span>
+                    <span className="mt-2 block text-xs leading-relaxed text-muted-foreground">
+                      {item.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* PILLAR 3 — RIGOUR */}
+        <section className="border-b border-border py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="max-w-2xl">
+              <Eyebrow>03 — Rigour</Eyebrow>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+                What we claim — and what we don&apos;t.
               </h2>
-              <p className="text-muted-foreground text-sm mt-2 max-w-xl mx-auto">
-                Cheap gas sensors have real, narrow limits. We&apos;d rather state ours than oversell.
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                Cheap gas sensors have narrow, real limits. Stating them is the point.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
-              <div className="bg-background p-6">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-green-400 mb-3">We do — with evidence</div>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  {[
-                    "Detect chemical change against your own baseline",
-                    "Track and correct sensor drift over time",
-                    "Dedicated-sensor alarms for a known target",
-                    "Closed-set classification on a fixed panel",
-                    "Transfer a model across matched devices",
-                    "Molecule → odour descriptors (Pyrfume / Chemoprint)",
-                  ].map((t) => (
-                    <li key={t} className="flex items-start gap-2">
-                      <span className="w-1 h-1 bg-green-400 mt-2 flex-shrink-0" />
-                      {t}
+
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              <div className="border border-border bg-card p-6">
+                <Eyebrow>We do — with evidence</Eyebrow>
+                <ul className="mt-4 divide-y divide-border border-t border-border">
+                  {claimsDo.map((claim) => (
+                    <li key={claim} className="flex items-start gap-3 py-3 text-sm">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 bg-foreground" />
+                      {claim}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="bg-background p-6">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-red-400 mb-3">We don&apos;t — and won&apos;t pretend to</div>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  {[
-                    "Identify arbitrary unknown mixtures from a cheap array",
-                    "Report absolute VOC concentrations from index sensors",
-                    "Claim one accuracy that generalises everywhere",
-                    "Replace lab-grade GC-MS for regulated results",
-                  ].map((t) => (
-                    <li key={t} className="flex items-start gap-2">
-                      <span className="w-1 h-1 bg-red-400 mt-2 flex-shrink-0" />
-                      {t}
+              <div className="border border-border bg-card p-6">
+                <Eyebrow warn>We don&apos;t — and won&apos;t pretend to</Eyebrow>
+                <ul className="mt-4 divide-y divide-border border-t border-border">
+                  {claimsDont.map((claim) => (
+                    <li key={claim} className="flex items-start gap-3 py-3 text-sm">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 bg-warn" />
+                      {claim}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-            <p className="text-center text-[11px] text-muted-foreground/70 font-mono mt-4">
-              Scored out-of-sample on open data — the harness is public at{" "}
-              <a href="https://github.com/opensmell/interoperability" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
-                github.com/opensmell/interoperability
+
+            <p className="mt-5 text-xs text-muted-foreground">
+              Scored out-of-sample on open data. The harness is public at{" "}
+              <a
+                href={INTEROP}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-foreground"
+              >
+                github.com/OpenSmell/interoperability
               </a>
               .
             </p>
           </div>
         </section>
 
-        {/* DEPLOYMENT — multiple units */}
-        <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Deployment</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* EVIDENCE */}
+        <section className="border-b border-border py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <div>
-                <div className="coord-tag mb-3">002 // Fleet</div>
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
-                  Manage your fleet in one view.
+                <Eyebrow>Evidence</Eyebrow>
+                <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+                  Numbers with a source.
                 </h2>
-                <p className="text-muted-foreground mb-5 text-sm leading-relaxed">
-                  Run one unit or several across a line, warehouse, or field site. Every device keeps its own baseline; Osmograph Desktop shows them all in one place.
-                </p>
-                <div className="space-y-2 mb-6">
-                  {[
-                    "Independent baselines per device — no cross-contamination",
-                    "Centralized session recording with device identification",
-                    "OLED layouts and buzzer patterns configurable per unit",
-                    "Sensor health at a glance",
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="w-1 h-1 bg-foreground mt-2 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-                <Link href="/osmograph" className="hex-btn hex-btn-primary">
-                  Manage with Osmograph
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
               </div>
-              <div className="hud-corners border border-border p-6 bg-background relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <div className="coord-tag mb-3">Fleet Overview</div>
-                <div className="space-y-3 data-readout">
-                  {[
-                    { id: "SM-001", location: "Line A — Fermentation", status: "ACTIVE", health: "98%", lastSeen: "2s ago" },
-                    { id: "SM-002", location: "Line B — Packaging", status: "ACTIVE", health: "94%", lastSeen: "5s ago" },
-                    { id: "SM-003", location: "Cold Storage", status: "ALERT", health: "87%", lastSeen: "1s ago" },
-                    { id: "SM-004", location: "Warehouse East", status: "IDLE", health: "91%", lastSeen: "3h ago" },
-                  ].map((device) => (
-                    <div key={device.id} className="border border-border p-3">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-foreground font-medium">{device.id}</span>
-                        <span className={`text-[10px] font-mono ${device.status === "ALERT" ? "text-red-400" : device.status === "IDLE" ? "text-muted-foreground" : "text-green-400"}`}>
-                          {device.status}
-                        </span>
-                      </div>
-                      <div className="text-[10px] text-muted-foreground">{device.location}</div>
-                      <div className="flex items-center justify-between mt-1 text-[10px] text-muted-foreground">
-                        <span>Health: {device.health}</span>
-                        <span>Last: {device.lastSeen}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* OPEN DATA — datasets only, no redundant summary cards */}
-        <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Data Commons</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Every number, sourced</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Real data — 5 independent datasets, each linked to its source and licence. We
-                link, we don&apos;t silently rehost.
+              <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+                Dataset-specific results, linked. No number appears here without its source and
+                scope.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {[
-                { name: "Food Freshness", samples: "838K", sensors: "10 MOX", source: "Zenodo", url: "https://zenodo.org/records/17285312" },
-                { name: "SmellNet", samples: "828K steps", sensors: "MOX + MEMS", source: "MIT · GitHub", url: "https://github.com/MIT-MI/SmellNet" },
-                { name: "Beef Spoilage", samples: "26K", sensors: "12 MOX", source: "Harvard Dataverse", url: "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XNFVTS" },
-                { name: "UCI Gas Drift", samples: "14K", sensors: "128", source: "UCI ⚠ link only", url: "https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset" },
-                { name: "WineSmell", samples: "565", sensors: "13 ch", source: "MIT · alexnkorovin", url: "https://github.com/alexnkorovin/wine_dataset" },
-              ].map((ds) => (
+
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {evidence.map((item) => (
                 <a
-                  key={ds.name}
-                  href={ds.url}
+                  key={item.value}
+                  href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hud-corners border border-border p-4 hover:bg-foreground hover:text-background transition-all duration-300 group relative"
+                  className="group border border-border bg-card p-6 transition-colors hover:bg-muted"
                 >
-                  <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-sm">{ds.name}</h3>
-                    <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-background/70" />
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="font-mono text-3xl tracking-tight">{item.value}</span>
+                    <ExternalLink className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
                   </div>
-                  <div className="space-y-1 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground group-hover:text-background/70">Samples</span>
-                      <span className="font-mono">{ds.samples}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground group-hover:text-background/70">Sensors</span>
-                      <span className="font-mono">{ds.sensors}</span>
-                    </div>
-                    <div className="flex justify-between border-t border-border pt-1 mt-1">
-                      <span className="text-muted-foreground group-hover:text-background/70">Source</span>
-                      <span className="font-mono text-[10px]">{ds.source}</span>
-                    </div>
-                  </div>
+                  <p className="mt-3 text-sm font-medium">{item.label}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                    {item.note}
+                  </p>
+                  <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                    {item.source}
+                  </p>
                 </a>
               ))}
             </div>
-            <p className="text-center text-[11px] text-muted-foreground/70 font-mono mt-4">
-              UCI gas datasets carry conflicting licence text — structured field says CC BY 4.0,
-              donor notes say research-only — so they are linked, not rehosted. Every dataset
-              keeps its own licence; see our NOTICE for the full attribution record.
-            </p>
           </div>
         </section>
 
-        {/* THE STACK CAROUSEL */}
-        <section className="border-t border-border py-20 bg-hex relative">
-          <span className="section-marginalia">Stack</span>
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-10">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">The open stack</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-sm mt-1">
-                Search, hardware, software, e-nose builder, Vials, Academy.
+        {/* TWO DOORS */}
+        <section className="border-b border-border bg-card py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="max-w-2xl">
+              <Eyebrow>Start here</Eyebrow>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+                Two ways in.
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                Use the software, or put a sensor on a process.
               </p>
             </div>
-            <div className="flex items-center gap-2 md:gap-3 flex-wrap mb-10 justify-center">
-              {products.map((m, i) => (
-                <button
-                  key={m.title}
-                  type="button"
-                  aria-label={m.title}
-                  onClick={() => carouselApi?.scrollTo(i)}
-                  className={`w-10 h-11 sm:w-12 sm:h-14 flex items-center justify-center transition-all duration-300 ${
-                    i === activeProduct
-                      ? "bg-foreground text-background"
-                      : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground"
-                  }`}
-                  style={{ clipPath: "polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%)" }}
-                >
-                  <m.icon className="w-5 h-5" />
-                </button>
-              ))}
-            </div>
-            <Carousel
-              className="max-w-4xl mx-auto"
-              opts={{ loop: true, align: "center" }}
-              setApi={setCarouselApi}
-            >
-              <CarouselContent>
-                {products.map((m, i) => (
-                  <CarouselItem key={m.title} className="basis-[88%] md:basis-[72%]">
-                    <div
-                      className={`hud-corners relative border border-border p-8 md:p-10 text-center bg-background h-full transition-all duration-500 ${
-                        i === activeProduct ? "opacity-100" : "opacity-40"
-                      }`}
+
+            <div className="mt-10 grid gap-4 lg:grid-cols-2">
+              <div className="flex flex-col border border-border bg-background p-6 sm:p-8">
+                <Eyebrow>Software</Eyebrow>
+                <h3 className="mt-2 text-2xl font-semibold tracking-tight">Use Osmograph.</h3>
+                <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+                  Download the desktop app, open the Playground, and work with real recordings —
+                  no rig required.
+                </p>
+                <div className="mt-6">
+                  <DownloadOsmograph fullWidth />
+                </div>
+                <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs">
+                  {[
+                    { label: "Aromatory", href: "/appstore" },
+                    { label: "Academy", href: "/academy" },
+                    { label: "Docs", href: "/docs" },
+                    { label: "Scent Search", href: "/search" },
+                  ].map((link) => (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="inline-flex items-center gap-1 underline-offset-4 hover:underline"
                     >
-                      <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                      <span
-                        aria-hidden
-                        className="absolute top-3 right-5 text-5xl md:text-6xl font-bold text-foreground/[0.05] select-none leading-none"
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div className="coord-tag mb-2">{m.eyebrow}</div>
-                      <div
-                        className="mx-auto w-14 h-14 flex items-center justify-center mb-5 bg-border"
-                        style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-                      >
-                        <m.icon className="w-6 h-6" />
-                      </div>
-                      <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-2">{m.title}</h3>
-                      <p className="text-sm text-muted-foreground max-w-lg mx-auto mb-6 leading-relaxed">
-                        {m.desc}
-                      </p>
-                      <Link href={m.href} className="hex-btn hex-btn-primary">
-                        {m.cta}
-                        <ChevronRight className="w-4 h-4" />
-                      </Link>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex" />
-              <CarouselNext className="hidden sm:flex" />
-            </Carousel>
+                      {link.label} <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  ))}
+                </div>
+                <p className="mt-auto pt-6 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                  macOS · Windows · Linux · Open beta
+                </p>
+              </div>
+
+              <div className="flex flex-col border border-border bg-background p-6 sm:p-8">
+                <Eyebrow>Hardware</Eyebrow>
+                <h3 className="mt-2 text-2xl font-semibold tracking-tight">
+                  Deploy a Smell Monitor.
+                </h3>
+                <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+                  A modular 6-channel MOX array for continuous chemical monitoring. Join the pilot
+                  and we&apos;ll scope it with you.
+                </p>
+                <div className="mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setPilotOpen(true)}
+                    data-umami-event="door_pilot_click"
+                    className="btn-primary w-full sm:w-auto"
+                  >
+                    Request pilot access <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+                <Link
+                  href="/smell-monitor"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline"
+                >
+                  See the hardware <ArrowRight className="h-4 w-4" />
+                </Link>
+                <p className="mt-auto pt-6 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                  Pilot units · not a finished consumer product
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* SCENT SEARCH */}
-        <section ref={searchRef} className="border-t border-border py-20 bg-hex">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-10">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="hex-icon text-muted-foreground" />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Scent Search</h2>
-                <span className="hex-icon text-muted-foreground" />
-              </div>
-              <p className="text-muted-foreground text-sm mt-1">
-                4,800+ chemical-odour relationships from{" "}
-                <a href="https://pyrfume.org" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:opacity-70">
-                  Pyrfume
-                </a>
-                {" "}— each archive keeps its own licence (some non-commercial), passed through unchanged.
+        {/* DATA COMMONS */}
+        <section id="data" className="border-b border-border py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="max-w-2xl">
+              <Eyebrow>Data</Eyebrow>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+                The data commons.
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                Every dataset carries its licence. We link to the source; restricted corpora are
+                not rehosted.
               </p>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-4xl mx-auto">
-              <div className="hud-corners border border-border p-5 relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <h3 className="font-semibold text-sm mb-1">Find chemicals by smell</h3>
-                <p className="text-xs text-muted-foreground mb-3">e.g. citrus, floral, woody, aldehydic</p>
-                <div className="flex">
-                  <input
-                    type="text"
-                    placeholder="citrus, floral, woody..."
-                    className="flex-1 bg-transparent border border-border px-3 py-2 text-sm focus:outline-none focus:border-foreground transition-colors"
-                    onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit(e.currentTarget.value, "odor")}
-                  />
-                  <button
-                    onClick={() => {
-                      const el = document.querySelector<HTMLInputElement>('input[placeholder*="citrus"]')
-                      handleSearchSubmit(el?.value || "citrus", "odor")
-                    }}
-                    className="bg-foreground text-background px-3 py-2 hover:opacity-90 transition-opacity"
-                  >
-                    <Search className="w-4 h-4" />
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                  {["citrus", "floral", "woody", "aldehydic"].map((term) => (
-                    <button key={term} onClick={() => handleSearchSubmit(term, "odor")}
-                      className="text-xs border border-border px-2.5 py-1 hover:bg-foreground hover:text-background transition-all">
-                      {term}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="hud-corners border border-border p-5 relative">
-                <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-                <h3 className="font-semibold text-sm mb-1">Find smells by chemical</h3>
-                <p className="text-xs text-muted-foreground mb-3">e.g. vanillin, limonene, benzaldehyde</p>
-                <div className="flex">
-                  <input
-                    type="text"
-                    placeholder="vanillin, limonene..."
-                    className="flex-1 bg-transparent border border-border px-3 py-2 text-sm focus:outline-none focus:border-foreground transition-colors"
-                    onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit(e.currentTarget.value, "chemical")}
-                  />
-                  <button
-                    onClick={() => {
-                      const el = document.querySelector<HTMLInputElement>('input[placeholder*="vanillin"]')
-                      handleSearchSubmit(el?.value || "vanillin", "chemical")
-                    }}
-                    className="bg-foreground text-background px-3 py-2 hover:opacity-90 transition-opacity"
-                  >
-                    <Search className="w-4 h-4" />
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                  {["vanillin", "limonene", "benzaldehyde", "eugenol"].map((term) => (
-                    <button key={term} onClick={() => handleSearchSubmit(term, "chemical")}
-                      className="text-xs border border-border px-2.5 py-1 hover:bg-foreground hover:text-background transition-all">
-                      {term}
-                    </button>
-                  ))}
-                </div>
-              </div>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {datasets.map((dataset) => (
+                <a
+                  key={dataset.name}
+                  href={dataset.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col border border-border bg-background p-5 transition-colors hover:bg-card"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-semibold">{dataset.name}</h3>
+                    <ExternalLink className="h-3.5 w-3.5 flex-shrink-0 text-muted-foreground" />
+                  </div>
+                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
+                    {dataset.meta}
+                  </p>
+                  <div className="mt-auto pt-5">
+                    <div className="flex items-baseline justify-between gap-3 border-t border-border pt-3">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                        Licence
+                      </span>
+                      <span
+                        className={`text-right font-mono text-[11px] ${
+                          dataset.warn ? "text-warn" : "text-foreground"
+                        }`}
+                      >
+                        {dataset.licence}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-[10px] leading-relaxed text-muted-foreground">
+                      {dataset.note}
+                    </p>
+                    <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+                      {dataset.source}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+
+            <div className="mt-6 flex flex-col justify-between gap-3 border-t border-border pt-5 sm:flex-row sm:items-center">
+              <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
+                UCI gas datasets carry conflicting licence text — the structured field says CC BY
+                4.0, the donor notes say research-only — so they are linked, not rehosted. Every
+                dataset keeps its own licence.
+              </p>
+              <a
+                href="https://github.com/OpenSmell/data-commons"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-shrink-0 items-center gap-2 text-sm font-medium underline-offset-4 hover:underline"
+              >
+                Full registry and provenance <ArrowRight className="h-4 w-4" />
+              </a>
             </div>
           </div>
         </section>
 
-        {/* DONATE */}
-        <section className="border-t border-border py-20 relative">
-          <span className="section-marginalia">Support</span>
-          <div className="max-w-xl mx-auto text-center px-6">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
-              Join the community
-            </h2>
-            <p className="text-muted-foreground text-sm mb-6">
-              Help build digital olfaction — rigs, datasets, and early access.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-              <a href="https://discord.gg/CGER3tHxbH" target="_blank" rel="noopener noreferrer"
-                className="hex-btn hex-btn-outline">
-                <MessageSquare className="w-4 h-4" />
-                Join Discord
-              </a>
-              <a href="https://github.com/opensmell" target="_blank" rel="noopener noreferrer"
-                className="hex-btn hex-btn-outline">
-                <Github className="w-4 h-4" />
-                GitHub
-              </a>
-            </div>
-            <p className="text-xs text-muted-foreground mb-4">
-              Donations go to cloud compute, sensor prototyping, and community building.
-            </p>
-            <div className="hud-corners border border-border p-4 bg-background/80 backdrop-blur-sm w-full relative">
-              <div className="hud-corners-inner absolute inset-0 pointer-events-none" />
-              <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest mb-2">
-                Donate USDC — Polygon
+        {/* LEARN / SUPPORT */}
+        <section className="border-b border-border py-16">
+          <div className="mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-2">
+            <div>
+              <Eyebrow>Learn</Eyebrow>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight">Go deeper.</h2>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+                Sensor fundamentals to ML pipelines, without the hand-waving.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                <Link href="/academy" className="inline-flex items-center gap-1 hover:underline">
+                  Academy <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+                <Link href="/docs" className="inline-flex items-center gap-1 hover:underline">
+                  Docs <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+                <a
+                  href="https://discord.gg/CGER3tHxbH"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:underline"
+                >
+                  <MessageSquare className="h-3.5 w-3.5" /> Discord
+                </a>
+                <a
+                  href="https://github.com/OpenSmell"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:underline"
+                >
+                  <Github className="h-3.5 w-3.5" /> GitHub
+                </a>
               </div>
-              <div className="flex items-center gap-2 w-full min-w-0">
-                <code className="flex-1 min-w-0 text-xs font-mono border border-border px-3 py-2 bg-foreground/5 truncate">
+            </div>
+
+            <div>
+              <Eyebrow>Support</Eyebrow>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight">Keep it open.</h2>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+                Donations fund compute, sensor prototyping, and community. USDC on Polygon:
+              </p>
+              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                <code className="min-w-0 flex-1 break-all border border-border bg-card px-3 py-2 font-mono text-[10px]">
                   0x699d0178f16484509f57d4d77f310b6b617621ce
                 </code>
                 <button
-                  onClick={() => navigator.clipboard.writeText("0x699d0178f16484509f57d4d77f310b6b617621ce")}
-                  className="hex-btn hex-btn-primary flex-shrink-0"
+                  type="button"
+                  onClick={copyDonationAddress}
+                  className="btn-outline flex-shrink-0"
                 >
-                  Copy
+                  {copied ? "Copied" : "Copy"}
                 </button>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* FINAL CTA */}
+        <section className="py-20 sm:py-24">
+          <div className="mx-auto max-w-3xl px-6 text-center">
+            <Eyebrow>Open beta</Eyebrow>
+            <h2 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+              Put a nose on your process.
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Start with the software. Add hardware when you need it.
+            </p>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <DownloadOsmograph fullWidth />
+              <button
+                type="button"
+                onClick={() => setPilotOpen(true)}
+                data-umami-event="final_pilot_click"
+                className="btn-outline w-full sm:w-auto"
+              >
+                Request pilot access <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+            <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+              <a href={RELEASE_NOTES} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
+                Release notes
+              </a>
+            </p>
           </div>
         </section>
       </main>
 
-      {pilotOpen && <PilotModal open={pilotOpen} onClose={() => setPilotOpen(false)} />}
+      <PilotModal
+        open={pilotOpen}
+        onClose={() => setPilotOpen(false)}
+        defaultEmail={email}
+      />
     </div>
   )
 }
