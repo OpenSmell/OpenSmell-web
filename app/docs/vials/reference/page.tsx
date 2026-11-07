@@ -150,9 +150,9 @@ export default function VialReferencePage() {
             [<Code key="a">osmograph.action(action)</Code>, "Send one bounded action. See the UI chapter."],
             [<Code key="r">osmograph.ready()</Code>, "Announce that the bridge is live."],
             [<Code key="t">osmograph.toast(message)</Code>, "Show a host toast."],
-            [<Code key="td">osmograph.setDetection(config)</Code>, "Legacy only; refused for a v2 profile."],
-            [<Code key="tt">osmograph.setTransforms(t)</Code>, "Legacy only; refused for a v2 profile."],
-            [<Code key="tj">osmograph.setTrajectory(spec)</Code>, "Track fields at an interval; clamped to 1–600 s."],
+            [<Code key="td">{"action({ type: \"set-detection\" })"}</Code>, "v1 only; a v2 profile refuses it."],
+            [<Code key="tt">{"action({ type: \"set-transforms\" })"}</Code>, "v1 only; a v2 profile refuses it."],
+            [<Code key="tj">{"action({ type: \"set-trajectory\" })"}</Code>, "Track fields at an interval; clamped to 1–600 s."],
           ]}
         />
 

@@ -1,7 +1,7 @@
 {
   "schema": "osmograph.vial-registry/1",
-  "updated": "2026-10-25",
-  "note": "Every Vial is an author-hosted project. Osmograph fetches the manifest from its raw URL, verifies the pinned manifest and UI hashes, and runs the same local policy gate as a file import. The review route also verifies every declared fixture hash before it pins the entry. A listing records a human review of the claim and its evidence; the host still verifies the bytes and owns every safety refusal on install. Legacy /1 entries are labeled and install as Ungated; new submissions must use /2.",
+  "updated": "2026-11-07",
+  "note": "Every Vial is an author-hosted project. Osmograph fetches the manifest from its raw URL, verifies the pinned manifest and UI hashes, and runs the same local policy gate as a file import. The review route verifies every declared fixture hash before it pins a reviewed entry. This index also carries author-hosted v2 Vials without an evidence block; those are labeled Ungated and are not reviewed listings. The host still verifies the bytes and owns every safety refusal on install. Legacy /1 entries are labeled and install as Ungated.",
   "vials": [
     {
       "id": "example.coffee-roast",
@@ -23,44 +23,43 @@
     {
       "id": "praisejamesx.fermentation",
       "name": "Fermentation Lab",
-      "version": "0.4.1",
+      "version": "0.6.0",
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "fermentation",
-      "tagline": "The batch is the record; the array is one change detector inside it.",
-      "summary": "Home-fermentation workspace: batch protocol, readings log, stop rules, and a sandboxed Home view. Declares host-enforced ΔR/R₀ transforms, a single-unit watch limit derived from measured channel noise, and a persisted trajectory. The stop rules point at the primary measurement for any food-safety decision.",
+      "tagline": "Track the batch, not just the bubble.",
+      "summary": "A batch log for home fermentation that reads the live array as a change detector, compares its phase estimate to the logged pH, gravity, and temperature, and keeps every safety verdict on the primary controls.",
       "hasUi": true,
-      "evidence": "B",
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/fermentation-lab/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/fermentation-lab",
-      "hash": "078777daf14fbed990f84c7b98c3da6d032279d35129e105b98ad8a3e102d694",
+      "hash": "84b45767f94427818c5f77ccf59620079f26fe7ac884a005b93d8fc9f8b0e63c",
       "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
       "fixtures": {},
-      "schema": "osmograph.domain-pack/1",
+      "schema": "osmograph.domain-pack/2",
       "assets": {
-        "ui.html": "0dba43ddc5d2289ca98052fc2db36cdf909247e6a1aa3320b3b030e5604eab4f",
-        "home.html": "e7b5e6ee0387f64ab0d67ae02d3dbd4ac8f19b75ad1dd6b2b971d7d34334bb10"
+        "ui.html": "670297ff9ad8777bb2e78fd10a8e43866cc30e44b2987020c9e6bc5b924f8a33",
+        "home.html": "f844bd4408d9c5b3d4ea816a609e171c7df4c43c64a267578c8ffb39ccf18dbf"
       }
     },
     {
       "id": "praisejamesx.plant-respiration",
       "name": "Plant Respiration",
-      "version": "0.4.0",
+      "version": "0.6.0",
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "plants",
-      "tagline": "The plant is the evidence; the array is one change detector.",
-      "summary": "Plant-health workspace: weekly readings with leaf, soil, water, and action context, plus a measurement-first Home. Declares host-enforced ΔR/R₀ transforms, a single-unit watch limit derived from measured channel noise, and a persisted trajectory. Ethylene, pests, and pathogens each need their own primary measurement.",
+      "tagline": "Watch the plant, not just the number.",
+      "summary": "A one-plant change monitor. It compares the host's baseline-relative response to each channel's measured noise, withholds the call when the enclosure moved, and keeps a session history for a same-time-of-day comparison.",
       "hasUi": true,
-      "evidence": "B",
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/plant-respiration/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/plant-respiration",
-      "hash": "2ffdaeb375a11a2291030ee99afab5b35922ac42d79e378d79d7f10a88b58f63",
+      "hash": "86377095748dbfab626fc53e252a362b40ec6e1f80311fb2ce2102d69fde424f",
       "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
       "fixtures": {},
-      "schema": "osmograph.domain-pack/1",
+      "schema": "osmograph.domain-pack/2",
       "assets": {
-        "home.html": "6710ce683a2ab48318e2db2168b373e05c159ca236a03558bc84ec2b4beff399"
+        "ui.html": "30f23cf403338c6e2a3ae7b6caa6c1bfeefa0cffb32d988da2138c792f35f84b",
+        "home.html": "c5c7090955106d12bb1bd5c393debc9f363b60a078bfdc95836cb2e06587aeac"
       }
     }
   ]

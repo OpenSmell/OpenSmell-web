@@ -69,9 +69,10 @@ cd fermentation-lab`}</CodeBlock>
         />
         <P>
           The scaffold is deliberately incomplete: citations are empty, the text carries{" "}
-          <Code>REPLACE ME</Code> markers, and the evidence block has no report. <Code>noses lint</Code>{" "}
-          refuses until you fill them. That is the point: a scaffold must never be publishable by
-          accident.
+          <Code>REPLACE ME</Code> markers, and the evidence block has no report.{" "}
+          <Code>noses lint</Code> refuses the placeholders and citations; a missing evidence block is a
+          warning that keeps the Vial Ungated. <Code>noses publish</Code> refuses until the evidence
+          exists. That is the point: a scaffold must never be publishable by accident.
         </P>
 
         <H2 id="identity">3. Write the identity and the scope</H2>
@@ -297,7 +298,7 @@ Profile fixtures (deterministic, no hardware)
 
 Programmable surface (static, no hardware)
   ui → ui.html
-    onData           declared
+    host data        declared
     setTransforms    —
     setDetection     —
     setTrajectory    —`}</CodeBlock>

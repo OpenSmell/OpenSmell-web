@@ -63,9 +63,10 @@ base-uri 'none';`}</CodeBlock>
             ],
             [
               <>
-                The host bridge: <Code>osmograph.onData</Code>, <Code>action</Code>, <Code>setTrajectory</Code>,
-                plus <Code>ready</Code>, and <Code>toast</Code>. The legacy <Code>setDetection</Code> / <Code>setTransforms</Code>{" "}
-                methods are v1-only and are refused for a v2 profile.
+                The host bridge: <Code>osmograph.onData</Code>, <Code>action</Code>, <Code>ready</Code>,{" "}
+                <Code>toast</Code>, and <Code>version</Code>. The old <Code>setDetection</Code> /{" "}
+                <Code>setTransforms</Code> / <Code>setTrajectory</Code> convenience methods are not
+                exposed; use the corresponding actions, and only for a v1 manifest.
               </>,
               "Any other global. A reference to an unknown osmograph method is a critical gate failure.",
             ],
@@ -233,17 +234,18 @@ base-uri 'none';`}</CodeBlock>
               <>
                 Ask the host to track fields such as <Code>ch0</Code>, <Code>anomaly.score</Code>,{" "}
                 <Code>baseline.progress</Code>, <Code>env.temperature</Code>. Clamped to 1–600 s.
+                Send it through <Code>action</Code>; the bridge helper is gone.
               </>,
             ],
             [
               <Code key="sd">set-detection</Code>,
               <Code key="v">{`{ enabled, alertThreshold, perChannelLimits }`}</Code>,
-              "Legacy only. A v2 Vial is refused with a message: the profile is compiled from the manifest.",
+              "v1 action only. A v2 Vial refuses it: the profile is compiled from the manifest.",
             ],
             [
               <Code key="str">set-transforms</Code>,
               <Code key="v">{`{ baseline, conditioning, response }`}</Code>,
-              "Legacy only. A v2 Vial is refused: transforms are declared in the manifest.",
+              "v1 action only. A v2 Vial refuses it: transforms are declared in the manifest.",
             ],
           ]}
         />

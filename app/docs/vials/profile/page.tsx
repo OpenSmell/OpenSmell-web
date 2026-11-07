@@ -307,9 +307,10 @@ export default function VialProfilePage() {
         <H2 id="legacy">Legacy manifests</H2>
         <P>
           A <Code>osmograph.domain-pack/1</Code> manifest has no anomaly block. It installs as
-          <b> Ungated</b> and its UI may call <Code>setTransforms</Code> and <Code>setDetection</Code>{" "}
-          at runtime. That path is kept for compatibility; it is not eligible for a new listing. New
-          Vials use v2.
+          <b> Ungated</b> for development. Its UI can still send the legacy{" "}
+          <Code>set-transforms</Code> and <Code>set-detection</Code> actions; the old convenience
+          bridge methods are gone, so a legacy UI that calls them must migrate to actions or v2. That
+          path is not eligible for a new listing. New Vials use v2.
         </P>
 
         <div className="flex flex-wrap gap-3 mt-8">

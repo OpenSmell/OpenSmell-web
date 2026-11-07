@@ -33,7 +33,7 @@ const facts = [
     href: "https://github.com/OpenSmell",
     external: true,
   },
-  { value: "6 MOX", label: "channels", href: "/smell-monitor", external: false },
+  { value: "MOX", label: "sensor array", href: "/smell-monitor", external: false },
   { value: "10 Hz", label: "raw readings", href: "/osmograph", external: false },
   {
     value: "Open",
@@ -861,8 +861,8 @@ export default function Home() {
                   Deploy a Smell Monitor.
                 </h3>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-                  A modular 6-channel MOX array for continuous chemical monitoring. Join the pilot
-                  and we&apos;ll scope it with you.
+                  A modular MOX sensor array for continuous chemical monitoring. Channel count and
+                  sensor mix are scoped to the process. Join the pilot and we&apos;ll scope it with you.
                 </p>
                 <div className="mt-6">
                   <button

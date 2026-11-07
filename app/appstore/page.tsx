@@ -71,7 +71,11 @@ function VialCard({ vial }: { vial: RegistryVial }) {
               v{vial.version}
             </span>
             <span className="text-[10px] uppercase tracking-wider font-mono border border-border px-2 py-0.5">
-              {vial.schema === "osmograph.domain-pack/2" ? "v2 · profile" : "legacy · Ungated"}
+              {vial.schema === "osmograph.domain-pack/2"
+                ? vial.evidence
+                  ? "v2 · reviewed evidence"
+                  : "v2 · Ungated"
+                : "legacy · Ungated"}
             </span>
             {vial.evidence ? (
               <span className="text-[10px] uppercase tracking-wider font-mono border border-foreground px-2 py-0.5">
@@ -225,9 +229,10 @@ export default function AromatoryPage() {
                 <span className="text-muted-foreground">Osmograph.</span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl mb-8 leading-relaxed">
-                Each Vial is an author-hosted manifest: a detection profile, a domain UI, and the
-                evidence behind it. Osmograph fetches the manifest, verifies its hash, and runs the
-                profile through the same gate as a local import.
+                Each Vial is an author-hosted manifest: a scope, an optional profile, an optional
+                domain UI, and whatever evidence the author can defend. Osmograph fetches the
+                manifest, verifies its hash, and runs the same local gate as a file import. A
+                listing is not a signature; entries without reviewed evidence are Ungated.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button onClick={openForm} className="hex-btn hex-btn-primary w-full sm:w-auto">
@@ -247,7 +252,7 @@ export default function AromatoryPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-border">
               {[
-                { value: String(vials.length), label: "Listed Vials" },
+                { value: String(vials.length), label: "Indexed Vials" },
                 { value: String(withUi.length), label: "With a domain UI" },
                 { value: registry.updated, label: "Registry updated" },
               ].map((stat) => (
@@ -394,14 +399,14 @@ export default function AromatoryPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
               <div>
-                <h2 className="text-2xl font-bold tracking-tight">Listed Vials</h2>
+                <h2 className="text-2xl font-bold tracking-tight">Indexed Vials</h2>
                 <p className="text-sm text-muted-foreground mt-1">
                   Install from the manifest URL. Osmograph checks the hash before it runs. Legacy /1
                   entries are labeled Ungated; new listings require /2.
                 </p>
               </div>
               <span className="text-[10px] uppercase tracking-wider font-mono text-muted-foreground">
-                {vials.length} listed
+                {vials.length} indexed
               </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
