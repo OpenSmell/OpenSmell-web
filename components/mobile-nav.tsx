@@ -16,6 +16,7 @@ import {
   Github,
   X,
 } from "lucide-react"
+import { OSMGRAPH_DOWNLOAD_PAGE } from "@/lib/osmograph-downloads"
 
 const links = [
   { label: "Osmograph", href: "/osmograph", icon: BarChart3 },
@@ -43,13 +44,13 @@ export default function MobileNav() {
       {open && (
         <div className="absolute right-0 top-full mt-2 w-64 border border-border bg-background">
           <Link
-            href="/osmograph"
+            href={OSMGRAPH_DOWNLOAD_PAGE}
             onClick={() => setOpen(false)}
             data-umami-event="mobile_download_click"
             className="flex items-center gap-2 border-b border-border bg-foreground px-4 py-3 text-sm font-medium text-background"
           >
             <Download className="h-4 w-4" />
-            Download Osmograph
+            Download for desktop
           </Link>
           <div className="py-2">
             {links.map((l) => (

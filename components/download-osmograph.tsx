@@ -3,8 +3,15 @@
 import { useState, useRef, useEffect } from "react"
 import type { ReactNode } from "react"
 import { ChevronDown, ArrowRight } from "lucide-react"
+import {
+  OSMGRAPH_DOWNLOADS,
+  OSMGRAPH_DOWNLOAD_PAGE,
+  OSMGRAPH_RELEASE_NOTES_URL,
+  OSMGRAPH_RELEASE_VERSION,
+  type OsmographPlatform,
+} from "@/lib/osmograph-downloads"
 
-type PlatformId = "windows" | "macos" | "linux-deb" | "linux-rpm"
+type PlatformId = OsmographPlatform
 
 interface PlatformOption {
   id: PlatformId
@@ -13,11 +20,6 @@ interface PlatformOption {
   href: string
   icon: ReactNode
 }
-
-const RELEASES_PAGE =
-  "https://github.com/OpenSmell/osmograph-desktop/releases"
-const LATEST_RELEASE =
-  "https://github.com/OpenSmell/osmograph-desktop/releases/latest"
 
 const WINDOWS_ICON = (
   <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
@@ -42,28 +44,35 @@ const OPTIONS: PlatformOption[] = [
     id: "windows",
     name: "Windows",
     spec: "64-bit · .exe · silent install",
-    href: RELEASES_PAGE,
+    href: OSMGRAPH_DOWNLOADS.windows,
     icon: WINDOWS_ICON,
   },
   {
     id: "macos",
     name: "macOS",
     spec: "Apple silicon · .dmg · silent install",
-    href: RELEASES_PAGE,
+    href: OSMGRAPH_DOWNLOADS.macos,
     icon: APPLE_ICON,
   },
   {
     id: "linux-deb",
     name: "Linux",
     spec: "Ubuntu · Debian · .deb · silent install",
-    href: RELEASES_PAGE,
+    href: OSMGRAPH_DOWNLOADS["linux-deb"],
     icon: LINUX_ICON,
   },
   {
     id: "linux-rpm",
     name: "Linux",
     spec: "Fedora · openSUSE · .rpm · silent install",
-    href: RELEASES_PAGE,
+    href: OSMGRAPH_DOWNLOADS["linux-rpm"],
+    icon: LINUX_ICON,
+  },
+  {
+    id: "linux-appimage",
+    name: "Linux",
+    spec: "Any distro · .AppImage · portable",
+    href: OSMGRAPH_DOWNLOADS["linux-appimage"],
     icon: LINUX_ICON,
   },
 ]
@@ -80,18 +89,21 @@ const SHORT_NAME: Record<PlatformId, string> = {
   macos: "macOS",
   "linux-deb": "Linux",
   "linux-rpm": "Linux",
+  "linux-appimage": "Linux",
 }
 
 export default function DownloadOsmograph({ fullWidth = false }: { fullWidth?: boolean }) {
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState<PlatformId>("windows")
   const [isMobile, setIsMobile] = useState(false)
+  const [ready, setReady] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (typeof navigator !== "undefined") {
       setSelected(detectPlatform())
-      setIsMobile(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))
+      setIsMobile(/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent))
+      setReady(true)
     }
   }, [])
 
@@ -112,18 +124,38 @@ export default function DownloadOsmograph({ fullWidth = false }: { fullWidth?: b
   }, [open])
 
   const current = OPTIONS.find((o) => o.id === selected) ?? OPTIONS[0]
+  const downloadHref = ready ? current.href : OSMGRAPH_DOWNLOAD_PAGE
 
   return (
     <div ref={rootRef} className={`relative inline-flex ${fullWidth ? "w-full sm:w-auto" : ""}`}>
-      <a
-        href={current.href}
-        data-umami-event="osmograph_download_click"
-        data-umami-event-platform={isMobile ? "mobile" : SHORT_NAME[selected]}
-        className={`hex-btn hex-btn-primary ${fullWidth ? "flex-1 sm:flex-none" : ""}`}
-      >
-        <DownloadGlyph />
-        Download for {isMobile ? "desktop" : SHORT_NAME[selected]}
-      </a>
+      {isMobile ? (
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-haspopup="menu"
+          aria-expanded={open}
+          aria-label="Choose an Osmograph desktop build"
+          data-umami-event="osmograph_download_click"
+          data-umami-event-platform="mobile"
+          data-umami-event-version={OSMGRAPH_RELEASE_VERSION}
+          className={`hex-btn hex-btn-primary ${fullWidth ? "flex-1 sm:flex-none" : ""}`}
+        >
+          <DownloadGlyph />
+          Choose desktop build
+        </button>
+      ) : (
+        <a
+          href={downloadHref}
+          aria-label={`Download Osmograph ${OSMGRAPH_RELEASE_VERSION} for ${SHORT_NAME[selected]}`}
+          data-umami-event="osmograph_download_click"
+          data-umami-event-platform={SHORT_NAME[selected]}
+          data-umami-event-version={OSMGRAPH_RELEASE_VERSION}
+          className={`hex-btn hex-btn-primary ${fullWidth ? "flex-1 sm:flex-none" : ""}`}
+        >
+          <DownloadGlyph />
+          Download for {SHORT_NAME[selected]}
+        </a>
+      )}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -140,6 +172,11 @@ export default function DownloadOsmograph({ fullWidth = false }: { fullWidth?: b
           aria-label="Download for your operating system"
           className="absolute top-full left-0 z-50 mt-2 w-72 border border-foreground bg-background"
         >
+          <li className="border-b border-border px-4 py-2.5">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+              Osmograph {OSMGRAPH_RELEASE_VERSION} · direct download
+            </span>
+          </li>
           {OPTIONS.map((o) => (
             <li key={o.id}>
               <a
@@ -162,12 +199,12 @@ export default function DownloadOsmograph({ fullWidth = false }: { fullWidth?: b
           ))}
           <li>
             <a
-              href="https://github.com/OpenSmell/osmograph-desktop/releases"
+              href={OSMGRAPH_RELEASE_NOTES_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2.5 text-[11px] font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground"
             >
-              All downloads on GitHub <ArrowRight className="w-3.5 h-3.5" />
+              Release notes &amp; checksums <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </li>
         </ul>

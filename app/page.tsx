@@ -14,10 +14,10 @@ import {
 } from "lucide-react"
 import DownloadOsmograph from "@/components/download-osmograph"
 import { trackEvent } from "@/lib/analytics"
+import { OSMGRAPH_RELEASE_NOTES_URL } from "@/lib/osmograph-downloads"
 import { submitSmellMonitorRequest } from "@/lib/smell-monitor-form"
 
-const RELEASE_NOTES =
-  "https://github.com/OpenSmell/osmograph-desktop/releases/tag/v0.1.2-beta.2"
+const RELEASE_NOTES = OSMGRAPH_RELEASE_NOTES_URL
 const INTEROP = "https://github.com/OpenSmell/interoperability"
 
 const facts = [

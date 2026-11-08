@@ -10,6 +10,11 @@ import {
   ShieldAlert, GitCompareArrows, SlidersHorizontal, X, ZoomIn,
 } from "lucide-react"
 import DownloadOsmograph from "@/components/download-osmograph"
+import {
+  OSMGRAPH_DOWNLOAD_PAGE,
+  OSMGRAPH_RELEASE_NOTES_URL,
+  OSMGRAPH_RELEASE_VERSION,
+} from "@/lib/osmograph-downloads"
 
 const SCREENSHOT = "/osmograph"
 
@@ -81,7 +86,7 @@ export default function OsmographPage() {
       )}
       <main>
         {/* ===== HERO ===== */}
-        <section className="pt-28 pb-20 border-b border-border bg-grid relative">
+        <section id="download" className="scroll-mt-20 pt-28 pb-20 border-b border-border bg-grid relative">
           <span className="section-marginalia">Software</span>
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mb-14">
@@ -107,12 +112,12 @@ export default function OsmographPage() {
                   </div>
                   <div className="text-xs text-muted-foreground">
                     <a
-                      href="https://github.com/OpenSmell/osmograph-desktop/releases/tag/v0.1.2-beta.2"
+                      href={OSMGRAPH_RELEASE_NOTES_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-foreground underline underline-offset-4 hover:text-primary"
                     >
-                      Try the 0.1.2 beta
+                      Release notes for {OSMGRAPH_RELEASE_VERSION}
                     </a>
                     <span> · Pre-release; installing may replace your stable app.</span>
                   </div>
@@ -182,8 +187,8 @@ export default function OsmographPage() {
                   <Li>Release notes split into what&apos;s new and what&apos;s fixed</Li>
                   <Li>Signed installers are verified before anything runs</Li>
                 </ul>
-                <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer" className="hex-btn hex-btn-outline">
-                  See the latest release <ChevronRight className="w-4 h-4" />
+                <a href={OSMGRAPH_RELEASE_NOTES_URL} target="_blank" rel="noopener noreferrer" className="hex-btn hex-btn-outline">
+                  Release notes for {OSMGRAPH_RELEASE_VERSION} <ChevronRight className="w-4 h-4" />
                 </a>
               </div>
               <Shot src={`${SCREENSHOT}/osmograph_updates.png`} tag="Settings · Updates"
@@ -356,10 +361,9 @@ export default function OsmographPage() {
                   <Li>Export a session, a fingerprint, or submit labeled data to vetting</Li>
                 </ul>
                 <div className="flex flex-wrap gap-3">
-                  <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer"
-                    className="hex-btn hex-btn-outline">
-                    Get Osmograph <ChevronRight className="w-4 h-4" />
-                  </a>
+                  <Link href={OSMGRAPH_DOWNLOAD_PAGE} className="hex-btn hex-btn-outline">
+                    Download Osmograph <ChevronRight className="w-4 h-4" />
+                  </Link>
                 </div>
               </div>
               <div className="space-y-4">
@@ -473,9 +477,9 @@ export default function OsmographPage() {
                   <Li>Each workspace states what the array cannot tell you before it makes a call</Li>
                   <Li>Sandboxed UI, local-only logs, and a journal you can export</Li>
                 </ul>
-                <a href="https://github.com/OpenSmell/osmograph-desktop/releases" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
-                  Get Osmograph and open the Aromatory <ChevronRight className="w-4 h-4" />
-                </a>
+                <Link href={OSMGRAPH_DOWNLOAD_PAGE} className="inline-flex items-center gap-2 text-sm font-medium hover:underline">
+                  Download Osmograph and open the Aromatory <ChevronRight className="w-4 h-4" />
+                </Link>
               </div>
               <div className="space-y-4">
                 <Shot src={`${SCREENSHOT}/osmograph_plant.png`} tag="Vial · Plant Respiration"
