@@ -146,14 +146,14 @@ export default function DownloadOsmograph({ fullWidth = false }: { fullWidth?: b
       ) : (
         <a
           href={downloadHref}
-          aria-label={`Download Osmograph ${OSMGRAPH_RELEASE_VERSION} for ${SHORT_NAME[selected]}`}
+          aria-label={ready ? `Download Osmograph ${OSMGRAPH_RELEASE_VERSION} for ${SHORT_NAME[selected]}` : `Download Osmograph ${OSMGRAPH_RELEASE_VERSION}`}
           data-umami-event="osmograph_download_click"
           data-umami-event-platform={SHORT_NAME[selected]}
           data-umami-event-version={OSMGRAPH_RELEASE_VERSION}
           className={`hex-btn hex-btn-primary ${fullWidth ? "flex-1 sm:flex-none" : ""}`}
         >
           <DownloadGlyph />
-          Download for {SHORT_NAME[selected]}
+          Download{ready ? ` for ${SHORT_NAME[selected]}` : ""}
         </a>
       )}
       <button
