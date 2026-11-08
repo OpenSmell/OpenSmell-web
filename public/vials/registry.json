@@ -28,17 +28,17 @@
       "license": "CC-BY-4.0",
       "domain": "fermentation",
       "tagline": "Track the batch, not just the bubble.",
-      "summary": "A batch log for home fermentation that reads the live array as a change detector, compares its phase estimate to the logged pH, gravity, and temperature, and keeps every safety verdict on the primary controls.",
+      "summary": "A batch log for home fermentation. The Vial's declared profile is the host detector: at least two channels must corroborate, persistence and hysteresis apply, and the array phase is compared to the logged pH, gravity, and temperature. Safety stays on the primary controls.",
       "hasUi": true,
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/fermentation-lab/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/fermentation-lab",
-      "hash": "84b45767f94427818c5f77ccf59620079f26fe7ac884a005b93d8fc9f8b0e63c",
+      "hash": "5ab59676362a46ba18615e1a063a8dd408f1cf14deca9d99ad5731526e9c7029",
       "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
       "fixtures": {},
       "schema": "osmograph.domain-pack/2",
       "assets": {
-        "ui.html": "670297ff9ad8777bb2e78fd10a8e43866cc30e44b2987020c9e6bc5b924f8a33",
-        "home.html": "f844bd4408d9c5b3d4ea816a609e171c7df4c43c64a267578c8ffb39ccf18dbf"
+        "ui.html": "2dd41e7b248b43a207f01f656bdbe193ad20a07c801e483147aadd45f4285db4",
+        "home.html": "82988d2252344705de7b630dfa3779390a08ee12589cde3e683195210ae415d8"
       }
     },
     {
@@ -49,17 +49,17 @@
       "license": "CC-BY-4.0",
       "domain": "plants",
       "tagline": "Watch the plant, not just the number.",
-      "summary": "A one-plant change monitor. It compares the host's baseline-relative response to each channel's measured noise, withholds the call when the enclosure moved, and keeps a session history for a same-time-of-day comparison.",
+      "summary": "A one-plant change monitor. The Vial's declared profile is the host detector: at least two channels must corroborate, persistence and hysteresis apply, and the call is withheld when the enclosure moved. The workspace keeps a same-time-of-day session history.",
       "hasUi": true,
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/plant-respiration/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/plant-respiration",
-      "hash": "86377095748dbfab626fc53e252a362b40ec6e1f80311fb2ce2102d69fde424f",
+      "hash": "c2d064eb1c80e3aa77f7b630e71369c4e2d43cd7d96c09da629d1c6fcafc40e1",
       "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
       "fixtures": {},
       "schema": "osmograph.domain-pack/2",
       "assets": {
-        "ui.html": "30f23cf403338c6e2a3ae7b6caa6c1bfeefa0cffb32d988da2138c792f35f84b",
-        "home.html": "c5c7090955106d12bb1bd5c393debc9f363b60a078bfdc95836cb2e06587aeac"
+        "ui.html": "9f3de82f9c6141358ded82cc3467414a875b70afd87924005227009cc006c318",
+        "home.html": "6383b85ca3d26d09a3ab8a38cf5870bd2564b51533c58c3eef055ba481a5e691"
       }
     }
   ]

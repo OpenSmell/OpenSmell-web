@@ -98,12 +98,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <section className="py-12">
             <div className="max-w-4xl mx-auto px-6">
               <figure className="border border-border mb-12">
-                <div className="relative aspect-[1200/630] bg-white">
+                <div className="relative aspect-[1200/630] bg-card">
                   <Image
                     src={article.thumbnail}
                     alt={article.title}
                     fill
-                    className="object-contain"
+                    className="object-contain mix-blend-multiply dark:mix-blend-normal"
                     priority
                     sizes="(max-width: 896px) 100vw, 896px"
                   />

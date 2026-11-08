@@ -178,8 +178,8 @@ base-uri 'none';`}</CodeBlock>
             ],
             [
               <Code key="dc">detectionConfig</Code>,
-              <>{`{ enabled, alertThreshold, perChannelLimits } | null`}</>,
-              "The profile in force. For v2 this comes from the manifest; the UI cannot change it.",
+              <>{`{ enabled, alertThreshold, minChannels?, perChannelLimits } | null`}</>,
+              "The profile in force. For v2 this comes from the manifest; the UI cannot change it. `minChannels` is the host-enforced corroboration floor; legacy Vials default to 1.",
             ],
             [
               <Code key="d">detection</Code>,

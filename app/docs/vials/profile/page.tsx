@@ -128,10 +128,11 @@ export default function VialProfilePage() {
         </P>
         <P>
           In v2 the host compiles the profile into a detector owned by the Vial. The engine&apos;s
-          multivariate verdict and the declared bands are combined: an alert requires the engine to
-          see a sustained change and at least <Code>minChannels</Code> channels to clear their band.
-          The bands are a corroboration gate, not a decorative display. A profile with no bands uses
-          the engine verdict alone.
+          multivariate verdict and the declared bands are combined. The engine itself enforces the
+          profile&apos;s <Code>minChannels</Code> corroboration floor and optional level leg. When bands
+          are declared, an alert also requires at least <Code>minChannels</Code> channels to clear
+          their band. The bands are a corroboration gate, not a decorative display. A profile with
+          no bands uses the engine verdict plus the <Code>alertThreshold</Code> confidence floor.
         </P>
 
         <H2 id="detection">Detection</H2>
@@ -166,7 +167,7 @@ export default function VialProfilePage() {
             [
               <Code key="t">detection.alertThreshold</Code>,
               "0–1",
-              "Confidence floor for the per-channel band. The engine's level budget remains the statistical threshold. In v2 the host requires the engine verdict and the band gate to agree.",
+              "Confidence floor for the profile verdict. The engine's budgets remain the statistical threshold. In v2 the host requires the engine verdict and, when declared, the band gate to agree, then applies this floor to the final call.",
             ],
             [
               <Code key="l">detection.perChannelLimits</Code>,

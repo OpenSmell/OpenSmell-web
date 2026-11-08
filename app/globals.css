@@ -41,6 +41,7 @@
   --live: #0e7490;
   --alarm: #e11d48;
   --warn: #a16207;
+  color-scheme: light;
 }
 
 .dark {
@@ -79,6 +80,7 @@
   --live: #22d3ee;
   --alarm: #fb7185;
   --warn: #eab308;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -145,8 +147,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+  /* Keep the canvas warm before hydration and on overscroll. Without this the
+     browser's default white canvas shows through the transparent html element
+     during a load, a route change, or a rubber-band scroll. */
+  html {
+    min-height: 100%;
+    background-color: var(--background);
+  }
   body {
     @apply bg-background text-foreground;
+    min-height: 100dvh;
     scrollbar-width: thin;
     scrollbar-color: #d7cdba transparent;
   }

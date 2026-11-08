@@ -164,7 +164,9 @@ export default function VialEvidencePage() {
             </>,
             <>
               <b className="text-foreground">Corroboration.</b> At least{" "}
-              <Code>detection.minChannels</Code> channels must clear their limit on the same sample.
+              <Code>detection.minChannels</Code> channels must clear the engine&apos;s
+              sensitivity-scaled budget on the same sample. When the profile declares
+              <Code>perChannelLimits</Code>, the same floor applies to the band gate.
             </>,
             <>
               <b className="text-foreground">Escalation.</b> Continuous anomalous seconds drive{" "}

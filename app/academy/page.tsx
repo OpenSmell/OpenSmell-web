@@ -214,13 +214,13 @@ export default function AcademyPage() {
                   href={`/academy/${article.slug}`}
                   className="bg-background p-6 group no-underline"
                 >
-                  <div className="border border-border mb-4 bg-white overflow-hidden">
+                  <div className="border border-border mb-4 bg-card overflow-hidden">
                     <div className="relative aspect-[1200/630]">
                       <Image
                         src={article.thumbnail}
                         alt={article.title}
                         fill
-                        className="object-contain"
+                        className="object-contain mix-blend-multiply dark:mix-blend-normal"
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     </div>
