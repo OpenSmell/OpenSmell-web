@@ -1,6 +1,6 @@
 {
   "schema": "osmograph.vial-registry/1",
-  "updated": "2026-11-07",
+  "updated": "2026-11-09",
   "note": "Every Vial is an author-hosted project. Osmograph fetches the manifest from its raw URL, verifies the pinned manifest and UI hashes, and runs the same local policy gate as a file import. The review route verifies every declared fixture hash before it pins a reviewed entry. This index also carries author-hosted v2 Vials without an evidence block; those are labeled Ungated and are not reviewed listings. The host still verifies the bytes and owns every safety refusal on install. Legacy /1 entries are labeled and install as Ungated.",
   "vials": [
     {
@@ -23,7 +23,7 @@
     {
       "id": "praisejamesx.fermentation",
       "name": "Fermentation Lab",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "fermentation",
@@ -32,19 +32,19 @@
       "hasUi": true,
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/fermentation-lab/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/fermentation-lab",
-      "hash": "5ab59676362a46ba18615e1a063a8dd408f1cf14deca9d99ad5731526e9c7029",
+      "hash": "f79c6ddf07ef8566ec40c87370b3ac27cdca71793c85256e81a2f392bb12128d",
       "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
       "fixtures": {},
       "schema": "osmograph.domain-pack/2",
       "assets": {
-        "ui.html": "2dd41e7b248b43a207f01f656bdbe193ad20a07c801e483147aadd45f4285db4",
-        "home.html": "82988d2252344705de7b630dfa3779390a08ee12589cde3e683195210ae415d8"
+        "ui.html": "e3b78b70cd3e5360f01d1d581eb431bbd3e735f9f41158a83558cbf72ae7f5ae",
+        "home.html": "f868af9f7ffbbbedabf65034ab7c390344a5074d75cf4559325bbde860a6a4e2"
       }
     },
     {
       "id": "praisejamesx.plant-respiration",
       "name": "Plant Respiration",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "plants",
@@ -53,13 +53,13 @@
       "hasUi": true,
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/plant-respiration/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/plant-respiration",
-      "hash": "c2d064eb1c80e3aa77f7b630e71369c4e2d43cd7d96c09da629d1c6fcafc40e1",
+      "hash": "c2595bf9e2b85e1aa2481fab6cb6ce6e408346b1d45e9b4ce71b70205d1dadfe",
       "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
       "fixtures": {},
       "schema": "osmograph.domain-pack/2",
       "assets": {
-        "ui.html": "9f3de82f9c6141358ded82cc3467414a875b70afd87924005227009cc006c318",
-        "home.html": "6383b85ca3d26d09a3ab8a38cf5870bd2564b51533c58c3eef055ba481a5e691"
+        "ui.html": "0be3707a01f2006f26b5fb1ec2388a818a63b972384b4e67d7f08cc0ef220453",
+        "home.html": "bcd0ff587004837ed6f98a869aa3018d934dfc77c42f522f57b92eadad53eba9"
       }
     }
   ]
