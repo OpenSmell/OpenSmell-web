@@ -38,7 +38,7 @@ export default function DesktopDocsPage() {
         rows={[
           ["Version / id", "v0.1.0 · com.opensmell.osmograph-desktop"],
           ["Stack", "Tauri 2 (Rust backend) + TypeScript/Vite frontend; Chart.js for charts"],
-          ["Window", "Opens inside the monitor work area (1100×700 default, 640×400 minimum)"],
+          ["Window", "Opens inside the monitor work area (1100×700 default, 640×360 minimum)"],
           ["Connections", "Serial (OSM protocol, 115200 baud), WiFi (HTTP polling), BLE (async streaming)"],
           ["Max channels", "6 (presets for 3 / 4 / 6) — channel count is auto-detected and never hardcoded"],
         ]}
