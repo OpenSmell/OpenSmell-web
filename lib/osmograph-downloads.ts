@@ -1,5 +1,5 @@
-export const OSMGRAPH_RELEASE_TAG = "v0.1.2-beta.2"
-export const OSMGRAPH_RELEASE_VERSION = "0.1.2 beta 2"
+export const OSMGRAPH_RELEASE_TAG = "v0.1.2-beta.3"
+export const OSMGRAPH_RELEASE_VERSION = "0.1.2 beta 3"
 export const OSMGRAPH_REPO = "https://github.com/OpenSmell/osmograph-desktop"
 export const OSMGRAPH_RELEASES_URL = `${OSMGRAPH_REPO}/releases`
 export const OSMGRAPH_RELEASE_NOTES_URL = `${OSMGRAPH_RELEASES_URL}/tag/${OSMGRAPH_RELEASE_TAG}`
