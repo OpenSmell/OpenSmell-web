@@ -1,6 +1,6 @@
 {
   "schema": "osmograph.vial-registry/1",
-  "updated": "2026-11-09",
+  "updated": "2026-11-19",
   "note": "Every Vial is an author-hosted project. Osmograph fetches the manifest from its raw URL, verifies the pinned manifest and UI hashes, and runs the same local policy gate as a file import. The review route verifies every declared fixture hash before it pins a reviewed entry. This index also carries author-hosted v2 Vials without an evidence block; those are labeled Ungated and are not reviewed listings. The host still verifies the bytes and owns every safety refusal on install. Legacy /1 entries are labeled and install as Ungated.",
   "vials": [
     {
@@ -23,43 +23,43 @@
     {
       "id": "praisejamesx.fermentation",
       "name": "Fermentation Lab",
-      "version": "0.6.1",
+      "version": "0.7.0",
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "fermentation",
       "tagline": "Track the batch, not just the bubble.",
-      "summary": "A batch log for home fermentation. The Vial's declared profile is the host detector: at least two channels must corroborate, persistence and hysteresis apply, and the array phase is compared to the logged pH, gravity, and temperature. Safety stays on the primary controls.",
+      "summary": "A batch log for home fermentation. The Vial's declared profile is the host detector: at least two channels must corroborate, persistence and hysteresis apply, and the array phase is compared to a trend-driven pH and gravity phase. At-target calls require a recorded pH-meter calibration; safety stays on the primary controls.",
       "hasUi": true,
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/fermentation-lab/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/fermentation-lab",
-      "hash": "f79c6ddf07ef8566ec40c87370b3ac27cdca71793c85256e81a2f392bb12128d",
+      "hash": "210b2ad341de609c8c17b9ab89ea044883452c37d9873bf5e116e87ce6aeaa14",
       "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
       "fixtures": {},
       "schema": "osmograph.domain-pack/2",
       "assets": {
-        "ui.html": "763c467d6b058a56acc466fcd5cf64771e8d18205ef2dc8a335d7e873567500a",
-        "home.html": "f868af9f7ffbbbedabf65034ab7c390344a5074d75cf4559325bbde860a6a4e2"
+        "ui.html": "ca9cf9b8bf93c1988146f408b43128f08dad5abed6063e499ea21b3de49afd4a",
+        "home.html": "f74b34f48bd1dbe1cc6dfba8b91f546df0950919f5d46042e4c65b115a66fb3b"
       }
     },
     {
       "id": "praisejamesx.plant-respiration",
       "name": "Plant Respiration",
-      "version": "0.6.1",
+      "version": "0.7.0",
       "author": "@praisejamesx",
       "license": "CC-BY-4.0",
       "domain": "plants",
       "tagline": "Watch the plant, not just the number.",
-      "summary": "A one-plant change monitor. The Vial's declared profile is the host detector: at least two channels must corroborate, persistence and hysteresis apply, and the call is withheld when the enclosure moved. The workspace keeps a same-time-of-day session history.",
+      "summary": "A one-plant change monitor. The Vial's declared profile is the host detector: at least two channels must corroborate, persistence and hysteresis apply, and the call is withheld when the enclosure moved. The signed change index keeps magnitude and direction separate, with a same-time-of-day session history.",
       "hasUi": true,
       "manifestUrl": "https://raw.githubusercontent.com/praisejamesx/plant-respiration/main/vial.json",
       "sourceUrl": "https://github.com/praisejamesx/plant-respiration",
-      "hash": "c2595bf9e2b85e1aa2481fab6cb6ce6e408346b1d45e9b4ce71b70205d1dadfe",
+      "hash": "e2875ab3da8a8618ba6a43d98f9e409c1ed9a432930bf8dced7967a7ebab8b9e",
       "install": "Install from source above, or paste the manifest URL in Osmograph → Vials → Aromatory.",
       "fixtures": {},
       "schema": "osmograph.domain-pack/2",
       "assets": {
-        "ui.html": "0be3707a01f2006f26b5fb1ec2388a818a63b972384b4e67d7f08cc0ef220453",
-        "home.html": "bcd0ff587004837ed6f98a869aa3018d934dfc77c42f522f57b92eadad53eba9"
+        "ui.html": "e7f90ab7411ce6375cfdd22da1551f6b59c59a2b6f8c860694a8f0d00dce6a9b",
+        "home.html": "9df1788f1b5cea3fa0a2c10b38d81c501766cad6c7eebfe585155ad166481682"
       }
     }
   ]
